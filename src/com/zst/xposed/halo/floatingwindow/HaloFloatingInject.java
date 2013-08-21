@@ -307,6 +307,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	}
 	
 	public static void appleFloating(Context context , Window mWindow, String class_name ){
+		try{
 		Intent intent__ = new Intent(context.getPackageManager().getLaunchIntentForPackage(class_name));
 	        	ResolveInfo rInfo = context.getPackageManager().resolveActivity(intent__, 0);
 	        	ActivityInfo info = rInfo.activityInfo;	            
@@ -324,6 +325,9 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	            }
 	            
 	            ta.recycle();
+		}catch(Throwable t){
+            context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
+		}
 	            // Create our new window
 	           //mWindow.mIsFloatingWindow = true; < We dont need this. onCreate Hook will compare getTaskId and resize accordingly
 	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
