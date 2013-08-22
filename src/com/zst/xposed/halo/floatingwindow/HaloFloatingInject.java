@@ -95,7 +95,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 int _launchedFromUid  = (Integer) param.args[3];
 						 if (_launchedFromUid == 0) return;
 						 
-						 if(!(_launchedFromUid == Res.previousUid && Res.previousUid != -756456451 )){
 							 
 						 if((i.getFlags()& FLAG_FLOATING_WINDOW)==0){
 							 Res.notFloating = true;
@@ -103,7 +102,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 }
 						 }
 						 
-						 }
 						 Res.notFloating = false;
 						 Res.previousUid = aInfo.applicationInfo.uid;
 
