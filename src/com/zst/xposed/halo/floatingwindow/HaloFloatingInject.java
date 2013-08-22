@@ -93,7 +93,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 if(aInfo.applicationInfo.uid != Res.previousUid){
 							 
 						 int _launchedFromUid  = (Integer) param.args[3];
-						 if (_launchedFromUid == 0) return;
+						 if (_launchedFromUid == 1000) return;
 						 
 							 
 						 if((i.getFlags()& FLAG_FLOATING_WINDOW)==0){
@@ -215,6 +215,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					if (Res.notFloating) return;
 					// Gets String pkg to get package name
 					String pkg = (String)param.args[1];
+					if(pkg.equals("android"))return;
 					//if (!class_boolean.startsWith(pkg + ID_TAG)) return;
 					//TODO: if(!pkg.contains("com.whatsapp"))   return;
 					
