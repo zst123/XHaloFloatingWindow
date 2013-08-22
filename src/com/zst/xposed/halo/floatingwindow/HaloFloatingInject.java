@@ -52,10 +52,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	private static String class_boolean = Res.NULL;
 	public static XSharedPreferences pref;
 
-		
-//	FLAG_ACTIVITY_CLEAR_TASK	If set in an Intent passed to Context.startActivity(), this flag will cause any existing task that would be associated with the activity to be cleared before the activity is started.
-	//int	FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET	If set, this marks a point in the task's activity stack that should be cleared when the task is reset.
-	//int	FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
@@ -88,7 +84,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					 Intent i  = (Intent) param.args[4];
 						ActivityInfo aInfo  = (ActivityInfo) param.args[6];
 						 String pkg = aInfo.applicationInfo.packageName;
-						  // XposedBridge.log("halo:--init----0");  
 						 if (pkg.equals("android") || pkg.equals("com.android.systemui")) return;
 						 if(aInfo.applicationInfo.uid != Res.previousUid){
 							 
@@ -110,97 +105,28 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 
 					 fullscreen_3 = null;
 					   for ( Field fullscreen_1 : d.getDeclaredFields() ) {
-				           // XposedBridge.log("halo-activityrecord:field " + ff);
+				            
 				            if (fullscreen_1.getName().contains("fullscreen")){
 				            fullscreen_3 = fullscreen_1;
 				            fullscreen_3.setAccessible(true);
 				            break;
 				            }
 					   }
-					/*   ActivityInfo aInfo  = (ActivityInfo) param.args[6];
-						 String pkg = aInfo.applicationInfo.packageName;
-						 if(pkg.equals("com.android.systemui")){isHaloFloat=false;   return; }
-						 if(pkg.equals("android"))  {isHaloFloat=false;   return; }
-
-					 Intent intent_p = (Intent)param.args[4];
-					isHaloFloat  = (intent_p.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
-*/
-					 /*if (floatingWindow) {
-			                intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_TASK_ON_HOME);---
-			                intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			                intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			                intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);-----
-		                intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-			                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);---
-			                
-			                // If this is the mother-intent we make it volatile
-			                if (topIntent) {
-			                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-			                }*/
 			}
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-					/*Intent i  = (Intent) param.args[4];
-					ActivityInfo aInfo  = (ActivityInfo) param.args[6];
-					 String pkg = aInfo.applicationInfo.packageName;
-					  // XposedBridge.log("halo:--init----0");  
-
-					 if((i.getFlags()& FLAG_FLOATING_WINDOW)==0) return;
-					//   XposedBridge.log("halo:--floating check----0");  
-
-					// if(!pkg.equals(i.getPackage()))   return; 
-					  // XposedBridge.log("halo:--equals---0");  
-
-				   Class<?> d = findClass("com.android.server.am.ActivityRecord", lpparam.classLoader);
-				   XposedBridge.log("halo:--"+d.toString() + "----" + pkg);  
-
-				 //   Field fullscreen_1 = null;
-				   for ( Field fullscreen_1 : d.getDeclaredFields() ) {
-			           // XposedBridge.log("halo-activityrecord:field " + ff);
-			            if (fullscreen_1.getName().contains("fullscreen")){
-			            //fullscreen_1 = field;
-			            fullscreen_1.setAccessible(true);
-						fullscreen_1.set(param.thisObject, Boolean.FALSE); 
-			            break;
-			            }*/
+					
 				   if (fullscreen_3 != null)
 		            fullscreen_3.set(param.thisObject, Boolean.FALSE); 
 				   
 					 fullscreen_3 = null;
-
-
-				  // }
-				    
-				   
-					 
-				   
-				  // Intent yyy = (Intent)intent_1..get(d.newInstance());
-				   
-				  // 				  //f (!floatingWindow) return;
-				   //yyy.setFlags(yyy.getFlags() & ~Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-				   //yyy.setFlags(yyy.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
-	                //yyy.setFlags(yyy.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
-	                //yyy.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-	              ///  yyy.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-
-				   //yyy.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				   //intent_1.set(param.thisObject, yyy);
-				    
-				   
-				   
-				   
-				   
-				   
-
 			   }
 			 });
 			
 			
 		
 		} catch (Exception e) {
-			XposedBridge.log("halo-activityrecord:error "+ e.toString() );
-
+			XposedBridge.log("XHaloFloatingWindow-ERROR(ActivityRecord): " + e.toString());
 		}
 	}
 		
@@ -215,9 +141,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					if (Res.notFloating) return;
 					// Gets String pkg to get package name
 					String pkg = (String)param.args[1];
-					if(pkg.equals("android"))return;
-					//if (!class_boolean.startsWith(pkg + ID_TAG)) return;
-					//TODO: if(!pkg.contains("com.whatsapp"))   return;
+					if(pkg.equals("android"))return; 
 					
 					// Change boolean "createIfNeeded" to FALSE
 					param.args[9] = Boolean.FALSE;
@@ -240,9 +164,8 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					 Activity thiz = (Activity)param.thisObject;
-					 String name = thiz.getWindow().getContext().getClass().getPackage().getName();
-					 if (name.startsWith("com.android.systemui"))  return;
-					 //boolean isHoloFloat = (!notFloating) ;
+					 String name = thiz.getWindow().getContext().getPackageName();
+					 if (name.startsWith("com.android.systemui"))  return; 
 					 boolean isHoloFloat = (thiz.getIntent().getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
 					 if (Res.notFloating == false){
 						 isHoloFloat = true;
@@ -263,18 +186,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				
 			});
 		
-			/*findAndHookMethod( Activity.class,  "finish", new XC_MethodHook() { 
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					 Activity thiz = (Activity)param.thisObject;
-					 String name = thiz.getWindow().getContext().getClass().getPackage().getName();
-					 if (name.startsWith("com.android.systemui"))  return;
-
-					 if (class_boolean.equals( name + ID_TAG + thiz.getTaskId())) { 
-						 thiz.overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-					 }
-				}
-				
-			});*/
+			
 		} catch (Throwable e) {
 		}
 		
@@ -288,16 +200,15 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					Window window = (Window) param.thisObject;
 					Context context = window.getContext();
-					String localClassName = context.getClass().getPackage().getName();
-
-					//if (!gotFloat) return;
-					 if (!class_boolean.startsWith(localClassName + ID_TAG)) return;
-					//TODO :if (!localClassName.equals("com.whatsapp")) {
-					//TODO :      return;
-					//TODO :       }
+					String AppPackage = context.getPackageName();
+ 
+					 if (!class_boolean.startsWith(AppPackage + ID_TAG)) return; 
+					 
 					 XposedBridge.log("XHaloFloatingWindow-DEBUG(DecorView): " + class_boolean);
+					 
+						String localClassPackageName = context.getClass().getPackage().getName();
 
-					appleFloating(context, window,localClassName);
+					appleFloating(context, window,localClassPackageName);
 					
 				}
 			});
