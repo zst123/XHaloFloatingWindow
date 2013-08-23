@@ -252,6 +252,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	            params.alpha = alp;	
 	            params.dimAmount = dimm;
 	            mWindow.setAttributes((android.view.WindowManager.LayoutParams) params);
+			     scaleFloatingWindow(context,mWindow);
 	}
 
 	public static void scaleFloatingWindow(Context context ,  Window mWindow ) {		
