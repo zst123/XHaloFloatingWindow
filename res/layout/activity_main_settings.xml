@@ -3,82 +3,40 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@null"
     android:orientation="vertical"
     tools:context=".MainSettings" >
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true" >
-
-        <Button
-            android:id="@+id/button1"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text="Reset All" />
-
-        <Button
-            android:id="@+id/button2"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/button3"
-            android:layout_toRightOf="@+id/button1"
-            android:text="SAVE SETTINGS" />
-
-        <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:onClick="help"
-            android:text="Help"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/relativeLayout2"
+        android:layout_above="@+id/testLO"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:background="@null" >
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#fff"
+            android:layout_margin="10dp"
+            android:background="@null"
             android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView2"
+            <LinearLayout
+                android:id="@+id/LinearLayout1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:gravity="center_vertical|center_horizontal"
-                android:text="All values range from 0 - 1 "
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="17dp"
-                android:textStyle="bold" />
+                android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="(eg. 67% = 0.67)"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textSize="15dp"
-                android:textStyle="bold|italic" />
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Click Button on right to edit" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -91,19 +49,20 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/DIMb"
                     android:gravity="center_vertical"
                     android:text="Dim Amount"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
-                    android:id="@+id/EditText01"
+                <Button
+                    android:id="@+id/DIMb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/TextView01"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:onClick="click"
+                    android:text="Button" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -117,19 +76,19 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/TRANSb"
                     android:gravity="center_vertical"
-                    android:text="Transparency"
+                    android:text="Transparency of App"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
-                    android:id="@+id/editText1"
+                <Button
+                    android:id="@+id/TRANSb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/textView1"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:onClick="click"
+                    android:text="Button" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -143,20 +102,20 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/PWIDTHb"
                     android:gravity="center_vertical"
-                    android:text="Width of Screen"
+                    android:text="Window width (Portrait)"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
-                    android:id="@+id/EditText02"
+                <Button
+                    android:id="@+id/PWIDTHb"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/TextView02"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:onClick="click"
+                    android:text="Button" />
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -170,22 +129,174 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/PHEIGHTb"
                     android:gravity="center_vertical"
-                    android:text="Height of Screen"
+                    android:text="Window Height (Portrait)"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                <EditText
-                    android:id="@+id/EditText03"
+                <Button
+                    android:id="@+id/PHEIGHTb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="click"
+                    android:text="Button" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="48dp" >
+
+                <TextView
+                    android:id="@+id/TextView05"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/LWIDTHb"
+                    android:gravity="center_vertical"
+                    android:text="Window width (Landscape)"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/LWIDTHb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_toRightOf="@+id/TextView03"
-                    android:ems="10"
-                    android:inputType="number" />
+                    android:onClick="click"
+                    android:text="Button" />
+
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="48dp" >
+
+                <TextView
+                    android:id="@+id/TextView04"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/LHEIGHTb"
+                    android:gravity="center_vertical"
+                    android:text="Window height (Landscape)"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <Button
+                    android:id="@+id/LHEIGHTb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:onClick="click"
+                    android:text="Button" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="48dp" >
+
+                <TextView
+                    android:id="@+id/TextView07"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/Button02"
+                    android:gravity="center_vertical"
+                    android:text="Disabled"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="#777" />
+
+                <Button
+                    android:id="@+id/Button02"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:enabled="false"
+                    android:onClick="click"
+                    android:text="Button" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="36dp" >
+
+                <TextView
+                    android:id="@+id/TextView06"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center_horizontal"
+                    android:text="Found a bug? Report on the xda thread."
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            </RelativeLayout>
+
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/testLO"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="5dp"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="Test Changes"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/textView4"
+            android:onClick="testclick"
+            android:text="Dark" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/textView4"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/textView4"
+            android:onClick="testclick"
+            android:text="Light" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

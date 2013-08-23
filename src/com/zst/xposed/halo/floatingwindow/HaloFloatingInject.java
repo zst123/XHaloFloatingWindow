@@ -54,7 +54,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
-	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		inject_WindowManagerService_setAppStartingWindow();
 		inject_Activity();
 		inject_DecorView_generateLayout();	
@@ -245,7 +244,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	            mWindow.setGravity(Gravity.CENTER);
 	            mWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 	            WindowManager.LayoutParams params = mWindow.getAttributes(); 
-	            //TODO : transparency amount customization
+	    	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 				Float alp = pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA);
 				Float dimm = pref.getFloat(Res.KEY_DIM, Res.DEFAULT_DIM);
 
@@ -260,11 +259,15 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
         Display display = wm.getDefaultDisplay();
         DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics); 
-        //TODO : make width/height customizable 
+	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
         if (metrics.heightPixels > metrics.widthPixels) { // portrait 
-            mWindow.setLayout((int)(metrics.widthPixels * 0.95f), (int)(metrics.heightPixels * 0.7f));
+        	Float width_portrait = pref.getFloat(Res.KEY_PORTRAIT_WIDTH, Res.DEFAULT_PORTRAIT_WIDTH);
+    		Float height__portrait = pref.getFloat(Res.KEY_PORTRAIT_HEIGHT, Res.DEFAULT_PORTRAIT_HEIGHT);
+            mWindow.setLayout((int)(metrics.widthPixels * width_portrait), (int)(metrics.heightPixels * height__portrait));
         } else {  // landscape
-        	mWindow.setLayout((int)(metrics.widthPixels * 0.7f), (int)(metrics.heightPixels * 0.85f));
+        	Float width_ls = pref.getFloat(Res.KEY_LANDSCAPE_WIDTH, Res.DEFAULT_LANDSCAPE_WIDTH);
+    		Float height__ls = pref.getFloat(Res.KEY_LANDSCAPE_HEIGHT, Res.DEFAULT_LANDSCAPE_HEIGHT);
+        	mWindow.setLayout((int)(metrics.widthPixels * width_ls), (int)(metrics.heightPixels * height__ls));
         }
     }
 

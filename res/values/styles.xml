@@ -4,7 +4,13 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light"> 
+            <color name="background">#DD000000</color>
+    <style name="AppBaseTheme" parent="android:Theme.Holo"> 
+        <item name="android:windowIsTranslucent">true</item>  
+  		<item name="android:windowContentOverlay">@null</item>
+  		<item name="android:windowBackground">@color/background</item>
+   		<item name="android:windowIsFloating">false</item>
+   		<item name="android:backgroundDimEnabled">false</item>
     </style>
 
     <style name="AppTheme" parent="AppBaseTheme">
