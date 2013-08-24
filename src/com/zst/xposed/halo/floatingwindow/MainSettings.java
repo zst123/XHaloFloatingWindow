@@ -101,7 +101,7 @@ boolean sv = true;
 		}
 		if (item.getTitle().equals("About")){
 			Intent intent = new Intent(this,AboutActivity.class);
-			openFloating(intent);
+			startActivity(intent);
 		}
 		if (item.getTitle().equals("Reset Preferences")){
 			new AlertDialog.Builder(this)
@@ -138,10 +138,10 @@ boolean sv = true;
 	public void testclick(View v){
 		if(v.getId() ==R.id.button1){
 			Intent intent = new Intent(this,AboutActivityWhite.class);
-			openFloating(intent);
+			startActivity(intent);
 		}else if(v.getId() ==R.id.button2){
 			Intent intent = new Intent(this,AboutActivity.class);
-			openFloating(intent);
+			startActivity(intent);
 		}
 		 
 	}

@@ -13,7 +13,12 @@
    		<item name="android:backgroundDimEnabled">false</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme">
+    <style name="Light" parent="android:Theme.Holo.Light">
+        <item name="android:windowIsTranslucent">true</item>  
+    </style>
+    
+    <style name="Dark" parent="android:Theme.Holo">
+        <item name="android:windowIsTranslucent">true</item>  
     </style>
     
     <style name="Theme.Halo.FloatingWindow" parent="android:Theme.Holo.Dialog">
