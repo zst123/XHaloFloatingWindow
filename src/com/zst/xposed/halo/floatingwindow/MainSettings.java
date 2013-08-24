@@ -100,8 +100,8 @@ boolean sv = true;
 			openFloating(intent);
 		}
 		if (item.getTitle().equals("About")){
-			
-			
+			Intent intent = new Intent(this,AboutActivity.class);
+			openFloating(intent);
 		}
 		if (item.getTitle().equals("Reset Preferences")){
 			new AlertDialog.Builder(this)
@@ -137,10 +137,11 @@ boolean sv = true;
 	
 	public void testclick(View v){
 		if(v.getId() ==R.id.button1){
-			//Show a light dialog
+			Intent intent = new Intent(this,AboutActivityWhite.class);
+			openFloating(intent);
 		}else if(v.getId() ==R.id.button2){
-			//Show a dark dialog
-
+			Intent intent = new Intent(this,AboutActivity.class);
+			openFloating(intent);
 		}
 		 
 	}
