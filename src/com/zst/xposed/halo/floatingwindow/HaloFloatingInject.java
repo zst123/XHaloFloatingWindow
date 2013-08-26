@@ -177,6 +177,17 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					 if(isHoloFloat){
 						 class_boolean = name + ID_TAG + thiz.getTaskId();
 						// XposedBridge.log("XHaloFloatingWindow-DEBUG(onCreate):" + class_boolean);
+						 thiz.getWindow().setCloseOnTouchOutsideIfNotSet(true);
+						 thiz.getWindow().setGravity(Gravity.CENTER);
+						 thiz.getWindow().setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+				            WindowManager.LayoutParams params = thiz.getWindow().getAttributes(); 
+				    	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+							Float alp = pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA);
+							Float dimm = pref.getFloat(Res.KEY_DIM, Res.DEFAULT_DIM);
+
+				            params.alpha = alp;	
+				            params.dimAmount = dimm;
+				            thiz.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
 					     scaleFloatingWindow(thiz.getWindow().getContext(),thiz.getWindow());
 						 return;
 					 }
