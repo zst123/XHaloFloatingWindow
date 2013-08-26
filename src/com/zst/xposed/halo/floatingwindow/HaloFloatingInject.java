@@ -57,13 +57,14 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		inject_WindowManagerService_setAppStartingWindow();
 		inject_Activity();
 		inject_DecorView_generateLayout();	
-		//TODO : add dynamic enabler
 	}
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
 		inject_ActivityRecord_ActivityRecord(l);
+		inject_ActivityStack(l);
 	}
 	static Field fullscreen_3 = null;
+	static String PKG_NAME = null;
 
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
 		try {
@@ -98,7 +99,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 
 						 Res.notFloating = false;
 						 Res.previousUid = aInfo.applicationInfo.uid;
-
+						 PKG_NAME = pkg;
 					   Class<?> d = findClass("com.android.server.am.ActivityRecord", lpparam.classLoader);
 					   //XposedBridge.log("halo:--"+d.toString() + "----" + pkg);  
 
@@ -108,6 +109,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				            if (fullscreen_1.getName().contains("fullscreen")){
 				            fullscreen_3 = fullscreen_1;
 				            fullscreen_3.setAccessible(true);
+				            fullscreen_3.set(param.thisObject, Boolean.FALSE); 
 				            break;
 				            }
 					   }
@@ -128,6 +130,25 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 			XposedBridge.log("XHaloFloatingWindow-ERROR(ActivityRecord): " + e.toString());
 		}
 	}
+	public static void inject_ActivityStack(final LoadPackageParam lpparam) {
+		Class hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
+			XposedBridge.hookAllMethods(hookClass, "startActivityLocked", new XC_MethodHook() { 
+				
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					if (Res.notFloating) return;
+					if (param.args[1] instanceof Intent)return;
+					Object activityRecord = param.args[0];
+					Class<?> activityRecordClass = activityRecord.getClass();
+					if (!PKG_NAME.equals(activityRecordClass.getDeclaredField("packageName").get(activityRecord))) return;
+					Field activityField = activityRecordClass.getDeclaredField(("fullscreen"));
+					activityField.setAccessible(true);
+					activityField.set(activityRecord, Boolean.FALSE);
+
+					
+				}
+				});
+		}
+	
 		
 	public static void inject_WindowManagerService_setAppStartingWindow() {
 		try {
