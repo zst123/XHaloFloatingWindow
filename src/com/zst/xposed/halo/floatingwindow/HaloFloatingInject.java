@@ -100,7 +100,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 Res.previousUid = aInfo.applicationInfo.uid;
 
 					   Class<?> d = findClass("com.android.server.am.ActivityRecord", lpparam.classLoader);
-					   XposedBridge.log("halo:--"+d.toString() + "----" + pkg);  
+					   //XposedBridge.log("halo:--"+d.toString() + "----" + pkg);  
 
 					 fullscreen_3 = null;
 					   for ( Field fullscreen_1 : d.getDeclaredFields() ) {
@@ -146,7 +146,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					param.args[9] = Boolean.FALSE;
 					// Removes Blank window placeholder before activity's layout xml fully loads
 					
-					XposedBridge.log("XHaloFloatingWindow-DEBUG(setAppStartingWindow):" + pkg );
+					//XposedBridge.log("XHaloFloatingWindow-DEBUG(setAppStartingWindow):" + pkg );
 					
 
 					}
@@ -176,7 +176,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					
 					 if(isHoloFloat){
 						 class_boolean = name + ID_TAG + thiz.getTaskId();
-						 XposedBridge.log("XHaloFloatingWindow-DEBUG(onCreate):" + class_boolean);
+						// XposedBridge.log("XHaloFloatingWindow-DEBUG(onCreate):" + class_boolean);
 					     scaleFloatingWindow(thiz.getWindow().getContext(),thiz.getWindow());
 						 return;
 					 }
@@ -204,7 +204,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
  
 					 if (!class_boolean.startsWith(AppPackage + ID_TAG)) return; 
 					 
-					 XposedBridge.log("XHaloFloatingWindow-DEBUG(DecorView): " + class_boolean);
+					// XposedBridge.log("XHaloFloatingWindow-DEBUG(DecorView): " + class_boolean);
 					 
 						String localClassPackageName = context.getClass().getPackage().getName();
 
