@@ -103,6 +103,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 			}
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				   if (Res.notFloating)return;
 				   Field fullS = param.thisObject.getClass().getDeclaredField("fullscreen");
 				   fullS.setAccessible(true);
 				   fullS.set(param.thisObject, Boolean.FALSE);
