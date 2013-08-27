@@ -78,8 +78,8 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 					int.class, Intent.class, String.class, ActivityInfo.class, Configuration.class,
 		            findClass("com.android.server.am.ActivityRecord", lpparam.classLoader), 
 		            String.class, int.class, boolean.class );
-			
-			XposedBridge.hookMethod(contructor3, new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
+			XposedBridge.hookAllConstructors(findClass("com.android.server.am.ActivityRecord", lpparam.classLoader),
+					new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
 				 @Override  protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					 Intent i  = (Intent) param.args[4];
 						ActivityInfo aInfo  = (ActivityInfo) param.args[6];
@@ -100,27 +100,12 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 Res.notFloating = false;
 						 Res.previousUid = aInfo.applicationInfo.uid;
 						 PKG_NAME = pkg;
-					   Class<?> d = findClass("com.android.server.am.ActivityRecord", lpparam.classLoader);
-					   //XposedBridge.log("halo:--"+d.toString() + "----" + pkg);  
-
-					 fullscreen_3 = null;
-					   for ( Field fullscreen_1 : d.getDeclaredFields() ) {
-				            
-				            if (fullscreen_1.getName().contains("fullscreen")){
-				            fullscreen_3 = fullscreen_1;
-				            fullscreen_3.setAccessible(true);
-				            fullscreen_3.set(param.thisObject, Boolean.FALSE); 
-				            break;
-				            }
-					   }
 			}
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-					
-				   if (fullscreen_3 != null)
-		            fullscreen_3.set(param.thisObject, Boolean.FALSE); 
-				   
-					 fullscreen_3 = null;
+				   Field fullS = param.thisObject.getClass().getDeclaredField("fullscreen");
+				   fullS.setAccessible(true);
+				   fullS.set(param.thisObject, Boolean.FALSE);
 			   }
 			 });
 			
