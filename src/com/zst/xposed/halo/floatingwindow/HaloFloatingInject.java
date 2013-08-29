@@ -54,16 +54,15 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
-		inject_WindowManagerService_setAppStartingWindow();
 		inject_Activity();
 		inject_DecorView_generateLayout();	
 	}
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
+		inject_WindowManagerService_setAppStartingWindow(l);
 		inject_ActivityRecord_ActivityRecord(l);
 		inject_ActivityStack(l);
 	}
-	static Field fullscreen_3 = null;
 	static String PKG_NAME = null;
 
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
@@ -110,7 +109,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		}
 	}
 	public static void inject_ActivityStack(final LoadPackageParam lpparam) {
-		Class hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
+		Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
 			XposedBridge.hookAllMethods(hookClass, "startActivityLocked", new XC_MethodHook() { 
 				
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -129,13 +128,14 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		}
 	
 		
-	public static void inject_WindowManagerService_setAppStartingWindow() {
+	public static void inject_WindowManagerService_setAppStartingWindow(final LoadPackageParam lpparam) {
 		try {
-			findAndHookMethod("com.android.server.wm.WindowManagerService", null, "setAppStartingWindow",
+			/*findAndHookMethod("com.android.server.wm.WindowManagerService", null, "setAppStartingWindow",
 					IBinder.class, String.class, int.class, CompatibilityInfo.class, CharSequence.class, 
 				    int.class, int.class, int.class, IBinder.class, boolean.class, 
-				    new XC_MethodHook() { 
-				
+				    new XC_MethodHook() { */
+				Class<?> hookClass = findClass("com.android.server.wm.WindowManagerService", lpparam.classLoader);
+				XposedBridge.hookAllMethods(hookClass, "setAppStartingWindow", new XC_MethodHook(){
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					if (Res.notFloating) return;
 					// Gets String pkg to get package name
@@ -153,6 +153,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				
 				});
 		} catch (Throwable e) {
+			XposedBridge.log("XHaloFloatingWindow-ERROR(setAppStartingWindow):" + e.toString());
 		}
 }
 	
@@ -199,6 +200,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		
 			
 		} catch (Throwable e) {
+			XposedBridge.log("XHaloFloatingWindow-ERROR(onCreate):" + e.toString());
 		}
 		
 }
