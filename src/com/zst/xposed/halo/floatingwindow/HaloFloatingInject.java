@@ -70,14 +70,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		try {
 			if (!lpparam.packageName.equals("android")) return;
 			
-			final Constructor<?> contructor3 = XposedHelpers.findConstructorBestMatch(
-					findClass("com.android.server.am.ActivityRecord", lpparam.classLoader),
-					findClass("com.android.server.am.ActivityManagerService", lpparam.classLoader), 
-					findClass("com.android.server.am.ActivityStack", lpparam.classLoader),
-					findClass("com.android.server.am.ProcessRecord", lpparam.classLoader),
-					int.class, Intent.class, String.class, ActivityInfo.class, Configuration.class,
-		            findClass("com.android.server.am.ActivityRecord", lpparam.classLoader), 
-		            String.class, int.class, boolean.class );
+
 			XposedBridge.hookAllConstructors(findClass("com.android.server.am.ActivityRecord", lpparam.classLoader),
 					new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
 				 @Override  protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
