@@ -282,6 +282,9 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
     		Float height__ls = pref.getFloat(Res.KEY_LANDSCAPE_HEIGHT, Res.DEFAULT_LANDSCAPE_HEIGHT);
         	mWindow.setLayout((int)(metrics.widthPixels * width_ls), (int)(metrics.heightPixels * height__ls));
         }
+        mWindow.setWindowAnimations(android.R.style.Animation_Dialog);
+        mWindow.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        mWindow.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
     }
 
 }
