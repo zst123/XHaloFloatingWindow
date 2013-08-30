@@ -63,7 +63,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		inject_ActivityRecord_ActivityRecord(l);
 		inject_ActivityStack(l);
 	}
-	static String PKG_NAME = null;
+	static String PKG_NAME = "XHaloFloatingWindow-PackageName-Null";
 
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
 		try {
@@ -71,16 +71,26 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 			
 
 			XposedBridge.hookAllConstructors(findClass("com.android.server.am.ActivityRecord", lpparam.classLoader),
-					new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
+					new XC_MethodHook(XCallback.PRIORITY_LOWEST) {
 				 @Override  protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					 Intent i  = (Intent) param.args[4];
-						ActivityInfo aInfo  = (ActivityInfo) param.args[6];
+					 Intent i;
+					 ActivityInfo aInfo;
+					 if (param.args[4] instanceof Intent){
+					 i  = (Intent) param.args[4];
+					 aInfo  = (ActivityInfo) param.args[6];
+					 }else{// Android 4.3 has additional _launchedFromPackage
+					 i  = (Intent) param.args[5];
+					 aInfo  = (ActivityInfo) param.args[7];
+					 
+					 }
+					 if (i == null) return;
+						 
 						 String pkg = aInfo.applicationInfo.packageName;
 						 if (pkg.equals("android") || pkg.equals("com.android.systemui")) return;
 						 if(aInfo.applicationInfo.uid != Res.previousUid){
 							 
-						 int _launchedFromUid  = (Integer) param.args[3];
-						 if (_launchedFromUid == 1000) return;
+						// int _launchedFromUid  = (Integer) param.args[3];
+						// if (_launchedFromUid == 1000) return;
 						 
 							 
 						 if((i.getFlags()& FLAG_FLOATING_WINDOW)==0){
