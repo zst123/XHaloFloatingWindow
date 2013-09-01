@@ -199,6 +199,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 				            params.alpha = alp;	
 				            params.dimAmount = dimm;
 				            thiz.getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+				            thiz.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
 					     scaleFloatingWindow(thiz.getWindow().getContext(),thiz.getWindow());
 						 return;
 					 }
@@ -247,10 +248,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	        	TypedArray ta = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);
 	        	
 	            TypedValue backgroundValue = ta.peekValue(com.android.internal.R.styleable.Window_windowBackground);
-	            // Apps that have no title don't need no title bar
-	            boolean gotTitle = ta.getBoolean(com.android.internal.R.styleable.Window_windowNoTitle, false);
-	            if (gotTitle) mWindow.requestFeature(Window.FEATURE_NO_TITLE);
-	           
+	            
 	            if (backgroundValue != null && backgroundValue.toString().contains("light")) {
 	                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindowLight, true);
 	            } else {  //Checks if light or dark theme
@@ -277,11 +275,17 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 			     scaleFloatingWindow(context,mWindow);
 	}
 
-	public static void scaleFloatingWindow(Context context ,  Window mWindow ) {		
+	public static void scaleFloatingWindow(Context context ,  Window mWindow ) {
+		DisplayMetrics metrics = new DisplayMetrics();
+		try{
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics); 
+		}catch (Exception e){
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			metrics = new DisplayMetrics();
+			metrics = dm;
+		}
 	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
         if (metrics.heightPixels > metrics.widthPixels) { // portrait 
         	Float width_portrait = pref.getFloat(Res.KEY_PORTRAIT_WIDTH, Res.DEFAULT_PORTRAIT_WIDTH);
