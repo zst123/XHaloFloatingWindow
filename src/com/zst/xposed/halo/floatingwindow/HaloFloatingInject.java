@@ -89,9 +89,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 						 if (pkg.equals("android") || pkg.equals("com.android.systemui")) return;
 						 if(aInfo.applicationInfo.uid != Res.previousUid){
 							 
-						// int _launchedFromUid  = (Integer) param.args[3];
-						// if (_launchedFromUid == 1000) return;
-						 
 							 
 						 if((i.getFlags()& FLAG_FLOATING_WINDOW)==0){
 							 Res.notFloating = true;
@@ -140,10 +137,6 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 		
 	public static void inject_WindowManagerService_setAppStartingWindow(final LoadPackageParam lpparam) {
 		try {
-			/*findAndHookMethod("com.android.server.wm.WindowManagerService", null, "setAppStartingWindow",
-					IBinder.class, String.class, int.class, CompatibilityInfo.class, CharSequence.class, 
-				    int.class, int.class, int.class, IBinder.class, boolean.class, 
-				    new XC_MethodHook() { */
 				Class<?> hookClass = findClass("com.android.server.wm.WindowManagerService", lpparam.classLoader);
 				XposedBridge.hookAllMethods(hookClass, "setAppStartingWindow", new XC_MethodHook(){
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -299,6 +292,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
         mWindow.setWindowAnimations(android.R.style.Animation_Dialog);
         mWindow.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         mWindow.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
 }
