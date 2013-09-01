@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainSettings extends Activity {
 boolean sv = true;
@@ -49,7 +51,7 @@ boolean sv = true;
 
 	}
 	public void click(View v){
-		String msg = "Enter decimal no. between 0.1 & 1 \n (Enter 0.53 for 53%) \n \n ";
+		String msg = "Enter decimal no. between 0.1 & 1 \n (Enter 0.76 for 76%) \n \n ";
 		String currentValue = ((Button)v).getText().toString();
 
 		switch(v.getId()){
@@ -96,8 +98,14 @@ boolean sv = true;
 	@Override
 		public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		if (item.getTitle().equals("Open Xposed Installer")){
+			try{
 			Intent intent = new Intent(getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer"));
 			openFloating(intent);
+			}catch(Exception e){
+				Toast t = Toast.makeText(this, "Xposed Installer isn't found", Toast.LENGTH_SHORT);
+				t.setGravity(Gravity.CENTER, 0, 0);
+				t.show();
+			}
 		}
 		if (item.getTitle().equals("About")){
 			Intent intent = new Intent(this,AboutActivity.class);
@@ -157,6 +165,7 @@ boolean sv = true;
         text.setText(message+"");
         
         TextView debug = (TextView)dialog.findViewById(R.id.debugINFO);
+        debug.setTextSize(7f);
         debug.setText("Debug: " + prefKey);
         
         final EditText numb = (EditText)dialog.findViewById(R.id.valueBox);
@@ -189,7 +198,7 @@ boolean sv = true;
 	}
 	public void deletePrefs(String id){
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
-					 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
+					 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
 			Editor editor = pref.edit();
 			editor.remove(id);
 			 editor.commit();  
@@ -197,7 +206,7 @@ boolean sv = true;
 	}
 	public void setPref(String id, Float value){
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
-				 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
 		Editor editor = pref.edit();
         editor.putFloat(id, value) ; 
 		 editor.commit();
