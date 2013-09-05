@@ -1,16 +1,12 @@
 package com.zst.xposed.halo.floatingwindow;
 
-import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.view.Gravity;
-import android.view.Window;
-import android.view.WindowManager;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
@@ -28,6 +24,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
 		inject_ActivityRecord_ActivityRecord(l);
+		inject_ActivityStack(l);
 	}
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
 		try {
@@ -39,6 +36,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 				
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				   floatingWindow = false;
 				   Intent i;
 					 ActivityInfo aInfo;
 					 if (param.args[4] instanceof Intent){
@@ -102,8 +100,45 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 			XposedBridge.log("XHaloFloatingWindow-ERROR(ActivityRecord): " + e.toString());
 		}
 	}
-	
-	
+	static Object previous = null;
+	public static void inject_ActivityStack(final LoadPackageParam lpparam) {
+		Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
+			XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() { 
+				
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+		    	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
+		    		if (!b) return;
+					if (!floatingWindow) return;
+					if (param.args.length == 2){
+						Object prevt = param.args[0];
+						Class<?> clazz = param.thisObject.getClass();
+						Field field = clazz.getDeclaredField(("mResumedActivity"));
+						field.setAccessible(true);
+						previous = null;
+						previous = field.get(param.thisObject);
+						field.set(param.thisObject, null);
+						XposedBridge.log("entered mthod");
+
+
+					}
+					
+					
+					
+				}
+				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+					pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
+		    		if (!b) return;
+					if (!floatingWindow) return;
+					Class<?> clazz = param.thisObject.getClass();
+					Field field = clazz.getDeclaredField(("mResumedActivity"));
+					field.setAccessible(true);
+					field.set(param.thisObject, previous);
+				}
+				
+		});
+	}	
 	
 }
 

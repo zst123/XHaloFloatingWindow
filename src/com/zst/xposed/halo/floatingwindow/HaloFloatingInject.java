@@ -292,7 +292,14 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
         mWindow.setWindowAnimations(android.R.style.Animation_Dialog);
         mWindow.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         mWindow.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
-        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		int i = pref.getInt(Res.KEY_KEYBOARD_MODE, Res.DEFAULT_KEYBOARD_MODE);
+		if (i ==2){
+	        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		}else if (i == 3){
+	        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		}
+        mWindow.getCallback().onWindowAttributesChanged(mWindow.getAttributes());
+
     }
 
 }

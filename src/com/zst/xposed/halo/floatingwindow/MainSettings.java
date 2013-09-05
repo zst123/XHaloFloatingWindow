@@ -3,6 +3,7 @@ package com.zst.xposed.halo.floatingwindow;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -45,9 +46,12 @@ boolean sv = true;
 
 		Button transparencyV = (Button)findViewById(R.id.TRANSb);
 		transparencyV.setText(""+pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA));
+		
+		Button kbmd = (Button)findViewById(R.id.KMODEb);
+		kbmd.setText(getKbMode(pref.getInt(Res.KEY_KEYBOARD_MODE, Res.DEFAULT_KEYBOARD_MODE)));
 
-		Button light = (Button)findViewById(R.id.button1);
-		Button dark = (Button)findViewById(R.id.button2);
+		Button paus = (Button)findViewById(R.id.PAUSEb);
+		paus.setText(pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE)? "Off":"Default On");
 
 	}
 	public void click(View v){
@@ -220,5 +224,39 @@ boolean sv = true;
          init();
 
 	}
+	public void kbclick(View v){
+		
+		SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
+		int u =pref.getInt(Res.KEY_KEYBOARD_MODE, Res.DEFAULT_KEYBOARD_MODE);
+		if (u==3){
+			u = 0;
+		}
+		u++;
+		Editor editor = pref.edit();
+       editor.putInt(Res.KEY_KEYBOARD_MODE, u) ; 
+		 editor.commit();
+        init();
+	}
+	public String getKbMode(int i){
+		if (i ==2){
+			return "Pan up";
+		}else if (i == 3){
+			return "Scale";
+		}else{
+			return "Default";
+		}
+	}
+	public void bap(View v){
+		SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
+		boolean b =pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
+		
+		Editor editor = pref.edit();
+      editor.putBoolean(Res.KEY_APP_PAUSE, (!b)) ; 
+		 editor.commit();
+       init();
+	}
+
 }
 
