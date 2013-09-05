@@ -102,9 +102,16 @@ boolean sv = true;
 			Intent intent = new Intent(getPackageManager().getLaunchIntentForPackage("de.robv.android.xposed.installer"));
 			openFloating(intent);
 			}catch(Exception e){
+				try{
+					Intent intent = new Intent(Intent.ACTION_MAIN);
+					intent.addCategory(Intent.CATEGORY_LAUNCHER);
+					intent.setComponent(new ComponentName("de.robv.android.xposed.installer","de.robv.android.xposed.installer.XposedInstallerActivity"));
+					openFloating(intent);
+				}catch(Exception ee){
 				Toast t = Toast.makeText(this, "Xposed Installer isn't found", Toast.LENGTH_SHORT);
 				t.setGravity(Gravity.CENTER, 0, 0);
 				t.show();
+				}
 			}
 		}
 		if (item.getTitle().equals("About")){
