@@ -55,13 +55,14 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		inject_Activity();
-		inject_DecorView_generateLayout();	
 	}
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
 		inject_WindowManagerService_setAppStartingWindow(l);
 		inject_ActivityRecord_ActivityRecord(l);
 		inject_ActivityStack(l);
+		inject_DecorView_generateLayout(l);	
+
 	}
 	static String PKG_NAME = "XHaloFloatingWindow-PackageName-Null";
 
@@ -163,7 +164,7 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 	
 	public static void inject_Activity( ) { 
 		try{	
-			findAndHookMethod( Activity.class,  "onCreate", Bundle.class, new XC_MethodHook() { 
+			XposedBridge.hookAllMethods( Activity.class,  "onCreate", new XC_MethodHook() { 
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 					
 					 Activity thiz = (Activity)param.thisObject;
@@ -210,10 +211,10 @@ public class HaloFloatingInject implements  IXposedHookZygoteInit , IXposedHookL
 }
 	
 	
-	public static void inject_DecorView_generateLayout() {
+	public static void inject_DecorView_generateLayout(final LoadPackageParam lpparam) {
 		try {
-			findAndHookMethod("com.android.internal.policy.impl.PhoneWindow", null, "generateLayout",
-					"com.android.internal.policy.impl.PhoneWindow.DecorView", new XC_MethodHook() { 
+			Class<?> hookClass = findClass("com.android.internal.policy.impl.PhoneWindow", lpparam.classLoader);
+			XposedBridge.hookAllMethods(hookClass, "generateLayout",  new XC_MethodHook() { 
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					Window window = (Window) param.thisObject;
 					Context context = window.getContext();

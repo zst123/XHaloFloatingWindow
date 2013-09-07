@@ -32,7 +32,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 			
 
 			XposedBridge.hookAllConstructors(findClass("com.android.server.am.ActivityRecord", lpparam.classLoader),
-					new XC_MethodHook(XCallback.PRIORITY_LOWEST) {
+					new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
 				
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
@@ -53,6 +53,11 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		            // In order to hook its attributes we set up our check for floating mutil windows here.
 
 		            floatingWindow = (i.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
+	                boolean newHome = (i.getFlags() & Intent.FLAG_ACTIVITY_TASK_ON_HOME) == Intent.FLAG_ACTIVITY_TASK_ON_HOME;		            
+		            int flagger1 = i.getFlags();
+		            flagger1 &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
+			        i.setFlags( flagger1 );
+			        
 		            Object stack = param.args[1];
 		            Class activitystack = stack.getClass();
 		            Field mHistoryField = activitystack.getDeclaredField("mHistory");
@@ -86,6 +91,12 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		                   // XposedBridge.log(baseRecord_pkg + " ----- floating" + aInfo.applicationInfo.className);
 		                    
 		                }
+		                
+		                Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
+						   tt.setAccessible(true);
+		                if (newHome && !tt.getBoolean(param.thisObject)){
+		                	floatingWindow = true; 
+		                }
 		            }
 	            	previousPkg = aInfo.applicationInfo.packageName;
 
@@ -118,7 +129,6 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 						previous = null;
 						previous = field.get(param.thisObject);
 						field.set(param.thisObject, null);
-						XposedBridge.log("entered mthod");
 
 
 					}
