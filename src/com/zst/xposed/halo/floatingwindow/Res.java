@@ -26,15 +26,7 @@ public class Res {
 
 
 	
-	public static boolean notFloating = true;
-	public static int previousUid = -756456451;
-
-
-
-
-
-	
-
+	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
 
 	public static final String NULL = "nulled";
 

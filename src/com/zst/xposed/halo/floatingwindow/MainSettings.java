@@ -84,7 +84,7 @@ boolean sv = true;
 	
 	
 		public void openFloating(Intent intent){
-			 intent.addFlags(HaloFloatingInject.FLAG_FLOATING_WINDOW);
+			 intent.addFlags(Res.FLAG_FLOATING_WINDOW);
 	         intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_TASK_ON_HOME);
 	         intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
 	         intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
