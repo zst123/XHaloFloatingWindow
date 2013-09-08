@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,7 +53,7 @@ boolean sv = true;
 		kbmd.setText(getKbMode(pref.getInt(Res.KEY_KEYBOARD_MODE, Res.DEFAULT_KEYBOARD_MODE)));
 
 		Button paus = (Button)findViewById(R.id.PAUSEb);
-		paus.setText(pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE)? "Off":"Default On");
+		paus.setText(pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE)? "Off":"On");
 
 	}
 	public void click(View v){
@@ -77,7 +79,9 @@ boolean sv = true;
 		case R.id.TRANSb:
 			showDialog(Res.KEY_ALPHA, msg + "Transparency:\n Transparency value of window", currentValue);
 			break;
-			
+		case R.id.ButtonGravity:
+		showGravityDialog();
+		break;
 		}
 
 	}
@@ -207,6 +211,62 @@ boolean sv = true;
 		save.setOnClickListener(listener);
 		discard.setOnClickListener(listener);
 	}
+	
+	public void showGravityDialog(){
+		AlertDialog.Builder builder = new AlertDialog.Builder(this); 
+	    final AlertDialog dialog = builder.create();
+	    dialog.setTitle("Changing Gravity");
+	    dialog.setView(this.getLayoutInflater().inflate(R.layout.dialog_gravity, null));
+	    dialog.show();
+	    SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
+	    int flags = pref.getInt(Res.KEY_GRAVITY, Res.DEFAULT_GRAVITY);
+        int id = R.id.RadioButton5;
+	    if (flags == (Gravity.TOP | Gravity.LEFT)){
+	    	id = R.id.RadioButton1;
+	    }else if(flags == (Gravity.TOP | Gravity.RIGHT)){
+	    	id = R.id.radioButton3;
+	    }else if(flags == (Gravity.CENTER)){
+	    	id = R.id.RadioButton5;
+	    }else if(flags == (Gravity.BOTTOM | Gravity.LEFT)){
+	    	id = R.id.RadioButton7;
+	    }else if(flags == (Gravity.BOTTOM | Gravity.RIGHT)){
+	    	id = R.id.RadioButton9;
+	    }
+	    
+       ((RadioButton)dialog.findViewById(id)).setChecked(true);;
+        
+
+        
+        OnClickListener listener  = new  OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	if(v.getId() ==R.id.dialog_save){
+            		int id =((RadioGroup)dialog.findViewById(R.id.radioSex)).getCheckedRadioButtonId();
+            		int ff = Gravity.CENTER;
+            		if (id == R.id.RadioButton1){
+            			ff = (Gravity.TOP | Gravity.LEFT);
+            	    }else if(id == R.id.radioButton3){
+            	    	ff = (Gravity.TOP | Gravity.RIGHT);
+            	    }else if(id == R.id.RadioButton5){
+            	    	ff = (Gravity.CENTER);
+            	    }else if(id == R.id.RadioButton7){
+            	    	ff = (Gravity.BOTTOM | Gravity.LEFT);
+            	    }else if( id == R.id.RadioButton9){
+            	    	ff = (Gravity.BOTTOM | Gravity.RIGHT);
+            	    }
+                     setPref(Res.KEY_GRAVITY, ff);
+     	            dialog.dismiss();
+        		}else if(v.getId() ==R.id.dialog_discard){
+    	            dialog.dismiss();
+        		}
+            }
+        };
+		Button save = (Button)dialog.findViewById(R.id.dialog_save);
+		Button discard = (Button)dialog.findViewById(R.id.dialog_discard);
+		save.setOnClickListener(listener);
+		discard.setOnClickListener(listener);
+	}
 	public void deletePrefs(String id){
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
 					 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
@@ -220,6 +280,15 @@ boolean sv = true;
 				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
 		Editor editor = pref.edit();
         editor.putFloat(id, value) ; 
+		 editor.commit();
+         init();
+
+	}
+	public void setPref(String id, int value){
+		SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
+		Editor editor = pref.edit();
+        editor.putInt(id, value) ; 
 		 editor.commit();
          init();
 

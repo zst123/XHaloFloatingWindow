@@ -42,11 +42,12 @@ public class LayoutScaling {
 		appleFloating( context ,  mWindow);
 	}
 	public static void appleFloating(Context context , Window mWindow){
+	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+
 	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
-	            mWindow.setGravity(Gravity.CENTER);
+	            mWindow.setGravity(pref.getInt(Res.KEY_GRAVITY, Res.DEFAULT_GRAVITY));
 	            mWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 	            WindowManager.LayoutParams params = mWindow.getAttributes(); 
-	    	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 				Float alp = pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA);
 				Float dimm = pref.getFloat(Res.KEY_DIM, Res.DEFAULT_DIM);
 
