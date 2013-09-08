@@ -160,7 +160,8 @@ boolean sv = true;
 	
 	public void testclick(View v){
 		if(v.getId() ==R.id.button1){
-			Intent intent = new Intent(this,AboutActivityWhite.class);
+			Intent intent = new Intent(this,AboutActivity.class);
+			intent.putExtra("d","d");
 			startActivity(intent);
 		}else if(v.getId() ==R.id.button2){
 			Intent intent = new Intent(this,AboutActivity.class);

@@ -17,10 +17,14 @@ import android.view.Window;
 import android.view.WindowManager;
 
 public class AboutActivity extends Activity {
-
+	SharedPreferences pref;
 	@Override
 	protected void onCreate(Bundle f) {
-		appleFloating(this.getApplicationContext(), this.getWindow(), Res.MY_PACKAGE_NAME);
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			this.setTheme(android.R.style.Theme_Holo_Light);
+		}
+		applyTheme(this.getApplicationContext(), this.getWindow(), Res.MY_PACKAGE_NAME);
 		super.onCreate(f);
 		setContentView(R.layout.activity_about);
 	}
@@ -28,52 +32,60 @@ public class AboutActivity extends Activity {
 	public void c(View v){
 		finish();
 	}
-	public  void appleFloating(Context context , Window mWindow, String class_name ){
+	public  void applyThemeLess(Context context , Window mWindow){
+		context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
+		appleFloating( context ,  mWindow);
+	}
+	public  void applyTheme(Context context , Window mWindow, String class_name ){
 		try{
-		Intent intent__ = new Intent(context.getPackageManager().getLaunchIntentForPackage(class_name));
-	        	ResolveInfo rInfo = context.getPackageManager().resolveActivity(intent__, 0);
-	        	ActivityInfo info = rInfo.activityInfo;	            
-	        	TypedArray ta = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);
-	        	
-	            TypedValue backgroundValue = ta.peekValue(com.android.internal.R.styleable.Window_windowBackground);
-	            // Apps that have no title don't need no title bar
-	            boolean gotTitle = ta.getBoolean(com.android.internal.R.styleable.Window_windowNoTitle, false);
-	            if (gotTitle) mWindow.requestFeature(Window.FEATURE_NO_TITLE);
-	           
-	            if (backgroundValue != null && backgroundValue.toString().contains("light")) {
-	                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindowLight, true);
-	            } else {  //Checks if light or dark theme
-	                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
-	            }
-	            
-	            ta.recycle();
-		}catch(Throwable t){
-            context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
-		}
-	            // Create our new window
-	           //mWindow.mIsFloatingWindow = true; < We dont need this. onCreate Hook will compare getTaskId and resize accordingly
+			Intent intent__ = new Intent(context.getPackageManager().getLaunchIntentForPackage(class_name));
+		        	ResolveInfo rInfo = context.getPackageManager().resolveActivity(intent__, 0);
+		        	ActivityInfo info = rInfo.activityInfo;	            
+		        	TypedArray ta = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);
+		        	
+		            TypedValue backgroundValue = ta.peekValue(com.android.internal.R.styleable.Window_windowBackground);
+		            
+		            if (backgroundValue != null && backgroundValue.toString().contains("light")) {
+		                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindowLight, true);
+		            } else {  //Checks if light or dark theme
+		                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
+		            }
+		            
+		            ta.recycle();
+			}catch(Throwable t){
+	            context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
+			}
+		appleFloating( context ,  mWindow);
+	}
+	public  void appleFloating(Context context , Window mWindow){
+
+		  pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
 	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
-	            mWindow.setGravity(Gravity.CENTER);
+	            mWindow.setGravity(pref.getInt(Res.KEY_GRAVITY, Res.DEFAULT_GRAVITY));
 	            mWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 	            WindowManager.LayoutParams params = mWindow.getAttributes(); 
-	            SharedPreferences pref = getApplicationContext().getSharedPreferences(
-	   				 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
-	            Float alp = pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA);
+				Float alp = pref.getFloat(Res.KEY_ALPHA, Res.DEFAULT_ALPHA);
 				Float dimm = pref.getFloat(Res.KEY_DIM, Res.DEFAULT_DIM);
 
 	            params.alpha = alp;	
 	            params.dimAmount = dimm;
 	            mWindow.setAttributes((android.view.WindowManager.LayoutParams) params);
 			     scaleFloatingWindow(context,mWindow);
+			     
 	}
 
-	public  void scaleFloatingWindow(Context context ,  Window mWindow ) {		
+	public  void scaleFloatingWindow(Context context ,  Window mWindow ) {
+		DisplayMetrics metrics = new DisplayMetrics();
+		try{
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        DisplayMetrics metrics = new DisplayMetrics();
         display.getMetrics(metrics); 
-        SharedPreferences pref = getApplicationContext().getSharedPreferences(
-				 Res.MY_PACKAGE_NAME, MODE_WORLD_READABLE);
+		}catch (Exception e){
+			DisplayMetrics dm = context.getResources().getDisplayMetrics();
+			metrics = new DisplayMetrics();
+			metrics = dm;
+		}
         if (metrics.heightPixels > metrics.widthPixels) { // portrait 
         	Float width_portrait = pref.getFloat(Res.KEY_PORTRAIT_WIDTH, Res.DEFAULT_PORTRAIT_WIDTH);
     		Float height__portrait = pref.getFloat(Res.KEY_PORTRAIT_HEIGHT, Res.DEFAULT_PORTRAIT_HEIGHT);
@@ -83,5 +95,15 @@ public class AboutActivity extends Activity {
     		Float height__ls = pref.getFloat(Res.KEY_LANDSCAPE_HEIGHT, Res.DEFAULT_LANDSCAPE_HEIGHT);
         	mWindow.setLayout((int)(metrics.widthPixels * width_ls), (int)(metrics.heightPixels * height__ls));
         }
+        mWindow.setWindowAnimations(android.R.style.Animation_Dialog);
+        mWindow.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        mWindow.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+		int i = pref.getInt(Res.KEY_KEYBOARD_MODE, Res.DEFAULT_KEYBOARD_MODE);
+		if (i ==2){
+	        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		}else if (i == 3){
+	        mWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		}
+
     }
 }
