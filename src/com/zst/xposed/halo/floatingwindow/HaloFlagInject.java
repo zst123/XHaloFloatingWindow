@@ -144,7 +144,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 					Class<?> clazz = param.thisObject.getClass();
 					Field field = clazz.getDeclaredField(("mResumedActivity"));
 					field.setAccessible(true);
-					field.set(param.thisObject, previous);
+					if (previous != null)field.set(param.thisObject, previous);
 				}
 				
 		});
