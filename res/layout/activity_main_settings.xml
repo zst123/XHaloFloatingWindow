@@ -15,7 +15,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@null" >
+        android:background="@null"
+        android:requiresFadingEdge="vertical" >
 
         <LinearLayout
             android:layout_width="fill_parent"

@@ -233,6 +233,14 @@ boolean sv = true;
 	    	id = R.id.RadioButton7;
 	    }else if(flags == (Gravity.BOTTOM | Gravity.RIGHT)){
 	    	id = R.id.RadioButton9;
+	    }else if(flags == (Gravity.TOP | Gravity.CENTER_HORIZONTAL)){
+	    	id = R.id.radioButton2;
+	    }else if(flags == (Gravity.LEFT | Gravity.CENTER_VERTICAL)){
+	    	id = R.id.radioButton4;
+	    }else if(flags == (Gravity.RIGHT | Gravity.CENTER_VERTICAL)){
+	    	id = R.id.radioButton6;
+	    }else if(flags == (Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL)){
+	    	id = R.id.radioButton8;
 	    }
 	    
        ((RadioButton)dialog.findViewById(id)).setChecked(true);;
@@ -255,6 +263,14 @@ boolean sv = true;
             	    	ff = (Gravity.BOTTOM | Gravity.LEFT);
             	    }else if( id == R.id.RadioButton9){
             	    	ff = (Gravity.BOTTOM | Gravity.RIGHT);
+            	    }else if(id == R.id.radioButton2){
+            	    	ff = (Gravity.TOP | Gravity.CENTER_HORIZONTAL);
+            	    }else if(id == R.id.radioButton4){
+            	    	ff  = (Gravity.LEFT | Gravity.CENTER_VERTICAL);
+            	    }else if(id == R.id.radioButton6){
+                	    ff = (Gravity.RIGHT | Gravity.CENTER_VERTICAL);
+            	    }else if(id == R.id.radioButton8){
+            	    	ff = (Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL); 
             	    }
                      setPref(Res.KEY_GRAVITY, ff);
      	            dialog.dismiss();
