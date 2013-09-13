@@ -10,15 +10,12 @@ import android.app.ActivityThread;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.view.Gravity;
 import android.view.Window;
-import android.view.WindowManager;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.callbacks.XCallback;
 
@@ -37,6 +34,9 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		inject_Activity();
 		inject_DecorView_generateLayout(l);
 		inject_ActivityThread();
+		if (l.packageName.equals(NotificationShadeHook.SYSTEM_UI)){
+		NotificationShadeHook.inject_BaseStatusBar_LongPress(l); 
+		}
 	}
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
 		try {
