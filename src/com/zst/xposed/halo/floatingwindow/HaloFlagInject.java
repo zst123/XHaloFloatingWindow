@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.ActivityThread;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -14,6 +15,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -34,6 +36,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		inject_WindowManagerService_setAppStartingWindow(l);
 		inject_Activity();
 		inject_DecorView_generateLayout(l);
+		inject_ActivityThread();
 	}
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
 		try {
@@ -223,6 +226,27 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		} catch (Exception e) { XposedBridge.log("XHaloFloatingWindow-ERROR(DecorView): " + e.toString());
 		}
 	}
+	
+	static boolean ExceptionHook = false;
+	public static void inject_ActivityThread() {
+		try {
+				XposedBridge.hookAllMethods(ActivityThread.class, "performResumeActivity", new XC_MethodHook(){
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable { 
+					ExceptionHook = true;
+					}
+				protected void afterHookedMethod(MethodHookParam param) throws Throwable { 
+					ExceptionHook = false;
+					}
+				}); /* Fix BoatBrowser etc. app FC onResume */
+				XposedBridge.hookAllMethods(android.app.Instrumentation.class, "onException", new XC_MethodReplacement(){
+					protected Object replaceHookedMethod(MethodHookParam param) throws Throwable { 
+						return ExceptionHook;
+						}
+				}); 
+		} catch (Throwable e) {
+			XposedBridge.log("XHaloFloatingWindow-ERROR(setAppStartingWindow):" + e.toString());
+		}
+	}	
 }
 
 
