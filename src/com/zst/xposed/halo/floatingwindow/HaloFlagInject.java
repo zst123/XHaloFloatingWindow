@@ -69,7 +69,17 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		            int flagger1 = i.getFlags();
 		            flagger1 &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
 			        i.setFlags( flagger1 );
-			        
+			        if (floatingWindow){
+			        i.addFlags(Res.FLAG_FLOATING_WINDOW);
+			         i.setFlags(i.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			         i.setFlags(i.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
+			         i.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
+			         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			         i.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+			         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+			         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+			        }
 		            Object stack = param.args[1];
 		            Class activitystack = stack.getClass();
 		            Field mHistoryField = activitystack.getDeclaredField("mHistory");
