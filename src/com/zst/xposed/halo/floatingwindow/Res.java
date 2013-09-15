@@ -12,6 +12,7 @@ public class Res {
 	public static final String KEY_KEYBOARD_MODE = "kbmode_softkb";
 	public static final String KEY_APP_PAUSE = "app_pausing_rocks";
 	public static final String KEY_GRAVITY = "gravity_sticky_hahah_derp_noobz_lolcats";
+	public static final String KEY_LONGPRESS_INJECT = "longpress_inject_key";
 
 
 
@@ -26,6 +27,8 @@ public class Res {
 	public static final int DEFAULT_KEYBOARD_MODE = 1;
 	public static final boolean DEFAULT_APP_PAUSE = true;
 	public static final int DEFAULT_GRAVITY = android.view.Gravity.CENTER;
+	public static final boolean DEFAULT_LONGPRESS_INJECT = false;
+	
 
 
 

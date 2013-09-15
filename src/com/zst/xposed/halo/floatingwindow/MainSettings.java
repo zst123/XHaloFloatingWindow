@@ -54,6 +54,9 @@ boolean sv = true;
 
 		Button paus = (Button)findViewById(R.id.PAUSEb);
 		paus.setText(pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE)? "Off":"On");
+		
+		Button paus1 = (Button)findViewById(R.id.lpnmButton);
+		paus1.setText(pref.getBoolean(Res.KEY_LONGPRESS_INJECT, Res.DEFAULT_LONGPRESS_INJECT)? "On":"Off");
 
 	}
 	public void click(View v){
@@ -342,6 +345,19 @@ boolean sv = true;
       editor.putBoolean(Res.KEY_APP_PAUSE, (!b)) ; 
 		 editor.commit();
        init();
+	}
+	public void lmpn(View v){
+		SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
+		boolean b =pref.getBoolean(Res.KEY_LONGPRESS_INJECT, Res.DEFAULT_LONGPRESS_INJECT);
+		
+		Editor editor = pref.edit();
+      editor.putBoolean(Res.KEY_LONGPRESS_INJECT, (!b)) ; 
+		 editor.commit();
+       init();
+       Toast t = Toast.makeText(this, "Please restart SystemUI or reboot", Toast.LENGTH_SHORT);
+		t.setGravity(Gravity.CENTER, 0, 0);
+		t.show();
 	}
 
 }

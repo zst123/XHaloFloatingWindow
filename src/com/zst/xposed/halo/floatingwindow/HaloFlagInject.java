@@ -34,8 +34,9 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		inject_Activity();
 		inject_DecorView_generateLayout(l);
 		inject_ActivityThread();
+		pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		if (l.packageName.equals(NotificationShadeHook.SYSTEM_UI)){
-		NotificationShadeHook.inject_BaseStatusBar_LongPress(l); 
+		 if (pref.getBoolean(Res.KEY_LONGPRESS_INJECT, Res.DEFAULT_LONGPRESS_INJECT))NotificationShadeHook.inject_BaseStatusBar_LongPress(l); 
 		}
 	}
 	public static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam) {
