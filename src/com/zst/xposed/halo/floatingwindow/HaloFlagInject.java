@@ -3,6 +3,7 @@ package com.zst.xposed.halo.floatingwindow;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -49,6 +50,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 				
 			   @Override
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				   isHoloFloat= false;
 				   floatingWindow = false;
 				   Intent i;
 					 ActivityInfo aInfo;
@@ -66,21 +68,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		            // In order to hook its attributes we set up our check for floating mutil windows here.
 
 		            floatingWindow = (i.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
-	                boolean newHome = (i.getFlags() & Intent.FLAG_ACTIVITY_TASK_ON_HOME) == Intent.FLAG_ACTIVITY_TASK_ON_HOME;		            
-		            int flagger1 = i.getFlags();
-		            flagger1 &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
-			        i.setFlags( flagger1 );
-			        if (floatingWindow){
-			        i.addFlags(Res.FLAG_FLOATING_WINDOW);
-			         i.setFlags(i.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
-			         i.setFlags(i.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
-			         i.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-			         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			         i.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-			         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-			         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-			        }
+			        
 		            Object stack = param.args[1];
 		            Class activitystack = stack.getClass();
 		            Field mHistoryField = activitystack.getDeclaredField("mHistory");
@@ -116,8 +104,11 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		                }
 		            Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
 					   tt.setAccessible(true);
-					   if(floatingWindow) tt.set(param.thisObject, Boolean.FALSE);
-	                if (newHome && !tt.getBoolean(param.thisObject)) floatingWindow = true; 
+					   if (floatingWindow){
+					        i.addFlags(Res.FLAG_FLOATING_WINDOW);
+					         i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+					        tt.set(param.thisObject, Boolean.FALSE);
+					   }
 		            
 	            	previousPkg = aInfo.applicationInfo.packageName;
 
@@ -162,6 +153,26 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 				}
 				
 		});
+			XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodReplacement() { 
+				@Override
+				protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+					int launchFlags = (Integer)param.args[0]; 
+					if ((launchFlags &
+			                (Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_TASK_ON_HOME))
+			                == (Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_TASK_ON_HOME)) {
+						boolean floating = (launchFlags&Res.FLAG_FLOATING_WINDOW) == Res.FLAG_FLOATING_WINDOW;
+			            if (!floating) {
+			            	try{ 
+			    	    		Method showsb = param.thisObject.getClass().getMethod("moveHomeToFrontLocked");
+			    	    		showsb.invoke( param.thisObject );
+			    	    	}catch(Throwable e2){ }
+			            }
+					}
+					return null;
+				}
+				
+		});
+			
 	}	
 	public static void inject_WindowManagerService_setAppStartingWindow(final LoadPackageParam lpparam) {
 		try {
@@ -184,14 +195,14 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 	static boolean isHoloFloat = false;
 	public static void inject_Activity( ) { 
 		try{	
-			XposedBridge.hookAllMethods( Activity.class,  "onCreate", new XC_MethodHook() { 
+			XposedBridge.hookAllMethods( Activity.class, "onResume", new XC_MethodHook() { 
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable { 
 					 Activity thiz = (Activity)param.thisObject;
 					 String name = thiz.getWindow().getContext().getPackageName();
 					 if (name.startsWith("com.android.systemui"))  return; 
 					  isHoloFloat = (thiz.getIntent().getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
 					
-					 if(isHoloFloat){ 
+					 if(isHoloFloat && floatingWindow){ 
 						 
 					     LayoutScaling.applyThemeLess(thiz.getWindow().getContext(),thiz.getWindow());
 						 return;
@@ -214,6 +225,21 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		} catch (Throwable e) {
 			XposedBridge.log("XHaloFloatingWindow-ERROR(onCreate):" + e.toString());
 		}
+		try{	
+			XposedBridge.hookAllMethods( Activity.class, "performStop", new XC_MethodHook() { 
+				protected void afterHookedMethod(MethodHookParam param) throws Throwable { 
+					// Floatingwindows activities should be kept volatile to prevent new activities taking
+			        // up front in a minimized space. Every stop call, for instance when pressing home,
+			        // will terminate the activity. If the activity is already finishing we might just
+			        // as well let it go.
+					 Activity thiz = (Activity)param.thisObject;
+			        if (!thiz.isChangingConfigurations() && thiz.getWindow() != null && isHoloFloat && !thiz.isFinishing())
+			            thiz.finishAffinity();
+				}
+			});
+		} catch (Throwable e) {
+			XposedBridge.log("XHaloFloatingWindow-ERROR(performStop):" + e.toString());
+		}
 		
 	}
 	public static void inject_DecorView_generateLayout(final LoadPackageParam lpparam) {
@@ -223,9 +249,8 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					Window window = (Window) param.thisObject;
 					Context context = window.getContext();
-					String AppPackage = context.getPackageName();
- 
-					 if (!isHoloFloat) return; 
+					
+					 if (!(isHoloFloat && floatingWindow)) return; 
 					 
 					 
 						String localClassPackageName = context.getClass().getPackage().getName();
