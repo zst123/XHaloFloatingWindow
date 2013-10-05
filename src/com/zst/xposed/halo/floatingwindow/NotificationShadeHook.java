@@ -3,10 +3,12 @@ package com.zst.xposed.halo.floatingwindow;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 import android.app.ActivityThread;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -43,17 +45,16 @@ public class NotificationShadeHook {
 			                 //final String packageNameF = (String) v.getTag();
 			                 PopupMenu popup = new PopupMenu(mContext, v);
 			                 popup.getMenu().add("App info");  popup.getMenu().add("Open in Halo");
-			                 XposedBridge.log("MENU INFATED");
 			                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			                     public boolean onMenuItemClick(MenuItem item) {
 			                         if (item.getTitle().equals("App info")) { 
 			                             Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,Uri.fromParts("package", packageNameF, null));
 			                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			                             mContext.startActivity(intent);
-			                             XposedHelpers.callMethod(thiz, "animateCollapsePanels", (int)0);
+			                             closeNotificationShade(mContext);
 			                         } else if (item.getTitle().equals("Open in Halo")) {
 			                        	 launchFloating(contentIntent,mContext);
-			                             XposedHelpers.callMethod(thiz, "animateCollapsePanels", (int)0);
+			                        	 closeNotificationShade(mContext);
 			                         }else{ return false;}
 			                         
 			                         return true;
@@ -90,21 +91,35 @@ public class NotificationShadeHook {
 	public static void launchFloating(PendingIntent pIntent , Context mContext) { // for status bar long press
         Intent intent = new Intent();
         intent.addFlags(Res.FLAG_FLOATING_WINDOW);
-        intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-        intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
-        intent.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        //intent.setFlags(intent.getFlags() & ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS); 
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         try {
             android.app.ActivityManagerNative.getDefault().resumeAppSwitches();
             android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
             pIntent.send(mContext, 0, intent);
         } catch (Exception e) { 
-        	android.widget.Toast.makeText(mContext, "XHalo can't be opened : " + e.getCause(), android.widget.Toast.LENGTH_SHORT).show();
+        	android.widget.Toast.makeText(mContext, "XHalo can't be opened : " + e.toString(), android.widget.Toast.LENGTH_SHORT).show();
         }
     }
+	
+	
+		
+	public static void closeNotificationShade(Context c) {
+	    final StatusBarManager statusBar = (StatusBarManager) c.getSystemService("statusbar");
+	    if (statusBar == null)  return;
+	    try{
+	        statusBar.collapse();
+	    }catch(Throwable e){ // OEM's might remove this expand method.
+	    	try{ // 4.2.2 (later builds) changed method name
+	    		Method showsb = statusBar.getClass().getMethod("collapsePanels");
+	    		showsb.invoke( statusBar );
+	    	}catch(Throwable e2){ // else No Hope! Just leave it :P
+	    	}
+	    }
+	}
+
+	
 }
