@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -345,6 +346,22 @@ boolean sv = true;
       editor.putBoolean(Res.KEY_APP_PAUSE, (!b)) ; 
 		 editor.commit();
        init();
+	}
+	public void halo_toggle(View v){
+	    LinearLayout s = (LinearLayout)findViewById(R.id.halo_setting_buttons);
+	   if( s.getVisibility() == View.VISIBLE){
+		   s.setVisibility(View.GONE);
+	   }else{
+	    s.setVisibility(View.VISIBLE);
+	   }
+	}
+	public void systemui_toggle(View v){
+	    LinearLayout s = (LinearLayout)findViewById(R.id.systemui_setting_buttons);
+	   if( s.getVisibility() == View.VISIBLE){
+		   s.setVisibility(View.GONE);
+	   }else{
+	    s.setVisibility(View.VISIBLE);
+	   }
 	}
 	public void lmpn(View v){
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
