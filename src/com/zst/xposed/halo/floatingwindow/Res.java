@@ -13,6 +13,7 @@ public class Res {
 	public static final String KEY_APP_PAUSE = "app_pausing_rocks";
 	public static final String KEY_GRAVITY = "gravity_sticky_hahah_derp_noobz_lolcats";
 	public static final String KEY_LONGPRESS_INJECT = "longpress_inject_key";
+	public static final String KEY_MOVABLE_WINDOW= "movable_windows_key";
 
 
 
@@ -28,6 +29,7 @@ public class Res {
 	public static final boolean DEFAULT_APP_PAUSE = true;
 	public static final int DEFAULT_GRAVITY = android.view.Gravity.CENTER;
 	public static final boolean DEFAULT_LONGPRESS_INJECT = false;
+	public static final boolean DEFAULT_MOVABLE_WINDOW = false;
 	
 
 

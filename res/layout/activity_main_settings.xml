@@ -254,7 +254,7 @@
                 android:layout_height="wrap_content"
                 android:minHeight="24dp"
                 android:onClick="systemui_toggle"
-                android:text="SYSTEMUI  (SHOW/HIDE)"
+                android:text="SYSTEM  (SHOW/HIDE)"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -344,6 +344,60 @@
                     android:text="Button" />
             </RelativeLayout>
 </LinearLayout></LinearLayout>
+
+  <LinearLayout
+      android:id="@+id/LinearLayout02"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical" >
+
+      <Button
+          android:id="@+id/Button05"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:minHeight="24dp"
+          android:onClick="movable_toggle"
+          android:text="MOVABLE/RESIZABLE (SHOW/HIDE)"
+          android:textSize="15sp"
+          android:textStyle="bold" />
+
+      <LinearLayout
+          android:id="@+id/movable_buttons"
+          android:layout_width="fill_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical"
+          android:visibility="gone" >
+
+          <RelativeLayout
+              android:layout_width="fill_parent"
+              android:layout_height="48dp" >
+
+              <TextView
+                  android:id="@+id/textview2"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentBottom="true"
+                  android:layout_alignParentLeft="true"
+                  android:layout_alignParentTop="true"
+                  android:layout_toLeftOf="@+id/Button03"
+                  android:gravity="center_vertical"
+                  android:text="Movable &amp; Resizable"
+                  android:textAppearance="?android:attr/textAppearanceMedium" />
+
+              <Button
+                  android:id="@+id/movable_setting_1"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_alignParentRight="true"
+                  android:layout_alignParentTop="true"
+                  android:onClick="movable_one_setting"
+                  android:text="Button" />
+
+          </RelativeLayout>
+
+      </LinearLayout>
+  </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="48dp"
@@ -372,11 +426,6 @@
                     android:onClick="click"
                     android:text="Button" />
 
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="36dp" >
             </RelativeLayout>
 
         </LinearLayout>
@@ -432,16 +481,5 @@
             android:text="Light" />
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/TextView06"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/testLO"
-        android:layout_alignLeft="@+id/testLO"
-        android:layout_alignRight="@+id/testLO"
-        android:gravity="center_horizontal"
-        android:text="Found a bug? Report on the xda thread."
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

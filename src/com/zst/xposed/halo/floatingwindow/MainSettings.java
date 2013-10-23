@@ -59,6 +59,8 @@ boolean sv = true;
 		Button paus1 = (Button)findViewById(R.id.lpnmButton);
 		paus1.setText(pref.getBoolean(Res.KEY_LONGPRESS_INJECT, Res.DEFAULT_LONGPRESS_INJECT)? "On":"Off");
 
+		Button move1 = (Button)findViewById(R.id.movable_setting_1);
+		move1.setText(pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)? "Enabled":"Disabled");
 	}
 	public void click(View v){
 		String msg = "Enter decimal no. between 0.1 & 1 \n (Enter 0.76 for 76%) \n \n ";
@@ -363,6 +365,14 @@ boolean sv = true;
 	    s.setVisibility(View.VISIBLE);
 	   }
 	}
+	public void movable_toggle(View v){
+	    LinearLayout s = (LinearLayout)findViewById(R.id.movable_buttons);
+	   if( s.getVisibility() == View.VISIBLE){
+		   s.setVisibility(View.GONE);
+	   }else{
+	    s.setVisibility(View.VISIBLE);
+	   }
+	}
 	public void lmpn(View v){
 		SharedPreferences pref = getApplicationContext().getSharedPreferences(
 				 Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
@@ -376,6 +386,14 @@ boolean sv = true;
 		t.setGravity(Gravity.CENTER, 0, 0);
 		t.show();
 	}
-
+	public void movable_one_setting(View v){
+		SharedPreferences pref = getApplicationContext().getSharedPreferences(
+				Res.MY_PACKAGE_NAME, MODE_WORLD_WRITEABLE);
+		boolean b =pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW);	
+		Editor editor = pref.edit();
+		editor.putBoolean(Res.KEY_MOVABLE_WINDOW, (!b)); 
+		editor.commit();
+		init();
+	}
 }
 
