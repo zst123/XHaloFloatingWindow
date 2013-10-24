@@ -2,27 +2,22 @@ package com.zst.xposed.halo.floatingwindow;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-import java.lang.reflect.Field;
-
 import com.zst.xposed.halo.floatingwindow.movable.Movable;
 import com.zst.xposed.halo.floatingwindow.movable.Resizable;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Dialog;
+import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.ServiceManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.IWindowManager;
@@ -39,14 +34,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -84,7 +77,7 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
 		XSharedPreferences pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
-		focusChangerHook(l);
+		focusChangeContextFinder(l);
 		onCreateHook();
 		inject_dispatchTouchEvent();
 
@@ -95,19 +88,22 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 		}
 		}
 
-	private static void focusChangerHook(final LoadPackageParam lpparam) { 
-		Class<?> hookClass = findClass("com.android.internal.policy.impl.keyguard.KeyguardViewManager", lpparam.classLoader);
-		XposedBridge.hookAllMethods(hookClass,"inflateKeyguardView",new XC_MethodHook(){
-			@Override protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				mSystemContext = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
-				IntentFilter filter = new IntentFilter();
-				filter.addAction(CHANGE_APP_FOCUS);
-				mSystemContext.registerReceiver(mIntentReceiver, filter, null, null);
-				//We need system context for rearranging app focus for multitasking
-				// Context is from system lockscreen which is init-ed instantly when phone turns on
-			}
-		});		
-    }
+	private static void focusChangeContextFinder(LoadPackageParam l) throws Throwable{
+		if (! l.packageName.equals("com.android.systemui")) return;
+		Class<?> hookClass = findClass("com.android.systemui.SystemUIService", l.classLoader);
+		XposedBridge.hookAllMethods(hookClass,"onCreate",new XC_MethodHook(){
+			@Override
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				Service thiz = (Service) param.thisObject;
+				mSystemContext = thiz.getApplicationContext();
+				//Gets SystemUI Context which has 
+				IntentFilter filters = new IntentFilter();
+				filters.addAction(CHANGE_APP_FOCUS);
+				mSystemContext.registerReceiver(mIntentReceiver, filters, null, null);
+ 			}
+		});
+	}
+
 	private final static BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
