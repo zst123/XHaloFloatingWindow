@@ -29,13 +29,13 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		 static String previousPkg = Res.NULL;
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
+		pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		inject_ActivityRecord_ActivityRecord(l);
 		inject_ActivityStack(l);
 		inject_WindowManagerService_setAppStartingWindow(l);
-		inject_Activity();
+		inject_Activity(pref);
 		inject_DecorView_generateLayout(l);
 		inject_ActivityThread();
-		pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		if (l.packageName.equals(NotificationShadeHook.SYSTEM_UI)){
 		 if (pref.getBoolean(Res.KEY_LONGPRESS_INJECT, Res.DEFAULT_LONGPRESS_INJECT))NotificationShadeHook.inject_BaseStatusBar_LongPress(l); 
 		}
@@ -193,9 +193,10 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		}
 	}	
 	static boolean isHoloFloat = false;
-	public static void inject_Activity( ) { 
+	public static void inject_Activity(XSharedPreferences pref) { 
+		boolean isMovable = pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW);
 		try{	
-			XposedBridge.hookAllMethods( Activity.class, "onResume", new XC_MethodHook() { 
+			XposedBridge.hookAllMethods( Activity.class, isMovable?"onStart":"onResume", new XC_MethodHook() { 
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable { 
 					 Activity thiz = (Activity)param.thisObject;
 					 String name = thiz.getWindow().getContext().getPackageName();
@@ -251,11 +252,13 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 					Context context = window.getContext();
 					
 					 if (!(isHoloFloat && floatingWindow)) return; 
-					 
+					 if (window.getDecorView().getTag(10000) != null) return;
+					 //Return so it doesnt override our custom movable window scaling
 					 
 						String localClassPackageName = context.getClass().getPackage().getName();
 
 						LayoutScaling.applyTheme(context, window,localClassPackageName);
+						window.getDecorView().setTag(10000, (Object)1);
 					
 				}
 			});

@@ -43,8 +43,10 @@ public class LayoutScaling {
 	}
 	public static void appleFloating(Context context , Window mWindow){
 	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
-
+	    boolean isMovable = pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW);
+	    if(!isMovable){
 	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
+	    }
 	            mWindow.setGravity(pref.getInt(Res.KEY_GRAVITY, Res.DEFAULT_GRAVITY));
 	            mWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 	            WindowManager.LayoutParams params = mWindow.getAttributes(); 

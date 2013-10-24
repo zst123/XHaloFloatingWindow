@@ -42,6 +42,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:text="Drag to Move"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffff"
             android:textStyle="bold"
             android:typeface="sans" />
 
@@ -105,6 +106,7 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="Transparency"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffff"
                 android:textStyle="bold"
                 android:typeface="sans" />
 

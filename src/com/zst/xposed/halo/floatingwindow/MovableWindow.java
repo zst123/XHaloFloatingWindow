@@ -44,6 +44,7 @@ import de.robv.android.xposed.IXposedHookInitPackageResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
@@ -81,6 +82,8 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
+		XSharedPreferences pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
 		focusChangerHook(l);
 		onCreateHook();
 		inject_dispatchTouchEvent();
