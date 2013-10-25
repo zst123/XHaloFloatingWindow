@@ -42,7 +42,8 @@ public class LayoutScaling {
 		appleFloating( context ,  mWindow);
 	}
 	public static void appleFloating(Context context , Window mWindow){
-	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+	    pref = HaloFlagInject.pref;
+	    pref.reload();
 	    boolean isMovable = pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW);
 	    if(!isMovable){
 	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
@@ -71,7 +72,8 @@ public class LayoutScaling {
 			metrics = new DisplayMetrics();
 			metrics = dm;
 		}
-	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		pref = HaloFlagInject.pref;
+	    pref.reload();
         if (metrics.heightPixels > metrics.widthPixels) { // portrait 
         	Float width_portrait = pref.getFloat(Res.KEY_PORTRAIT_WIDTH, Res.DEFAULT_PORTRAIT_WIDTH);
     		Float height__portrait = pref.getFloat(Res.KEY_PORTRAIT_HEIGHT, Res.DEFAULT_PORTRAIT_HEIGHT);

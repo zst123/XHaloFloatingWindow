@@ -62,6 +62,7 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	static ImageView triangle;
 	static View overlayView;
 	private static String MODULE_PATH = null;
+	private static XSharedPreferences pref;
 	
 	@Override
 	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
@@ -71,11 +72,12 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		MODULE_PATH = startupParam.modulePath;		
+		pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 	}
 	
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
-		XSharedPreferences pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		pref.reload();
 		if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
 		focusChangeContextFinder(l);
 		onCreateHook();

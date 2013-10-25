@@ -13,25 +13,33 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.view.Window;
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.IXposedHookZygoteInit.StartupParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.callbacks.XCallback;
 
 
-public class HaloFlagInject implements  IXposedHookLoadPackage{
+public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygoteInit{
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
 	public static XSharedPreferences pref;
 	    static boolean newTask;
 	    static boolean floatingWindow;
 		 static String previousPkg = Res.NULL;
+		 
+	@Override
+	public void initZygote(StartupParam startupParam) throws Throwable {
+		 pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+	}
+		 
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
-		pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
+		pref.reload();
 		inject_ActivityRecord_ActivityRecord(l);
-		inject_ActivityStack(l);
+		inject_ActivityStack(l,pref);
 		inject_WindowManagerService_setAppStartingWindow(l);
 		inject_Activity(pref);
 		inject_DecorView_generateLayout(l);
@@ -122,12 +130,11 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 		}
 	}
 	static Object previous = null;
-	public static void inject_ActivityStack(final LoadPackageParam lpparam) {
+	public static void inject_ActivityStack(final LoadPackageParam lpparam, final XSharedPreferences pref) {
 		Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
 			XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() { 
 				
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-		    	    pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
 		    		if (!b) return;
 					if (!floatingWindow) return;
@@ -142,7 +149,6 @@ public class HaloFlagInject implements  IXposedHookLoadPackage{
 					}	
 				}
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-					pref = new XSharedPreferences(Res.MY_PACKAGE_NAME,Res.MY_PACKAGE_NAME);
 		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
 		    		if (!b) return;
 					if (!floatingWindow) return;

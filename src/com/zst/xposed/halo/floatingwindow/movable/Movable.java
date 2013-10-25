@@ -47,6 +47,6 @@ public class Movable implements View.OnTouchListener {
         private void updateView(Window mWindow, float x , float y){
     		param.x = (int)x;	
     		param.y = (int)y;
-    		mWindow.setAttributes((android.view.WindowManager.LayoutParams) param);
+    		mWindow.setAttributes(param);
     	}
 }
