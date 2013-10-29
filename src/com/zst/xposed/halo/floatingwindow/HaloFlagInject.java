@@ -206,26 +206,19 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable { 
 					 Activity thiz = (Activity)param.thisObject;
 					 String name = thiz.getWindow().getContext().getPackageName();
-					 if (name.startsWith("com.android.systemui"))  return; 
-					  isHoloFloat = (thiz.getIntent().getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
-					
-					 if(isHoloFloat && floatingWindow){ 
-						 
-					     LayoutScaling.applyThemeLess(thiz.getWindow().getContext(),thiz.getWindow());
+					 Intent intent = thiz.getIntent();
+					 if (name.startsWith("com.android.systemui")){
+						 //How did halo flag get into SystemUI? Remove it.
+						 intent.setFlags(intent.getFlags() & ~Res.FLAG_FLOATING_WINDOW);
+						 isHoloFloat = false;
+						 return; 
+					 }
+					  isHoloFloat = (intent.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
+					 if(isHoloFloat) {
+					     LayoutScaling.appleFloating(thiz.getWindow().getContext(),thiz.getWindow());
 						 return;
-					 } 
-					 
+					 }
 				}
-				protected void afterHookedMethod(MethodHookParam param) throws Throwable { 
-					 Activity thiz = (Activity)param.thisObject;
-					 if(isHoloFloat){ 
-						 
-					     LayoutScaling.applyThemeLess(thiz.getWindow().getContext(),thiz.getWindow());
-						 return;
-					 } 
-					 
-				}
-				
 			});
 		
 			
@@ -256,14 +249,14 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					Window window = (Window) param.thisObject;
 					Context context = window.getContext();
-					
+					String name = window.getContext().getPackageName();
+					if (name.startsWith("com.android.systemui"))  return; 
+					 
 					 if (!(isHoloFloat && floatingWindow)) return; 
 					 if (window.getDecorView().getTag(10000) != null) return;
 					 //Return so it doesnt override our custom movable window scaling
 					 
-						String localClassPackageName = context.getClass().getPackage().getName();
-
-						LayoutScaling.applyTheme(context, window,localClassPackageName);
+						LayoutScaling.appleFloating(context, window);
 						window.getDecorView().setTag(10000, (Object)1);
 					
 				}

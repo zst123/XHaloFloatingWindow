@@ -77,8 +77,6 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	
 	@Override
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
-		pref.reload();
-		if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
 		focusChangeContextFinder(l);
 		onCreateHook();
 		inject_dispatchTouchEvent();
@@ -151,6 +149,8 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 		Class<?> hookClass = findClass("com.android.internal.policy.impl.PhoneWindow", lpparam.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "generateLayout",  new XC_MethodHook() { 
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				pref.reload();
+				if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
 				if (!isHoloFloat) return;
 
 				Window window = (Window) param.thisObject;
@@ -274,6 +274,9 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	private static void inject_dispatchTouchEvent() throws Throwable{
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook(){
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable { 
+				pref.reload();
+				if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
+				
 				Activity a =  (Activity)param.thisObject;
 				boolean isHoloFloat = (a.getIntent().getFlags() & Res.FLAG_FLOATING_WINDOW) == Res.FLAG_FLOATING_WINDOW;
 				if (!isHoloFloat) return;
@@ -320,9 +323,7 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 		WindowManager.LayoutParams params = mWindow.getAttributes(); 
 		params.x = (int)x;	
 		params.y = (int)y;
-		mWindow.setCloseOnTouchOutside(false);
-		mWindow.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-		mWindow.setAttributes((android.view.WindowManager.LayoutParams) params);
+		mWindow.setAttributes(params);
 	}
 	
 	public static int dp(int dp, Context c){ //convert dp to px

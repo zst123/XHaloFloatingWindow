@@ -1,12 +1,9 @@
 package com.zst.xposed.halo.floatingwindow.movable;
  
-import android.content.Context;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
  
 public class Movable implements View.OnTouchListener {

@@ -1,14 +1,8 @@
 package com.zst.xposed.halo.floatingwindow;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ResolveInfo;
-import android.content.res.TypedArray;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 import de.robv.android.xposed.XSharedPreferences;
@@ -16,37 +10,16 @@ import de.robv.android.xposed.XSharedPreferences;
 public class LayoutScaling {
 
 	public static XSharedPreferences pref;
-	public static void applyThemeLess(Context context , Window mWindow){
-		context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
-		appleFloating( context ,  mWindow);
-	}
-	public static void applyTheme(Context context , Window mWindow, String class_name ){
-		try{
-			Intent intent__ = new Intent(context.getPackageManager().getLaunchIntentForPackage(class_name));
-		        	ResolveInfo rInfo = context.getPackageManager().resolveActivity(intent__, 0);
-		        	ActivityInfo info = rInfo.activityInfo;	            
-		        	TypedArray ta = context.obtainStyledAttributes(info.theme, com.android.internal.R.styleable.Window);
-		        	
-		            TypedValue backgroundValue = ta.peekValue(com.android.internal.R.styleable.Window_windowBackground);
-		            
-		            if (backgroundValue != null && backgroundValue.toString().contains("light")) {
-		                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindowLight, true);
-		            } else {  //Checks if light or dark theme
-		                context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
-		            }
-		            
-		            ta.recycle();
-			}catch(Throwable t){
-	            context.getTheme().applyStyle(R.style.Theme_Halo_FloatingWindow, true);
-			}
-		appleFloating( context ,  mWindow);
-	}
+	
 	public static void appleFloating(Context context , Window mWindow){
 	    pref = HaloFlagInject.pref;
 	    pref.reload();
 	    boolean isMovable = pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW);
-	    if(!isMovable){
-	            mWindow.setCloseOnTouchOutsideIfNotSet(true);
+	    if(isMovable){
+	    	mWindow.setCloseOnTouchOutside(false);
+			mWindow.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+	    }else{
+	    	mWindow.setCloseOnTouchOutsideIfNotSet(true);
 	    }
 	            mWindow.setGravity(pref.getInt(Res.KEY_GRAVITY, Res.DEFAULT_GRAVITY));
 	            mWindow.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,WindowManager.LayoutParams.FLAG_DIM_BEHIND);
@@ -56,7 +29,7 @@ public class LayoutScaling {
 
 	            params.alpha = alp;	
 	            params.dimAmount = dimm;
-	            mWindow.setAttributes((android.view.WindowManager.LayoutParams) params);
+	            mWindow.setAttributes(params);
 			     scaleFloatingWindow(context,mWindow);
 			     
 	}
