@@ -20,6 +20,7 @@ import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.IXposedHookZygoteInit.StartupParam;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.callbacks.XCallback;
 
@@ -40,7 +41,11 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 	public void handleLoadPackage(LoadPackageParam l) throws Throwable {
 		pref.reload();
 		inject_ActivityRecord_ActivityRecord(l);
-		inject_ActivityStack(l,pref);
+		try {
+			inject_ActivityStack(l, pref);
+		} catch (Throwable e) {
+			XposedBridge.log("XHaloFloatingWindow-ERROR(ActivityStack): " + e.toString());
+		}
 		inject_WindowManagerService_setAppStartingWindow(l);
 		inject_Activity(pref);
 		inject_DecorView_generateLayout(l);
@@ -75,9 +80,14 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 					 }else if (Build.VERSION.SDK_INT == 19) { // Fuck Google. Changed params order again for KitKat.
 					 i  = (Intent) param.args[4];
 					 aInfo  = (ActivityInfo) param.args[6];
-					 Field field = param.args[12].getClass().getDeclaredField("mFocusedStack");
-					 field.setAccessible(true);
-					 stack = field.get(param.args[12]);
+					 	try{
+					 		Object stackSupervisor = param.args[12]; //mStackSupervisor
+					 		stack = XposedHelpers.callMethod(stackSupervisor, "getFocusedStack");
+					 	}catch(Exception e){
+					 		Field field = param.args[12].getClass().getDeclaredField("mFocusedStack");
+							 field.setAccessible(true);
+							 stack = field.get(param.args[12]);
+					 	}
 					 //TODO check if working
 					 }
 					 if (i == null) return;
@@ -88,25 +98,43 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 		            floatingWindow = (i.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
 			        
 		            Class activitystack = stack.getClass();
-		            Field mHistoryField = activitystack.getDeclaredField("mHistory");
+		            Field mHistoryField = null;
+		            if (Build.VERSION.SDK_INT == 19) { //Kitkat
+		            	mHistoryField = activitystack.getDeclaredField("mTaskHistory"); // ArrayList<TaskRecord>
+		            }else { // JB4.3 and lower
+		            	mHistoryField = activitystack.getDeclaredField("mHistory"); // ArrayList<ActivityRecord>
+		            } 
+		             
 		            mHistoryField.setAccessible(true);
 		            ArrayList<?> alist = (ArrayList<?>)mHistoryField.get(stack);
 		            
+		            boolean isFloating;
+		            boolean taskAffinity;
 		            if (alist.size() > 0){
+			            if (Build.VERSION.SDK_INT == 19) {
+			            	Object taskRecord =  alist.get(alist.size() - 1);
+			            	Field taskRecord_intent_field = taskRecord.getClass().getDeclaredField("intent");
+			            	taskRecord_intent_field.setAccessible(true);
+			            	Intent  taskRecord_intent = (Intent) taskRecord_intent_field.get(taskRecord);
+			                isFloating = (taskRecord_intent.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
+			            	String pkgName = taskRecord_intent.getPackage();
+			            	taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /*info.packageName*/);
+			            }else{
 		            	//XposedBridge.log("more than 0 -----" + aInfo.applicationInfo.className);
 		            	Object baseRecord =  alist.get(alist.size() -1); //ActivityRecord
 		            	Field baseRecordField = baseRecord.getClass().getDeclaredField("intent");
 		            	baseRecordField.setAccessible(true);
 		            	Intent  baseRecord_intent = (Intent) baseRecordField.get(baseRecord);
-		                final boolean floats = (baseRecord_intent.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
+		            	isFloating = (baseRecord_intent.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
 		                Field baseRecordField_2 = baseRecord.getClass().getDeclaredField("packageName");
 		            	baseRecordField_2.setAccessible(true);
 		            	String  baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
-		                final boolean taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg /*baseRecord.packageName*/);
+		                taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg /*baseRecord.packageName*/);
+			            }
 		                newTask = false;
 		                // If the current intent is not a new task we will check its top parent.
 		                // Perhaps it started out as a multiwindow in which case we pass the flag on
-		                if (floats && (!newTask || taskAffinity)) {
+		                if (isFloating && taskAffinity) {
 				            Field intentField = param.thisObject.getClass().getDeclaredField("intent");
 				            intentField.setAccessible(true);
 				            Intent newer = (Intent)intentField.get(param.thisObject);
@@ -134,12 +162,12 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 			
 			
 		
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			XposedBridge.log("XHaloFloatingWindow-ERROR(ActivityRecord): " + e.toString());
 		}
 	}
 	static Object previous = null;
-	public static void inject_ActivityStack(final LoadPackageParam lpparam, final XSharedPreferences pref) {
+	public static void inject_ActivityStack(final LoadPackageParam lpparam, final XSharedPreferences pref) throws Throwable{
 		Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpparam.classLoader);
 			XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() { 
 				
@@ -270,7 +298,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 					
 				}
 			});
-		} catch (Exception e) { XposedBridge.log("XHaloFloatingWindow-ERROR(DecorView): " + e.toString());
+		} catch (Throwable e) { XposedBridge.log("XHaloFloatingWindow-ERROR(DecorView): " + e.toString());
 		}
 	}
 	
