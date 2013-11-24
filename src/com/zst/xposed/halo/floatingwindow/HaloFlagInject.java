@@ -11,6 +11,7 @@ import android.app.ActivityThread;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Build;
 import android.view.Window;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -60,15 +61,24 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 			   protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				   isHoloFloat= false;
 				   floatingWindow = false;
-				   Intent i;
-					 ActivityInfo aInfo;
-					 if (param.args[4] instanceof Intent){
+				   Intent i = null;
+				   Object stack = null;
+					 ActivityInfo aInfo = null;
+					 if (Build.VERSION.SDK_INT <= 17){ //JB 4.2 and below
 					 i  = (Intent) param.args[4];
 					 aInfo  = (ActivityInfo) param.args[6];
-					 }else {// Android 4.3 has additional _launchedFromPackage
+					 stack = param.args[1];
+					 }else if (Build.VERSION.SDK_INT == 18) { // JB 4.3 has additional _launchedFromPackage. so indexs are affected
 					 i  = (Intent) param.args[5];
 					 aInfo  = (ActivityInfo) param.args[7];
-					 
+					 stack = param.args[1];
+					 }else if (Build.VERSION.SDK_INT == 19) { // Fuck Google. Changed params order again for KitKat.
+					 i  = (Intent) param.args[4];
+					 aInfo  = (ActivityInfo) param.args[6];
+					 Field field = param.args[12].getClass().getDeclaredField("mFocusedStack");
+					 field.setAccessible(true);
+					 stack = field.get(param.args[12]);
+					 //TODO check if working
 					 }
 					 if (i == null) return;
 					 
@@ -77,7 +87,6 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 
 		            floatingWindow = (i.getFlags() & FLAG_FLOATING_WINDOW) == FLAG_FLOATING_WINDOW;
 			        
-		            Object stack = param.args[1];
 		            Class activitystack = stack.getClass();
 		            Field mHistoryField = activitystack.getDeclaredField("mHistory");
 		            mHistoryField.setAccessible(true);
@@ -158,6 +167,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 				}
 				
 		});
+			//FIXME Kitkat breaks this
 			XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodReplacement() { 
 				@Override
 				protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
@@ -189,7 +199,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 					if(pkg.equals("android"))return; 
 					
 					// Change boolean "createIfNeeded" to FALSE
-					param.args[9] = Boolean.FALSE;
+					param.args[param.args.length-1] = Boolean.FALSE;
 					}
 				
 				});
