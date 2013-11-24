@@ -146,14 +146,15 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 	
 	
 	public static void inject_DecorView_generateLayout(final LoadPackageParam lpparam) throws Throwable{
-		Class<?> hookClass = findClass("com.android.internal.policy.impl.PhoneWindow", lpparam.classLoader);
-		XposedBridge.hookAllMethods(hookClass, "generateLayout",  new XC_MethodHook() { 
+		//Class<?> hookClass = findClass("com.android.internal.policy.impl.PhoneWindow", lpparam.classLoader);
+		//XposedBridge.hookAllMethods(hookClass, "generateLayout",  new XC_MethodHook() { 
+		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook(){
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				if (!isHoloFloat) return;
 				pref.reload();
 				if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
-				if (!isHoloFloat) return;
-
-				Window window = (Window) param.thisObject;
+				Activity thiss =  (Activity)param.thisObject;
+				Window window = (Window) thiss.getWindow();
 				Context context = window.getContext();
 					
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();

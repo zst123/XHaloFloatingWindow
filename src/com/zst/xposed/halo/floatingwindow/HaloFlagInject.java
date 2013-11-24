@@ -65,7 +65,7 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 					 if (param.args[4] instanceof Intent){
 					 i  = (Intent) param.args[4];
 					 aInfo  = (ActivityInfo) param.args[6];
-					 }else{// Android 4.3 has additional _launchedFromPackage
+					 }else {// Android 4.3 has additional _launchedFromPackage
 					 i  = (Intent) param.args[5];
 					 aInfo  = (ActivityInfo) param.args[7];
 					 
@@ -135,11 +135,10 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 			XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() { 
 				
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					if (!floatingWindow) return;
 		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
 		    		if (!b) return;
-					if (!floatingWindow) return;
 					if (param.args.length == 2){
-						Object prevt = param.args[0];
 						Class<?> clazz = param.thisObject.getClass();
 						Field field = clazz.getDeclaredField(("mResumedActivity"));
 						field.setAccessible(true);
@@ -149,9 +148,9 @@ public class HaloFlagInject implements  IXposedHookLoadPackage, IXposedHookZygot
 					}	
 				}
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+					if (!floatingWindow) return;
 		    		boolean b = pref.getBoolean(Res.KEY_APP_PAUSE, Res.DEFAULT_APP_PAUSE);
 		    		if (!b) return;
-					if (!floatingWindow) return;
 					Class<?> clazz = param.thisObject.getClass();
 					Field field = clazz.getDeclaredField(("mResumedActivity"));
 					field.setAccessible(true);
