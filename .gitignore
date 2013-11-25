@@ -1,7 +1,33 @@
-/bin
-.classpath
+#Android generated
+bin
+gen
+tmp
+*.class
+
+#Eclipse
 .project
-/gen
+.classpath
+.settings
+
+#IntelliJ IDEA
+.idea
+*.iml
+classes
+
+#Maven
+target
+release.properties
+pom.xml.*
+
+#Command line
+local.properties
+build.xml
 proguard-project.txt
-project.properties
+
+#Gradle
+library/build
+.gradle
+
+#PC generated
 .DS_Store
+Thumbs.db
