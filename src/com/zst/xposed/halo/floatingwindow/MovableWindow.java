@@ -142,19 +142,30 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 						& Res.FLAG_FLOATING_WINDOW) == Res.FLAG_FLOATING_WINDOW;
 			}
 		});	
+		XposedBridge.hookAllMethods(Activity.class, "onResume", new XC_MethodHook(){
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable { 
+				if (!isHoloFloat) return;
+				if (overlayView != null){
+					FrameLayout decorView = (FrameLayout) activity.getWindow().peekDecorView().getRootView();
+					decorView.bringChildToFront(overlayView);
+				}
+			}
+		});	
+		
 	}
 	
 	
 	public static void inject_DecorView_generateLayout(final LoadPackageParam lpparam) throws Throwable{
 		//Class<?> hookClass = findClass("com.android.internal.policy.impl.PhoneWindow", lpparam.classLoader);
 		//XposedBridge.hookAllMethods(hookClass, "generateLayout",  new XC_MethodHook() { 
-		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook(){
+		XposedBridge.hookAllMethods(Activity.class, "onStart", new XC_MethodHook() { 
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!isHoloFloat) return;
 				pref.reload();
 				if (!pref.getBoolean(Res.KEY_MOVABLE_WINDOW, Res.DEFAULT_MOVABLE_WINDOW)) return;
 				Activity thiss =  (Activity)param.thisObject;
 				Window window = (Window) thiss.getWindow();
+				//Window window = (Window) param.thisObject;
 				Context context = window.getContext();
 					
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
@@ -166,7 +177,7 @@ public class MovableWindow implements IXposedHookLoadPackage,IXposedHookZygoteIn
 				ViewGroup.LayoutParams paramz = new ViewGroup.LayoutParams
 						(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 				
-				decorView.addView(overlayView, decorView.getChildCount(), paramz);
+				decorView.addView(overlayView, -1, paramz);
 										
 				triangle = (ImageView)overlayView.findViewById(R.id.movable_corner);
 				triangle.setBackground(modRes.getDrawable(R.drawable.movable_corner));
