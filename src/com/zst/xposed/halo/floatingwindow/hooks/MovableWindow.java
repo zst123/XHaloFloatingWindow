@@ -18,6 +18,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.ServiceManager;
@@ -181,8 +184,14 @@ public class MovableWindow {
 				
 				decorView.addView(overlayView, -1, paramz);
 				
+				String color_str = mPref.getString(Common.KEY_WINDOW_TRIANGLE_COLOR, Common.DEFAULT_WINDOW_TRIANGLE_COLOR);
+				Drawable background = mModRes.getDrawable(R.drawable.movable_corner);
+				if (!color_str.equals(Common.DEFAULT_WINDOW_TRIANGLE_COLOR)) { //If not white, apply
+					background.setColorFilter(Color.parseColor("#" + color_str), Mode.MULTIPLY);
+				}
+				
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
-				triangle.setBackground(mModRes.getDrawable(R.drawable.movable_corner));
+				triangle.setBackground(background);
 				
 				Resizable resize = new Resizable(context, window);
 				triangle.setOnTouchListener(resize);

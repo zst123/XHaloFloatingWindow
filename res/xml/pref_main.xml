@@ -84,6 +84,11 @@
             android:defaultValue="false"
             android:key="window_movable"
             android:title="@string/pref_movable_top_title" />
+        
+        <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
+            defaultValue="FFFFFF"
+            android:key="window_triangle_color"
+            android:title="@string/pref_movable_triangle_color" />
 
     </PreferenceScreen>
 

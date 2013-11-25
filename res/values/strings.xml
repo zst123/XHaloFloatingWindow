@@ -41,6 +41,7 @@
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
+	<string name="pref_movable_triangle_color">Resizing Triangle Color</string>
 
     <!-- 5th Preference Screen -->
     <string name="pref_other_top_title">Others</string>
@@ -48,5 +49,9 @@
     <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications. \n(If you experience continuous SystemUI force closes, immediately uncheck this)</string>
     
     <!-- Gravity -->
+    <!-- ColorPicker -->
+    <string name="apply">Apply</string>
+    <string name="arrow_symbol">➙</string>
+    <string name="color_hex">Color Hex</string>
 
 </resources>

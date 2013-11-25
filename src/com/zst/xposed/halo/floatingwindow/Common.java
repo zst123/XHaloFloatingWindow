@@ -25,6 +25,7 @@ public class Common {
 	public static final String KEY_KEYBOARD_MODE = "window_keyboard_mode";
 	public static final String KEY_APP_PAUSE = "system_app_pausing";
 	public static final String KEY_NOTIFICATION_LONGPRESS_OPTION = "system_notif_longpress_option";
+	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -38,6 +39,7 @@ public class Common {
 	public static final boolean DEFAULT_APP_PAUSE = true;
 	public static final boolean DEFAULT_MOVABLE_WINDOW = false;
 	public static final boolean DEFAULT_NOTIFICATION_LONGPRESS_OPTION = false;
+	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
