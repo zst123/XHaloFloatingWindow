@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/app_name" >
+
+    <!-- Screen 1: Popup Window -->
+    <PreferenceScreen
+        android:summary="@string/pref_window_top_summary"
+        android:title="@string/pref_window_top_title" >
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="1"
+            maximum="1"
+            minimum="0.25"
+            android:key="window_alpha"
+            android:summary="@string/pref_alpha_summary"
+            android:title="@string/pref_alpha_title" />
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="0.25"
+            maximum="1"
+            minimum="0"
+            android:key="window_dim"
+            android:summary="@string/pref_dim_summary"
+            android:title="@string/pref_dim_title" />
+
+        <Preference
+            android:key="window_gravity"
+            android:summary="@string/pref_gravity_summary"
+            android:title="@string/pref_gravity_title" />
+    </PreferenceScreen>
+
+    <!-- Screen 2: Popup Size -->
+    <PreferenceScreen
+        android:summary="@string/pref_size_top_summary"
+        android:title="@string/pref_size_top_title" >
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="0.95"
+            maximum="1"
+            minimum="0.1"
+            android:key="window_portrait_width"
+            android:summary="@string/pref_width_portrait_summary"
+            android:title="@string/pref_width_portrait_title" />
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="0.7"
+            maximum="1"
+            minimum="0.1"
+            android:key="window_portrait_height"
+            android:summary="@string/pref_height_portrait_summary"
+            android:title="@string/pref_height_portrait_title" />
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="0.7"
+            maximum="1"
+            minimum="0.1"
+            android:key="window_landscape_width"
+            android:summary="@string/pref_width_landscape_summary"
+            android:title="@string/pref_width_landscape_title" />
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="0.85"
+            maximum="1"
+            minimum="0.1"
+            android:key="window_landscape_height"
+            android:summary="@string/pref_height_landscape_summary"
+            android:title="@string/pref_height_landscape_title" />
+    </PreferenceScreen>
+
+    <!-- Screen 3: Popup Behaviour -->
+    <PreferenceScreen
+        android:summary="@string/pref_behave_top_summary"
+        android:title="@string/pref_behave_top_title" >
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="system_app_pausing"
+            android:summaryOff="@string/pref_app_pause_summary_off"
+            android:summaryOn="@string/pref_app_pause_summary_on"
+            android:title="@string/pref_app_pause_title" />
+        <Preference
+            android:key="window_keyboard_mode"
+            android:summary="@string/pref_keyboard_summary"
+            android:title="@string/pref_keyboard_title" />
+    </PreferenceScreen>
+    
+    <!-- Screen 4: Movable Resizable -->
+    <PreferenceScreen
+        android:title="@string/pref_movable_top_title" >
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="window_movable"
+            android:title="@string/pref_movable_top_title" />
+
+    </PreferenceScreen>
+
+     <!-- Screen 5: Others -->
+    <PreferenceScreen
+        android:title="@string/pref_other_top_title" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="system_notif_longpress_option"
+            android:summary="@string/pref_notif_long_click_summary"
+            android:title="@string/pref_notif_long_click_title" />
+
+    </PreferenceScreen>
+    
+</PreferenceScreen>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">XHaloFloatingWindow</string>
+    <string name="app_description">Movable &amp; Resizable Halo Floating Windows from Paranoid Android (zst123)</string>
+
+    <!-- Preference Strings -->
+    <string name="default_value">Default Value</string>
+    <string name="save">Save</string>
+
+    <!-- First Preference Screen -->
+    <string name="pref_window_top_title">Popup Window</string>
+    <string name="pref_window_top_summary">Customize Window Properties</string>
+    <string name="pref_alpha_title">Popup Alpha</string>
+    <string name="pref_alpha_summary">Transparency of Window</string>
+    <string name="pref_dim_title">Popup Dim</string>
+    <string name="pref_dim_summary">Background Dimming of Popup</string>
+    <string name="pref_gravity_title">Gravity</string>
+    <string name="pref_gravity_summary">Position of the Popup</string>
+
+    <!-- 2nd Preference Screen -->
+    <string name="pref_size_top_title">Popup Size</string>
+    <string name="pref_size_top_summary">Customize Size of the Popup</string>
+    <string name="pref_width_portrait_title">Portrait Width</string>
+    <string name="pref_width_portrait_summary">Width of Popup in Portrait</string>
+    <string name="pref_height_portrait_title">Portrait Height</string>
+    <string name="pref_height_portrait_summary">Height of Popup in Portrait</string>
+    <string name="pref_width_landscape_title">Landscape Width</string>
+    <string name="pref_width_landscape_summary">Width of Popup in Landscape</string>
+    <string name="pref_height_landscape_title">Landscape Height</string>
+    <string name="pref_height_landscape_summary">Height of Popup in Landscape</string>
+
+    <!-- 3rd Preference Screen -->
+    <string name="pref_behave_top_title">Popup Behavior</string>
+    <string name="pref_behave_top_summary">Customize behaviour of popup window </string>
+    <string name="pref_app_pause_title">App Pausing</string>
+    <string name="pref_app_pause_summary_off">The below app will not pause when a Halo window is above (Default)</string>
+    <string name="pref_app_pause_summary_on">Pause the below app when a Halo window is above</string>
+    <string name="pref_keyboard_title">Keyboard Mode</string>
+    <string name="pref_keyboard_summary">The action the popup will do when a keyboard opens.</string>
+
+    <!-- 4rd Preference Screen -->
+    <string name="pref_movable_top_title">Movable &amp; Resizable</string>
+
+    <!-- 5th Preference Screen -->
+    <string name="pref_other_top_title">Others</string>
+    <string name="pref_notif_long_click_title">Long Press Notification Option</string>
+    <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications. \n(If you experience continuous SystemUI force closes, immediately uncheck this)</string>
+    
+    <!-- Gravity -->
+
+</resources>
