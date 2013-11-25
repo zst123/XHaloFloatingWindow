@@ -19,6 +19,7 @@ import android.view.View;
 import android.widget.PopupMenu;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -26,8 +27,10 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class NotificationShadeHook {
 	public static final String SYSTEM_UI = "com.android.systemui";
 	
-	public static void hook(final LoadPackageParam lpp) {
+	public static void hook(final LoadPackageParam lpp, final XSharedPreferences pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
+		if (!pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
+				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION)) return;
 		try {
 			hookLongPressNotif(lpp);
 		} catch (Throwable e) {

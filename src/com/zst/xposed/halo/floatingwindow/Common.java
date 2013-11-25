@@ -24,7 +24,7 @@ public class Common {
 	public static final String KEY_MOVABLE_WINDOW = "window_movable";
 	public static final String KEY_KEYBOARD_MODE = "window_keyboard_mode";
 	public static final String KEY_APP_PAUSE = "system_app_pausing";
-	public static final String KEY_LONGPRESS_INJECT = "system_notif_longpress_option";
+	public static final String KEY_NOTIFICATION_LONGPRESS_OPTION = "system_notif_longpress_option";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -37,7 +37,7 @@ public class Common {
 	public static final int DEFAULT_GRAVITY = Gravity.CENTER;
 	public static final boolean DEFAULT_APP_PAUSE = true;
 	public static final boolean DEFAULT_MOVABLE_WINDOW = false;
-	public static final boolean DEFAULT_LONGPRESS_INJECT = false;
+	public static final boolean DEFAULT_NOTIFICATION_LONGPRESS_OPTION = false;
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
