@@ -1,0 +1,10 @@
+/bin
+/.git
+.classpath
+.project
+/gen
+proguard-project.txt
+project.properties
+.DS_Store
+/temp
+*.prefs
