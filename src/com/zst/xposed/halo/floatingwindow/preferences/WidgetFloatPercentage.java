@@ -94,7 +94,7 @@ public class WidgetFloatPercentage extends DialogPreference implements
 	
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		float realValue = progress + (mMin * 100);
+		int realValue = progress + (int)(mMin * 100);
 		mValue.setText(realValue + "%");
 	}
 	
