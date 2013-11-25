@@ -133,9 +133,11 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:text="100%"
                 android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#FFF"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:typeface="sans" />
+
         </RelativeLayout>
 
     </RelativeLayout>
