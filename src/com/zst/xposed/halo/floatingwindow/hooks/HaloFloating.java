@@ -237,23 +237,18 @@ public class HaloFloating {
 		});
 
 		// FIXME Kitkat breaks this //TODO change this to beforehooked and return param.
-		XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodReplacement() {
+		XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodHook() {
 			@Override
-			protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				int launchFlags = (Integer) param.args[0];
-				if ((launchFlags & (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME)) 
+				if ((launchFlags & (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME))
 						== (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME)) {
 					boolean floating = (launchFlags & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-					if (!floating) {
-						try {
-							Method showsb = param.thisObject.getClass().getMethod(
-									"moveHomeToFrontLocked");
-							showsb.invoke(param.thisObject);
-						} catch (Throwable e2) {
-						}
-					}
+					if (floating) param.setResult(null);
+				} else {
+					param.setResult(null);
+					// No point to run method which checks for the same thing
 				}
-				return null;
 			}
 		});
 	}
@@ -318,18 +313,17 @@ public class HaloFloating {
 		Class<?> cls = findClass("com.android.internal.policy.impl.PhoneWindow", lpp.classLoader);
 		XposedBridge.hookAllMethods(cls, "generateLayout", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				if (!(isHoloFloat && floatingWindow)) return;
 				Window window = (Window) param.thisObject;
 				String name = window.getContext().getPackageName();
 				if (name.startsWith("com.android.systemui")) return;
 				
-				if (!(isHoloFloat && floatingWindow)) return;
 				if (window.getDecorView().getTag(10000) != null) return;
 				// Return so it doesnt override our custom movable window
 				// scaling
 				
 				LayoutScaling.appleFloating(mPref, window);
 				window.getDecorView().setTag(10000, (Object) 1);
-				
 			}
 		});
 	}
