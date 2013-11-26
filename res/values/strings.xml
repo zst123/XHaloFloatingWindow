@@ -34,8 +34,8 @@
     <string name="pref_behave_top_title">Popup Behavior</string>
     <string name="pref_behave_top_summary">Customize behaviour of popup window </string>
     <string name="pref_app_pause_title">App Pausing</string>
-    <string name="pref_app_pause_summary_off">The below app will not pause when a Halo window is above (Default)</string>
-    <string name="pref_app_pause_summary_on">Pause the below app when a Halo window is above</string>
+    <string name="pref_app_pause_summary_off">Do not pause the below app when a Halo window is above (Halo)</string>
+    <string name="pref_app_pause_summary_on">Pause the below app when a Halo window is above (Default)</string>
     <string name="pref_keyboard_title">Keyboard Mode</string>
     <string name="pref_keyboard_summary">The action the popup will do when a keyboard opens.</string>
 
