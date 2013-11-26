@@ -31,11 +31,11 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 	@SuppressLint("WorldReadableFiles")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getPreferenceManager().setSharedPreferencesName(Common.PREFERENCE_MAIN_FILE);
+		getPreferenceManager().setSharedPreferencesMode(PreferenceActivity.MODE_WORLD_READABLE);
 		addPreferencesFromResource(R.xml.pref_main);
 		findPreference(Common.KEY_GRAVITY).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_KEYBOARD_MODE).setOnPreferenceClickListener(this);
-		getPreferenceManager().setSharedPreferencesMode(PreferenceActivity.MODE_WORLD_READABLE);
-		getPreferenceManager().setSharedPreferencesName(Common.PREFERENCE_MAIN_FILE);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
 	}
