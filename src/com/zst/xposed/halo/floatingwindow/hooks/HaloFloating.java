@@ -183,6 +183,9 @@ public class HaloFloating {
 				Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
 				tt.setAccessible(true);
 				if (floatingWindow) {
+					int intent_flag = i.getFlags();
+					intent_flag &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
+					i.setFlags(intent_flag);
 					i.addFlags(Common.FLAG_FLOATING_WINDOW);
 					i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 					tt.set(param.thisObject, Boolean.FALSE);
