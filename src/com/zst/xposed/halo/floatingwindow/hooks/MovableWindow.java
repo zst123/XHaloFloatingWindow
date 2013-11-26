@@ -188,6 +188,9 @@ public class MovableWindow {
 					background.setColorFilter(Color.parseColor("#" + color_str), Mode.MULTIPLY);
 				}
 				
+				float alpha = mPref.getFloat(Common.KEY_WINDOW_TRIANGLE_ALPHA, Common.DEFAULT_WINDOW_TRIANGLE_ALPHA);
+				background.setAlpha((int)(alpha * 255));
+				
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 				triangle.setBackground(background);
 				

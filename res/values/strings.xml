@@ -41,7 +41,10 @@
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
-	<string name="pref_movable_triangle_color">Resizing Triangle Color</string>
+	<string name="pref_movable_triangle_color_title">Triangle Color</string>
+	<string name="pref_movable_triangle_color_summary">Color of the corner triangle for resizing</string>
+	<string name="pref_movable_triangle_alpha_title">Triangle Alpha</string>
+	<string name="pref_movable_triangle_alpha_summary">Transparency of the corner triangle for resizing</string>
 
     <!-- 5th Preference Screen -->
     <string name="pref_other_top_title">Others</string>

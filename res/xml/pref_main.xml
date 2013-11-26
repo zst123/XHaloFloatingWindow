@@ -88,8 +88,16 @@
         <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
             defaultValue="FFFFFF"
             android:key="window_triangle_color"
-            android:title="@string/pref_movable_triangle_color" />
-
+            android:title="@string/pref_movable_triangle_color_title"
+            android:summary="@string/pref_movable_triangle_color_summary" />
+        
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+            defaultValue="1"
+            maximum="1"
+            minimum="0"
+            android:key="window_triangle_alpha"
+            android:summary="@string/pref_movable_triangle_alpha_summary"
+            android:title="@string/pref_movable_triangle_alpha_title" />
     </PreferenceScreen>
 
      <!-- Screen 5: Others -->
