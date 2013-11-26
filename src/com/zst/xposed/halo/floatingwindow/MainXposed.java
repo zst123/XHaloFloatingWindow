@@ -12,8 +12,7 @@ import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
-public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit,
-		IXposedHookInitPackageResources {
+public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	
 	public static XModuleResources sModRes;
 	static String MODULE_PATH = null;
@@ -23,6 +22,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
 		MODULE_PATH = startupParam.modulePath;
+		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
 	}
 	
 	@Override
@@ -30,12 +30,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		MovableWindow.handleLoadPackage(lpparam, mPref);
 		HaloFloating.handleLoadPackage(lpparam, mPref);
 		NotificationShadeHook.hook(lpparam, mPref);
+		MovableWindow.handleInitPackageResources(sModRes); 
 	}
 
-	@Override
-	public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable {
-		sModRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);
-		MovableWindow.handleInitPackageResources(sModRes);
-	}
-	
 }

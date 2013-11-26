@@ -3,7 +3,6 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import com.zst.xposed.halo.floatingwindow.Common;
-import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
 import com.zst.xposed.halo.floatingwindow.helpers.Resizable;
@@ -43,7 +42,6 @@ import android.widget.TextView;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
-import de.robv.android.xposed.callbacks.XC_InitPackageResources.InitPackageResourcesParam;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MovableWindow {
@@ -168,8 +166,8 @@ public class MovableWindow {
 				if (!isHoloFloat) return;
 				mPref.reload();
 				if (!mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW)) return;
-				Activity thiss = (Activity) param.thisObject;
-				Window window = (Window) thiss.getWindow();
+				activity = (Activity) param.thisObject;
+				Window window = (Window) activity.getWindow();
 				// Window window = (Window) param.thisObject;
 				Context context = window.getContext();
 				
