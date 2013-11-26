@@ -49,9 +49,10 @@
 	<string name="pref_movable_triangle_size_summary">Size of the corner triangle for resizing</string>
 
     <!-- 5th Preference Screen -->
-    <string name="pref_other_top_title">Others</string>
+    <string name="pref_systemui_top_title">SystemUI</string>
+    <string name="pref_notif_warning">These mods are for AOSP-based ROMs and, thus, untested with other ROMs. If you experience continuous SystemUI force closes, immediately disable these mods.</string>
     <string name="pref_notif_long_click_title">Long Press Notification Option</string>
-    <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications. \n(If you experience continuous SystemUI force closes, immediately uncheck this)</string>
+    <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications.</string>
     <string name="pref_notif_single_click_title">Single Click Notification Halo</string>
     <string name="pref_notif_single_click_summary">Use together with \"Long Press Notification Option\". Unlike the above, it adds \"Open Normally\" when long-pressing &amp; allows single-clicking notification to open in halo.</string>
     

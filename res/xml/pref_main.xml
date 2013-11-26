@@ -112,7 +112,9 @@
 
      <!-- Screen 5: Others -->
     <PreferenceScreen
-        android:title="@string/pref_other_top_title" >
+        android:title="@string/pref_systemui_top_title" >
+        <Preference
+            android:summary="@string/pref_notif_warning" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="system_notif_longpress_option"
