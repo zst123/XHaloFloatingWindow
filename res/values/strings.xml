@@ -53,6 +53,10 @@
     <string name="pref_notif_long_click_title">Long Press Notification Option</string>
     <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications. \n(If you experience continuous SystemUI force closes, immediately uncheck this)</string>
     
+    <!-- Keyboard Mode -->
+    <string name="keyboard_default">Default</string>
+    <string name="keyboard_pan">Pan Up</string>
+    <string name="keyboard_scale">Scale</string>
     <!-- Gravity -->
     <!-- ColorPicker -->
     <string name="apply">Apply</string>

@@ -11,9 +11,15 @@ import android.preference.PreferenceFragment;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 
@@ -39,6 +45,9 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		String k = p.getKey();
 		if (k.equals(Common.KEY_GRAVITY)) {
 			showGravityDialog();
+			return true;
+		}else if (k.equals(Common.KEY_KEYBOARD_MODE)) {
+			showKeyboardDialog();
 			return true;
 		}
 		return false;
@@ -115,5 +124,40 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		Button discard = (Button) dialog.findViewById(R.id.dialog_discard);
 		save.setOnClickListener(listener);
 		discard.setOnClickListener(listener);
+	}
+	
+	private void showKeyboardDialog() {
+		final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+		final ListView modeList = new ListView(getActivity());
+		
+		builder.setView(modeList);
+		builder.setTitle(R.string.pref_keyboard_title);
+		
+		final AlertDialog dialog = builder.create();
+		final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+				android.R.layout.simple_list_item_1, android.R.id.text1);
+		
+		adapter.add(getResources().getString(R.string.keyboard_default));
+		adapter.add(getResources().getString(R.string.keyboard_pan));
+		adapter.add(getResources().getString(R.string.keyboard_scale));
+		
+		modeList.setAdapter(adapter);
+		modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+				String title = ((TextView) view.findViewById(android.R.id.text1))
+						.getText().toString();
+				if (title.equals(getResources().getString(R.string.keyboard_default))) {
+					mPref.edit().putInt(Common.KEY_KEYBOARD_MODE, 1).commit();
+				} else if (title.equals(getResources().getString(R.string.keyboard_pan))) {
+					mPref.edit().putInt(Common.KEY_KEYBOARD_MODE, 2).commit();
+				} else if (title.equals(getResources().getString(R.string.keyboard_scale))) {
+					mPref.edit().putInt(Common.KEY_KEYBOARD_MODE, 3).commit();
+				}
+				Toast.makeText(getActivity(), title, Toast.LENGTH_SHORT).show();
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
 	}
 }
