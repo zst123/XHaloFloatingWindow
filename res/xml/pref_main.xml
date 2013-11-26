@@ -118,6 +118,12 @@
             android:key="system_notif_longpress_option"
             android:summary="@string/pref_notif_long_click_summary"
             android:title="@string/pref_notif_long_click_title" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:dependency="system_notif_longpress_option"
+            android:key="system_notif_single_click_halo"
+            android:summary="@string/pref_notif_single_click_summary"
+            android:title="@string/pref_notif_single_click_title" />
 
     </PreferenceScreen>
     

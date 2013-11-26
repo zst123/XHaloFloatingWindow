@@ -25,14 +25,30 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class NotificationShadeHook {
-	public static final String SYSTEM_UI = "com.android.systemui";
+
+	static boolean mLongPressEnabled;
+	static boolean mSinglePressEnabled = true;
 	
 	public static void hook(final LoadPackageParam lpp, final XSharedPreferences pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
-		if (!pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
-				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION)) return;
+		pref.reload();
+		mLongPressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
+				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION);
+		if (!mLongPressEnabled) return;
+		mSinglePressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_SINGLE_CLICK_HALO,
+				Common.DEFAULT_NOTIFICATION_SINGLE_CLICK_HALO);
+		
+		Class<?> baseStatusBar = findClass("com.android.systemui.statusbar.BaseStatusBar",
+				lpp.classLoader);
 		try {
-			hookLongPressNotif(lpp);
+			injectViewTag(baseStatusBar);
+		} catch (Throwable e) {
+			XposedBridge.log(Common.LOG_TAG + "(injectViewTag)");
+			XposedBridge.log(e);
+		}
+		
+		try {
+			hookLongPressNotif(baseStatusBar);
 		} catch (Throwable e) {
 			XposedBridge.log(Common.LOG_TAG + "(NotificationHook)");
 			XposedBridge.log(e);
@@ -40,9 +56,9 @@ public class NotificationShadeHook {
 		
 	}
 
-	private static void hookLongPressNotif(final LoadPackageParam lpp) {
-		Class<?> hookClass = findClass("com.android.systemui.statusbar.BaseStatusBar", lpp.classLoader);
-		XposedBridge.hookAllMethods(hookClass, "getNotificationLongClicker",
+	private static void hookLongPressNotif(Class<?> baseStatusBar) {
+		
+		XposedBridge.hookAllMethods(baseStatusBar, "getNotificationLongClicker",
 				new XC_MethodReplacement() {
 			protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
 				final Object thiz = param.thisObject;
@@ -70,7 +86,11 @@ public class NotificationShadeHook {
 
 							PopupMenu popup = new PopupMenu(mContext, v);
 							popup.getMenu().add("App info");
-							popup.getMenu().add("Open in Halo");
+							if (!mSinglePressEnabled) {
+								popup.getMenu().add("Open in Halo");
+							} else {
+								popup.getMenu().add("Open Normally");
+							}
 							//TODO put in strings.xml
 							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 								public boolean onMenuItemClick(MenuItem item) {
@@ -84,6 +104,9 @@ public class NotificationShadeHook {
 													closeNotificationShade(mContext);
 									} else if (item.getTitle().equals("Open in Halo")) {
 										launchFloating(contentIntent, mContext);
+										closeNotificationShade(mContext);
+									} else if (item.getTitle().equals("Open Normally")) {
+										launch(new Intent(), contentIntent, mContext);
 										closeNotificationShade(mContext);
 									} else {
 										return false;
@@ -100,13 +123,42 @@ public class NotificationShadeHook {
 				};
 			}
 		});
-		XposedBridge.hookAllMethods(hookClass, "inflateViews", new XC_MethodHook() {
+		
+	}
+	
+	private static void injectViewTag(Class<?> baseStatusBar) {
+		XposedBridge.hookAllMethods(baseStatusBar, "inflateViews", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				Object entry = param.args[0];
+				final Object entry = param.args[0];
 				Class<?> entryClazz = entry.getClass();
 				Field fieldRow = entryClazz.getDeclaredField(("row"));
 				View newRow = (View) fieldRow.get(entry);
 				newRow.setTag(entry);
+				if (mSinglePressEnabled) {
+					View content = newRow.findViewById(newRow.getResources()
+							.getIdentifier("content", "id", "com.android.systemui"));
+					content.setOnClickListener(new View.OnClickListener(){
+						@Override
+						public void onClick(View v) {
+							try {
+								final Object sbn = entry.getClass()
+										.getDeclaredField(("notification")).get(entry);
+								final String packageNameF = (String) sbn.getClass()
+										.getDeclaredField(("pkg")).get(sbn);
+								final Notification n = (Notification) sbn.getClass()
+										.getDeclaredField(("notification")).get(sbn);
+								if (packageNameF == null) return;
+								if (v.getWindowToken() == null) return;
+								launchFloating(n.contentIntent, v.getContext());
+								closeNotificationShade(v.getContext());
+							} catch (Exception e) {
+								android.widget.Toast.makeText(v.getContext(),
+										"(XHFW) Error Opening Notification : " + e.toString(),
+										android.widget.Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				}
 				fieldRow.set(entry, newRow);
 			}
 		});
@@ -121,6 +173,9 @@ public class NotificationShadeHook {
 		// intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		// intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 		// intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+		launch(intent, pIntent, mContext);
+	}
+	private static void launch(Intent intent, PendingIntent pIntent, Context mContext) { 
 		try {
 			android.app.ActivityManagerNative.getDefault().resumeAppSwitches();
 			android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
