@@ -12,16 +12,17 @@ import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class WidgetFloatPercentage extends DialogPreference implements
 		SeekBar.OnSeekBarChangeListener {
 	
+	private TextView mFinalValue;
 	private SeekBar mSeekBar;
 	private TextView mValue;
 	
-	private String mKey = "";
 	private Float mMin;
 	private Float mMax;
 	private Float mDefault;
@@ -33,6 +34,16 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		mDefault = Float.parseFloat(attrs.getAttributeValue(null, "defaultValue"));
 		mMin = Float.parseFloat(attrs.getAttributeValue(null, "minimum"));
 		mMax = Float.parseFloat(attrs.getAttributeValue(null, "maximum"));
+	}
+	
+	@Override
+	protected void onBindView(View view) {
+		super.onBindView(view);
+		mFinalValue = new TextView(getContext());
+		mFinalValue.setTextSize(24);
+		LinearLayout layout = (LinearLayout)view;
+		layout.addView(mFinalValue, layout.getChildCount());
+		updatePercentage();
 	}
 	
 	@Override
@@ -70,9 +81,8 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		});
 		
 		final SharedPreferences prefs = getSharedPreferences();
-		mKey = getKey();
 		
-		float value = prefs.getFloat(mKey, mDefault);
+		float value = prefs.getFloat(getKey(), mDefault);
 		value -= mMin;
 		int max = (int) ((mMax * 100) - (mMin * 100));
 		mSeekBar.setMax(max);
@@ -87,9 +97,10 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		if (positiveResult) {
 			float realValue = mSeekBar.getProgress() + (mMin * 100);
 			Editor editor = getEditor();
-			editor.putFloat(mKey, (realValue * 0.01f));
+			editor.putFloat(getKey(), (realValue * 0.01f));
 			editor.commit();
 		}
+		updatePercentage();
 	}
 	
 	@Override
@@ -104,5 +115,10 @@ public class WidgetFloatPercentage extends DialogPreference implements
 	
 	@Override
 	public void onStopTrackingTouch(SeekBar seekBar) {
+	}
+	
+	private void updatePercentage() {
+		float value = getSharedPreferences().getFloat(getKey(), mDefault);
+		mFinalValue.setText((int)(value * 100) + "%");
 	}
 }
