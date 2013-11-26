@@ -40,6 +40,8 @@
     <string name="pref_keyboard_summary">The action the popup will do when a keyboard opens.</string>
     <string name="pref_disable_auto_close_title">Disable Auto Close</string>
     <string name="pref_disable_auto_close_summary">Disable closing the app window when screen turns off or home is pressed.</string>
+    <string name="pref_show_recents_title">Show App in Recents</string>
+    <string name="pref_show_recents_summary">Allows the app to be shown in the recents screen.</string>
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>

@@ -3,7 +3,6 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -187,7 +186,9 @@ public class HaloFloating {
 					intent_flag &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
 					i.setFlags(intent_flag);
 					i.addFlags(Common.FLAG_FLOATING_WINDOW);
-					i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
+						i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+					}
 					tt.set(param.thisObject, Boolean.FALSE);
 				}
 			}
