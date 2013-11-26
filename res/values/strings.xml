@@ -38,6 +38,8 @@
     <string name="pref_app_pause_summary_on">Pause the below app when a Halo window is above (Default)</string>
     <string name="pref_keyboard_title">Keyboard Mode</string>
     <string name="pref_keyboard_summary">The action the popup will do when a keyboard opens.</string>
+    <string name="pref_disable_auto_close_title">Disable Auto Close</string>
+    <string name="pref_disable_auto_close_summary">Disable closing the app window when screen turns off or home is pressed.</string>
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>

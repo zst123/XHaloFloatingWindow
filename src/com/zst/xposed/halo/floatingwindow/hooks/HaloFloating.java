@@ -297,6 +297,8 @@ public class HaloFloating {
 	private static void injectPerformStop() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "performStop", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				if (mPref.getBoolean(Common.KEY_DISABLE_AUTO_CLOSE, Common.DEFAULT_DISABLE_AUTO_CLOSE)) return;
+				
 				Activity thiz = (Activity) param.thisObject;
 				if (!thiz.isChangingConfigurations() && (thiz.getWindow() != null) && isHoloFloat
 						&& !thiz.isFinishing()) {
