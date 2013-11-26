@@ -11,7 +11,6 @@ import android.app.ActivityThread;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
-import android.util.Log;
 import android.view.Window;
 
 import com.zst.xposed.halo.floatingwindow.Common;
@@ -29,9 +28,7 @@ public class HaloFloating {
 	
 	static XSharedPreferences mPref;
 	static boolean isHoloFloat = false;
-	static boolean newTask;
 	static boolean floatingWindow;
-	static String previousPkg = "";
 	
 	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences pref) {
 		mPref = pref;
@@ -92,6 +89,7 @@ public class HaloFloating {
 		/*********************************************/
 		
 	}
+	
 	
 	/* For passing on flag to next activity*/
 	private static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam)
@@ -168,7 +166,6 @@ public class HaloFloating {
 						taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
 						/*baseRecord.packageName*/
 					}
-					newTask = false;
 					// If the current intent is not a new task we will check its top parent.
 					// Perhaps it started out as a multiwindow in which case we pass the flag on
 					if (isFloating && taskAffinity) {
@@ -190,7 +187,6 @@ public class HaloFloating {
 					i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 					tt.set(param.thisObject, Boolean.FALSE);
 				}
-				previousPkg = aInfo.applicationInfo.packageName;
 			}
 		});
 	}
@@ -207,7 +203,7 @@ public class HaloFloating {
 				
 				mPref.reload();
 				appPauseEnabled = mPref.getBoolean(Common.KEY_APP_PAUSE, Common.DEFAULT_APP_PAUSE);
-				if (!appPauseEnabled) return;
+				if (appPauseEnabled) return;
 				
 				Class<?> clazz = param.thisObject.getClass();
 				Field field = clazz.getDeclaredField(("mResumedActivity"));
@@ -218,7 +214,7 @@ public class HaloFloating {
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!floatingWindow) return;
-				if (!appPauseEnabled) return;
+				if (appPauseEnabled) return;
 				if (previous != null) {
 					Class<?> clazz = param.thisObject.getClass();
 					Field field = clazz.getDeclaredField(("mResumedActivity"));
@@ -227,22 +223,16 @@ public class HaloFloating {
 				}
 			}
 		});
+		/* Kitkat work-around */
 		XposedBridge.hookAllMethods(hookClass, "startActivityLocked", new XC_MethodHook() {
-			//XXX
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				if (!floatingWindow) return;
-				//XXX
-				Log.d("test1", Common.LOG_TAG + "(startActivityLocked) - inside checking method");
 				if (param.args[1] instanceof Intent) return;
-				Log.d("test1", Common.LOG_TAG + "(startActivityLocked) - inside actual method");
 				Object activityRecord = param.args[0];
 				Class<?> activityRecordClass = activityRecord.getClass();
-				Log.d("test1", Common.LOG_TAG + "(startActivityLocked) - got the class");
 				Field activityField = activityRecordClass.getDeclaredField(("fullscreen"));
-				Log.d("test1", Common.LOG_TAG + "(startActivityLocked) - found reflection field");
 				activityField.setAccessible(true);
 				activityField.set(activityRecord, Boolean.FALSE);
-				Log.d("test1", Common.LOG_TAG + "(startActivityLocked) - done settinge field");
 			}
 		});
 
