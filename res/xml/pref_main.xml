@@ -87,6 +87,7 @@
         
         <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
             defaultValue="FFFFFF"
+            android:dependency="window_movable"
             android:key="window_triangle_color"
             android:title="@string/pref_movable_triangle_color_title"
             android:summary="@string/pref_movable_triangle_color_summary" />
@@ -95,6 +96,7 @@
             defaultValue="1"
             maximum="1"
             minimum="0"
+            android:dependency="window_movable"
             android:key="window_triangle_alpha"
             android:summary="@string/pref_movable_triangle_alpha_summary"
             android:title="@string/pref_movable_triangle_alpha_title" />
@@ -102,6 +104,7 @@
             defaultValue="36"
             maximum="100"
             minimum="1"
+            android:dependency="window_movable"
             android:key="window_triangle_size"
             android:summary="@string/pref_movable_triangle_size_summary"
             android:title="@string/pref_movable_triangle_size_title" />

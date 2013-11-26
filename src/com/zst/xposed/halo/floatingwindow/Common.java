@@ -5,10 +5,6 @@ import android.view.Gravity;
 
 public class Common {
 	
-	// TODO
-	// Gravity translation
-	// KB mode chooser
-	
 	/* Preference misc */
 	public static final String THIS_PACKAGE_NAME = Common.class.getPackage().getName();
 	public static final String PREFERENCE_MAIN_FILE = THIS_PACKAGE_NAME + "_main";
@@ -50,7 +46,5 @@ public class Common {
 	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";
 
 	/* Others */
-	public static final String LOG_TAG = "XHaloFloatingWindow(" + Build.VERSION.SDK_INT + ") - ";
-	//public static final String NULL = "nulled";
-	
+	public static final String LOG_TAG = "XHaloFloatingWindow(" + Build.VERSION.SDK_INT + ") - ";	
 }
