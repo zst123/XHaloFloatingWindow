@@ -27,6 +27,7 @@ public class Common {
 	public static final String KEY_NOTIFICATION_LONGPRESS_OPTION = "system_notif_longpress_option";
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	public static final String KEY_WINDOW_TRIANGLE_ALPHA = "window_triangle_alpha";
+	public static final String KEY_WINDOW_TRIANGLE_SIZE = "window_triangle_size";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -42,6 +43,7 @@ public class Common {
 	public static final boolean DEFAULT_NOTIFICATION_LONGPRESS_OPTION = false;
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_TRIANGLE_ALPHA = 1f;
+	public static final int DEFAULT_WINDOW_TRIANGLE_SIZE = 36;
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;

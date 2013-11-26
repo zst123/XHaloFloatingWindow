@@ -194,6 +194,10 @@ public class MovableWindow {
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 				triangle.setBackground(background);
 				
+				int size = mPref.getInt(Common.KEY_WINDOW_TRIANGLE_SIZE, Common.DEFAULT_WINDOW_TRIANGLE_SIZE);
+				triangle.getLayoutParams().width = size;
+				triangle.getLayoutParams().height = size;
+				
 				Resizable resize = new Resizable(context, window);
 				triangle.setOnTouchListener(resize);
 				

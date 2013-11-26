@@ -98,6 +98,13 @@
             android:key="window_triangle_alpha"
             android:summary="@string/pref_movable_triangle_alpha_summary"
             android:title="@string/pref_movable_triangle_alpha_title" />
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+            defaultValue="36"
+            maximum="100"
+            minimum="1"
+            android:key="window_triangle_size"
+            android:summary="@string/pref_movable_triangle_size_summary"
+            android:title="@string/pref_movable_triangle_size_title" />
     </PreferenceScreen>
 
      <!-- Screen 5: Others -->
