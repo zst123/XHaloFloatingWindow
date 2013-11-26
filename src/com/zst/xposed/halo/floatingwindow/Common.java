@@ -27,6 +27,7 @@ public class Common {
 	public static final String KEY_WINDOW_TRIANGLE_SIZE = "window_triangle_size";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
+	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;

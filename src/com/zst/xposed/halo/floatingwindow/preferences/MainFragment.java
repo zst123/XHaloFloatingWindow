@@ -1,7 +1,10 @@
 package com.zst.xposed.halo.floatingwindow.preferences;
 
+import java.io.DataOutputStream;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -36,6 +39,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		addPreferencesFromResource(R.xml.pref_main);
 		findPreference(Common.KEY_GRAVITY).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_KEYBOARD_MODE).setOnPreferenceClickListener(this);
+		findPreference(Common.KEY_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
 	}
@@ -49,11 +53,14 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		}else if (k.equals(Common.KEY_KEYBOARD_MODE)) {
 			showKeyboardDialog();
 			return true;
+		}else if (k.equals(Common.KEY_RESTART_SYSTEMUI)) {
+			showKillPackageDialog("com.android.systemui");
+			return true;
 		}
 		return false;
 	}
 	
-	public void showGravityDialog() {
+	private void showGravityDialog() {
 		View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_gravity, null, false);
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		final AlertDialog dialog = builder.create();
@@ -159,5 +166,28 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			}
 		});
 		dialog.show();
+	}
+	
+	private void showKillPackageDialog(final String pkgToKill) {
+		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
+		build.setMessage(R.string.pref_systemui_restart_title);
+		build.setNegativeButton(android.R.string.cancel, null);
+		build.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				try {
+					Process su = Runtime.getRuntime().exec("su");
+					if (su == null) return;
+					DataOutputStream os = new DataOutputStream(su.getOutputStream());
+					os.writeBytes("pkill " + pkgToKill + "\n");
+					os.writeBytes("exit\n");
+					su.waitFor();
+					os.close();
+				} catch (Throwable e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		build.show();
 	}
 }
