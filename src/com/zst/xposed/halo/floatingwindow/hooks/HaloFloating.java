@@ -103,21 +103,21 @@ public class HaloFloating {
 				floatingWindow = false;
 				Intent i = null;
 				Object stack = null;
-				ActivityInfo aInfo = null;
+				//ActivityInfo aInfo = null;
 				
 				if (Build.VERSION.SDK_INT <= 17) { // JB 4.2 and below
 					i = (Intent) param.args[4];
-					aInfo = (ActivityInfo) param.args[6];
+					//aInfo = (ActivityInfo) param.args[6];
 					stack = param.args[1];
 				} else if (Build.VERSION.SDK_INT == 18) { 
 					// JB 4.3 has additional _launchedFromPackage. so indexs are affected
 					i = (Intent) param.args[5];
-					aInfo = (ActivityInfo) param.args[7];
+					//aInfo = (ActivityInfo) param.args[7];
 					stack = param.args[1];
 				} else if (Build.VERSION.SDK_INT == 19) { 
 					// Fuck Google. Changed params order again for KitKat.
 					i = (Intent) param.args[4];
-					aInfo = (ActivityInfo) param.args[6];
+					//aInfo = (ActivityInfo) param.args[6];
 					try {
 						Object stackSupervisor = param.args[12]; // mStackSupervisor
 						stack = XposedHelpers.callMethod(stackSupervisor, "getFocusedStack");
@@ -143,7 +143,7 @@ public class HaloFloating {
 				ArrayList<?> alist = (ArrayList<?>) mHistoryField.get(stack);
 						
 				boolean isFloating;
-				boolean taskAffinity;
+				//XXX boolean taskAffinity;
 				if (alist.size() > 0) {
 					if (Build.VERSION.SDK_INT == 19) {
 						Object taskRecord = alist.get(alist.size() - 1);
@@ -151,23 +151,23 @@ public class HaloFloating {
 						taskRecord_intent_field.setAccessible(true);
 						Intent taskRecord_intent = (Intent) taskRecord_intent_field.get(taskRecord);
 						isFloating = (taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-						String pkgName = taskRecord_intent.getPackage();
-						taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
+						//String pkgName = taskRecord_intent.getPackage();
+						//taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
 					} else {
 						Object baseRecord = alist.get(alist.size() - 1); // ActivityRecord
 						Field baseRecordField = baseRecord.getClass().getDeclaredField("intent");
 						baseRecordField.setAccessible(true);
 						Intent baseRecord_intent = (Intent) baseRecordField.get(baseRecord);
 						isFloating = (baseRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-						Field baseRecordField_2 = baseRecord.getClass().getDeclaredField("packageName");
-						baseRecordField_2.setAccessible(true);
-						String baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
-						taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
+						//Field baseRecordField_2 = baseRecord.getClass().getDeclaredField("packageName");
+						//baseRecordField_2.setAccessible(true);
+						//String baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
+						//taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
 						/*baseRecord.packageName*/
 					}
 					// If the current intent is not a new task we will check its top parent.
 					// Perhaps it started out as a multiwindow in which case we pass the flag on
-					if (isFloating && taskAffinity) {
+					if (isFloating /*&& taskAffinity*/) {
 						Field intentField = param.thisObject.getClass().getDeclaredField("intent");
 						intentField.setAccessible(true);
 						Intent newer = (Intent) intentField.get(param.thisObject);
@@ -271,6 +271,7 @@ public class HaloFloating {
 		});
 	}
 	
+	// FIXME If app is open in bg, hook will remain as onresume.
 	private static void inject_Activity() throws Throwable {
 		final boolean isMovable = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW);
 		final String class_name = isMovable ? "onStart" : "onResume";
