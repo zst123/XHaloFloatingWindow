@@ -46,6 +46,9 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MovableWindow {
 	
+	static final String INTENT_APP_TOKEN = "token";
+	static final String INTENT_APP_ID = "id";
+	
 	static XSharedPreferences mPref;
 	static XModuleResources mModRes;
 	/* App ActionBar Moving Values */
@@ -108,8 +111,8 @@ public class MovableWindow {
 	final static BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			IBinder token = (IBinder) intent.getExtra("token");
-			int taskId = intent.getIntExtra("id", 0);
+			IBinder token = (IBinder) intent.getExtra(INTENT_APP_TOKEN);
+			int taskId = intent.getIntExtra(INTENT_APP_ID, 0);
 			
 			iWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
 			iActivityManager = (ActivityManager) mSystemContext
@@ -348,8 +351,8 @@ public class MovableWindow {
 	
 	private static void changeFocusApp(Activity a) throws Throwable {
 		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
-		i.putExtra("token", a.getActivityToken());
-		i.putExtra("id", a.getTaskId());
+		i.putExtra(INTENT_APP_TOKEN, a.getActivityToken());
+		i.putExtra(INTENT_APP_ID, a.getTaskId());
 		a.sendBroadcast(i);
 	}
 	
