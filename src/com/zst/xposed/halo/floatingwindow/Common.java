@@ -27,6 +27,7 @@ public class Common {
 	public static final String KEY_WINDOW_TRIANGLE_SIZE = "window_triangle_size";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
+	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
 	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
 	
 	/* Preference defaults */
@@ -47,6 +48,7 @@ public class Common {
 	public static final int DEFAULT_WINDOW_TRIANGLE_SIZE = 36;
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
+	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;

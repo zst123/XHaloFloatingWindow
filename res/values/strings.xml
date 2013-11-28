@@ -59,6 +59,8 @@
     <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications.</string>
     <string name="pref_notif_single_click_title">Single Click Notification Halo</string>
     <string name="pref_notif_single_click_summary">Use together with \"Long Press Notification Option\". Unlike the above, it adds \"Open Normally\" when long-pressing &amp; allows single-clicking notification to open in halo.</string>
+    <string name="pref_notif_floating_qs_title">Quick Settings in Halo</string>
+    <string name="pref_notif_floating_qs_summary">Open Quick Settings tiles in floating window</string>
     <string name="pref_systemui_restart_title">Restart SystemUI</string>
     <string name="pref_systemui_restart_summary">Restart for changes to take effect.\n(Requires SU Permission)</string>
     

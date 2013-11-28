@@ -142,6 +142,12 @@
             android:summary="@string/pref_notif_single_click_summary"
             android:title="@string/pref_notif_single_click_title" />
         
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="system_notif_floating_quick_settings"
+            android:summary="@string/pref_notif_floating_qs_summary"
+            android:title="@string/pref_notif_floating_qs_title" />
+        
         <Preference
             android:key="restart_systemui"
             android:summary="@string/pref_systemui_restart_summary"

@@ -1,5 +1,6 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
+import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import java.lang.reflect.Field;
@@ -32,6 +33,17 @@ public class NotificationShadeHook {
 	public static void hook(final LoadPackageParam lpp, final XSharedPreferences pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
 		pref.reload();
+		
+		try {
+			if (pref.getBoolean(Common.KEY_FLOATING_QUICK_SETTINGS,
+					Common.DEFAULT_FLOATING_QUICK_SETTINGS)) {
+				injectQuickSettings(lpp);
+			}
+		} catch (Throwable t) {
+			XposedBridge.log(Common.LOG_TAG + "(QuickSettingsHaloInject)");
+			XposedBridge.log(t);
+		}
+		
 		mLongPressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
 				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION);
 		if (!mLongPressEnabled) return;
@@ -160,6 +172,26 @@ public class NotificationShadeHook {
 					});
 				}
 				fieldRow.set(entry, newRow);
+			}
+		});
+	}
+	
+	static Intent stolenIntent;
+	private static void injectQuickSettings(final LoadPackageParam lpp) throws Throwable{
+		final Class<?> clazz = findClass("com.android.systemui.quicksettings.QuickSettingsTile",
+				lpp.classLoader);
+		findAndHookMethod(clazz, "startSettingsActivity", Intent.class, boolean.class, 
+				new XC_MethodHook() {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				stolenIntent = (Intent) param.args[0];
+				param.args[0] = new Intent();
+			}
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				final Context ctx = (Context) clazz.getDeclaredField(("mContext"))
+						.get(param.thisObject);
+				stolenIntent.setFlags(Common.FLAG_FLOATING_WINDOW |
+						Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				ctx.startActivity(stolenIntent);
 			}
 		});
 	}
