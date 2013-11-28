@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.ActivityThread;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.view.Window;
 
@@ -173,14 +172,9 @@ public class HaloFloating {
 						Intent newer = (Intent) intentField.get(param.thisObject);
 						newer.addFlags(Common.FLAG_FLOATING_WINDOW);
 						intentField.set(param.thisObject, newer);
-						Field fullS = param.thisObject.getClass().getDeclaredField("fullscreen");
-						fullS.setAccessible(true);
-						fullS.set(param.thisObject, Boolean.FALSE);
 						floatingWindow = true;
 					}
 				}
-				Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
-				tt.setAccessible(true);
 				if (floatingWindow) {
 					int intent_flag = i.getFlags();
 					intent_flag &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
@@ -189,6 +183,8 @@ public class HaloFloating {
 					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
 						i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 					}
+					Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
+					tt.setAccessible(true);
 					tt.set(param.thisObject, Boolean.FALSE);
 				}
 			}
@@ -196,6 +192,7 @@ public class HaloFloating {
 	}
 	
 	/* for disabling app pause */
+	static Field activityField;
 	static Object previous = null;
 	static boolean appPauseEnabled;
 	private static void injectActivityStack(final LoadPackageParam lpp) throws Throwable {
@@ -210,20 +207,20 @@ public class HaloFloating {
 				if (appPauseEnabled) return;
 				
 				Class<?> clazz = param.thisObject.getClass();
-				Field field = clazz.getDeclaredField(("mResumedActivity"));
-				field.setAccessible(true);
+				activityField = clazz.getDeclaredField(("mResumedActivity"));
+				activityField.setAccessible(true);
 				previous = null;
-				previous = field.get(param.thisObject);
-				field.set(param.thisObject, null);
+				previous = activityField.get(param.thisObject);
+				activityField.set(param.thisObject, null);
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!floatingWindow) return;
 				if (appPauseEnabled) return;
 				if (previous != null) {
 					Class<?> clazz = param.thisObject.getClass();
-					Field field = clazz.getDeclaredField(("mResumedActivity"));
-					field.setAccessible(true);
-					field.set(param.thisObject, previous);
+					if (activityField == null) activityField = clazz.getDeclaredField(("mResumedActivity"));
+					activityField.setAccessible(true);
+					activityField.set(param.thisObject, previous);
 				}
 			}
 		});
