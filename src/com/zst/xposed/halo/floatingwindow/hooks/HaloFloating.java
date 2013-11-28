@@ -98,6 +98,8 @@ public class HaloFloating {
 				lpparam.classLoader), new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
 			@Override
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				mPref.reload();
+				
 				isHoloFloat = false;
 				floatingWindow = false;
 				Intent i = null;
@@ -296,6 +298,7 @@ public class HaloFloating {
 	private static void injectPerformStop() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "performStop", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				mPref.reload();
 				if (mPref.getBoolean(Common.KEY_DISABLE_AUTO_CLOSE, Common.DEFAULT_DISABLE_AUTO_CLOSE)) return;
 				
 				Activity thiz = (Activity) param.thisObject;
