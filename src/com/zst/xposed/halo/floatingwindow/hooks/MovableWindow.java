@@ -147,7 +147,7 @@ public class MovableWindow {
 		});
 		
 		XposedBridge.hookAllMethods(Activity.class, "onResume", new XC_MethodHook() {
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!isHoloFloat) return;
 				if (overlayView != null) {
 					FrameLayout decorView = (FrameLayout) activity.getWindow()
