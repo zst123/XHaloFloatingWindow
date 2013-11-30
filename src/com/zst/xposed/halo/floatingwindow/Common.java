@@ -29,6 +29,7 @@ public class Common {
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
 	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
 	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
+	public static final String KEY_FORCE_OPEN_APP_ABOVE_HALO = "window_force_open_app_above_halo";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -49,6 +50,7 @@ public class Common {
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;
+	public static final boolean DEFAULT_FORCE_OPEN_APP_ABOVE_HALO = false;
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;

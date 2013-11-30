@@ -88,6 +88,12 @@
             android:key="window_show_recents"
             android:summary="@string/pref_show_recents_summary"
             android:title="@string/pref_show_recents_title" />
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="window_force_open_app_above_halo"
+            android:summary="@string/pref_force_open_app_above_halo_summary"
+            android:title="@string/pref_force_open_app_above_halo_title" />
     </PreferenceScreen>
     
     <!-- Screen 4: Movable Resizable -->
