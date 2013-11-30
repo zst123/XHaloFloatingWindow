@@ -21,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.ServiceManager;
 import android.util.Log;
@@ -195,8 +196,12 @@ public class MovableWindow {
 				background.setAlpha((int)(alpha * 255));
 				
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
-				triangle.setBackground(background);
-				
+				if (Build.VERSION.SDK_INT >= 16) {
+					triangle.setBackground(background);
+				} else {
+					triangle.setBackgroundDrawable(background);
+				}
+								
 				int size = mPref.getInt(Common.KEY_WINDOW_TRIANGLE_SIZE, Common.DEFAULT_WINDOW_TRIANGLE_SIZE);
 				triangle.getLayoutParams().width = size;
 				triangle.getLayoutParams().height = size;
