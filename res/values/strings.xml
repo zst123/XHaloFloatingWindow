@@ -47,6 +47,7 @@
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
+    
 	<string name="pref_movable_triangle_color_title">Triangle Color</string>
 	<string name="pref_movable_triangle_color_summary">Color of the corner triangle for resizing</string>
 	<string name="pref_movable_triangle_alpha_title">Triangle Alpha</string>
@@ -55,6 +56,19 @@
 	<string name="pref_movable_triangle_size_summary">Size of the corner triangle for resizing</string>
 	<string name="pref_movable_triangle_lp_action_title">Triangle Long Press Action</string>
 	<string name="pref_movable_triangle_lp_action_summary">The action that will occur when long pressing the corner triangle.</string>
+	
+	<string name="pref_movable_quadrant_enable_title">Show Quadrant</string>
+	<string name="pref_movable_quadrant_enable_summary">Show a quadrant on the bottom right of the window for additional actions.</string>
+	<string name="pref_movable_quadrant_color_title">Quadrant Color</string>
+	<string name="pref_movable_quadrant_color_summary">Color of the corner quadrant</string>
+	<string name="pref_movable_quadrant_alpha_title">Quadrant Alpha</string>
+	<string name="pref_movable_quadrant_alpha_summary">Transparency of the corner quadrant</string>
+	<string name="pref_movable_quadrant_size_title">Quadrant Size</string>
+	<string name="pref_movable_quadrant_size_summary">Size of the corner quadrant</string>
+	<string name="pref_movable_quadrant_sp_action_title">Quadrant Single Press Action</string>
+	<string name="pref_movable_quadrant_sp_action_summary">The action that will occur when clicking the corner quadrant.</string>
+	<string name="pref_movable_quadrant_lp_action_title">Quadrant Long Press Action</string>
+	<string name="pref_movable_quadrant_lp_action_summary">The action that will occur when long pressing the corner quadrant.</string>
 	
 	<!-- 4th Preference Corner Actions -->
 	<string name="option_movable_corner_nothing">Do Nothing</string>

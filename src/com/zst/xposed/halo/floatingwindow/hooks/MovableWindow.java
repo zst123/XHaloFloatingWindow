@@ -66,11 +66,14 @@ public class MovableWindow {
 	private static Activity activity; // Current app activity
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	
+	static ImageView quadrant;
 	static ImageView triangle;
 	static View overlayView;
 	
 	/* Corner Button Actions Constants*/
 	static final int ACTION_LONGPRESS_TRIANGLE = 0x1;
+	static final int ACTION_CLICK_QUADRANT = 0x2;
+	static final int ACTION_LONGPRESS_QUADRANT = 0x3;
 	
 	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p) throws Throwable {
 		mPref = p;
@@ -190,28 +193,42 @@ public class MovableWindow {
 				decorView.addView(overlayView, -1, paramz);
 				
 				String color_str = mPref.getString(Common.KEY_WINDOW_TRIANGLE_COLOR, Common.DEFAULT_WINDOW_TRIANGLE_COLOR);
-				Drawable background = mModRes.getDrawable(R.drawable.movable_corner);
+				Drawable triangle_background = mModRes.getDrawable(R.drawable.movable_corner);
 				if (!color_str.equals(Common.DEFAULT_WINDOW_TRIANGLE_COLOR)) { //If not white, apply
-					background.setColorFilter(Color.parseColor("#" + color_str), Mode.MULTIPLY);
+					triangle_background.setColorFilter(Color.parseColor("#" + color_str), Mode.MULTIPLY);
 				}
+				Drawable quadrant_background = mModRes.getDrawable(R.drawable.movable_quadrant);
+				String color_quadrant = mPref.getString(Common.KEY_WINDOW_QUADRANT_COLOR, Common.DEFAULT_WINDOW_QUADRANT_COLOR);
+				if (!color_quadrant.equals(Common.DEFAULT_WINDOW_QUADRANT_COLOR)) { //If not white, apply
+					quadrant_background.setColorFilter(Color.parseColor("#" + color_quadrant), Mode.MULTIPLY);
+				}
+				float triangle_alpha = mPref.getFloat(Common.KEY_WINDOW_TRIANGLE_ALPHA, Common.DEFAULT_WINDOW_TRIANGLE_ALPHA);
+				triangle_background.setAlpha((int)(triangle_alpha * 255));
 				
-				float alpha = mPref.getFloat(Common.KEY_WINDOW_TRIANGLE_ALPHA, Common.DEFAULT_WINDOW_TRIANGLE_ALPHA);
-				background.setAlpha((int)(alpha * 255));
+				float quadrant_alpha = mPref.getFloat(Common.KEY_WINDOW_QUADRANT_ALPHA, Common.DEFAULT_WINDOW_QUADRANT_ALPHA);
+				quadrant_background.setAlpha((int)(quadrant_alpha * 255));
 				
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
+				quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
+				
 				if (Build.VERSION.SDK_INT >= 16) {
-					triangle.setBackground(background);
+					triangle.setBackground(triangle_background);
+					quadrant.setBackground(quadrant_background);
 				} else {
-					triangle.setBackgroundDrawable(background);
+					triangle.setBackgroundDrawable(triangle_background);
+					quadrant.setBackgroundDrawable(quadrant_background);
 				}
 								
-				int size = mPref.getInt(Common.KEY_WINDOW_TRIANGLE_SIZE, Common.DEFAULT_WINDOW_TRIANGLE_SIZE);
-				triangle.getLayoutParams().width = size;
-				triangle.getLayoutParams().height = size;
+				int triangle_size = mPref.getInt(Common.KEY_WINDOW_TRIANGLE_SIZE, Common.DEFAULT_WINDOW_TRIANGLE_SIZE);
+				triangle.getLayoutParams().width = triangle_size;
+				triangle.getLayoutParams().height = triangle_size;
+				
+				int quadrant_size = mPref.getInt(Common.KEY_WINDOW_QUADRANT_SIZE, Common.DEFAULT_WINDOW_QUADRANT_SIZE);
+				quadrant.getLayoutParams().width = quadrant_size;
+				quadrant.getLayoutParams().height = quadrant_size;
 				
 				Resizable resize = new Resizable(context, window);
 				triangle.setOnTouchListener(resize);
-				
 				triangle.setOnLongClickListener(new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
@@ -219,6 +236,28 @@ public class MovableWindow {
 						return true;
 					}
 				});
+				
+				boolean quadrant_enabled = mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_ENABLE,
+						Common.DEFAULT_WINDOW_QUADRANT_ENABLE);
+				if (quadrant_enabled) {
+					quadrant.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							cornerButtonClickAction(ACTION_CLICK_QUADRANT);
+						}
+					});
+					
+					quadrant.setOnLongClickListener(new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View v) {
+							cornerButtonClickAction(ACTION_LONGPRESS_QUADRANT);
+							return true;
+						}
+					});
+				} else {
+					quadrant.getLayoutParams().width = 0;
+					quadrant.getLayoutParams().height = 0;
+				}
 				
 				setDragActionBarVisibility(false);
 				initActionBar(activity);
@@ -232,6 +271,15 @@ public class MovableWindow {
 		case ACTION_LONGPRESS_TRIANGLE:
 			index = mPref.getString(Common.KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION,
 					Common.DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION);
+			break;
+		case ACTION_CLICK_QUADRANT:
+			index = mPref.getString(Common.KEY_WINDOW_QUADRANT_CLICK_ACTION,
+					Common.DEFAULT_WINDOW_QUADRANT_CLICK_ACTION);
+			break;
+		case ACTION_LONGPRESS_QUADRANT:
+			index = mPref.getString(Common.KEY_WINDOW_QUADRANT_LONGPRESS_ACTION,
+					Common.DEFAULT_WINDOW_QUADRANT_LONGPRESS_ACTION);
+			break;
 		}
 		switch (Integer.parseInt(index)) {
 		case 0: // Do Nothing
@@ -250,6 +298,7 @@ public class MovableWindow {
 		View header = overlayView.findViewById(R.id.movable_action_bar);
 		header.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
 		triangle.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
+		quadrant.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
 	}
 	
 	private static void showTransparencyDialogVisibility(final Window win) {

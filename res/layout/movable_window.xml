@@ -10,6 +10,17 @@
     <!-- There'll be inflation problems cause we inflate as another activity -->
 
     <ImageView
+        android:id="@+id/movable_quadrant"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#ffffff"
+        android:clickable="true"
+        android:longClickable="true"
+        android:scaleType="fitXY" />
+
+    <ImageView
         android:id="@+id/movable_corner"
         android:layout_width="36dp"
         android:layout_height="36dp"
