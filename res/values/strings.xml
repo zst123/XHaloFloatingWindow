@@ -48,6 +48,11 @@
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
     
+    <string name="pref_movable_sub_triangle_title">Triangle Settings</string>
+    <string name="pref_movable_sub_triangle_summary">Change Bottom Left Triangle Properties</string>
+    <string name="pref_movable_sub_quadrant_title">Quadrant Settings</string>
+    <string name="pref_movable_sub_quadrant_summary">Change Bottom Right Quadrant Properties</string>
+    
 	<string name="pref_movable_triangle_color_title">Triangle Color</string>
 	<string name="pref_movable_triangle_color_summary">Color of the corner triangle for resizing</string>
 	<string name="pref_movable_triangle_alpha_title">Triangle Alpha</string>
