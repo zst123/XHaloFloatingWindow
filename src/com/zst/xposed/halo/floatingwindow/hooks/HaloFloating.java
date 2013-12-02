@@ -272,7 +272,6 @@ public class HaloFloating {
 		});
 	}
 	
-	// FIXME If app is open in bg, hook will remain as onresume.
 	private static void inject_Activity() throws Throwable {
 		final boolean isMovable = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW);
 		final String class_name = isMovable ? "onStart" : "onResume";
@@ -290,7 +289,6 @@ public class HaloFloating {
 				isHoloFloat = (intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 				if (isHoloFloat) {
 					LayoutScaling.appleFloating(mPref, thiz.getWindow());
-					return;
 				}
 			}
 		});
@@ -299,11 +297,10 @@ public class HaloFloating {
 	
 	private static void injectPerformStop() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "performStop", new XC_MethodHook() {
-			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {		
+				Activity thiz = (Activity) param.thisObject;
 				mPref.reload();
 				if (mPref.getBoolean(Common.KEY_DISABLE_AUTO_CLOSE, Common.DEFAULT_DISABLE_AUTO_CLOSE)) return;
-				
-				Activity thiz = (Activity) param.thisObject;
 				if (!thiz.isChangingConfigurations() && (thiz.getWindow() != null) && isHoloFloat
 						&& !thiz.isFinishing()) {
 					thiz.finishAffinity();
@@ -327,12 +324,7 @@ public class HaloFloating {
 				String name = window.getContext().getPackageName();
 				if (name.startsWith("com.android.systemui")) return;
 				
-				if (window.getDecorView().getTag(10000) != null) return;
-				// Return so it doesnt override our custom movable window
-				// scaling
-				
 				LayoutScaling.appleFloating(mPref, window);
-				window.getDecorView().setTag(10000, (Object) 1);
 			}
 		});
 	}
