@@ -69,6 +69,9 @@ public class MovableWindow {
 	static ImageView triangle;
 	static View overlayView;
 	
+	/* Corner Button Actions Constants*/
+	static final int ACTION_LONGPRESS_TRIANGLE = 0x1;
+	
 	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p) throws Throwable {
 		mPref = p;
 		try {
@@ -212,7 +215,7 @@ public class MovableWindow {
 				triangle.setOnLongClickListener(new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(View v) {
-						setDragActionBarVisibility(true);
+						cornerButtonClickAction(ACTION_LONGPRESS_TRIANGLE);
 						return true;
 					}
 				});
@@ -223,6 +226,25 @@ public class MovableWindow {
 		});
 	}
 	
+	private static void cornerButtonClickAction(int type_of_action) {
+		String index = "0";
+		switch (type_of_action) {
+		case ACTION_LONGPRESS_TRIANGLE:
+			index = mPref.getString(Common.KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION,
+					Common.DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION);
+		}
+		switch (Integer.parseInt(index)) {
+		case 0: // Do Nothing
+			break;
+		case 1: // Drag & Move Bar
+			setDragActionBarVisibility(true);
+			break;
+		case 2:
+			activity.finishAffinity();
+			break;
+		}
+	}
+
 	// Show and hide the action bar we injected for dragging
 	private static void setDragActionBarVisibility(boolean visible) {
 		View header = overlayView.findViewById(R.id.movable_action_bar);

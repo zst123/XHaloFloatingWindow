@@ -25,6 +25,7 @@ public class Common {
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	public static final String KEY_WINDOW_TRIANGLE_ALPHA = "window_triangle_alpha";
 	public static final String KEY_WINDOW_TRIANGLE_SIZE = "window_triangle_size";
+	public static final String KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION = "window_triangle_lp_action";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
 	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
@@ -47,6 +48,7 @@ public class Common {
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_TRIANGLE_ALPHA = 1f;
 	public static final int DEFAULT_WINDOW_TRIANGLE_SIZE = 36;
+	public static final String DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION = "1";
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;

@@ -119,6 +119,7 @@
             android:key="window_triangle_alpha"
             android:summary="@string/pref_movable_triangle_alpha_summary"
             android:title="@string/pref_movable_triangle_alpha_title" />
+        
         <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
             defaultValue="36"
             maximum="100"
@@ -127,6 +128,15 @@
             android:key="window_triangle_size"
             android:summary="@string/pref_movable_triangle_size_summary"
             android:title="@string/pref_movable_triangle_size_title" />
+        
+        <ListPreference
+            android:defaultValue="1"
+            android:dependency="window_movable"
+            android:entries="@array/option_movable_corner_entries"
+            android:entryValues="@array/option_movable_corner_values"
+            android:key="window_triangle_lp_action"
+            android:summary="@string/pref_movable_triangle_lp_action_summary"
+            android:title="@string/pref_movable_triangle_lp_action_title" />
     </PreferenceScreen>
 
      <!-- Screen 5: Others -->

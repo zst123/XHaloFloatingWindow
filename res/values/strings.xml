@@ -53,6 +53,13 @@
 	<string name="pref_movable_triangle_alpha_summary">Transparency of the corner triangle for resizing</string>
 	<string name="pref_movable_triangle_size_title">Triangle Size</string>
 	<string name="pref_movable_triangle_size_summary">Size of the corner triangle for resizing</string>
+	<string name="pref_movable_triangle_lp_action_title">Triangle Long Press Action</string>
+	<string name="pref_movable_triangle_lp_action_summary">The action that will occur when long pressing the corner triangle.</string>
+	
+	<!-- 4th Preference Corner Actions -->
+	<string name="option_movable_corner_nothing">Do Nothing</string>
+	<string name="option_movable_corner_dnm">Show Drag To Move Bar</string>
+	<string name="option_movable_corner_close">Close App</string>
 
     <!-- 5th Preference Screen -->
     <string name="pref_systemui_top_title">SystemUI</string>
