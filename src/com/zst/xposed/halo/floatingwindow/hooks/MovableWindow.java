@@ -288,7 +288,11 @@ public class MovableWindow {
 			setDragActionBarVisibility(true);
 			break;
 		case 2:
-			activity.finishAffinity();
+			if (Build.VERSION.SDK_INT >= 16) {
+				activity.finishAffinity();
+			} else {
+				activity.finish();
+			}
 			break;
 		}
 	}
