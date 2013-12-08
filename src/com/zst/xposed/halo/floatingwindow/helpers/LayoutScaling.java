@@ -30,6 +30,7 @@ public class LayoutScaling {
 		params.alpha = alp;
 		params.dimAmount = dimm;
 		window.setAttributes(params);
+		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 		
 		scaleFloatingWindow(pref, window.getContext(), window);
 	}
