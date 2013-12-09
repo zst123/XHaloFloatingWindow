@@ -110,7 +110,18 @@
     <string name="keyboard_default">Default</string>
     <string name="keyboard_pan">Pan Up</string>
     <string name="keyboard_scale">Scale</string>
+    
     <!-- Gravity -->
+    <string name="option_gravity_1">Top Left Corner</string>
+    <string name="option_gravity_2">Top Center</string>
+    <string name="option_gravity_3">Top Right Corner</string>
+    <string name="option_gravity_4">Left Center</string>
+    <string name="option_gravity_5">Center (Default)</string>
+    <string name="option_gravity_6">Right Center</string>
+    <string name="option_gravity_7">Bottom Left Corner</string>
+    <string name="option_gravity_8">Bottom Center</string>
+    <string name="option_gravity_9">Bottom Right Corner</string>
+    
     <!-- ColorPicker -->
     <string name="apply">Apply</string>
     <string name="arrow_symbol">➙</string>
