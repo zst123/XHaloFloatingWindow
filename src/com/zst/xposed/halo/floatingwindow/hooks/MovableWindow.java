@@ -6,6 +6,7 @@ import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
 import com.zst.xposed.halo.floatingwindow.helpers.Resizable;
+import com.zst.xposed.halo.floatingwindow.helpers.RightResizable;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -240,6 +241,9 @@ public class MovableWindow {
 				boolean quadrant_enabled = mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_ENABLE,
 						Common.DEFAULT_WINDOW_QUADRANT_ENABLE);
 				if (quadrant_enabled) {
+					RightResizable right_resize = new RightResizable(window);
+					quadrant.setOnTouchListener(right_resize);
+					
 					quadrant.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
