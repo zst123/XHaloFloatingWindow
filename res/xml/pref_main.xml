@@ -108,6 +108,19 @@
         <PreferenceScreen
             android:summary="@string/pref_movable_sub_triangle_summary"
             android:title="@string/pref_movable_sub_triangle_title" >
+            <SwitchPreference
+                android:defaultValue="true"
+                android:key="window_triangle_enabled"
+                android:summary="@string/pref_movable_triangle_enable_summary"
+                android:title="@string/pref_movable_triangle_enable_title" />
+
+            <CheckBoxPreference
+            	android:defaultValue="true"
+            	android:key="window_triangle_resize_enabled"
+            	android:dependency="window_movable"
+            	android:summary="@string/pref_movable_resize_enabled_summary"
+            	android:title="@string/pref_movable_resize_enabled_title" />
+
             <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
                 defaultValue="FFFFFF"
                 android:dependency="window_movable"
@@ -152,7 +165,14 @@
                 android:key="window_quadrant_enabled"
                 android:summary="@string/pref_movable_quadrant_enable_summary"
                 android:title="@string/pref_movable_quadrant_enable_title" />
-
+            
+            <CheckBoxPreference
+            	android:defaultValue="false"
+            	android:key="window_quadrant_resize_enabled"
+            	android:dependency="window_movable"
+            	android:summary="@string/pref_movable_resize_enabled_summary"
+            	android:title="@string/pref_movable_resize_enabled_title" />
+            
             <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
                 defaultValue="FFFFFF"
                 android:dependency="window_quadrant_enabled"

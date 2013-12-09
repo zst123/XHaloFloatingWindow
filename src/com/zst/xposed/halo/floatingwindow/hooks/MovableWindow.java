@@ -228,21 +228,34 @@ public class MovableWindow {
 				quadrant.getLayoutParams().width = quadrant_size;
 				quadrant.getLayoutParams().height = quadrant_size;
 				
-				Resizable resize = new Resizable(context, window);
-				triangle.setOnTouchListener(resize);
-				triangle.setOnLongClickListener(new View.OnLongClickListener() {
-					@Override
-					public boolean onLongClick(View v) {
-						cornerButtonClickAction(ACTION_LONGPRESS_TRIANGLE);
-						return true;
+				boolean triangle_enabled = mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_ENABLE,
+						Common.DEFAULT_WINDOW_TRIANGLE_ENABLE);
+				if (triangle_enabled) {
+					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_RESIZE_ENABLED,
+							Common.DEFAULT_WINDOW_TRIANGLE_RESIZE_ENABLED)) {
+						Resizable resize = new Resizable(context, window);
+						triangle.setOnTouchListener(resize);
 					}
-				});
+					triangle.setOnLongClickListener(new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View v) {
+							cornerButtonClickAction(ACTION_LONGPRESS_TRIANGLE);
+							return true;
+						}
+					});
+				} else {
+					triangle.getLayoutParams().width = 0;
+					triangle.getLayoutParams().height = 0;
+				}
 				
 				boolean quadrant_enabled = mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_ENABLE,
 						Common.DEFAULT_WINDOW_QUADRANT_ENABLE);
 				if (quadrant_enabled) {
-					RightResizable right_resize = new RightResizable(window);
-					quadrant.setOnTouchListener(right_resize);
+					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_RESIZE_ENABLED,
+							Common.DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED)) {
+						RightResizable right_resize = new RightResizable(window);
+						quadrant.setOnTouchListener(right_resize);
+					}
 					
 					quadrant.setOnClickListener(new View.OnClickListener() {
 						@Override
