@@ -391,6 +391,11 @@ public class MovableWindow {
 		Movable moveable = new Movable(a.getWindow());
 		header.setOnTouchListener(moveable);
 		
+		final TextView dtm_title = (TextView) overlayView.findViewById(R.id.textView1);
+		dtm_title.setText(mModRes.getString(R.string.dnm_title));
+		final TextView trans_title = (TextView) overlayView.findViewById(R.id.movable_textView2);
+		trans_title.setText(mModRes.getString(R.string.dnm_transparency));
+		
 		ImageButton done = (ImageButton) overlayView.findViewById(R.id.movable_done);
 		done.setImageDrawable(mModRes.getDrawable(R.drawable.movable_done));
 		done.setOnClickListener(new View.OnClickListener() {
@@ -405,9 +410,8 @@ public class MovableWindow {
 		overflow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				final String item1 = "Transparency";
-				final String item2 = "Close App";
-				//TODO strings.xml
+				final String item1 = mModRes.getString(R.string.dnm_transparency);
+				final String item2 = mModRes.getString(R.string.dnm_close_app);
 				PopupMenu popupMenu = new PopupMenu(overflow.getContext(), (View) overflow);
 				Menu menu = popupMenu.getMenu();
 				menu.add(item1);

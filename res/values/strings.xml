@@ -115,5 +115,10 @@
     <string name="apply">Apply</string>
     <string name="arrow_symbol">➙</string>
     <string name="color_hex">Color Hex</string>
+    
+    <!-- Drag & Move Bar -->
+    <string name="dnm_title">Drag To Move</string>
+    <string name="dnm_transparency">Transparency</string>
+    <string name="dnm_close_app">Close App</string>
 
 </resources>
