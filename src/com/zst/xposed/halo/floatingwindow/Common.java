@@ -35,6 +35,9 @@ public class Common {
 	public static final String KEY_WINDOW_QUADRANT_CLICK_ACTION = "window_quadrant_sp_action";
 	public static final String KEY_WINDOW_QUADRANT_LONGPRESS_ACTION = "window_quadrant_lp_action";
 	public static final String KEY_WINDOW_QUADRANT_RESIZE_ENABLED = "window_quadrant_resize_enabled";
+	public static final String KEY_WINDOW_BORDER_ENABLED = "window_border_enabled";
+	public static final String KEY_WINDOW_BORDER_COLOR = "window_border_color";
+	public static final String KEY_WINDOW_BORDER_THICKNESS = "window_border_thickness";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
 	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
@@ -67,6 +70,9 @@ public class Common {
 	public static final String DEFAULT_WINDOW_QUADRANT_CLICK_ACTION = "0";
 	public static final String DEFAULT_WINDOW_QUADRANT_LONGPRESS_ACTION = "0";
 	public static final boolean DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED = false;
+	public static final boolean DEFAULT_WINDOW_BORDER_ENABLED = false;
+	public static final String DEFAULT_WINDOW_BORDER_COLOR = "FFFFFF";
+	public static final int DEFAULT_WINDOW_BORDER_THICKNESS = 0;
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;

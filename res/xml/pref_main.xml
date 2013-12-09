@@ -216,6 +216,32 @@
                 android:title="@string/pref_movable_quadrant_lp_action_title" />
         </PreferenceScreen>
 
+        <!-- Border -->
+        <PreferenceScreen
+            android:summary="@string/pref_movable_sub_border_summary"
+            android:title="@string/pref_movable_sub_border_title" >
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="window_border_enabled"
+                android:summary="@string/pref_movable_border_enable_summary"
+                android:title="@string/pref_movable_border_enable_title" />
+            
+            <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
+                defaultValue="FFFFFF"
+                android:dependency="window_border_enabled"
+                android:key="window_border_color"
+                android:summary="@string/pref_movable_border_color_summary"
+                android:title="@string/pref_movable_border_color_title" />
+            
+            <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+                defaultValue="0"
+                maximum="100"
+                minimum="0"
+                android:dependency="window_border_enabled"
+                android:key="window_border_thickness"
+                android:summary="@string/pref_movable_border_thickness_summary"
+                android:title="@string/pref_movable_border_thickness_title" />
+        </PreferenceScreen>
     </PreferenceScreen>
 
      <!-- Screen 5: Others -->

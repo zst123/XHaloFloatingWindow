@@ -52,6 +52,8 @@
     <string name="pref_movable_sub_triangle_summary">Change Bottom Left Triangle Properties</string>
     <string name="pref_movable_sub_quadrant_title">Quadrant Settings</string>
     <string name="pref_movable_sub_quadrant_summary">Change Bottom Right Quadrant Properties</string>
+    <string name="pref_movable_sub_border_title">Border Settings</string>
+    <string name="pref_movable_sub_border_summary">Change Window Border Properties</string>
     
 	<string name="pref_movable_triangle_enable_title">Show Triangle</string>
 	<string name="pref_movable_triangle_enable_summary">Show a triangle on the bottom left of the window for additional actions.</string>
@@ -79,6 +81,13 @@
 	
 	<string name="pref_movable_resize_enabled_title">Enable Resizing</string>
 	<string name="pref_movable_resize_enabled_summary">Use to resize window when dragged.</string>
+	
+	<string name="pref_movable_border_enable_title">Show Border</string>
+	<string name="pref_movable_border_enable_summary">Show a border around the edge of the window</string>
+	<string name="pref_movable_border_color_title">Border Color</string>
+	<string name="pref_movable_border_color_summary">Color of the border</string>
+	<string name="pref_movable_border_thickness_title">Border Width</string>
+	<string name="pref_movable_border_thickness_summary">Thickness of the border in pixels</string>
 	
 	<!-- 4th Preference Corner Actions -->
 	<string name="option_movable_corner_nothing">Do Nothing</string>

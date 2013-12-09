@@ -19,8 +19,11 @@ import android.content.IntentFilter;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
@@ -278,8 +281,31 @@ public class MovableWindow {
 				
 				setDragActionBarVisibility(false);
 				initActionBar(activity);
+				
+				if (mPref.getBoolean(Common.KEY_WINDOW_BORDER_ENABLED,
+						Common.DEFAULT_WINDOW_BORDER_ENABLED)) {
+					final int color = Color.parseColor("#" + mPref.getString(
+							Common.KEY_WINDOW_BORDER_COLOR, Common.DEFAULT_WINDOW_BORDER_COLOR));
+					final int thickness = mPref.getInt(Common.KEY_WINDOW_BORDER_THICKNESS,
+							Common.DEFAULT_WINDOW_BORDER_THICKNESS);
+					setWindowBorder(color, thickness);
+				}
 			}
 		});
+	}
+	
+	private static void setWindowBorder(int color, int thickness) {
+		if (thickness == 0) {
+			overlayView.setBackgroundResource(0);
+		} else {
+			// make the shape a drawable
+			ShapeDrawable rectShapeDrawable = new ShapeDrawable(new RectShape());
+			Paint paint = rectShapeDrawable.getPaint();
+			paint.setColor(color);
+			paint.setStyle(Paint.Style.STROKE);
+			paint.setStrokeWidth(thickness);
+			overlayView.setBackgroundDrawable(rectShapeDrawable);
+		}
 	}
 	
 	private static void cornerButtonClickAction(int type_of_action) {
