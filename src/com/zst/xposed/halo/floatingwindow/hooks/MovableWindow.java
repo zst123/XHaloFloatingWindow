@@ -182,7 +182,9 @@ public class MovableWindow {
 				if (!mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW)) return;
 				activity = (Activity) param.thisObject;
 				Window window = (Window) activity.getWindow();
-				// Window window = (Window) param.thisObject;
+				
+				setLayoutPositioning(window);
+				
 				Context context = window.getContext();
 				
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
@@ -471,10 +473,48 @@ public class MovableWindow {
 						updateView(mWindow, leftFromScreen, topFromScreen);
 					}
 					break;
+				case MotionEvent.ACTION_UP:
+					initLayoutPositioning(a.getWindow());
+					break;
 				}
 			}
 		});
 	}
+	
+	/* (Start) Layout Position Method Helpers */
+	static boolean layout_outdated;
+	static boolean layout_moved;
+	static int layout_x;
+	static int layout_y;
+	static int layout_width;
+	static int layout_height;
+	static float layout_alpha;
+
+	private static void initLayoutPositioning(Window window) {
+		if (!layout_outdated) return;
+		final WindowManager.LayoutParams params = window.getAttributes();
+		layout_moved = true;
+		layout_x = params.x;
+		layout_y = params.y;
+		layout_width = params.width;
+		layout_height = params.height;
+		layout_alpha = params.alpha;
+		layout_outdated = false;
+	}
+	
+	private static void setLayoutPositioning(Window window) {
+		if (!layout_moved) return;
+		
+		WindowManager.LayoutParams params = window.getAttributes();
+		params.x = layout_x;
+		params.y = layout_y;
+		params.width = layout_width;
+		params.height = layout_height;
+		params.alpha = layout_alpha;
+		params.gravity = Gravity.LEFT | Gravity.TOP;
+		window.setAttributes(params);
+	}
+	/* (End) Layout Position Method Helpers */
 	
 	private static void changeFocusApp(Activity a) throws Throwable {
 		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
@@ -488,6 +528,7 @@ public class MovableWindow {
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
+		layout_outdated = true;
 	}
 	
 	public static int dp(int dp, Context c) { // convert dp to px
