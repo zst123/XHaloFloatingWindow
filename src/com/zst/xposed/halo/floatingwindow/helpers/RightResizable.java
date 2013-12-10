@@ -1,5 +1,8 @@
 package com.zst.xposed.halo.floatingwindow.helpers;
 
+import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
+
+import android.content.Context;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.view.WindowManager.LayoutParams;
 public class RightResizable implements View.OnTouchListener {
 	
 	final Window window;
+	final Context context;
 	final int minSize;
 	
 	LayoutParams param;
@@ -19,6 +23,7 @@ public class RightResizable implements View.OnTouchListener {
 	
 	public RightResizable(Window window) {
 		this.window = window;
+		this.context = window.getContext();
 		// Convert 100dp to px equivalent from the context
 		final float scale = window.getContext().getResources().getDisplayMetrics().density;
 		minSize = (int) (100 * scale + 0.5f);
@@ -51,6 +56,8 @@ public class RightResizable implements View.OnTouchListener {
 				param.height = calculatedH;
 			}
 			window.setAttributes(param);
+			MovableWindow.initAndRefreshLayoutParams(window, context,
+					context.getApplicationInfo().packageName);
 			break;
 		}
 		return false;

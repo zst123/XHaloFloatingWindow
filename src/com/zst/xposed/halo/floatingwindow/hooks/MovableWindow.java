@@ -479,11 +479,8 @@ public class MovableWindow {
 						Window mWindow = a.getWindow();
 						mWindow.setGravity(Gravity.LEFT | Gravity.TOP);
 						updateView(mWindow, leftFromScreen, topFromScreen);
+						initAndRefreshLayoutParams(a.getWindow(), a.getBaseContext(), activity.getPackageName());
 					}
-					break;
-				case MotionEvent.ACTION_UP:
-					initLayoutPositioning(a.getWindow());
-					refreshLayoutParams(a);
 					break;
 				}
 			}
@@ -491,7 +488,6 @@ public class MovableWindow {
 	}
 	
 	/* (Start) Layout Position Method Helpers */
-	// TODO: Live Updating instead of on ACTION_UP.
 	static boolean layout_moved;
 	static int layout_x;
 	static int layout_y;
@@ -499,10 +495,10 @@ public class MovableWindow {
 	static int layout_height;
 	static float layout_alpha;
 
-	private static void initLayoutPositioning(Window window) {
+	private static boolean initLayoutPositioning(Window window) {
 		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
 				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION)) 
-			return;
+			return false;
 
 		final WindowManager.LayoutParams params = window.getAttributes();
 		layout_moved = true;
@@ -511,6 +507,7 @@ public class MovableWindow {
 		layout_width = params.width;
 		layout_height = params.height;
 		layout_alpha = params.alpha;
+		return true;
 	}
 	
 	private static void setLayoutPositioning(Window window) {
@@ -567,16 +564,15 @@ public class MovableWindow {
 		}
 	}
 	
-	private static void refreshLayoutParams(Activity activity) throws Throwable {
-		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
-			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
-			return;
-		
-		Intent intent = new Intent(Common.REFRESH_APP_LAYOUT);
-		intent.putExtra(INTENT_APP_PKG, activity.getPackageName());
-		activity.sendBroadcast(intent);
+	public static void initAndRefreshLayoutParams(Window w, Context ctx, String pkg) {
+		if (initLayoutPositioning(w)) {
+			refreshLayoutParams(ctx, pkg);
+		}
+	}
+	private static void refreshLayoutParams(Context ctx, String pkg) {
+		Intent intent = new Intent(Common.REFRESH_APP_LAYOUT); 
+		intent.putExtra(INTENT_APP_PKG, pkg);
+		ctx.sendBroadcast(intent);
 	}
 	/* (End) Layout Position Method Helpers */
 	
