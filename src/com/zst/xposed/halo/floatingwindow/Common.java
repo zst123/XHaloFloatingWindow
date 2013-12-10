@@ -22,6 +22,8 @@ public class Common {
 	public static final String KEY_APP_PAUSE = "system_app_pausing";
 	public static final String KEY_NOTIFICATION_LONGPRESS_OPTION = "system_notif_longpress_option";
 	public static final String KEY_NOTIFICATION_SINGLE_CLICK_HALO = "system_notif_single_click_halo";
+	public static final String KEY_WINDOW_MOVING_RETAIN_START_POSITION = "window_moving_start_pos_enabled";
+	public static final String KEY_WINDOW_MOVING_CONSTANT_POSITION = "window_moving_move_pos_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_ENABLE = "window_triangle_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	public static final String KEY_WINDOW_TRIANGLE_ALPHA = "window_triangle_alpha";
@@ -57,6 +59,8 @@ public class Common {
 	public static final boolean DEFAULT_MOVABLE_WINDOW = false;
 	public static final boolean DEFAULT_NOTIFICATION_LONGPRESS_OPTION = false;
 	public static final boolean DEFAULT_NOTIFICATION_SINGLE_CLICK_HALO = false;
+	public static final boolean DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION = true;
+	public static final boolean DEFAULT_WINDOW_MOVING_CONSTANT_POSITION = true;
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_ENABLE = true;
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_TRIANGLE_ALPHA = 1f;

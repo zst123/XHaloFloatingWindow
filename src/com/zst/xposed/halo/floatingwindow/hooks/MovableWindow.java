@@ -500,7 +500,10 @@ public class MovableWindow {
 	static float layout_alpha;
 
 	private static void initLayoutPositioning(Window window) {
-		//set pref
+		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION)) 
+			return;
+
 		final WindowManager.LayoutParams params = window.getAttributes();
 		layout_moved = true;
 		layout_x = params.x;
@@ -511,8 +514,11 @@ public class MovableWindow {
 	}
 	
 	private static void setLayoutPositioning(Window window) {
-		//set pref
 		if (!layout_moved) return;
+		
+		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION)) 
+			return;
 		
 		WindowManager.LayoutParams params = window.getAttributes();
 		params.x = layout_x;
@@ -525,7 +531,12 @@ public class MovableWindow {
 	}
 	
 	private static void registerLayoutBroadcastReceiver(final Window window) {
-		//move
+		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
+			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
+			return;
+		
 		BroadcastReceiver br = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
@@ -542,7 +553,12 @@ public class MovableWindow {
 	}
 	
 	private static void unregisterLayoutBroadcastReceiver(Window window) {
-		//move
+		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
+			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
+			return;
+		
 		try {
 			BroadcastReceiver br = (BroadcastReceiver) window.getDecorView().getTag(
 					Common.LAYOUT_RECEIVER_TAG);
@@ -552,7 +568,12 @@ public class MovableWindow {
 	}
 	
 	private static void refreshLayoutParams(Activity activity) throws Throwable {
-		//move
+		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
+			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
+				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
+			return;
+		
 		Intent intent = new Intent(Common.REFRESH_APP_LAYOUT);
 		intent.putExtra(INTENT_APP_PKG, activity.getPackageName());
 		activity.sendBroadcast(intent);

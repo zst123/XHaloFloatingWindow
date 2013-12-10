@@ -103,6 +103,23 @@
             android:defaultValue="false"
             android:key="window_movable"
             android:title="@string/pref_movable_top_title" />
+        <!-- Moving -->
+        <PreferenceScreen
+            android:summary="@string/pref_movable_sub_moving_summary"
+            android:title="@string/pref_movable_sub_moving_title" >
+            <CheckBoxPreference
+                android:defaultValue="true"
+                android:key="window_moving_start_pos_enabled"
+                android:summary="@string/pref_movable_moving_start_pos_summary"
+                android:title="@string/pref_movable_moving_start_pos_title" />
+            
+			<CheckBoxPreference
+                android:defaultValue="true"
+                android:dependency="window_moving_start_pos_enabled"
+                android:key="window_moving_move_pos_enabled"
+                android:summary="@string/pref_movable_moving_move_pos_summary"
+                android:title="@string/pref_movable_moving_move_pos_title" />
+        </PreferenceScreen>
         
         <!-- Triangle -->
         <PreferenceScreen
