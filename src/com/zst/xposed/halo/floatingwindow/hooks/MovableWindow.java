@@ -54,6 +54,8 @@ public class MovableWindow {
 	static final String INTENT_APP_TOKEN = "token";
 	static final String INTENT_APP_ID = "id";
 	
+	static final String INTENT_APP_PKG = "pkg";
+	
 	static XSharedPreferences mPref;
 	static XModuleResources mModRes;
 	/* App ActionBar Moving Values */
@@ -171,6 +173,11 @@ public class MovableWindow {
 			}
 		});
 		
+		XposedBridge.hookAllMethods(Activity.class, "onDestroy", new XC_MethodHook() {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
+			}
+		});
 	}
 	
 	private static void injectTriangle(final LoadPackageParam lpparam)
@@ -183,6 +190,7 @@ public class MovableWindow {
 				activity = (Activity) param.thisObject;
 				Window window = (Window) activity.getWindow();
 				
+				registerLayoutBroadcastReceiver(window);
 				setLayoutPositioning(window);
 				
 				Context context = window.getContext();
@@ -475,6 +483,7 @@ public class MovableWindow {
 					break;
 				case MotionEvent.ACTION_UP:
 					initLayoutPositioning(a.getWindow());
+					refreshLayoutParams(a);
 					break;
 				}
 			}
@@ -482,7 +491,7 @@ public class MovableWindow {
 	}
 	
 	/* (Start) Layout Position Method Helpers */
-	static boolean layout_outdated;
+	// TODO: Live Updating instead of on ACTION_UP.
 	static boolean layout_moved;
 	static int layout_x;
 	static int layout_y;
@@ -491,7 +500,7 @@ public class MovableWindow {
 	static float layout_alpha;
 
 	private static void initLayoutPositioning(Window window) {
-		if (!layout_outdated) return;
+		//set pref
 		final WindowManager.LayoutParams params = window.getAttributes();
 		layout_moved = true;
 		layout_x = params.x;
@@ -499,10 +508,10 @@ public class MovableWindow {
 		layout_width = params.width;
 		layout_height = params.height;
 		layout_alpha = params.alpha;
-		layout_outdated = false;
 	}
 	
 	private static void setLayoutPositioning(Window window) {
+		//set pref
 		if (!layout_moved) return;
 		
 		WindowManager.LayoutParams params = window.getAttributes();
@@ -513,6 +522,40 @@ public class MovableWindow {
 		params.alpha = layout_alpha;
 		params.gravity = Gravity.LEFT | Gravity.TOP;
 		window.setAttributes(params);
+	}
+	
+	private static void registerLayoutBroadcastReceiver(final Window window) {
+		//move
+		BroadcastReceiver br = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				if (intent.getStringExtra(INTENT_APP_PKG).equals(
+						window.getContext().getApplicationInfo().packageName)) {
+					setLayoutPositioning(window);
+				}
+			}
+		};
+		IntentFilter filters = new IntentFilter();
+		filters.addAction(Common.REFRESH_APP_LAYOUT);
+		window.getContext().registerReceiver(br, filters);
+		window.getDecorView().setTagInternal(Common.LAYOUT_RECEIVER_TAG, br);
+	}
+	
+	private static void unregisterLayoutBroadcastReceiver(Window window) {
+		//move
+		try {
+			BroadcastReceiver br = (BroadcastReceiver) window.getDecorView().getTag(
+					Common.LAYOUT_RECEIVER_TAG);
+			window.getContext().unregisterReceiver(br);
+		} catch (Exception e) {
+		}
+	}
+	
+	private static void refreshLayoutParams(Activity activity) throws Throwable {
+		//move
+		Intent intent = new Intent(Common.REFRESH_APP_LAYOUT);
+		intent.putExtra(INTENT_APP_PKG, activity.getPackageName());
+		activity.sendBroadcast(intent);
 	}
 	/* (End) Layout Position Method Helpers */
 	
@@ -528,7 +571,6 @@ public class MovableWindow {
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
-		layout_outdated = true;
 	}
 	
 	public static int dp(int dp, Context c) { // convert dp to px
