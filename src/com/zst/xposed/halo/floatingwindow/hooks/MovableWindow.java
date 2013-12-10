@@ -77,6 +77,7 @@ public class MovableWindow {
 	static View overlayView;
 	
 	/* Corner Button Actions Constants*/
+	static final int ACTION_CLICK_TRIANGLE = 0x0;
 	static final int ACTION_LONGPRESS_TRIANGLE = 0x1;
 	static final int ACTION_CLICK_QUADRANT = 0x2;
 	static final int ACTION_LONGPRESS_QUADRANT = 0x3;
@@ -249,6 +250,13 @@ public class MovableWindow {
 						Resizable resize = new Resizable(context, window);
 						triangle.setOnTouchListener(resize);
 					}
+					triangle.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							cornerButtonClickAction(ACTION_CLICK_TRIANGLE);
+						}
+					});
+					
 					triangle.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
@@ -321,6 +329,10 @@ public class MovableWindow {
 	private static void cornerButtonClickAction(int type_of_action) {
 		String index = "0";
 		switch (type_of_action) {
+		case ACTION_CLICK_TRIANGLE:
+			index = mPref.getString(Common.KEY_WINDOW_TRIANGLE_CLICK_ACTION,
+					Common.DEFAULT_WINDOW_TRIANGLE_CLICK_ACTION);
+			break;
 		case ACTION_LONGPRESS_TRIANGLE:
 			index = mPref.getString(Common.KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION,
 					Common.DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION);

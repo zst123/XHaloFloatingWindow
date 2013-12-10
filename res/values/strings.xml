@@ -70,6 +70,8 @@
 	<string name="pref_movable_triangle_alpha_summary">Transparency of the corner triangle</string>
 	<string name="pref_movable_triangle_size_title">Triangle Size</string>
 	<string name="pref_movable_triangle_size_summary">Size of the corner triangle</string>
+	<string name="pref_movable_triangle_sp_action_title">Triangle Single Press Action</string>
+	<string name="pref_movable_triangle_sp_action_summary">The action that will occur when clicking the corner triangle.</string>
 	<string name="pref_movable_triangle_lp_action_title">Triangle Long Press Action</string>
 	<string name="pref_movable_triangle_lp_action_summary">The action that will occur when long pressing the corner triangle.</string>
 	

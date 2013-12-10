@@ -164,6 +164,15 @@
                 android:title="@string/pref_movable_triangle_size_title" />
 
             <ListPreference
+                android:defaultValue="0"
+                android:dependency="window_triangle_enabled"
+                android:entries="@array/option_movable_corner_entries"
+                android:entryValues="@array/option_movable_corner_values"
+                android:key="window_triangle_sp_action"
+                android:summary="@string/pref_movable_triangle_sp_action_summary"
+                android:title="@string/pref_movable_triangle_sp_action_title" />
+            
+            <ListPreference
                 android:defaultValue="1"
                 android:dependency="window_movable"
                 android:entries="@array/option_movable_corner_entries"

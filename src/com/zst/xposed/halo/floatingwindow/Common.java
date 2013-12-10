@@ -28,6 +28,7 @@ public class Common {
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	public static final String KEY_WINDOW_TRIANGLE_ALPHA = "window_triangle_alpha";
 	public static final String KEY_WINDOW_TRIANGLE_SIZE = "window_triangle_size";
+	public static final String KEY_WINDOW_TRIANGLE_CLICK_ACTION = "window_triangle_sp_action";
 	public static final String KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION = "window_triangle_lp_action";
 	public static final String KEY_WINDOW_TRIANGLE_RESIZE_ENABLED = "window_triangle_resize_enabled";
 	public static final String KEY_WINDOW_QUADRANT_ENABLE = "window_quadrant_enabled";
@@ -65,6 +66,7 @@ public class Common {
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_TRIANGLE_ALPHA = 1f;
 	public static final int DEFAULT_WINDOW_TRIANGLE_SIZE = 36;
+	public static final String DEFAULT_WINDOW_TRIANGLE_CLICK_ACTION = "0";
 	public static final String DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION = "1";
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_RESIZE_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_QUADRANT_ENABLE = false;
