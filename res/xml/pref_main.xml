@@ -105,6 +105,7 @@
             android:title="@string/pref_movable_top_title" />
         <!-- Moving -->
         <PreferenceScreen
+            android:dependency="window_movable"
             android:summary="@string/pref_movable_sub_moving_summary"
             android:title="@string/pref_movable_sub_moving_title" >
             <CheckBoxPreference
@@ -123,6 +124,7 @@
         
         <!-- Triangle -->
         <PreferenceScreen
+            android:dependency="window_movable"
             android:summary="@string/pref_movable_sub_triangle_summary"
             android:title="@string/pref_movable_sub_triangle_title" >
             <SwitchPreference
@@ -134,13 +136,13 @@
             <CheckBoxPreference
             	android:defaultValue="true"
             	android:key="window_triangle_resize_enabled"
-            	android:dependency="window_movable"
+            	android:dependency="window_triangle_enabled"
             	android:summary="@string/pref_movable_resize_enabled_summary"
             	android:title="@string/pref_movable_resize_enabled_title" />
 
             <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
                 defaultValue="FFFFFF"
-                android:dependency="window_movable"
+                android:dependency="window_triangle_enabled"
                 android:key="window_triangle_color"
                 android:summary="@string/pref_movable_triangle_color_summary"
                 android:title="@string/pref_movable_triangle_color_title" />
@@ -149,7 +151,7 @@
                 defaultValue="1"
                 maximum="1"
                 minimum="0"
-                android:dependency="window_movable"
+                android:dependency="window_triangle_enabled"
                 android:key="window_triangle_alpha"
                 android:summary="@string/pref_movable_triangle_alpha_summary"
                 android:title="@string/pref_movable_triangle_alpha_title" />
@@ -158,7 +160,7 @@
                 defaultValue="36"
                 maximum="100"
                 minimum="1"
-                android:dependency="window_movable"
+                android:dependency="window_triangle_enabled"
                 android:key="window_triangle_size"
                 android:summary="@string/pref_movable_triangle_size_summary"
                 android:title="@string/pref_movable_triangle_size_title" />
@@ -174,7 +176,7 @@
             
             <ListPreference
                 android:defaultValue="1"
-                android:dependency="window_movable"
+                android:dependency="window_triangle_enabled"
                 android:entries="@array/option_movable_corner_entries"
                 android:entryValues="@array/option_movable_corner_values"
                 android:key="window_triangle_lp_action"
@@ -184,6 +186,7 @@
         
         <!-- Quadrant -->
         <PreferenceScreen
+            android:dependency="window_movable"
             android:summary="@string/pref_movable_sub_quadrant_summary"
             android:title="@string/pref_movable_sub_quadrant_title" >
             <SwitchPreference
@@ -244,6 +247,7 @@
 
         <!-- Border -->
         <PreferenceScreen
+            android:dependency="window_movable"
             android:summary="@string/pref_movable_sub_border_summary"
             android:title="@string/pref_movable_sub_border_title" >
             <SwitchPreference
