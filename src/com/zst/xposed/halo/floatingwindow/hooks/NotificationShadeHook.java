@@ -14,6 +14,7 @@ import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
@@ -50,6 +51,8 @@ public class NotificationShadeHook {
 		mSinglePressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_SINGLE_CLICK_HALO,
 				Common.DEFAULT_NOTIFICATION_SINGLE_CLICK_HALO);
 		
+		loadIcsHooks(lpp);
+
 		Class<?> baseStatusBar = findClass("com.android.systemui.statusbar.BaseStatusBar",
 				lpp.classLoader);
 		try {
@@ -65,11 +68,105 @@ public class NotificationShadeHook {
 			XposedBridge.log(Common.LOG_TAG + "(NotificationHook)");
 			XposedBridge.log(e);
 		}
-		
 	}
 	
 	/* Android 4.0+ (Start) */
+	private static void loadIcsHooks(final LoadPackageParam lpp) {
+		if (!(Build.VERSION.SDK_INT == 14 || Build.VERSION.SDK_INT == 15)) return;
+		Class<?> phoneStatusBar = findClass("com.android.systemui.statusbar.phone.PhoneStatusBar",
+				lpp.classLoader);
+		try {
+			injectOldViewTag(phoneStatusBar);
+		} catch (Throwable e) {
+			XposedBridge.log(Common.LOG_TAG + "(injectViewTag)");
+			XposedBridge.log(e);
+		}
+	}
 	
+	private static void injectOldViewTag(Class<?> phoneStatusBar) {
+		XposedBridge.hookAllMethods(phoneStatusBar, "inflateViews", new XC_MethodHook() {
+			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				final Object entry = param.args[0];
+				Field fieldRow = entry.getClass().getDeclaredField(("row"));
+				View newRow = (View) fieldRow.get(entry);
+				View content = newRow.findViewById(newRow.getResources().getIdentifier(
+						"content", "id", "com.android.systemui"));
+				
+				final Object sbn = entry.getClass()
+						.getDeclaredField(("notification")).get(entry);
+				final String packageNameF = (String) sbn.getClass()
+						.getDeclaredField(("pkg")).get(sbn);
+				final Notification n = (Notification) sbn.getClass()
+						.getDeclaredField(("notification")).get(sbn);
+				final PendingIntent contentIntent = n.contentIntent;
+
+				if (mSinglePressEnabled) {
+					content.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (packageNameF == null) return;
+							if (v.getWindowToken() == null) return;
+							
+							try {
+								launchFloating(contentIntent, v.getContext());
+								closeNotificationShade(v.getContext());
+							} catch (Exception e) {
+								android.widget.Toast.makeText(v.getContext(),
+										"(XHFW) Error Opening Notification : " + e.toString(),
+										android.widget.Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
+				}
+				content.setOnLongClickListener(new View.OnLongClickListener() {
+					@Override
+					public boolean onLongClick(final View v) {
+						if (packageNameF == null) return false;
+						if (v.getWindowToken() == null) return false;
+						
+						try {							
+							final Context ctx = v.getContext();
+							
+							PopupMenu popup = new PopupMenu(ctx, v);
+							popup.getMenu().add("App info");
+							if (!mSinglePressEnabled) {
+								popup.getMenu().add("Open in Halo");
+							} else {
+								popup.getMenu().add("Open Normally");
+							}
+							// TODO put in strings.xml
+							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+								public boolean onMenuItemClick(MenuItem item) {
+									if (item.getTitle().equals("App info")) {
+										Intent intent = new Intent(
+												Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+												Uri.fromParts("package", packageNameF, null));
+										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+										ctx.startActivity(intent);
+										closeNotificationShade(ctx);
+									} else if (item.getTitle().equals("Open in Halo")) {
+										launchFloating(contentIntent, ctx);
+										closeNotificationShade(ctx);
+									} else if (item.getTitle().equals("Open Normally")) {
+										launch(new Intent(), contentIntent, ctx);
+										closeNotificationShade(ctx);
+									} else {
+										return false;
+									}
+									return true;
+								}
+							});
+							popup.show();
+							return true;
+						} catch (Exception e) {
+							return false;
+						}
+					}
+				});
+				fieldRow.set(entry, newRow);
+			}
+		});
+	}
 	/* Android 4.0+ (End) */
 	
 	/* Android 4.1+ (Start) */
