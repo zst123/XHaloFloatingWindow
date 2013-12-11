@@ -21,6 +21,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
 		MODULE_PATH = startupParam.modulePath;
 		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
+		NotificationShadeHook.zygote(sModRes);
 	}
 	
 	@Override

@@ -7,12 +7,14 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.R;
 
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.XModuleResources;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -32,6 +34,17 @@ public class NotificationShadeHook {
 	static boolean mLongPressEnabled;
 	static boolean mSinglePressEnabled = true;
 	
+	static String TEXT_OPEN_IN_HALO;
+	static String TEXT_OPEN_IN_NORMALLY;
+	static String TEXT_APP_INFO;
+	static String TEXT_ERROR_LAUNCHING;
+	
+	public static void zygote(XModuleResources module_res) {
+		TEXT_APP_INFO = module_res.getString(R.string.notif_app_info);
+		TEXT_ERROR_LAUNCHING = module_res.getString(R.string.notif_error_launching);
+		TEXT_OPEN_IN_HALO = module_res.getString(R.string.notif_open_halo);
+		TEXT_OPEN_IN_NORMALLY = module_res.getString(R.string.notif_open_normal);
+	}
 	public static void hook(final LoadPackageParam lpp, final XSharedPreferences pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
 		pref.reload();
@@ -118,7 +131,7 @@ public class NotificationShadeHook {
 								closeNotificationShade(v.getContext());
 							} catch (Exception e) {
 								android.widget.Toast.makeText(v.getContext(),
-										"(XHFW) Error Opening Notification : " + e.toString(),
+										TEXT_ERROR_LAUNCHING + e.toString(),
 										android.widget.Toast.LENGTH_SHORT).show();
 							}
 						}
@@ -134,26 +147,26 @@ public class NotificationShadeHook {
 							final Context ctx = v.getContext();
 							
 							PopupMenu popup = new PopupMenu(ctx, v);
-							popup.getMenu().add("App info");
+							popup.getMenu().add(TEXT_APP_INFO);
 							if (!mSinglePressEnabled) {
-								popup.getMenu().add("Open in Halo");
+								popup.getMenu().add(TEXT_OPEN_IN_HALO);
 							} else {
-								popup.getMenu().add("Open Normally");
+								popup.getMenu().add(TEXT_OPEN_IN_NORMALLY);
 							}
 							// TODO put in strings.xml
 							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 								public boolean onMenuItemClick(MenuItem item) {
-									if (item.getTitle().equals("App info")) {
+									if (item.getTitle().equals(TEXT_APP_INFO)) {
 										Intent intent = new Intent(
 												Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 												Uri.fromParts("package", packageNameF, null));
 										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 										ctx.startActivity(intent);
 										closeNotificationShade(ctx);
-									} else if (item.getTitle().equals("Open in Halo")) {
+									} else if (item.getTitle().equals(TEXT_OPEN_IN_HALO)) {
 										launchFloating(contentIntent, ctx);
 										closeNotificationShade(ctx);
-									} else if (item.getTitle().equals("Open Normally")) {
+									} else if (item.getTitle().equals(TEXT_OPEN_IN_NORMALLY)) {
 										launch(new Intent(), contentIntent, ctx);
 										closeNotificationShade(ctx);
 									} else {
@@ -204,16 +217,16 @@ public class NotificationShadeHook {
 							if (v.getWindowToken() == null) return false;
 
 							PopupMenu popup = new PopupMenu(mContext, v);
-							popup.getMenu().add("App info");
+							popup.getMenu().add(TEXT_APP_INFO);
 							if (!mSinglePressEnabled) {
-								popup.getMenu().add("Open in Halo");
+								popup.getMenu().add(TEXT_OPEN_IN_HALO);
 							} else {
-								popup.getMenu().add("Open Normally");
+								popup.getMenu().add(TEXT_OPEN_IN_NORMALLY);
 							}
 							//TODO put in strings.xml
 							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 								public boolean onMenuItemClick(MenuItem item) {
-									if (item.getTitle().equals("App info")) {
+									if (item.getTitle().equals(TEXT_APP_INFO)) {
 										Intent intent = new Intent(
 												Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 												Uri.fromParts("package", packageNameF,
@@ -221,10 +234,10 @@ public class NotificationShadeHook {
 										intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 													mContext.startActivity(intent);
 													closeNotificationShade(mContext);
-									} else if (item.getTitle().equals("Open in Halo")) {
+									} else if (item.getTitle().equals(TEXT_OPEN_IN_HALO)) {
 										launchFloating(contentIntent, mContext);
 										closeNotificationShade(mContext);
-									} else if (item.getTitle().equals("Open Normally")) {
+									} else if (item.getTitle().equals(TEXT_OPEN_IN_NORMALLY)) {
 										launch(new Intent(), contentIntent, mContext);
 										closeNotificationShade(mContext);
 									} else {
@@ -272,7 +285,7 @@ public class NotificationShadeHook {
 								closeNotificationShade(v.getContext());
 							} catch (Exception e) {
 								android.widget.Toast.makeText(v.getContext(),
-										"(XHFW) Error Opening Notification : " + e.toString(),
+										TEXT_ERROR_LAUNCHING + e.toString(),
 										android.widget.Toast.LENGTH_SHORT).show();
 							}
 						}
@@ -323,7 +336,7 @@ public class NotificationShadeHook {
 			android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
 			pIntent.send(mContext, 0, intent);
 		} catch (Exception e) {
-			android.widget.Toast.makeText(mContext, "XHalo can't be opened : " + e.toString(),
+			android.widget.Toast.makeText(mContext, TEXT_ERROR_LAUNCHING + e.toString(),
 					android.widget.Toast.LENGTH_SHORT).show();
 		}
 	}

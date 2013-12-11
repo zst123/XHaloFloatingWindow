@@ -140,5 +140,11 @@
     <string name="dnm_title">Drag To Move</string>
     <string name="dnm_transparency">Transparency</string>
     <string name="dnm_close_app">Close App</string>
-
+    
+    <!-- Notification Shade -->
+    <string name="notif_open_halo">Open in Halo</string>
+    <string name="notif_open_normal">Open Normally</string>
+    <string name="notif_app_info">App info</string>
+    <string name="notif_error_launching">There was an error launching the notification\nPlease report this to the XHFW thread:\n</string>
+    
 </resources>
