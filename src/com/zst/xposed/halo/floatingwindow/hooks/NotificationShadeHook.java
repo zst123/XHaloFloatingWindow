@@ -67,9 +67,13 @@ public class NotificationShadeHook {
 		}
 		
 	}
-
+	
+	/* Android 4.0+ (Start) */
+	
+	/* Android 4.0+ (End) */
+	
+	/* Android 4.1+ (Start) */
 	private static void hookLongPressNotif(Class<?> baseStatusBar) {
-		
 		XposedBridge.hookAllMethods(baseStatusBar, "getNotificationLongClicker",
 				new XC_MethodReplacement() {
 			protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
@@ -175,7 +179,9 @@ public class NotificationShadeHook {
 			}
 		});
 	}
+	/* Android 4.1+ (End) */
 	
+	/* Android 4.2+ (Start) */
 	static Intent stolenIntent;
 	private static void injectQuickSettings(final LoadPackageParam lpp) throws Throwable{
 		final Class<?> clazz = findClass("com.android.systemui.quicksettings.QuickSettingsTile",
@@ -195,6 +201,7 @@ public class NotificationShadeHook {
 			}
 		});
 	}
+	/* Android 4.2+ (End) */
 	
 	private static void launchFloating(PendingIntent pIntent, Context mContext) { 
 		Intent intent = new Intent();
