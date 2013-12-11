@@ -28,31 +28,38 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class NotificationShadeHook {
 
+	static boolean mQuickSettingsEnabled;
 	static boolean mLongPressEnabled;
 	static boolean mSinglePressEnabled = true;
 	
 	public static void hook(final LoadPackageParam lpp, final XSharedPreferences pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
 		pref.reload();
-		
-		try {
-			if (pref.getBoolean(Common.KEY_FLOATING_QUICK_SETTINGS,
-					Common.DEFAULT_FLOATING_QUICK_SETTINGS)) {
-				injectQuickSettings(lpp);
-			}
-		} catch (Throwable t) {
-			XposedBridge.log(Common.LOG_TAG + "(QuickSettingsHaloInject)");
-			XposedBridge.log(t);
-		}
-		
+
+		mQuickSettingsEnabled = pref.getBoolean(Common.KEY_FLOATING_QUICK_SETTINGS,
+				Common.DEFAULT_FLOATING_QUICK_SETTINGS);
 		mLongPressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
 				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION);
 		if (!mLongPressEnabled) return;
 		mSinglePressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_SINGLE_CLICK_HALO,
 				Common.DEFAULT_NOTIFICATION_SINGLE_CLICK_HALO);
 		
-		loadIcsHooks(lpp);
-
+		if (Build.VERSION.SDK_INT <= 15) {
+			if (mLongPressEnabled) loadIcsHooks(lpp);
+		} else {
+			if (mLongPressEnabled) loadNewHooks(lpp);
+		}
+		if (Build.VERSION.SDK_INT >= 17) {
+			try {
+				injectQuickSettings(lpp);
+			} catch (Throwable t) {
+				XposedBridge.log(Common.LOG_TAG + "(QuickSettingsHaloInject)");
+				XposedBridge.log(t);
+			}
+		}
+	}
+		
+	private static void loadNewHooks(final LoadPackageParam lpp) {
 		Class<?> baseStatusBar = findClass("com.android.systemui.statusbar.BaseStatusBar",
 				lpp.classLoader);
 		try {
@@ -72,7 +79,6 @@ public class NotificationShadeHook {
 	
 	/* Android 4.0+ (Start) */
 	private static void loadIcsHooks(final LoadPackageParam lpp) {
-		if (!(Build.VERSION.SDK_INT == 14 || Build.VERSION.SDK_INT == 15)) return;
 		Class<?> phoneStatusBar = findClass("com.android.systemui.statusbar.phone.PhoneStatusBar",
 				lpp.classLoader);
 		try {
