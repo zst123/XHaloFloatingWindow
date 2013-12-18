@@ -8,6 +8,7 @@ public class Common {
 	/* Preference misc */
 	public static final String THIS_PACKAGE_NAME = Common.class.getPackage().getName();
 	public static final String PREFERENCE_MAIN_FILE = THIS_PACKAGE_NAME + "_main";
+	public static final String PREFERENCE_BLACKLIST_FILE = THIS_PACKAGE_NAME + "_blacklist";
 	
 	/* Preference keys */
 	public static final String KEY_ALPHA = "window_alpha";

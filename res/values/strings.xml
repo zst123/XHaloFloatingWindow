@@ -3,10 +3,12 @@
 
     <string name="app_name">XHaloFloatingWindow</string>
     <string name="app_description">Movable &amp; Resizable Halo Floating Windows from Paranoid Android (zst123)</string>
-
+    <string name="app_blacklist">Blacklist</string>
+    
     <!-- Preference Strings -->
     <string name="default_value">Default Value</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
 
     <!-- First Preference Screen -->
     <string name="pref_window_top_title">Popup Window</string>
