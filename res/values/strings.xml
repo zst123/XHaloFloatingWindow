@@ -46,7 +46,9 @@
     <string name="pref_show_recents_summary">Allows the app to be shown in the recents screen.</string>
     <string name="pref_force_open_app_above_halo_title">Force New Windows in Halo</string>
     <string name="pref_force_open_app_above_halo_summary">If an app is currently open in floating mode, new apps that open above it is forced to open in floating mode.</string>
-
+    <string name="pref_blacklist_title">Blacklist Apps</string>
+    <string name="pref_blacklist_summary">Choose a list of apps to never open in floating mode</string>
+    
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
     

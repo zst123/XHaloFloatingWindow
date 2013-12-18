@@ -47,6 +47,7 @@ public class Common {
 	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
 	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
 	public static final String KEY_FORCE_OPEN_APP_ABOVE_HALO = "window_force_open_app_above_halo";
+	public static final String KEY_BLACKLIST_APPS = "window_blacklist";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;

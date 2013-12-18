@@ -5,6 +5,7 @@ import java.io.DataOutputStream;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.Preference.OnPreferenceClickListener;
@@ -40,6 +41,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_GRAVITY).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_KEYBOARD_MODE).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
+		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
 	}
@@ -55,6 +57,9 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			return true;
 		}else if (k.equals(Common.KEY_RESTART_SYSTEMUI)) {
 			showKillPackageDialog("com.android.systemui");
+			return true;
+		}else if (k.equals(Common.KEY_BLACKLIST_APPS)) {
+			showBlacklistActivity();
 			return true;
 		}
 		return false;
@@ -189,5 +194,9 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			}
 		});
 		build.show();
+	}
+	
+	private void showBlacklistActivity() {
+		startActivity(new Intent(getActivity(), BlacklistActivity.class));
 	}
 }
