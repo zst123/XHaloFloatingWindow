@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">XHaloFloatingWindow</string>
-    <string name="app_description">Movable &amp; Resizable Halo Floating Windows from Paranoid Android (zst123)</string>
+    <string name="app_description">Halo Floating Windows from Paranoid Android with Movable &amp; Resizable feature.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
     
     <!-- Preference Strings -->
