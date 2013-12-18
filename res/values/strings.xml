@@ -57,6 +57,7 @@
     
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
+    <string name="pref_movable_top_summary">A feature similar to multi-window for true multi-tasking.</string>
     
     <string name="pref_movable_sub_moving_title">Moving Settings</string>
     <string name="pref_movable_sub_moving_summary">Change Moving Window Behaviour</string>
@@ -115,7 +116,8 @@
 	<string name="option_movable_corner_transparency">Show Transparency Slider</string>
 
     <!-- 5th Preference Screen -->
-    <string name="pref_systemui_top_title">SystemUI</string>
+    <string name="pref_systemui_top_title">SystemUI Mods</string>
+    <string name="pref_systemui_top_summary">Collection of SystemUI modifications</string>
     <string name="pref_notif_warning">These mods are for AOSP-based ROMs and, thus, untested with other ROMs. If you experience continuous SystemUI force closes, immediately disable these mods.</string>
     <string name="pref_notif_long_click_title">Long Press Notification Option</string>
     <string name="pref_notif_long_click_summary">Adds \"Open in Halo\" option when long-pressing notifications.</string>

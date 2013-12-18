@@ -103,6 +103,7 @@
     
     <!-- Screen 4: Movable Resizable -->
     <PreferenceScreen
+        android:summary="@string/pref_movable_top_summary"
         android:title="@string/pref_movable_top_title" >
         <SwitchPreference
             android:defaultValue="false"
@@ -281,6 +282,7 @@
 
      <!-- Screen 5: Others -->
     <PreferenceScreen
+        android:summary="@string/pref_systemui_top_summary"
         android:title="@string/pref_systemui_top_title" >
         <Preference
             android:summary="@string/pref_notif_warning" />
