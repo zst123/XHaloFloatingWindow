@@ -359,6 +359,9 @@ public class MovableWindow {
 		case 3: //Transparency Dialog
 			showTransparencyDialogVisibility(activity.getWindow());
 			break;
+		case 4: // Hide Entire App
+			activity.moveTaskToBack(true);
+			break;
 		}
 	}
 
