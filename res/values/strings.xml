@@ -123,6 +123,8 @@
     <string name="pref_notif_single_click_summary">Use together with \"Long Press Notification Option\". Unlike the above, it adds \"Open Normally\" when long-pressing &amp; allows single-clicking notification to open in halo.</string>
     <string name="pref_notif_floating_qs_title">Quick Settings in Halo</string>
     <string name="pref_notif_floating_qs_summary">Open Quick Settings tiles in floating window</string>
+    <string name="pref_prevent_home_to_front_title">Prevent Moving Home to the front</string>
+    <string name="pref_prevent_home_to_front_summary">Prevent the homescreen from being brought front when using the recent apps screen.</string>
     <string name="pref_systemui_restart_title">Restart SystemUI</string>
     <string name="pref_systemui_restart_summary">Restart for changes to take effect.\n(Requires SU Permission)</string>
     
