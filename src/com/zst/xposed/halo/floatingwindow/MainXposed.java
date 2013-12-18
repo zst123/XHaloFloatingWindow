@@ -15,10 +15,12 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	public static XModuleResources sModRes;
 	static String MODULE_PATH = null;
 	static XSharedPreferences mPref;
+	static XSharedPreferences mBlacklist;
 	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
+		mBlacklist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_BLACKLIST_FILE);
 		MODULE_PATH = startupParam.modulePath;
 		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
 		NotificationShadeHook.zygote(sModRes);
@@ -27,8 +29,14 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	@Override
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		NotificationShadeHook.hook(lpparam, mPref);
+		
+		if (isBlacklisted(lpparam.packageName)) return;
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
 		HaloFloating.handleLoadPackage(lpparam, mPref);
 	}
 
+	private boolean isBlacklisted(String pkg) {
+		mBlacklist.reload();
+		return mBlacklist.contains(pkg);
+	}
 }
