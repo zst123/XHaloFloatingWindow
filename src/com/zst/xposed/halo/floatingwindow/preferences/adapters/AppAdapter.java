@@ -50,12 +50,11 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 	}
 	
 	public void update() {
+		notifyDataSetChangedOnHandler();
 		toggleProgressBarVisible(true);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				synchronized (mInstalledApps) {
-					mInstalledApps.clear();
 					final List<AppItem> temp = new LinkedList<AppItem>(); 
 					for (PackageInfo info : mTemporarylist) {
 						final AppItem item = new AppItem();
@@ -75,7 +74,6 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 					mInstalledApps = temp;
 					notifyDataSetChangedOnHandler();
 					toggleProgressBarVisible(false);
-				}
 			}
 		}).start();
 	}
@@ -106,12 +104,16 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 	
 	@Override
 	public AppItem getItem(int position) {
-		return mInstalledApps.get(position);
+		try {
+			return mInstalledApps.get(position);
+		}catch (Exception e){
+			return new AppItem();
+		}
 	}
 	
 	@Override
 	public long getItemId(int position) {
-		return mInstalledApps.get(position).hashCode();
+		return getItem(position).hashCode();
 	}
 	
 	@Override
@@ -135,6 +137,7 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 		return convertView;
 	}
 	
+	boolean isFiltering;
 	@Override
 	public Filter getFilter() {
 		return new Filter() {
@@ -144,6 +147,11 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 			
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
+				if (isFiltering) {
+					return new FilterResults();
+				}
+				isFiltering = true;
+				
 				ArrayList<PackageInfo> FilteredList = new ArrayList<PackageInfo>();
 				
 				if (TextUtils.isEmpty(constraint)) {
@@ -168,6 +176,7 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 				}
 				mTemporarylist = FilteredList;
 				update();
+				isFiltering = false;
 				return new FilterResults();
 			}
 		};
