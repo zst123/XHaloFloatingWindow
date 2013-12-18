@@ -180,6 +180,16 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		build.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				killPackage(pkgToKill);
+			}
+		});
+		build.show();
+	}
+	
+	private void killPackage(final String pkgToKill) {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
 				try {
 					Process su = Runtime.getRuntime().exec("su");
 					if (su == null) return;
@@ -192,8 +202,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 					e.printStackTrace();
 				}
 			}
-		});
-		build.show();
+		}).start();
 	}
 	
 	private void showBlacklistActivity() {
