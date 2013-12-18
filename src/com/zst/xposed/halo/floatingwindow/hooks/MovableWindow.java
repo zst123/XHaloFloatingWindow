@@ -356,6 +356,9 @@ public class MovableWindow {
 				activity.finish();
 			}
 			break;
+		case 3: //Transparency Dialog
+			showTransparencyDialogVisibility(activity.getWindow());
+			break;
 		}
 	}
 
