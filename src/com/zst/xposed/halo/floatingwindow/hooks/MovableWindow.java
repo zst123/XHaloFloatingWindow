@@ -82,7 +82,8 @@ public class MovableWindow {
 	static final int ACTION_CLICK_QUADRANT = 0x2;
 	static final int ACTION_LONGPRESS_QUADRANT = 0x3;
 	
-	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p) throws Throwable {
+	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p, XModuleResources res) throws Throwable {
+		mModRes = res;
 		mPref = p;
 		try {
 		focusChangeContextFinder(l);
@@ -100,10 +101,6 @@ public class MovableWindow {
 			XposedBridge.log(Common.LOG_TAG + "Movable / inject_DecorView_generateLayout");
 			XposedBridge.log(e);
 		}
-	}
-	
-	public static void handleInitPackageResources(XModuleResources res) throws Throwable {
-		mModRes = res;
 	}
 	
 	private static void focusChangeContextFinder(LoadPackageParam l) throws Throwable {

@@ -26,10 +26,9 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	
 	@Override
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-		MovableWindow.handleLoadPackage(lpparam, mPref);
-		HaloFloating.handleLoadPackage(lpparam, mPref);
 		NotificationShadeHook.hook(lpparam, mPref);
-		MovableWindow.handleInitPackageResources(sModRes); 
+		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
+		HaloFloating.handleLoadPackage(lpparam, mPref);
 	}
 
 }
