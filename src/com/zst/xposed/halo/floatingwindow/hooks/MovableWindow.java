@@ -220,6 +220,7 @@ public class MovableWindow {
 				float quadrant_alpha = mPref.getFloat(Common.KEY_WINDOW_QUADRANT_ALPHA, Common.DEFAULT_WINDOW_QUADRANT_ALPHA);
 				quadrant_background.setAlpha((int)(quadrant_alpha * 255));
 				
+				final Activity current_activity = activity;
 				triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 				quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
 				
@@ -250,14 +251,14 @@ public class MovableWindow {
 					triangle.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							cornerButtonClickAction(ACTION_CLICK_TRIANGLE);
+							cornerButtonClickAction(ACTION_CLICK_TRIANGLE, current_activity);
 						}
 					});
 					
 					triangle.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
-							cornerButtonClickAction(ACTION_LONGPRESS_TRIANGLE);
+							cornerButtonClickAction(ACTION_LONGPRESS_TRIANGLE, current_activity);
 							return true;
 						}
 					});
@@ -278,14 +279,14 @@ public class MovableWindow {
 					quadrant.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							cornerButtonClickAction(ACTION_CLICK_QUADRANT);
+							cornerButtonClickAction(ACTION_CLICK_QUADRANT, current_activity);
 						}
 					});
 					
 					quadrant.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View v) {
-							cornerButtonClickAction(ACTION_LONGPRESS_QUADRANT);
+							cornerButtonClickAction(ACTION_LONGPRESS_QUADRANT, current_activity);
 							return true;
 						}
 					});
@@ -323,7 +324,7 @@ public class MovableWindow {
 		}
 	}
 	
-	private static void cornerButtonClickAction(int type_of_action) {
+	private static void cornerButtonClickAction(int type_of_action, Activity activity) {
 		String index = "0";
 		switch (type_of_action) {
 		case ACTION_CLICK_TRIANGLE:
