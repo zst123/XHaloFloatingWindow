@@ -9,6 +9,9 @@
     <string name="default_value">Default Value</string>
     <string name="save">Save</string>
     <string name="add">Add</string>
+    <string name="help">Help</string>
+    <string name="close_once">Remind me later</string>
+    <string name="close_forever">Close Forever</string>
 
     <!-- First Preference Screen -->
     <string name="pref_window_top_title">Popup Window</string>
@@ -48,6 +51,9 @@
     <string name="pref_force_open_app_above_halo_summary">If an app is currently open in floating mode, new apps that open above it is forced to open in floating mode.</string>
     <string name="pref_blacklist_title">Blacklist Apps</string>
     <string name="pref_blacklist_summary">Choose a list of apps to never open in floating mode</string>
+    <string name="pref_blacklist_dialog">Newly blacklisted apps needs to be force-closed for changes to take effect.\n\nYou may single press on the app icon for the app info to open. After which, you may select Force Stop.</string>
+    <string name="pref_blacklist_error">There was an error opening the App Info.\nThis is the error.\n\n</string>
+    
     
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>

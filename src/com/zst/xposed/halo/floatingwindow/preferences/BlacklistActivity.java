@@ -10,7 +10,9 @@ import com.zst.xposed.halo.floatingwindow.preferences.adapters.PackageNameAdapte
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +31,7 @@ public class BlacklistActivity extends Activity {
 	
 	/* others */
 	static final int ID_ADD = 1;
+	static final int ID_HELP = 2;
 	SharedPreferences mPref;
 	
 	/* main stuff */
@@ -47,6 +50,7 @@ public class BlacklistActivity extends Activity {
 	@SuppressLint("WorldReadableFiles")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		showFirstTimeHelper(false);
 		mPref = getSharedPreferences(Common.PREFERENCE_BLACKLIST_FILE, MODE_WORLD_READABLE);
 		loadBlacklist();
 		initAppList();
@@ -54,6 +58,10 @@ public class BlacklistActivity extends Activity {
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuItem help_item = menu.add(Menu.NONE, ID_HELP, 0, R.string.help);
+		help_item.setIcon(R.drawable.blacklist_help);
+		help_item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
+		
 		MenuItem setting_item = menu.add(Menu.NONE, ID_ADD, 0, R.string.add);
 		setting_item.setIcon(R.drawable.blacklist_add);
 		setting_item.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
@@ -66,8 +74,30 @@ public class BlacklistActivity extends Activity {
 		case ID_ADD:
 			dDialog.show();
 			break;
+		case ID_HELP:
+			showFirstTimeHelper(true);
+			break;
 		}
 		return false;
+	}
+	
+	private void showFirstTimeHelper(boolean force) {
+		final SharedPreferences main = getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
+				MODE_WORLD_READABLE);
+		if (!main.contains(Common.KEY_BLACKLIST_HELP) || force) {
+			AlertDialog.Builder alert = new AlertDialog.Builder(this);
+			alert.setMessage(R.string.pref_blacklist_dialog);
+			if (!force) {
+				alert.setPositiveButton(R.string.close_once, null);
+				alert.setNegativeButton(R.string.close_forever, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						main.edit().putBoolean(Common.KEY_BLACKLIST_HELP, true).commit();
+					}
+				});
+			}
+			alert.show();    
+		}
 	}
 	
 	private void initAppList() {

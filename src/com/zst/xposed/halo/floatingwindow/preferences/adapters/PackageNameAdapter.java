@@ -9,11 +9,14 @@ import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.preferences.BlacklistActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +25,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PackageNameAdapter extends BaseAdapter {
 	
@@ -119,6 +123,22 @@ public class PackageNameAdapter extends BaseAdapter {
 		holder.name.setText(appInfo.title);
 		holder.pkg.setText(appInfo.packageName);
 		holder.icon.setImageDrawable(appInfo.icon);
+		holder.icon.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+							Uri.fromParts("package", appInfo.packageName, null));
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					mStarter.startActivity(intent);
+				} catch (Exception e) {
+					final String txt = mStarter.getResources().getString(R.string.pref_blacklist_error)
+							+ appInfo.packageName + "\n" + e.toString();
+					Toast.makeText(mStarter, txt, Toast.LENGTH_LONG).show();
+					e.printStackTrace();
+				}				
+			}
+		});
 		holder.remove.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
