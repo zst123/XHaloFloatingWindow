@@ -91,10 +91,14 @@ public class Common {
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
-	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";
 	public static final String REFRESH_APP_LAYOUT = THIS_PACKAGE_NAME + ".REFRESH_APP_LAYOUT";
 
 	/* Others */
 	public static final String LOG_TAG = "XHaloFloatingWindow(" + Build.VERSION.SDK_INT + ") - ";	
 	public static final int LAYOUT_RECEIVER_TAG = android.R.id.background;
+	
+	/* SystemUI Broadcast */
+	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";
+	public static final String INTENT_APP_TOKEN = "token";
+	public static final String INTENT_APP_ID = "id";
 }

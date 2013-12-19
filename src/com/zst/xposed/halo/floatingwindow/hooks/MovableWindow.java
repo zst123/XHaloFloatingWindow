@@ -51,9 +51,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MovableWindow {
 	
-	static final String INTENT_APP_TOKEN = "token";
-	static final String INTENT_APP_ID = "id";
-	
 	static final String INTENT_APP_PKG = "pkg";
 	
 	static XSharedPreferences mPref;
@@ -66,9 +63,6 @@ public class MovableWindow {
 	private static Float leftFromScreen;
 	private static Float topFromScreen;
 	
-	private static IWindowManager iWindowManager;
-	private static ActivityManager iActivityManager;
-	private static Context mSystemContext; // SystemUI Context
 	private static Activity activity; // Current app activity
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	
@@ -85,12 +79,6 @@ public class MovableWindow {
 	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p, XModuleResources res) throws Throwable {
 		mModRes = res;
 		mPref = p;
-		try {
-		focusChangeContextFinder(l);
-		} catch (Exception e) {
-			XposedBridge.log(Common.LOG_TAG + "Movable / focusChangeContextFinder");
-			XposedBridge.log(e);
-		}
 		
 		activityHook();
 		inject_dispatchTouchEvent();
@@ -102,54 +90,6 @@ public class MovableWindow {
 			XposedBridge.log(e);
 		}
 	}
-	
-	private static void focusChangeContextFinder(LoadPackageParam l) throws Throwable {
-		if (!l.packageName.equals("com.android.systemui")) return;
-		Class<?> hookClass = findClass("com.android.systemui.SystemUIService", l.classLoader);
-		XposedBridge.hookAllMethods(hookClass, "onCreate", new XC_MethodHook() {
-			@Override
-			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				Service thiz = (Service) param.thisObject;
-				mSystemContext = thiz.getApplicationContext();
-				// Gets SystemUI Context which has
-				IntentFilter filters = new IntentFilter();
-				filters.addAction(Common.CHANGE_APP_FOCUS);
-				mSystemContext.registerReceiver(mIntentReceiver, filters, null, null);
-			}
-		});
-	}
-	
-	final static BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			IBinder token = (IBinder) intent.getExtra(INTENT_APP_TOKEN);
-			int taskId = intent.getIntExtra(INTENT_APP_ID, 0);
-			
-			iWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
-			iActivityManager = (ActivityManager) mSystemContext
-					.getSystemService(Context.ACTIVITY_SERVICE);
-			
-			try {
-				iWindowManager.setFocusedApp(token, false);
-			} catch (Exception e) {
-				XposedBridge.log(Common.LOG_TAG + "Cannot change App Focus");
-				XposedBridge.log(e);
-				Log.d("test1", "CANNOT CHANGE APP FOCUS", e);
-			}
-			
-			final long origId = Binder.clearCallingIdentity();
-			try {
-				iActivityManager.moveTaskToFront(taskId, ActivityManager.MOVE_TASK_NO_USER_ACTION);
-			} catch (Exception e) {
-				XposedBridge.log(Common.LOG_TAG + "Cannot move task to front");
-				XposedBridge.log(e);
-				Log.e("test1", "Cannot move the activity to front", e);
-			}
-			Binder.restoreCallingIdentity(origId);
-			// Using "messy" boradcast intent since wm and am needs
-			// system-specific permission
-		}
-	};
 	
 	private static void activityHook(){
 		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
@@ -594,8 +534,8 @@ public class MovableWindow {
 	
 	private static void changeFocusApp(Activity a) throws Throwable {
 		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
-		i.putExtra(INTENT_APP_TOKEN, a.getActivityToken());
-		i.putExtra(INTENT_APP_ID, a.getTaskId());
+		i.putExtra(Common.INTENT_APP_TOKEN, a.getActivityToken());
+		i.putExtra(Common.INTENT_APP_ID, a.getTaskId());
 		a.sendBroadcast(i);
 	}
 	
