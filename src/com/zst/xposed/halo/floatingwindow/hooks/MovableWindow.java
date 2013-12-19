@@ -1,7 +1,5 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
-import static de.robv.android.xposed.XposedHelpers.findClass;
-
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
@@ -10,8 +8,6 @@ import com.zst.xposed.halo.floatingwindow.helpers.RightResizable;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,13 +20,8 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
-import android.os.Binder;
 import android.os.Build;
-import android.os.IBinder;
-import android.os.ServiceManager;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.IWindowManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -63,8 +54,9 @@ public class MovableWindow {
 	private static Float leftFromScreen;
 	private static Float topFromScreen;
 	
-	private static Activity activity; // Current app activity
+	static Activity activity; // Current app activity
 	static boolean isHoloFloat = false; // Current app has floating flag?
+	static boolean mMovableWindow;
 	
 	static ImageView quadrant;
 	static ImageView triangle;
@@ -97,6 +89,8 @@ public class MovableWindow {
 				activity = (Activity) param.thisObject;
 				isHoloFloat = (activity.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW)
 						== Common.FLAG_FLOATING_WINDOW;
+				mMovableWindow = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW,
+						Common.DEFAULT_MOVABLE_WINDOW);
 			}
 		});
 		
@@ -124,7 +118,7 @@ public class MovableWindow {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!isHoloFloat) return;
 				mPref.reload();
-				if (!mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW)) return;
+				if (!mMovableWindow) return;
 				activity = (Activity) param.thisObject;
 				Window window = (Window) activity.getWindow();
 				
@@ -404,7 +398,7 @@ public class MovableWindow {
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				mPref.reload();
-				if (!mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW)) return;
+				if (!mMovableWindow) return;
 				
 				Activity a = (Activity) param.thisObject;
 				boolean isHoloFloat = (a.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;

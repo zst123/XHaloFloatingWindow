@@ -35,7 +35,7 @@ public class LayoutScaling {
 		scaleFloatingWindow(pref, window.getContext(), window);
 	}
 
-	public static void scaleFloatingWindow(XSharedPreferences pref, Context context, Window window) {
+	private static void scaleFloatingWindow(XSharedPreferences pref, Context context, Window window) {
 		pref.reload();
 		DisplayMetrics metrics = new DisplayMetrics();
 		try {
