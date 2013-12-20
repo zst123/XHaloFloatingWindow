@@ -305,6 +305,12 @@
             android:key="system_notif_floating_quick_settings"
             android:summary="@string/pref_notif_floating_qs_summary"
             android:title="@string/pref_notif_floating_qs_title" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="system_recents_long_click_option"
+            android:summary="@string/pref_recents_long_click_summary"
+            android:title="@string/pref_recents_long_click_title" />
         
         <CheckBoxPreference
             android:defaultValue="false"

@@ -3,6 +3,7 @@ package com.zst.xposed.halo.floatingwindow;
 import com.zst.xposed.halo.floatingwindow.hooks.HaloFloating;
 import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 import com.zst.xposed.halo.floatingwindow.hooks.NotificationShadeHook;
+import com.zst.xposed.halo.floatingwindow.hooks.RecentAppsHook;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemMods;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIReceiver;
 
@@ -26,11 +27,13 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		MODULE_PATH = startupParam.modulePath;
 		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
 		NotificationShadeHook.zygote(sModRes);
+		RecentAppsHook.initZygote(sModRes);
 	}
 	
 	@Override
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		NotificationShadeHook.hook(lpparam, mPref);
+		RecentAppsHook.handleLoadPackage(lpparam, mPref);
 		SystemMods.handleLoadPackage(lpparam, mPref);
 		SystemUIReceiver.handleLoadPackage(lpparam);
 		

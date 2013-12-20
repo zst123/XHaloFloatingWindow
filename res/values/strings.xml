@@ -128,6 +128,8 @@
     <string name="pref_notif_floating_qs_summary">Open Quick Settings tiles in floating window</string>
     <string name="pref_prevent_home_to_front_title">Prevent Moving Home to the front</string>
     <string name="pref_prevent_home_to_front_summary">Prevent the homescreen from being brought front when using the recent apps screen.</string>
+    <string name="pref_recents_long_click_title">Long Press Recent Apps Item Option</string>
+    <string name="pref_recents_long_click_summary">Adds \"Open in Halo\" option when long-pressing an item in the recent apps.</string>
     <string name="pref_systemui_restart_title">Restart SystemUI</string>
     <string name="pref_systemui_restart_summary">Restart for changes to take effect.\n(Requires SU Permission)</string>
     
@@ -162,5 +164,10 @@
     <string name="notif_open_normal">Open Normally</string>
     <string name="notif_app_info">App info</string>
     <string name="notif_error_launching">There was an error launching the notification\nPlease report this to the XHFW thread:\n</string>
+    
+    <!-- Recent Apps Screen -->
+    <string name="recents_remove_from_list">Remove from list</string>
+    <string name="recents_app_info">@string/notif_app_info</string>
+    <string name="recents_open_halo">@string/notif_open_halo</string>
     
 </resources>
