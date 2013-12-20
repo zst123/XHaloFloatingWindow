@@ -96,11 +96,15 @@ public class MovableWindow {
 		
 		XposedBridge.hookAllMethods(Activity.class, "onResume", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+				activity = (Activity) param.thisObject;
 				if (!isHoloFloat) return;
 				if (overlayView != null) {
 					FrameLayout decorView = (FrameLayout) activity.getWindow()
 							.peekDecorView().getRootView();
 					decorView.bringChildToFront(overlayView);
+				}
+				if (mMovableWindow) {
+					activity.getWindow().setCloseOnTouchOutside(false);
 				}
 			}
 		});
