@@ -11,6 +11,7 @@ public class Common {
 	public static final String PREFERENCE_BLACKLIST_FILE = THIS_PACKAGE_NAME + "_blacklist";
 	
 	/* Preference keys */
+	public static final String KEY_TESTING_SCREEN = "testing_screen";
 	public static final String KEY_ALPHA = "window_alpha";
 	public static final String KEY_DIM = "window_dim";
 	public static final String KEY_PORTRAIT_WIDTH = "window_portrait_width";
@@ -98,6 +99,7 @@ public class Common {
 	/* Others */
 	public static final String LOG_TAG = "XHaloFloatingWindow(" + Build.VERSION.SDK_INT + ") - ";	
 	public static final int LAYOUT_RECEIVER_TAG = android.R.id.background;
+	public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=2419287";
 	
 	/* SystemUI Broadcast */
 	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";

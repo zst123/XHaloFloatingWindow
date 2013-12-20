@@ -4,6 +4,7 @@
     <string name="app_name">XHaloFloatingWindow</string>
     <string name="app_description">Halo Floating Windows from Paranoid Android with Movable &amp; Resizable feature.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
+    <string name="app_testing">Testing</string>
     
     <!-- Preference Strings -->
     <string name="default_value">Default Value</string>
@@ -132,6 +133,19 @@
     <string name="pref_recents_long_click_summary">Adds \"Open in Halo\" option when long-pressing an item in the recent apps.</string>
     <string name="pref_systemui_restart_title">Restart SystemUI</string>
     <string name="pref_systemui_restart_summary">Restart for changes to take effect.\n(Requires SU Permission)</string>
+    
+    <!-- 6th Preference Screen -->    
+    <string name="pref_testing_top_title">Testing Area</string>
+    <string name="pref_testing_top_summary">Test the opening of floating windows</string>
+    <string name="pref_testing_active_title">The module is active!</string>
+    <string name="pref_testing_active_subtitle">You should be able to launch apps in floating mode.</string>
+    <string name="pref_testing_inactive_title">The module is inactive</string>
+    <string name="pref_testing_inactive_subtitle">You should be unable to launch apps in floating mode.\n\nPlease try disabling &amp; enabling this module in Xposed Installer followed by another reboot.\n\n If that did not solve your issue, seek help in the official XHaloFloatingWindow thread below.</string>
+    <string name="pref_testing_launch_settings">Launch Settings in Halo</string>
+    <string name="pref_testing_launch_xinstaller">Launch Xposed Installer in Halo</string>
+    <string name="pref_testing_problem_title">Have a problem?</string>
+    <string name="pref_testing_problem_subtitle">You may visit the official thread on XDA Developers for help.</string>
+    <string name="pref_testing_launch_thread">Visit XDA Thread</string>
     
     <!-- Keyboard Mode -->
     <string name="keyboard_default">Default</string>

@@ -325,4 +325,10 @@
 
     </PreferenceScreen>
     
+    <!-- Screen 6: Testing -->
+    <Preference
+        android:key="testing_screen"
+        android:summary="@string/pref_testing_top_summary"
+        android:title="@string/pref_testing_top_title" />
+    
 </PreferenceScreen>
