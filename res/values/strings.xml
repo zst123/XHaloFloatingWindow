@@ -5,7 +5,7 @@
     <string name="app_description">Halo Floating Windows from Paranoid Android with Movable &amp; Resizable feature.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
     <string name="app_testing">Testing</string>
-    
+
     <!-- Preference Strings -->
     <string name="default_value">Default Value</string>
     <string name="save">Save</string>
@@ -54,12 +54,10 @@
     <string name="pref_blacklist_summary">Choose a list of apps to never open in floating mode</string>
     <string name="pref_blacklist_dialog">Newly blacklisted apps needs to be force-closed for changes to take effect.\n\nYou may single press on the app icon for the app info to open. After which, you may select Force Stop.</string>
     <string name="pref_blacklist_error">There was an error opening the App Info.\nThis is the error.\n\n</string>
-    
-    
+
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
     <string name="pref_movable_top_summary">A feature similar to multi-window for true multi-tasking.</string>
-    
     <string name="pref_movable_sub_moving_title">Moving Settings</string>
     <string name="pref_movable_sub_moving_summary">Change Moving Window Behaviour</string>
     <string name="pref_movable_sub_triangle_title">Triangle Settings</string>
@@ -68,54 +66,49 @@
     <string name="pref_movable_sub_quadrant_summary">Change Bottom Right Quadrant Properties</string>
     <string name="pref_movable_sub_border_title">Border Settings</string>
     <string name="pref_movable_sub_border_summary">Change Window Border Properties</string>
-    
     <string name="pref_movable_moving_start_pos_title">Retain Window Position on Start</string>
     <string name="pref_movable_moving_start_pos_summary">When opening a new window of the same app, place them in the same position and size of the original</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>
     <string name="pref_movable_moving_move_pos_summary">When resizing or moving a window, windows of the same app behind it will also be updated.</string>
-    
-	<string name="pref_movable_triangle_enable_title">Show Triangle</string>
-	<string name="pref_movable_triangle_enable_summary">Show a triangle on the bottom left of the window for additional actions.</string>
-	<string name="pref_movable_triangle_color_title">Triangle Color</string>
-	<string name="pref_movable_triangle_color_summary">Color of the corner triangle</string>
-	<string name="pref_movable_triangle_alpha_title">Triangle Alpha</string>
-	<string name="pref_movable_triangle_alpha_summary">Transparency of the corner triangle</string>
-	<string name="pref_movable_triangle_size_title">Triangle Size</string>
-	<string name="pref_movable_triangle_size_summary">Size of the corner triangle</string>
-	<string name="pref_movable_triangle_sp_action_title">Triangle Single Press Action</string>
-	<string name="pref_movable_triangle_sp_action_summary">The action that will occur when clicking the corner triangle.</string>
-	<string name="pref_movable_triangle_lp_action_title">Triangle Long Press Action</string>
-	<string name="pref_movable_triangle_lp_action_summary">The action that will occur when long pressing the corner triangle.</string>
-	
-	<string name="pref_movable_quadrant_enable_title">Show Quadrant</string>
-	<string name="pref_movable_quadrant_enable_summary">Show a quadrant on the bottom right of the window for additional actions.</string>
-	<string name="pref_movable_quadrant_color_title">Quadrant Color</string>
-	<string name="pref_movable_quadrant_color_summary">Color of the corner quadrant</string>
-	<string name="pref_movable_quadrant_alpha_title">Quadrant Alpha</string>
-	<string name="pref_movable_quadrant_alpha_summary">Transparency of the corner quadrant</string>
-	<string name="pref_movable_quadrant_size_title">Quadrant Size</string>
-	<string name="pref_movable_quadrant_size_summary">Size of the corner quadrant</string>
-	<string name="pref_movable_quadrant_sp_action_title">Quadrant Single Press Action</string>
-	<string name="pref_movable_quadrant_sp_action_summary">The action that will occur when clicking the corner quadrant.</string>
-	<string name="pref_movable_quadrant_lp_action_title">Quadrant Long Press Action</string>
-	<string name="pref_movable_quadrant_lp_action_summary">The action that will occur when long pressing the corner quadrant.</string>
-	
-	<string name="pref_movable_resize_enabled_title">Enable Resizing</string>
-	<string name="pref_movable_resize_enabled_summary">Use to resize window when dragged.</string>
-	
-	<string name="pref_movable_border_enable_title">Show Border</string>
-	<string name="pref_movable_border_enable_summary">Show a border around the edge of the window</string>
-	<string name="pref_movable_border_color_title">Border Color</string>
-	<string name="pref_movable_border_color_summary">Color of the border</string>
-	<string name="pref_movable_border_thickness_title">Border Width</string>
-	<string name="pref_movable_border_thickness_summary">Thickness of the border in pixels</string>
-	
-	<!-- 4th Preference Corner Actions -->
-	<string name="option_movable_corner_nothing">Do Nothing</string>
-	<string name="option_movable_corner_dnm">Show Drag To Move Bar</string>
-	<string name="option_movable_corner_close">Close App</string>
-	<string name="option_movable_corner_transparency">Show Transparency Slider</string>
-	<string name="option_movable_corner_hide_app">Hide Entire App</string>
+    <string name="pref_movable_triangle_enable_title">Show Triangle</string>
+    <string name="pref_movable_triangle_enable_summary">Show a triangle on the bottom left of the window for additional actions.</string>
+    <string name="pref_movable_triangle_color_title">Triangle Color</string>
+    <string name="pref_movable_triangle_color_summary">Color of the corner triangle</string>
+    <string name="pref_movable_triangle_alpha_title">Triangle Alpha</string>
+    <string name="pref_movable_triangle_alpha_summary">Transparency of the corner triangle</string>
+    <string name="pref_movable_triangle_size_title">Triangle Size</string>
+    <string name="pref_movable_triangle_size_summary">Size of the corner triangle</string>
+    <string name="pref_movable_triangle_sp_action_title">Triangle Single Press Action</string>
+    <string name="pref_movable_triangle_sp_action_summary">The action that will occur when clicking the corner triangle.</string>
+    <string name="pref_movable_triangle_lp_action_title">Triangle Long Press Action</string>
+    <string name="pref_movable_triangle_lp_action_summary">The action that will occur when long pressing the corner triangle.</string>
+    <string name="pref_movable_quadrant_enable_title">Show Quadrant</string>
+    <string name="pref_movable_quadrant_enable_summary">Show a quadrant on the bottom right of the window for additional actions.</string>
+    <string name="pref_movable_quadrant_color_title">Quadrant Color</string>
+    <string name="pref_movable_quadrant_color_summary">Color of the corner quadrant</string>
+    <string name="pref_movable_quadrant_alpha_title">Quadrant Alpha</string>
+    <string name="pref_movable_quadrant_alpha_summary">Transparency of the corner quadrant</string>
+    <string name="pref_movable_quadrant_size_title">Quadrant Size</string>
+    <string name="pref_movable_quadrant_size_summary">Size of the corner quadrant</string>
+    <string name="pref_movable_quadrant_sp_action_title">Quadrant Single Press Action</string>
+    <string name="pref_movable_quadrant_sp_action_summary">The action that will occur when clicking the corner quadrant.</string>
+    <string name="pref_movable_quadrant_lp_action_title">Quadrant Long Press Action</string>
+    <string name="pref_movable_quadrant_lp_action_summary">The action that will occur when long pressing the corner quadrant.</string>
+    <string name="pref_movable_resize_enabled_title">Enable Resizing</string>
+    <string name="pref_movable_resize_enabled_summary">Use to resize window when dragged.</string>
+    <string name="pref_movable_border_enable_title">Show Border</string>
+    <string name="pref_movable_border_enable_summary">Show a border around the edge of the window</string>
+    <string name="pref_movable_border_color_title">Border Color</string>
+    <string name="pref_movable_border_color_summary">Color of the border</string>
+    <string name="pref_movable_border_thickness_title">Border Width</string>
+    <string name="pref_movable_border_thickness_summary">Thickness of the border in pixels</string>
+
+    <!-- 4th Preference Corner Actions -->
+    <string name="option_movable_corner_nothing">Do Nothing</string>
+    <string name="option_movable_corner_dnm">Show Drag To Move Bar</string>
+    <string name="option_movable_corner_close">Close App</string>
+    <string name="option_movable_corner_transparency">Show Transparency Slider</string>
+    <string name="option_movable_corner_hide_app">Hide Entire App</string>
 
     <!-- 5th Preference Screen -->
     <string name="pref_systemui_top_title">SystemUI Mods</string>
@@ -133,8 +126,8 @@
     <string name="pref_recents_long_click_summary">Adds \"Open in Halo\" option when long-pressing an item in the recent apps.</string>
     <string name="pref_systemui_restart_title">Restart SystemUI</string>
     <string name="pref_systemui_restart_summary">Restart for changes to take effect.\n(Requires SU Permission)</string>
-    
-    <!-- 6th Preference Screen -->    
+
+    <!-- 6th Preference Screen -->
     <string name="pref_testing_top_title">Testing Area</string>
     <string name="pref_testing_top_summary">Test the opening of floating windows</string>
     <string name="pref_testing_active_title">The module is active!</string>
@@ -147,12 +140,12 @@
     <string name="pref_testing_problem_title">Have a problem?</string>
     <string name="pref_testing_problem_subtitle">You may visit the official thread on XDA Developers for help.</string>
     <string name="pref_testing_launch_thread">Visit XDA Thread</string>
-    
+
     <!-- Keyboard Mode -->
     <string name="keyboard_default">Default</string>
     <string name="keyboard_pan">Pan Up</string>
     <string name="keyboard_scale">Scale</string>
-    
+
     <!-- Gravity -->
     <string name="option_gravity_1">Top Left Corner</string>
     <string name="option_gravity_2">Top Center</string>
@@ -163,26 +156,26 @@
     <string name="option_gravity_7">Bottom Left Corner</string>
     <string name="option_gravity_8">Bottom Center</string>
     <string name="option_gravity_9">Bottom Right Corner</string>
-    
+
     <!-- ColorPicker -->
     <string name="apply">Apply</string>
     <string name="arrow_symbol">➙</string>
     <string name="color_hex">Color Hex</string>
-    
+
     <!-- Drag & Move Bar -->
     <string name="dnm_title">Drag To Move</string>
     <string name="dnm_transparency">Transparency</string>
     <string name="dnm_close_app">Close Window</string>
-    
+
     <!-- Notification Shade -->
     <string name="notif_open_halo">Open in Halo</string>
     <string name="notif_open_normal">Open Normally</string>
     <string name="notif_app_info">App info</string>
     <string name="notif_error_launching">There was an error launching the notification\nPlease report this to the XHFW thread:\n</string>
-    
+
     <!-- Recent Apps Screen -->
     <string name="recents_remove_from_list">Remove from list</string>
     <string name="recents_app_info">@string/notif_app_info</string>
     <string name="recents_open_halo">@string/notif_open_halo</string>
-    
+
 </resources>
