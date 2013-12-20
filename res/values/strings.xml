@@ -141,6 +141,7 @@
     <string name="pref_testing_active_subtitle">You should be able to launch apps in floating mode.</string>
     <string name="pref_testing_inactive_title">The module is inactive</string>
     <string name="pref_testing_inactive_subtitle">You should be unable to launch apps in floating mode.\n\nPlease try disabling &amp; enabling this module in Xposed Installer followed by another reboot.\n\n If that did not solve your issue, seek help in the official XHaloFloatingWindow thread below.</string>
+    <string name="pref_testing_unknown_subtitle">Unable to detect module loading</string>
     <string name="pref_testing_launch_settings">Launch Settings in Halo</string>
     <string name="pref_testing_launch_xinstaller">Launch Xposed Installer in Halo</string>
     <string name="pref_testing_problem_title">Have a problem?</string>
