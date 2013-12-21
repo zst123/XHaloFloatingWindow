@@ -62,6 +62,8 @@ public class MovableWindow {
 	static ImageView triangle;
 	static View overlayView;
 	
+	static final int ID_OVERLAY_VIEW = 1000000;
+	
 	/* Corner Button Actions Constants*/
 	static final int ACTION_CLICK_TRIANGLE = 0x0;
 	static final int ACTION_LONGPRESS_TRIANGLE = 0x1;
@@ -105,6 +107,9 @@ public class MovableWindow {
 				}
 				if (mMovableWindow) {
 					activity.getWindow().setCloseOnTouchOutside(false);
+					overlayView = activity.findViewById(ID_OVERLAY_VIEW);
+					triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
+					quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
 				}
 			}
 		});
@@ -136,6 +141,8 @@ public class MovableWindow {
 				
 				XmlResourceParser parser = mModRes.getLayout(R.layout.movable_window);
 				overlayView = window.getLayoutInflater().inflate(parser, null);
+				
+				overlayView.setId(ID_OVERLAY_VIEW);
 				
 				ViewGroup.LayoutParams paramz = new ViewGroup.LayoutParams(
 						ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
