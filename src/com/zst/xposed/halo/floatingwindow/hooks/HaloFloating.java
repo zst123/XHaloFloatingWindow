@@ -203,7 +203,6 @@ public class HaloFloating {
 		final Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				if (param.args.length != 2) return;
 				if (!floatingWindow) return;
 				
 				mPref.reload();
@@ -214,7 +213,10 @@ public class HaloFloating {
 				activityField = clazz.getDeclaredField(("mResumedActivity"));
 				activityField.setAccessible(true);
 				previous = null;
-				previous = activityField.get(param.thisObject);
+				final Object prevActivity = activityField.get(param.thisObject);
+				if (prevActivity != null) {
+					previous = prevActivity;
+				}
 				activityField.set(param.thisObject, null);
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
