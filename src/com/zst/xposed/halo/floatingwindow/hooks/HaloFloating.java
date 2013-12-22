@@ -187,6 +187,7 @@ public class HaloFloating {
 					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
 						i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 					}
+					i.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 					Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
 					tt.setAccessible(true);
 					tt.set(param.thisObject, Boolean.FALSE);
