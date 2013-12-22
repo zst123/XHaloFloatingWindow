@@ -110,19 +110,22 @@ public class NotificationShadeHook {
 				View newRow = (View) fieldRow.get(entry);
 				View content = newRow.findViewById(newRow.getResources().getIdentifier(
 						"content", "id", "com.android.systemui"));
-				
-				final Object sbn = entry.getClass()
-						.getDeclaredField(("notification")).get(entry);
-				final String packageNameF = (String) sbn.getClass()
-						.getDeclaredField(("pkg")).get(sbn);
-				final Notification n = (Notification) sbn.getClass()
-						.getDeclaredField(("notification")).get(sbn);
-				final PendingIntent contentIntent = n.contentIntent;
+				content.setTag(entry);
 
 				if (mSinglePressEnabled) {
 					content.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							try {
+							final Object entry1 = v.getTag();
+							final Object sbn = entry1.getClass()
+									.getDeclaredField(("notification")).get(entry1);
+							final String packageNameF = (String) sbn.getClass()
+									.getDeclaredField(("pkg")).get(sbn);
+							final Notification n = (Notification) sbn.getClass()
+									.getDeclaredField(("notification")).get(sbn);
+							final PendingIntent contentIntent = n.contentIntent;
+							
 							if (packageNameF == null) return;
 							if (v.getWindowToken() == null) return;
 							
@@ -134,12 +137,26 @@ public class NotificationShadeHook {
 										TEXT_ERROR_LAUNCHING + e.toString(),
 										android.widget.Toast.LENGTH_SHORT).show();
 							}
+							
+							} catch (Throwable t) {
+							}
 						}
 					});
 				} else {
 					content.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
+							try {
+								
+							final Object entry1 = v.getTag();
+							final Object sbn = entry1.getClass()
+									.getDeclaredField(("notification")).get(entry1);
+							final String packageNameF = (String) sbn.getClass()
+									.getDeclaredField(("pkg")).get(sbn);
+							final Notification n = (Notification) sbn.getClass()
+									.getDeclaredField(("notification")).get(sbn);
+							final PendingIntent contentIntent = n.contentIntent;
+							
 							if (packageNameF == null) return;
 							if (v.getWindowToken() == null) return;
 							
@@ -151,12 +168,26 @@ public class NotificationShadeHook {
 										TEXT_ERROR_LAUNCHING + e.toString(),
 										android.widget.Toast.LENGTH_SHORT).show();
 							}
+							} catch (Throwable t) {
+								
+							}
 						}
 					});
 				}
 				content.setOnLongClickListener(new View.OnLongClickListener() {
 					@Override
 					public boolean onLongClick(final View v) {
+						try {
+							
+							final Object entry1 = v.getTag();
+							final Object sbn = entry1.getClass()
+									.getDeclaredField(("notification")).get(entry1);
+							final String packageNameF = (String) sbn.getClass()
+									.getDeclaredField(("pkg")).get(sbn);
+							final Notification n = (Notification) sbn.getClass()
+									.getDeclaredField(("notification")).get(sbn);
+							final PendingIntent contentIntent = n.contentIntent;
+							
 						if (packageNameF == null) return false;
 						if (v.getWindowToken() == null) return false;
 						
@@ -195,6 +226,9 @@ public class NotificationShadeHook {
 							popup.show();
 							return true;
 						} catch (Exception e) {
+							return false;
+						}
+						} catch (Throwable t) {
 							return false;
 						}
 					}
