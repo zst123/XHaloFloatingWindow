@@ -105,7 +105,8 @@
 
     <!-- 4th Preference Corner Actions -->
     <string name="option_movable_corner_nothing">Do Nothing</string>
-    <string name="option_movable_corner_dnm">Show Drag To Move Bar</string>
+    <string name="option_movable_corner_dnm">Show Drag To Move Bar (Hide Corners)</string>
+    <string name="option_movable_corner_dnm_wo_corners">Show Drag To Move Bar (Don\'t Hide Corners)</string>
     <string name="option_movable_corner_close">Close App</string>
     <string name="option_movable_corner_transparency">Show Transparency Slider</string>
     <string name="option_movable_corner_hide_app">Hide Entire App</string>

@@ -5,6 +5,7 @@
     <string-array name="option_movable_corner_entries">
         <item>@string/option_movable_corner_nothing</item>
         <item>@string/option_movable_corner_dnm</item>
+        <item>@string/option_movable_corner_dnm_wo_corners</item>
         <item>@string/option_movable_corner_close</item>
         <item>@string/option_movable_corner_transparency</item>
         <item>@string/option_movable_corner_hide_app</item>
@@ -13,6 +14,7 @@
     <string-array name="option_movable_corner_values">
         <item>0</item>
         <item>1</item>
+        <item>5</item>
         <item>2</item>
         <item>3</item>
         <item>4</item>

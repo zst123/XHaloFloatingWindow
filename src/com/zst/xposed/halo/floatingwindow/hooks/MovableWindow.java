@@ -240,7 +240,7 @@ public class MovableWindow {
 					quadrant.getLayoutParams().height = 0;
 				}
 				
-				setDragActionBarVisibility(false);
+				setDragActionBarVisibility(false, true);
 				initActionBar(activity);
 				
 				if (mPref.getBoolean(Common.KEY_WINDOW_BORDER_ENABLED,
@@ -293,7 +293,7 @@ public class MovableWindow {
 		case 0: // Do Nothing
 			break;
 		case 1: // Drag & Move Bar
-			setDragActionBarVisibility(true);
+			setDragActionBarVisibility(true, true);
 			break;
 		case 2:
 			if (Build.VERSION.SDK_INT >= 16) {
@@ -308,13 +308,17 @@ public class MovableWindow {
 		case 4: // Hide Entire App
 			activity.moveTaskToBack(true);
 			break;
+		case 5: // Drag & Move Bar w/o hiding corner
+			setDragActionBarVisibility(true, false);
+			break;
 		}
 	}
 
 	// Show and hide the action bar we injected for dragging
-	private static void setDragActionBarVisibility(boolean visible) {
+	private static void setDragActionBarVisibility(boolean visible, boolean with_corner) {
 		View header = overlayView.findViewById(R.id.movable_action_bar);
 		header.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+		if (!with_corner) return;
 		triangle.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
 		quadrant.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
 	}
@@ -372,7 +376,7 @@ public class MovableWindow {
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				setDragActionBarVisibility(false);
+				setDragActionBarVisibility(false, true);
 			}
 		});
 		
