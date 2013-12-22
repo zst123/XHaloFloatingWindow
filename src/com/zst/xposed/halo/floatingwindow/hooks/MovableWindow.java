@@ -329,6 +329,7 @@ public class MovableWindow {
 		final SeekBar t = (SeekBar) overlayView.findViewById(R.id.movable_seekBar1);
 		
 		float oldValue = win.getAttributes().alpha;
+		number.setText((int) (oldValue * 100) + "%");
 		t.setProgress((int) (oldValue * 100) - 10);
 		t.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 			@Override
