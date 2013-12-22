@@ -136,6 +136,23 @@ public class NotificationShadeHook {
 							}
 						}
 					});
+				} else {
+					content.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							if (packageNameF == null) return;
+							if (v.getWindowToken() == null) return;
+							
+							try {
+								launch(new Intent(), contentIntent, v.getContext());
+								closeNotificationShade(v.getContext());
+							} catch (Exception e) {
+								android.widget.Toast.makeText(v.getContext(),
+										TEXT_ERROR_LAUNCHING + e.toString(),
+										android.widget.Toast.LENGTH_SHORT).show();
+							}
+						}
+					});
 				}
 				content.setOnLongClickListener(new View.OnLongClickListener() {
 					@Override
