@@ -114,6 +114,7 @@
     <string name="option_movable_corner_close">Close App</string>
     <string name="option_movable_corner_transparency">Show Transparency Slider</string>
     <string name="option_movable_corner_hide_app">Hide Entire App</string>
+    <string name="option_movable_corner_maximize">Maximize App</string>
 
     <!-- 5th Preference Screen -->
     <string name="pref_systemui_top_title">SystemUI Mods</string>

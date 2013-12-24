@@ -326,6 +326,11 @@ public class MovableWindow {
 		case 5: // Drag & Move Bar w/o hiding corner
 			setDragActionBarVisibility(true, false);
 			break;
+		case 6: // Maximize App
+			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT);
+			initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
+			break;
 		}
 	}
 
