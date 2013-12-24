@@ -90,6 +90,7 @@ public class MovableWindow {
 		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
+				mPref.reload();
 				isHoloFloat = (activity.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW)
 						== Common.FLAG_FLOATING_WINDOW;
 				mMovableWindow = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW,
