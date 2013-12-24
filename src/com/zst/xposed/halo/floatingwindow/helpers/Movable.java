@@ -15,18 +15,31 @@ public class Movable implements View.OnTouchListener {
     	private static Float viewY ;
     	private static Float leftFromScreen ;
     	private static Float topFromScreen ;
+    	private View offsetView;
        
         public Movable(Window window){
                 mWindow=window;
         		param = mWindow.getAttributes(); 
 
         }
+        
+        public Movable(Window window, View v){
+        	this(window);
+        	offsetView = v;
+        }
+        
         @Override
         public boolean onTouch(View v, MotionEvent event) {
         	switch (event.getAction()){
         	case MotionEvent.ACTION_DOWN:
         		viewX = event.getX();
     			viewY = event.getY();
+        		if (offsetView != null) {
+        			int[] location = {0,0};
+        			offsetView.getLocationInWindow(location);
+        			viewX = viewX + location[0];
+        			viewY = viewY + location[1];
+        		}
                 return true;
         	case MotionEvent.ACTION_MOVE:
         		screenX = event.getRawX();

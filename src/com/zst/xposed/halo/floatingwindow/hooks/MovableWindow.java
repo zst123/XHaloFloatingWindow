@@ -196,7 +196,7 @@ public class MovableWindow {
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_DRAGGING_ENABLED,
 							Common.DEFAULT_WINDOW_TRIANGLE_DRAGGING_ENABLED)) {
-						triangle.setOnTouchListener(new Movable(current_activity.getWindow()));
+						triangle.setOnTouchListener(new Movable(current_activity.getWindow(), triangle));
 					}
 					
 					triangle.setOnClickListener(new View.OnClickListener() {
@@ -229,7 +229,7 @@ public class MovableWindow {
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_DRAGGING_ENABLED,
 							Common.DEFAULT_WINDOW_QUADRANT_DRAGGING_ENABLED)) {
-						quadrant.setOnTouchListener(new Movable(current_activity.getWindow()));
+						quadrant.setOnTouchListener(new Movable(current_activity.getWindow(), quadrant));
 					}
 					
 					quadrant.setOnClickListener(new View.OnClickListener() {
