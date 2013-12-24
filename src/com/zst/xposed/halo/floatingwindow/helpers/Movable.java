@@ -40,7 +40,7 @@ public class Movable implements View.OnTouchListener {
         			viewX = viewX + location[0];
         			viewY = viewY + location[1];
         		}
-                return true;
+                break;
         	case MotionEvent.ACTION_MOVE:
         		screenX = event.getRawX();
         		screenY = event.getRawY();
@@ -48,8 +48,6 @@ public class Movable implements View.OnTouchListener {
         		topFromScreen = (screenY - viewY);
         		mWindow.setGravity(Gravity.LEFT | Gravity.TOP);
         		updateView(mWindow, leftFromScreen, topFromScreen);
-        		return true;
-        	case MotionEvent.ACTION_UP:
         		break;
         	}
         	return false;
