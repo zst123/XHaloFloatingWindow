@@ -3,7 +3,6 @@ package com.zst.xposed.halo.floatingwindow.helpers;
 import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 
 import android.content.Context;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -34,7 +33,6 @@ public class RightResizable implements View.OnTouchListener {
 		switch (event.getAction()) {
 		
 		case MotionEvent.ACTION_DOWN:
-			window.setGravity(Gravity.LEFT | Gravity.TOP);
 			param = window.getAttributes();
 			oldW = param.width;
 			oldH = param.height;

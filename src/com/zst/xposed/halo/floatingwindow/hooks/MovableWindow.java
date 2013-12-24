@@ -427,8 +427,29 @@ public class MovableWindow {
 	
 	private static void inject_dispatchTouchEvent() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook() {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				if (!mMovableWindow) return;
+				
+				Activity a = (Activity) param.thisObject;
+				boolean isHoloFloat = (a.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+				if (!isHoloFloat) return;
+				
+				MotionEvent event = (MotionEvent) param.args[0];
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					if (a.getWindow().getAttributes().gravity != (Gravity.LEFT | Gravity.TOP)) {
+						// Fix First Resize moving into corner
+						viewX = event.getX();
+						viewY = event.getY();
+						screenX = event.getRawX();
+						screenY = event.getRawY();
+						leftFromScreen = (screenX - viewX);
+						topFromScreen = (screenY - viewY);
+						a.getWindow().setGravity(Gravity.LEFT | Gravity.TOP);
+						updateView(a.getWindow(), leftFromScreen, topFromScreen);
+					}
+				}
+			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				mPref.reload();
 				if (!mMovableWindow) return;
 				
 				Activity a = (Activity) param.thisObject;
