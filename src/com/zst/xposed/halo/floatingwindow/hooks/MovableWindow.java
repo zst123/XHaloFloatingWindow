@@ -193,6 +193,12 @@ public class MovableWindow {
 						Resizable resize = new Resizable(context, window);
 						triangle.setOnTouchListener(resize);
 					}
+					
+					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_DRAGGING_ENABLED,
+							Common.DEFAULT_WINDOW_TRIANGLE_DRAGGING_ENABLED)) {
+						triangle.setOnTouchListener(new Movable(current_activity.getWindow()));
+					}
+					
 					triangle.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -219,6 +225,11 @@ public class MovableWindow {
 							Common.DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED)) {
 						RightResizable right_resize = new RightResizable(window);
 						quadrant.setOnTouchListener(right_resize);
+					}
+					
+					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_DRAGGING_ENABLED,
+							Common.DEFAULT_WINDOW_QUADRANT_DRAGGING_ENABLED)) {
+						quadrant.setOnTouchListener(new Movable(current_activity.getWindow()));
 					}
 					
 					quadrant.setOnClickListener(new View.OnClickListener() {

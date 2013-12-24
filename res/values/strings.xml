@@ -96,6 +96,8 @@
     <string name="pref_movable_quadrant_lp_action_summary">The action that will occur when long pressing the corner quadrant.</string>
     <string name="pref_movable_resize_enabled_title">Enable Resizing</string>
     <string name="pref_movable_resize_enabled_summary">Use to resize window when dragged.</string>
+    <string name="pref_movable_dragging_enabled_title">Enable Dragging</string>
+    <string name="pref_movable_dragging_enabled_summary">Use to move window when dragged.</string>
     <string name="pref_movable_border_enable_title">Show Border</string>
     <string name="pref_movable_border_enable_summary">Show a border around the edge of the window</string>
     <string name="pref_movable_border_color_title">Border Color</string>

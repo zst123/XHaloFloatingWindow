@@ -35,6 +35,7 @@ public class Common {
 	public static final String KEY_WINDOW_TRIANGLE_CLICK_ACTION = "window_triangle_sp_action";
 	public static final String KEY_WINDOW_TRIANGLE_LONGPRESS_ACTION = "window_triangle_lp_action";
 	public static final String KEY_WINDOW_TRIANGLE_RESIZE_ENABLED = "window_triangle_resize_enabled";
+	public static final String KEY_WINDOW_TRIANGLE_DRAGGING_ENABLED = "window_triangle_dragging_enabled";
 	public static final String KEY_WINDOW_QUADRANT_ENABLE = "window_quadrant_enabled";
 	public static final String KEY_WINDOW_QUADRANT_COLOR = "window_quadrant_color";
 	public static final String KEY_WINDOW_QUADRANT_ALPHA = "window_quadrant_alpha";
@@ -42,6 +43,7 @@ public class Common {
 	public static final String KEY_WINDOW_QUADRANT_CLICK_ACTION = "window_quadrant_sp_action";
 	public static final String KEY_WINDOW_QUADRANT_LONGPRESS_ACTION = "window_quadrant_lp_action";
 	public static final String KEY_WINDOW_QUADRANT_RESIZE_ENABLED = "window_quadrant_resize_enabled";
+	public static final String KEY_WINDOW_QUADRANT_DRAGGING_ENABLED = "window_quadrant_dragging_enabled";
 	public static final String KEY_WINDOW_BORDER_ENABLED = "window_border_enabled";
 	public static final String KEY_WINDOW_BORDER_COLOR = "window_border_color";
 	public static final String KEY_WINDOW_BORDER_THICKNESS = "window_border_thickness";
@@ -77,6 +79,7 @@ public class Common {
 	public static final String DEFAULT_WINDOW_TRIANGLE_CLICK_ACTION = "0";
 	public static final String DEFAULT_WINDOW_TRIANGLE_LONGPRESS_ACTION = "1";
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_RESIZE_ENABLED = true;
+	public static final boolean DEFAULT_WINDOW_TRIANGLE_DRAGGING_ENABLED = false;
 	public static final boolean DEFAULT_WINDOW_QUADRANT_ENABLE = false;
 	public static final String DEFAULT_WINDOW_QUADRANT_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_QUADRANT_ALPHA = 1f;
@@ -84,6 +87,7 @@ public class Common {
 	public static final String DEFAULT_WINDOW_QUADRANT_CLICK_ACTION = "0";
 	public static final String DEFAULT_WINDOW_QUADRANT_LONGPRESS_ACTION = "0";
 	public static final boolean DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED = false;
+	public static final boolean DEFAULT_WINDOW_QUADRANT_DRAGGING_ENABLED = false;
 	public static final boolean DEFAULT_WINDOW_BORDER_ENABLED = false;
 	public static final String DEFAULT_WINDOW_BORDER_COLOR = "FFFFFF";
 	public static final int DEFAULT_WINDOW_BORDER_THICKNESS = 0;
