@@ -109,6 +109,8 @@ public class Common {
 	
 	/* SystemUI Broadcast */
 	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";
+	public static final String REMOVE_NOTIFICATION_RESTORE = THIS_PACKAGE_NAME + ".REMOVE_NOTIFICATION_RESTORE.";
 	public static final String INTENT_APP_TOKEN = "token";
 	public static final String INTENT_APP_ID = "id";
+	public static final String INTENT_APP_NOTIFICATION_HIDE = "notification_hide";
 }

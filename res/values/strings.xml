@@ -172,7 +172,10 @@
     <string name="dnm_title">Drag To Move</string>
     <string name="dnm_transparency">Transparency</string>
     <string name="dnm_close_app">Close Window</string>
-
+    <string name="dnm_minimize">Minimize App</string>
+    <string name="dnm_minimize_notif_title">Restore %1$s</string>
+    <string name="dnm_minimize_notif_summary">This floating app has been minimized</string>
+    
     <!-- Notification Shade -->
     <string name="notif_open_halo">Open in Halo</string>
     <string name="notif_open_normal">Open Normally</string>

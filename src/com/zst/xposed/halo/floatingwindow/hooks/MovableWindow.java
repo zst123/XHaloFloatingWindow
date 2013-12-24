@@ -8,10 +8,14 @@ import com.zst.xposed.halo.floatingwindow.helpers.RightResizable;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
@@ -64,6 +68,7 @@ public class MovableWindow {
 	static View overlayView;
 	
 	static final int ID_OVERLAY_VIEW = 1000000;
+	static final int ID_NOTIFICATION_RESTORE = 22222222;
 	
 	/* Corner Button Actions Constants*/
 	static final int ACTION_CLICK_TRIANGLE = 0x0;
@@ -407,10 +412,12 @@ public class MovableWindow {
 			@Override
 			public void onClick(View v) {
 				final String item1 = mModRes.getString(R.string.dnm_transparency);
+				final String item3 = mModRes.getString(R.string.dnm_minimize);
 				final String item2 = mModRes.getString(R.string.dnm_close_app);
 				PopupMenu popupMenu = new PopupMenu(overflow.getContext(), (View) overflow);
 				Menu menu = popupMenu.getMenu();
 				menu.add(item1);
+				menu.add(item3);
 				menu.add(item2);
 				
 				popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -422,12 +429,51 @@ public class MovableWindow {
 						if (item.getTitle().equals(item2)) {
 							a.finish();
 						}
+						if (item.getTitle().equals(item3)) {
+							minimizeAndShowNotification(a);
+						}
 						return false;
 					}
 				});
 				popupMenu.show();
 			}
 		});
+	}
+	
+	private static void minimizeAndShowNotification(Activity ac) {
+		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
+		i.putExtra(Common.INTENT_APP_TOKEN, ac.getActivityToken());
+		i.putExtra(Common.INTENT_APP_ID, ac.getTaskId());
+		i.putExtra(Common.INTENT_APP_NOTIFICATION_HIDE,
+				Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName());
+
+		ApplicationInfo app_info = ac.getApplication().getApplicationInfo();
+		PendingIntent intent = PendingIntent.getBroadcast(ac, 0, i, 
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		String title = String.format(mModRes.getString(R.string.dnm_minimize_notif_title),
+        		app_info.loadLabel(ac.getPackageManager()));
+		
+		Notification n  = new Notification.Builder(ac)
+		        .setContentTitle(title)
+		        .setContentText(mModRes.getString(R.string.dnm_minimize_notif_summary))
+		        .setSmallIcon(app_info.icon)
+		        .setAutoCancel(true)
+		        .setContentIntent(intent)
+		        .setOngoing(true)
+		        .getNotification();
+				
+		final NotificationManager notificationManager = 
+		  (NotificationManager) ac.getSystemService(Context.NOTIFICATION_SERVICE);
+		notificationManager.notify(ID_NOTIFICATION_RESTORE, n); 
+		
+		ac.moveTaskToBack(true);
+		
+		ac.registerReceiver(new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				notificationManager.cancel(ID_NOTIFICATION_RESTORE);
+			}
+		}, new IntentFilter(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName()));
 	}
 	
 	private static void inject_dispatchTouchEvent() throws Throwable {
