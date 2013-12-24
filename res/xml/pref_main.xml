@@ -126,6 +126,12 @@
                 android:key="window_moving_move_pos_enabled"
                 android:summary="@string/pref_movable_moving_move_pos_summary"
                 android:title="@string/pref_movable_moving_move_pos_title" />
+			
+			<CheckBoxPreference
+                android:defaultValue="true"
+                android:key="window_moving_move_ab_enabled"
+                android:summary="@string/pref_movable_moving_move_ab_summary"
+                android:title="@string/pref_movable_moving_move_ab_title" />
         </PreferenceScreen>
         
         <!-- Triangle -->

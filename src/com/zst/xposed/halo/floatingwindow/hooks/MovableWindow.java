@@ -57,6 +57,7 @@ public class MovableWindow {
 	static Activity activity; // Current app activity
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	static boolean mMovableWindow;
+	static boolean mActionBarDraggable;
 	
 	static ImageView quadrant;
 	static ImageView triangle;
@@ -93,6 +94,8 @@ public class MovableWindow {
 						== Common.FLAG_FLOATING_WINDOW;
 				mMovableWindow = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW,
 						Common.DEFAULT_MOVABLE_WINDOW);
+				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
+						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
 			}
 		});
 		
@@ -445,6 +448,7 @@ public class MovableWindow {
 					changeFocusApp(a);
 					break;
 				case MotionEvent.ACTION_MOVE:
+					if (mActionBarDraggable) {					
 					ActionBar ab = a.getActionBar();
 					int height = (ab != null) ? ab.getHeight() : dp(48, a.getApplicationContext());
 					
@@ -457,6 +461,7 @@ public class MovableWindow {
 						mWindow.setGravity(Gravity.LEFT | Gravity.TOP);
 						updateView(mWindow, leftFromScreen, topFromScreen);
 						initAndRefreshLayoutParams(a.getWindow(), a.getBaseContext(), activity.getPackageName());
+					}
 					}
 					break;
 				}

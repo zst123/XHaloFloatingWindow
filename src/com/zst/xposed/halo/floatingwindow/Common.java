@@ -28,6 +28,7 @@ public class Common {
 	public static final String KEY_SYSTEM_RECENTS_LONGPRESS_OPTION = "system_recents_long_click_option";
 	public static final String KEY_WINDOW_MOVING_RETAIN_START_POSITION = "window_moving_start_pos_enabled";
 	public static final String KEY_WINDOW_MOVING_CONSTANT_POSITION = "window_moving_move_pos_enabled";
+	public static final String KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED = "window_moving_move_ab_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_ENABLE = "window_triangle_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
 	public static final String KEY_WINDOW_TRIANGLE_ALPHA = "window_triangle_alpha";
@@ -72,6 +73,7 @@ public class Common {
 	public static final boolean DEFAULT_SYSTEM_RECENTS_LONGPRESS_OPTION = false;
 	public static final boolean DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION = true;
 	public static final boolean DEFAULT_WINDOW_MOVING_CONSTANT_POSITION = true;
+	public static final boolean DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_ENABLE = true;
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";
 	public static final float DEFAULT_WINDOW_TRIANGLE_ALPHA = 1f;

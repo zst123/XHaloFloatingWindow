@@ -70,6 +70,8 @@
     <string name="pref_movable_moving_start_pos_summary">When opening a new window of the same app, place them in the same position and size of the original</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>
     <string name="pref_movable_moving_move_pos_summary">When resizing or moving a window, windows of the same app behind it will also be updated.</string>
+    <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>
+    <string name="pref_movable_moving_move_ab_summary">Use the ActionBar (or the top area for apps with no ActionBar) to move windows. </string>
     <string name="pref_movable_triangle_enable_title">Show Triangle</string>
     <string name="pref_movable_triangle_enable_summary">Show a triangle on the bottom left of the window for additional actions.</string>
     <string name="pref_movable_triangle_color_title">Triangle Color</string>
