@@ -332,13 +332,16 @@ public class MovableWindow {
 			setDragActionBarVisibility(true, false);
 			break;
 		case 6: // Maximize App
-			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-					ViewGroup.LayoutParams.MATCH_PARENT);
-			initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
+			maximizeApp(activity);
 			break;
 		}
 	}
 
+	private static void maximizeApp(Activity activity) {
+		activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT);
+		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
+	}
 	// Show and hide the action bar we injected for dragging
 	private static void setDragActionBarVisibility(boolean visible, boolean with_corner) {
 		View header = overlayView.findViewById(R.id.movable_action_bar);
