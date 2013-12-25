@@ -489,11 +489,13 @@ public class MovableWindow {
 				if (!isHoloFloat) return;
 				
 				MotionEvent event = (MotionEvent) param.args[0];
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				switch (event.getAction()) {
+				case MotionEvent.ACTION_DOWN:
+					viewX = event.getX();
+					viewY = event.getY();
+					changeFocusApp(a);
 					if (a.getWindow().getAttributes().gravity != (Gravity.LEFT | Gravity.TOP)) {
 						// Fix First Resize moving into corner
-						viewX = event.getX();
-						viewY = event.getY();
 						screenX = event.getRawX();
 						screenY = event.getRawY();
 						leftFromScreen = (screenX - viewX);
@@ -501,27 +503,6 @@ public class MovableWindow {
 						a.getWindow().setGravity(Gravity.LEFT | Gravity.TOP);
 						updateView(a.getWindow(), leftFromScreen, topFromScreen);
 					}
-				}
-			}
-			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				if (!mMovableWindow) return;
-				
-				Activity a = (Activity) param.thisObject;
-				boolean isHoloFloat = (a.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-				if (!isHoloFloat) return;
-				
-				MotionEvent event = (MotionEvent) param.args[0];
-				switch (event.getAction()) {
-				
-				case MotionEvent.ACTION_OUTSIDE:
-					param.setResult(Boolean.FALSE); 
-					// False so android passes touch to behind app
-					break;
-				
-				case MotionEvent.ACTION_DOWN:
-					viewX = event.getX();
-					viewY = event.getY();
-					changeFocusApp(a);
 					break;
 				case MotionEvent.ACTION_MOVE:
 					if (mActionBarDraggable) {					
