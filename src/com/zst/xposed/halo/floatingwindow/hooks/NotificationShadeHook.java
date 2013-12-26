@@ -53,7 +53,6 @@ public class NotificationShadeHook {
 				Common.DEFAULT_FLOATING_QUICK_SETTINGS);
 		mLongPressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_LONGPRESS_OPTION,
 				Common.DEFAULT_NOTIFICATION_LONGPRESS_OPTION);
-		if (!mLongPressEnabled) return;
 		mSinglePressEnabled = pref.getBoolean(Common.KEY_NOTIFICATION_SINGLE_CLICK_HALO,
 				Common.DEFAULT_NOTIFICATION_SINGLE_CLICK_HALO);
 		
@@ -64,7 +63,7 @@ public class NotificationShadeHook {
 		}
 		if (Build.VERSION.SDK_INT >= 17) {
 			try {
-				injectQuickSettings(lpp);
+				if (mQuickSettingsEnabled) injectQuickSettings(lpp);
 			} catch (Throwable t) {
 				XposedBridge.log(Common.LOG_TAG + "(QuickSettingsHaloInject)");
 				XposedBridge.log(t);
