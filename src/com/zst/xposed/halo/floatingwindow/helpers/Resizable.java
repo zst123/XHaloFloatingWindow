@@ -3,8 +3,10 @@ package com.zst.xposed.halo.floatingwindow.helpers;
 import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager.LayoutParams;
  
@@ -40,6 +42,12 @@ public class Resizable implements View.OnTouchListener {
                 oldW = param.width;
                 oldH = param.height;
                 distance_from_top = param.y;
+                if (oldW == ViewGroup.LayoutParams.MATCH_PARENT
+                		|| oldH == ViewGroup.LayoutParams.MATCH_PARENT) {
+                	DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+                	oldW = (int) (metrics.widthPixels * 0.95f);
+                	oldH = (int) (metrics.heightPixels * 0.95f);
+                }
                 return false;
                 
         	case MotionEvent.ACTION_MOVE:
