@@ -147,6 +147,7 @@ public class MovableWindow {
 				
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
 				if (decorView == null) return;
+				decorView.setFitsSystemWindows(true);
 				
 				XmlResourceParser parser = mModRes.getLayout(R.layout.movable_window);
 				overlayView = window.getLayoutInflater().inflate(parser, null);
