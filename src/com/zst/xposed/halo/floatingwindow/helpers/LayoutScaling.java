@@ -31,6 +31,16 @@ public class LayoutScaling {
 		params.dimAmount = dimm;
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
+		window.setWindowAnimations(android.R.style.Animation_Dialog);
+		window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
+		int i = pref.getInt(Common.KEY_KEYBOARD_MODE, Common.DEFAULT_KEYBOARD_MODE);
+		if (i == 2) {
+			window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+		} else if (i == 3) {
+			window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+		}
 		
 		scaleFloatingWindow(pref, window.getContext(), window);
 	}
@@ -63,16 +73,5 @@ public class LayoutScaling {
 			window.setLayout((int) (metrics.widthPixels * width_ls),
 					(int) (metrics.heightPixels * height__ls));
 		}
-		window.setWindowAnimations(android.R.style.Animation_Dialog);
-		window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-		window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
-		int i = pref.getInt(Common.KEY_KEYBOARD_MODE, Common.DEFAULT_KEYBOARD_MODE);
-		if (i == 2) {
-			window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-		} else if (i == 3) {
-			window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-		}
-		
 	}
 }
