@@ -29,6 +29,7 @@ public class LayoutScaling {
 		Float dimm = pref.getFloat(Common.KEY_DIM, Common.DEFAULT_DIM);
 		params.alpha = alp;
 		params.dimAmount = dimm;
+		params.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 		window.setWindowAnimations(android.R.style.Animation_Dialog);
