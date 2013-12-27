@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
+import android.content.res.Configuration;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
@@ -62,6 +63,7 @@ public class MovableWindow {
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	static boolean mMovableWindow;
 	static boolean mActionBarDraggable;
+	static int mPreviousOrientation;
 	
 	static ImageView quadrant;
 	static ImageView triangle;
@@ -102,6 +104,7 @@ public class MovableWindow {
 						Common.DEFAULT_MOVABLE_WINDOW);
 				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
 						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
+				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 			}
 		});
 		
@@ -584,6 +587,23 @@ public class MovableWindow {
 		BroadcastReceiver br = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
+				if (intent.getAction().equals(Intent.ACTION_CONFIGURATION_CHANGED)) {
+					Configuration config = window.getContext().getResources().getConfiguration();
+					if (config.orientation != mPreviousOrientation) {
+						WindowManager.LayoutParams paramz = window.getAttributes();
+						final int old_x = paramz.x;
+						final int old_y = paramz.y;
+						final int old_height = paramz.height;
+						final int old_width = paramz.width;
+						paramz.x = old_y;
+						paramz.y = old_x;
+						paramz.width = old_height;
+						paramz.height = old_width;
+						window.setAttributes(paramz);
+						mPreviousOrientation = config.orientation;
+					}
+					return;
+				}
 				if (intent.getStringExtra(INTENT_APP_PKG).equals(
 						window.getContext().getApplicationInfo().packageName)) {
 					setLayoutPositioning(window);
@@ -592,6 +612,7 @@ public class MovableWindow {
 		};
 		IntentFilter filters = new IntentFilter();
 		filters.addAction(Common.REFRESH_APP_LAYOUT);
+		filters.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
 		window.getContext().registerReceiver(br, filters);
 		window.getDecorView().setTagInternal(Common.LAYOUT_RECEIVER_TAG, br);
 	}
