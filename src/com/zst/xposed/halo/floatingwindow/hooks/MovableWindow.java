@@ -339,8 +339,15 @@ public class MovableWindow {
 	}
 
 	private static void maximizeApp(Activity activity) {
-		activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT);
+		if ((activity.getWindow().getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT) ||
+			(activity.getWindow().getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT)) {
+			DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
+			activity.getWindow().setLayout((int) (metrics.widthPixels * 0.9f),
+					(int) (metrics.heightPixels * 0.9f));
+		} else {
+			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+					ViewGroup.LayoutParams.MATCH_PARENT);
+		}
 		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
 	}
 	// Show and hide the action bar we injected for dragging
