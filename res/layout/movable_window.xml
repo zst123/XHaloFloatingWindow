@@ -157,7 +157,7 @@
     <RelativeLayout
         android:id="@+id/movable_titlebar"
         android:layout_width="wrap_content"
-        android:layout_height="50px"
+        android:layout_height="0dp"
         android:background="#f000"
         android:focusable="true"
         android:focusableInTouchMode="true" >

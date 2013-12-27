@@ -58,6 +58,8 @@
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
     <string name="pref_movable_top_summary">A feature similar to multi-window for true multi-tasking.</string>
+    <string name="pref_movable_sub_titlebar_title">TitleBar Settings</string>
+    <string name="pref_movable_sub_titlebar_summary">Change Top TitleBar Behaviour</string>
     <string name="pref_movable_sub_moving_title">Moving Settings</string>
     <string name="pref_movable_sub_moving_summary">Change Moving Window Behaviour</string>
     <string name="pref_movable_sub_triangle_title">Triangle Settings</string>
@@ -66,6 +68,10 @@
     <string name="pref_movable_sub_quadrant_summary">Change Bottom Right Quadrant Properties</string>
     <string name="pref_movable_sub_border_title">Border Settings</string>
     <string name="pref_movable_sub_border_summary">Change Window Border Properties</string>
+    <string name="pref_movable_titlebar_enabled_title">Enable TitleBar</string>
+    <string name="pref_movable_titlebar_enabled_summary">Show a titlebar at the top of the window for dragging</string>
+    <string name="pref_movable_titlebar_size_title">TitleBar Size</string>
+    <string name="pref_movable_titlebar_size_summary">Height of the titlebar</string>
     <string name="pref_movable_moving_start_pos_title">Retain Window Position on Start</string>
     <string name="pref_movable_moving_start_pos_summary">When opening a new window of the same app, place them in the same position and size of the original</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>

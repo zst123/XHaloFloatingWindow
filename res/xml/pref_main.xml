@@ -109,6 +109,28 @@
             android:defaultValue="false"
             android:key="window_movable"
             android:title="@string/pref_movable_top_title" />
+        
+        <!-- TitleBar -->
+        <PreferenceScreen
+            android:dependency="window_movable"
+            android:summary="@string/pref_movable_sub_titlebar_summary"
+            android:title="@string/pref_movable_sub_titlebar_title" >
+            <SwitchPreference
+                android:defaultValue="false"
+                android:key="window_moving_titlebar_enabled"
+                android:summary="@string/pref_movable_titlebar_enabled_summary"
+                android:title="@string/pref_movable_titlebar_enabled_title" />
+            
+			<com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+                defaultValue="32"
+                maximum="120"
+                minimum="0"
+                android:dependency="window_moving_titlebar_enabled"
+                android:key="window_moving_titlebar_size"
+                android:summary="@string/pref_movable_titlebar_size_summary"
+                android:title="@string/pref_movable_titlebar_size_title" />
+        </PreferenceScreen>
+        
         <!-- Moving -->
         <PreferenceScreen
             android:dependency="window_movable"

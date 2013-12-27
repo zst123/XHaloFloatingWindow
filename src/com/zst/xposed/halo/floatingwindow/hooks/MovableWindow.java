@@ -74,7 +74,7 @@ public class MovableWindow {
 	static int mPreviousOrientation;
 	
 	/* Title Bar */
-	static int mTitleBarHeight = 32;
+	static int mTitleBarHeight = Common.DEFAULT_WINDOW_TITLEBAR_SIZE;
 	static int mTitleBarDivider = 2;
 	
 	static ImageView quadrant;
@@ -116,7 +116,13 @@ public class MovableWindow {
 						Common.DEFAULT_MOVABLE_WINDOW);
 				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
 						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
-				mTitleBarHeight = realDp(30, activity);
+				
+				boolean titlebar_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ENABLED,
+						Common.DEFAULT_WINDOW_TITLEBAR_ENABLED);
+				int titlebar_size = mPref.getInt(Common.KEY_WINDOW_TITLEBAR_SIZE,
+						Common.DEFAULT_WINDOW_TITLEBAR_SIZE);
+				mTitleBarHeight = titlebar_enabled ? realDp(titlebar_size, activity) : 0;
+				
 				mTitleBarDivider = realDp(2, activity);
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 			}
