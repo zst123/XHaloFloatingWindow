@@ -15,8 +15,6 @@ public class RightResizable implements View.OnTouchListener {
 	final int minSize;
 	
 	LayoutParams param;
-	int oldW;
-	int oldH;
 	int distance_from_left;
 	int distance_from_top;
 	
@@ -34,8 +32,6 @@ public class RightResizable implements View.OnTouchListener {
 		
 		case MotionEvent.ACTION_DOWN:
 			param = window.getAttributes();
-			oldW = param.width;
-			oldH = param.height;
 			distance_from_left = param.x;
 			distance_from_top = param.y;
 			break;
@@ -47,13 +43,13 @@ public class RightResizable implements View.OnTouchListener {
 			int calculatedW = newX - distance_from_left;
 			int calculatedH = newY - distance_from_top;
 			
-			if (calculatedW > minSize) {
-				param.width = calculatedW;
+			if (calculatedW < minSize) {
+				calculatedW = minSize;
 			}
-			if (calculatedH > minSize) {
-				param.height = calculatedH;
+			if (calculatedH < minSize) {
+				calculatedH = minSize;
 			}
-			window.setAttributes(param);
+			window.setLayout(calculatedW, calculatedH);
 			MovableWindow.initAndRefreshLayoutParams(window, context,
 					context.getApplicationInfo().packageName);
 			break;
