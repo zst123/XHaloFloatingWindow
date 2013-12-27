@@ -37,7 +37,8 @@
         android:layout_height="48dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
+        android:layout_below="@+id/movable_titlebar"
         android:background="#b0333333"
         android:focusable="true"
         android:focusableInTouchMode="true" >
@@ -150,6 +151,100 @@
                 android:typeface="sans" />
 
         </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/movable_titlebar"
+        android:layout_width="wrap_content"
+        android:layout_height="50px"
+        android:background="#f000"
+        android:focusable="true"
+        android:focusableInTouchMode="true" >
+
+        <TextView
+            android:id="@+id/movable_titlebar_appname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/movable_titlebar_min"
+            android:layout_toRightOf="@+id/movable_titlebar_more"
+            android:ellipsize="end"
+            android:gravity="center_vertical|center_horizontal"
+            android:hint="App Name"
+            android:maxLines="1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#ffff"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <ImageButton
+            android:id="@+id/movable_titlebar_close"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:scaleType="fitCenter"
+            android:src="#fff" />
+
+        <ImageButton
+            android:id="@+id/movable_titlebar_max"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/movable_titlebar_close"
+            android:adjustViewBounds="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:scaleType="fitCenter"
+            android:src="#FFF" />
+
+        <ImageButton
+            android:id="@+id/movable_titlebar_min"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/movable_titlebar_max"
+            android:adjustViewBounds="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:scaleType="fitCenter"
+            android:src="#FFF" />
+
+        <ImageButton
+            android:id="@+id/movable_titlebar_more"
+            style="@android:style/Widget.Holo.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:paddingLeft="0dp"
+            android:paddingRight="2dp"
+            android:scaleType="fitCenter"
+            android:src="#FFF" />
+
+        <View
+            android:id="@+id/movable_titlebar_line"
+            android:layout_width="wrap_content"
+            android:layout_height="2dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:background="#fff"
+            android:minHeight="5dp" />
 
     </RelativeLayout>
 

@@ -1,5 +1,8 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
@@ -26,6 +29,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,11 +43,14 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MovableWindow {
@@ -64,6 +72,10 @@ public class MovableWindow {
 	static boolean mMovableWindow;
 	static boolean mActionBarDraggable;
 	static int mPreviousOrientation;
+	
+	/* Title Bar */
+	static int mTitleBarHeight = 32;
+	static int mTitleBarDivider = 2;
 	
 	static ImageView quadrant;
 	static ImageView triangle;
@@ -104,6 +116,8 @@ public class MovableWindow {
 						Common.DEFAULT_MOVABLE_WINDOW);
 				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
 						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
+				mTitleBarHeight = realDp(30, activity);
+				mTitleBarDivider = realDp(2, activity);
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 			}
 		});
@@ -151,16 +165,25 @@ public class MovableWindow {
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
 				if (decorView == null) return;
 				decorView.setFitsSystemWindows(true);
+				try {
+					XposedHelpers.callMethod(decorView, "hackTurnOffWindowResizeAnim", true);
+				} catch (Throwable e) {
+				}
 				
 				XmlResourceParser parser = mModRes.getLayout(R.layout.movable_window);
 				overlayView = window.getLayoutInflater().inflate(parser, null);
 				
 				overlayView.setId(ID_OVERLAY_VIEW);
 				
-				ViewGroup.LayoutParams paramz = new ViewGroup.LayoutParams(
+				RelativeLayout.LayoutParams paramz = new RelativeLayout.LayoutParams(
 						ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+				paramz.setMargins(0, 0, 0, 0);
 				
 				decorView.addView(overlayView, -1, paramz);
+
+				/* TitleBar Start */
+				initTitleBar(activity, decorView);
+				/* TitleBar End */
 				
 				String color_str = mPref.getString(Common.KEY_WINDOW_TRIANGLE_COLOR, Common.DEFAULT_WINDOW_TRIANGLE_COLOR);
 				Drawable triangle_background = mModRes.getDrawable(R.drawable.movable_corner);
@@ -399,6 +422,81 @@ public class MovableWindow {
 		});
 		
 		bg.setVisibility(View.VISIBLE);
+	}
+	
+	private static void initTitleBar(final Activity a, final FrameLayout decorView) {
+		if (mTitleBarHeight == 0) 
+			return;
+		
+		View child = decorView.getChildAt(0);
+		FrameLayout.LayoutParams parammm = (FrameLayout.LayoutParams) child.getLayoutParams();
+		parammm.setMargins(0, mTitleBarHeight, 0, 0);
+		child.setLayoutParams(parammm);
+		
+		final RelativeLayout header = (RelativeLayout) overlayView.findViewById(R.id.movable_titlebar);
+		final View divider = overlayView.findViewById(R.id.movable_titlebar_line);
+		final TextView app_title = (TextView) overlayView.findViewById(R.id.movable_titlebar_appname);
+		final ImageButton close_button = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_close);
+		final ImageButton max_button = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_max);
+		final ImageButton min_button = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_min);
+		final ImageButton more_button = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_more);
+		
+		app_title.setText(a.getApplicationInfo().loadLabel(activity.getPackageManager()));
+		close_button.setImageDrawable(mModRes.getDrawable(R.drawable.movable_title_close));
+		max_button.setImageDrawable(mModRes.getDrawable(R.drawable.movable_title_max));
+		min_button.setImageDrawable(mModRes.getDrawable(R.drawable.movable_title_min));
+		more_button.setImageDrawable(mModRes.getDrawable(R.drawable.movable_title_more));
+		
+		RelativeLayout.LayoutParams header_param = (LayoutParams) header.getLayoutParams();
+		header_param.height = mTitleBarHeight;
+		header.setLayoutParams(header_param);
+		
+		ViewGroup.LayoutParams divider_param = divider.getLayoutParams();
+		divider_param.height = mTitleBarDivider;
+		divider.setLayoutParams(divider_param);
+		
+		final String item1 = mModRes.getString(R.string.dnm_transparency);
+		final PopupMenu popupMenu = new PopupMenu(a, more_button);
+		final Menu menu = popupMenu.getMenu();
+		menu.add(item1);
+		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				if (item.getTitle().equals(item1)) {
+					showTransparencyDialogVisibility(a.getWindow());
+				} 
+				return false;
+			}
+		});
+		
+		final View.OnClickListener click = new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				switch (v.getId()) {
+				case R.id.movable_titlebar_close:
+					if (Build.VERSION.SDK_INT >= 16) {
+						activity.finishAffinity();
+					} else {
+						activity.finish();
+					}
+					break;
+				case R.id.movable_titlebar_max:
+					maximizeApp(a);
+					break;
+				case R.id.movable_titlebar_min:
+					minimizeAndShowNotification(a);
+					break;
+				case R.id.movable_titlebar_more:
+					popupMenu.show();
+					break;
+				}
+			}
+		};
+		close_button.setOnClickListener(click);
+		max_button.setOnClickListener(click);
+		min_button.setOnClickListener(click);
+		more_button.setOnClickListener(click);	
+		header.setOnTouchListener(new Movable(a.getWindow()));
 	}
 	
 	private static void initActionBar(final Activity a) {
@@ -656,6 +754,31 @@ public class MovableWindow {
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
+	}
+	
+	/* Uses screen dpi instead of app dpi */
+	public static int realDp(int dp, Context c) {
+		String dpi = "";
+		try {
+			Process p = new ProcessBuilder("/system/bin/getprop", "ro.sf.lcd_density")
+					.redirectErrorStream(true).start();
+			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
+			String line = "";
+			while ((line = br.readLine()) != null) {
+				dpi = line;
+			}
+			p.destroy();
+		} catch (Exception e) {
+			dpi = "0";
+		}
+		float scale = Integer.parseInt(dpi);
+		if (scale == 0) {
+			scale = c.getResources().getDisplayMetrics().density;
+		} else {
+			scale = (scale / 160);
+		}
+		int pixel = (int) (dp * scale + 0.5f);
+		return pixel;
 	}
 	
 	public static int dp(int dp, Context c) { // convert dp to px
