@@ -66,7 +66,7 @@ public class Resizable implements View.OnTouchListener {
                         //Commented y because we never change it so no reason to reset it
                         //param.y = distance_from_top;
                 }
-                window.setAttributes(param);
+                window.getCallback().onWindowAttributesChanged(param);
                 MovableWindow.initAndRefreshLayoutParams(window, context,
     					context.getApplicationInfo().packageName);
               //I split the if statements because if say the width is at it's minimum that shouldn't keep the height from adjusting
