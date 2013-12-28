@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zst.xposed.halo.floatingwindow"
-    android:versionCode="212"
-    android:versionName="2.12 Beta" >
+    android:versionCode="214"
+    android:versionName="2.14 Beta" >
 
     <uses-sdk
         android:minSdkVersion="14"
