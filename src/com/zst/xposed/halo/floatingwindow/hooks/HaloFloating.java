@@ -146,7 +146,7 @@ public class HaloFloating {
 						
 				boolean isFloating;
 				boolean taskAffinity;
-				if (alist.size() > 0) {
+				if (alist.size() > 0 && !floatingWindow) {
 					if (Build.VERSION.SDK_INT == 19) {
 						Object taskRecord = alist.get(alist.size() - 1);
 						Field taskRecord_intent_field = taskRecord.getClass().getDeclaredField("intent");
