@@ -383,10 +383,9 @@ public class MovableWindow {
 	private static void maximizeApp(Activity activity) {
 		if ((activity.getWindow().getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT) ||
 			(activity.getWindow().getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT)) {
-			DisplayMetrics metrics = activity.getResources().getDisplayMetrics();
-			activity.getWindow().setLayout((int) (metrics.widthPixels * 0.9f),
-					(int) (metrics.heightPixels * 0.9f));
+			restoreNonMaximizedLayout(activity.getWindow());
 		} else {
+			saveNonMaximizedLayout(activity.getWindow());
 			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT);
 		}
@@ -658,6 +657,26 @@ public class MovableWindow {
 	static int layout_width;
 	static int layout_height;
 	static float layout_alpha;
+	
+	static int[] old_layout;
+
+	private static boolean saveNonMaximizedLayout(Window window) {
+		final WindowManager.LayoutParams params = window.getAttributes();
+		int[] layout = { params.x, params.y, params.width, params.height };
+		old_layout = layout;
+		return true;
+	}
+	
+	private static boolean restoreNonMaximizedLayout(Window window) {
+		WindowManager.LayoutParams params = window.getAttributes();
+		params.x = old_layout[0];
+		params.y = old_layout[1];
+		params.width = old_layout[2];
+		params.height = old_layout[3];
+		params.gravity = Gravity.LEFT | Gravity.TOP;
+		window.setAttributes(params);
+		return true;
+	}
 
 	private static boolean initLayoutPositioning(Window window) {
 		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
