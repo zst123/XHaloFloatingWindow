@@ -21,11 +21,13 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	static String MODULE_PATH = null;
 	static XSharedPreferences mPref;
 	static XSharedPreferences mBlacklist;
+	static XSharedPreferences mWhitelist;
 	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
 		mBlacklist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_BLACKLIST_FILE);
+		mWhitelist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_WHITELIST_FILE);
 		MODULE_PATH = startupParam.modulePath;
 		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
 		NotificationShadeHook.zygote(sModRes);
@@ -49,5 +51,10 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	private boolean isBlacklisted(String pkg) {
 		mBlacklist.reload();
 		return mBlacklist.contains(pkg);
+	}
+	
+	public static boolean isWhitelisted(String pkg) {
+		mWhitelist.reload();
+		return mWhitelist.contains(pkg);
 	}
 }

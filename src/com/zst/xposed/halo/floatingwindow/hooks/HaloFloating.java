@@ -13,6 +13,7 @@ import android.os.Build;
 import android.view.Window;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.helpers.LayoutScaling;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -132,6 +133,9 @@ public class HaloFloating {
 				if (i == null) return;
 				// This is where the package gets its first context from the attribute-cache. In
 				// order to hook its attributes we set up our check for floating mutil windows here.
+				if (MainXposed.isWhitelisted(aInfo.applicationInfo.packageName)) {
+					i.addFlags(Common.FLAG_FLOATING_WINDOW);
+				}
 				floatingWindow = (i.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 				
 				Class<?> activitystack = stack.getClass();
