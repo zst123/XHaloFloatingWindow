@@ -4,6 +4,7 @@
     <string name="app_name">XHaloFloatingWindow</string>
     <string name="app_description">Halo Floating Windows from Paranoid Android with Movable &amp; Resizable feature.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
+    <string name="app_whitelist">Whitelist</string>
     <string name="app_testing">Testing</string>
 
     <!-- Preference Strings -->
@@ -54,6 +55,9 @@
     <string name="pref_blacklist_summary">Choose a list of apps to never open in floating mode</string>
     <string name="pref_blacklist_dialog">Newly blacklisted apps needs to be force-closed for changes to take effect.\n\nYou may single press on the app icon for the app info to open. After which, you may select Force Stop.</string>
     <string name="pref_blacklist_error">There was an error opening the App Info.\nThis is the error.\n\n</string>
+    <string name="pref_whitelist_title">Whitelist Apps</string>
+    <string name="pref_whitelist_summary">Choose a list of apps to always open in floating mode</string>
+    <string name="pref_whitelist_dialog">Newly whitelisted apps needs to be force-closed for changes to take effect.\n\nYou may single press on the app icon for the app info to open. After which, you may select Force Stop.\n\nNote that blacklisting has a higher priority over whitelisting if you were to select the same app in both lists.</string>
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>

@@ -96,6 +96,11 @@
             android:title="@string/pref_force_open_app_above_halo_title" />
         
         <Preference
+            android:key="window_whitelist"
+            android:summary="@string/pref_whitelist_summary"
+            android:title="@string/pref_whitelist_title" />
+        
+        <Preference
             android:key="window_blacklist"
             android:summary="@string/pref_blacklist_summary"
             android:title="@string/pref_blacklist_title" />

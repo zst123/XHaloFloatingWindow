@@ -43,6 +43,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_KEYBOARD_MODE).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
+		findPreference(Common.KEY_WHITELIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_TESTING_SCREEN).setOnPreferenceClickListener(this);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
@@ -62,6 +63,9 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			return true;
 		}else if (k.equals(Common.KEY_BLACKLIST_APPS)) {
 			showBlacklistActivity();
+			return true;
+		}else if (k.equals(Common.KEY_WHITELIST_APPS)) {
+			showWhitelistActivity();
 			return true;
 		}else if (k.equals(Common.KEY_TESTING_SCREEN)) {
 			showTestScreen();
@@ -208,6 +212,10 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 				}
 			}
 		}).start();
+	}
+	
+	private void showWhitelistActivity() {
+		startActivity(new Intent(getActivity(), WhitelistActivity.class));
 	}
 	
 	private void showBlacklistActivity() {

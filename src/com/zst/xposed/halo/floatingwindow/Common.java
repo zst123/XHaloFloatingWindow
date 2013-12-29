@@ -9,6 +9,7 @@ public class Common {
 	public static final String THIS_PACKAGE_NAME = Common.class.getPackage().getName();
 	public static final String PREFERENCE_MAIN_FILE = THIS_PACKAGE_NAME + "_main";
 	public static final String PREFERENCE_BLACKLIST_FILE = THIS_PACKAGE_NAME + "_blacklist";
+	public static final String PREFERENCE_WHITELIST_FILE = THIS_PACKAGE_NAME + "_whitelist";
 	
 	/* Preference keys */
 	public static final String KEY_TESTING_SCREEN = "testing_screen";
@@ -57,7 +58,9 @@ public class Common {
 	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
 	public static final String KEY_FORCE_OPEN_APP_ABOVE_HALO = "window_force_open_app_above_halo";
 	public static final String KEY_BLACKLIST_APPS = "window_blacklist";
+	public static final String KEY_WHITELIST_APPS = "window_whitelist";
 	public static final String KEY_BLACKLIST_HELP = "window_blacklist_help";
+	public static final String KEY_WHITELIST_HELP = "window_whitelist_help";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;

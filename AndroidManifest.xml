@@ -40,6 +40,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.zst.xposed.halo.floatingwindow.preferences.WhitelistActivity"
+            android:label="@string/app_whitelist" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.zst.xposed.halo.floatingwindow.TestingActivity"
             android:label="@string/app_testing" >
             <intent-filter>
