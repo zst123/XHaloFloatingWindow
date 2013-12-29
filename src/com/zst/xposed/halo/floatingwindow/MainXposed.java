@@ -5,6 +5,7 @@ import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 import com.zst.xposed.halo.floatingwindow.hooks.NotificationShadeHook;
 import com.zst.xposed.halo.floatingwindow.hooks.RecentAppsHook;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemMods;
+import com.zst.xposed.halo.floatingwindow.hooks.SystemUIOutliner;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIReceiver;
 import com.zst.xposed.halo.floatingwindow.hooks.TestingSettingHook;
 
@@ -38,6 +39,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		RecentAppsHook.handleLoadPackage(lpparam, mPref);
 		SystemMods.handleLoadPackage(lpparam, mPref);
 		SystemUIReceiver.handleLoadPackage(lpparam);
+		SystemUIOutliner.handleLoadPackage(lpparam);
 		
 		if (isBlacklisted(lpparam.packageName)) return;
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
