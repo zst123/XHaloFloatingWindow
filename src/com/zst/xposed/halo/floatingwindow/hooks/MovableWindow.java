@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
+import com.zst.xposed.halo.floatingwindow.helpers.OutlineLeftResizable;
+import com.zst.xposed.halo.floatingwindow.helpers.OutlineRightResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.Resizable;
 import com.zst.xposed.halo.floatingwindow.helpers.RightResizable;
 
@@ -71,6 +73,7 @@ public class MovableWindow {
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	static boolean mMovableWindow;
 	static boolean mActionBarDraggable;
+	static boolean mLiveResizing;
 	static int mPreviousOrientation;
 	
 	/* Title Bar */
@@ -122,9 +125,10 @@ public class MovableWindow {
 				int titlebar_size = mPref.getInt(Common.KEY_WINDOW_TITLEBAR_SIZE,
 						Common.DEFAULT_WINDOW_TITLEBAR_SIZE);
 				mTitleBarHeight = titlebar_enabled ? realDp(titlebar_size, activity) : 0;
-				
 				mTitleBarDivider = realDp(2, activity);
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
+				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
+						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
 			}
 		});
 		
@@ -232,8 +236,11 @@ public class MovableWindow {
 				if (triangle_enabled) {
 					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_RESIZE_ENABLED,
 							Common.DEFAULT_WINDOW_TRIANGLE_RESIZE_ENABLED)) {
-						Resizable resize = new Resizable(context, window);
-						triangle.setOnTouchListener(resize);
+						if (mLiveResizing) {
+							triangle.setOnTouchListener(new Resizable(context, window));
+						} else {
+							triangle.setOnTouchListener(new OutlineLeftResizable(context, window));
+						}
 					}
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_DRAGGING_ENABLED,
@@ -265,8 +272,11 @@ public class MovableWindow {
 				if (quadrant_enabled) {
 					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_RESIZE_ENABLED,
 							Common.DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED)) {
-						RightResizable right_resize = new RightResizable(window);
-						quadrant.setOnTouchListener(right_resize);
+						if (mLiveResizing) {
+							quadrant.setOnTouchListener(new RightResizable(window));
+						} else {
+							quadrant.setOnTouchListener(new OutlineRightResizable(window));
+						}
 					}
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_DRAGGING_ENABLED,

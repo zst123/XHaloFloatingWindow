@@ -62,6 +62,8 @@
     <string name="pref_movable_sub_titlebar_summary">Change Top TitleBar Behaviour</string>
     <string name="pref_movable_sub_moving_title">Moving Settings</string>
     <string name="pref_movable_sub_moving_summary">Change Moving Window Behaviour</string>
+    <string name="pref_movable_sub_resizing_title">Resizing Settings</string>
+    <string name="pref_movable_sub_resizing_summary">Change Resizing Window Behaviour</string>
     <string name="pref_movable_sub_triangle_title">Triangle Settings</string>
     <string name="pref_movable_sub_triangle_summary">Change Bottom Left Triangle Properties</string>
     <string name="pref_movable_sub_quadrant_title">Quadrant Settings</string>
@@ -76,6 +78,8 @@
     <string name="pref_movable_moving_start_pos_summary">When opening a new window of the same app, place them in the same position and size of the original</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>
     <string name="pref_movable_moving_move_pos_summary">When resizing or moving a window, windows of the same app behind it will also be updated.</string>
+    <string name="pref_movable_resizing_live_update_title">Live Resize Updating </string>
+    <string name="pref_movable_resizing_live_update_summary">When resizing windows, contents will refresh immediately instead of showing an outline.\n(May reduce performance)</string>
     <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>
     <string name="pref_movable_moving_move_ab_summary">Use the ActionBar (or the top area for apps with no ActionBar) to move windows. </string>
     <string name="pref_movable_triangle_enable_title">Show Triangle</string>

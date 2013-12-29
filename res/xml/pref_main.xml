@@ -156,6 +156,18 @@
                 android:title="@string/pref_movable_moving_move_ab_title" />
         </PreferenceScreen>
         
+        <!-- Resizing -->
+        <PreferenceScreen
+            android:dependency="window_movable"
+            android:summary="@string/pref_movable_sub_resizing_summary"
+            android:title="@string/pref_movable_sub_resizing_title" >
+            <CheckBoxPreference
+                android:defaultValue="false"
+                android:key="window_resizing_live_updating"
+                android:summary="@string/pref_movable_resizing_live_update_summary"
+                android:title="@string/pref_movable_resizing_live_update_title" />
+        </PreferenceScreen>
+        
         <!-- Triangle -->
         <PreferenceScreen
             android:dependency="window_movable"
