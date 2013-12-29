@@ -37,8 +37,8 @@ public class OutlineLeftResizable implements View.OnTouchListener {
 		
 		case MotionEvent.ACTION_DOWN:
 			param = window.getAttributes();
-			oldX = Math.round(event.getRawX());
-			oldY = Math.round(event.getRawY());
+			oldX = Math.round(event.getRawX() - event.getX());
+			oldY = Math.round(event.getRawY() - event.getY());
 			oldW = param.width;
 			oldH = param.height;
 			distance_from_top = param.y;
