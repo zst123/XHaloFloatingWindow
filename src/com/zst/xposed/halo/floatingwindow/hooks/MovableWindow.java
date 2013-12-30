@@ -181,7 +181,7 @@ public class MovableWindow {
 				}
 				
 				XmlResourceParser parser = mModRes.getLayout(R.layout.movable_window);
-				overlayView = window.getLayoutInflater().inflate(parser, null);
+				overlayView = window.getLayoutInflater().inflate(parser, decorView, false);
 				
 				overlayView.setId(ID_OVERLAY_VIEW);
 				
