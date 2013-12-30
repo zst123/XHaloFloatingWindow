@@ -190,10 +190,6 @@ public class MovableWindow {
 				paramz.setMargins(0, 0, 0, 0);
 				
 				decorView.addView(overlayView, -1, paramz);
-
-				/* TitleBar Start */
-				initTitleBar(activity, decorView);
-				/* TitleBar End */
 				
 				String color_str = mPref.getString(Common.KEY_WINDOW_TRIANGLE_COLOR, Common.DEFAULT_WINDOW_TRIANGLE_COLOR);
 				Drawable triangle_background = mModRes.getDrawable(R.drawable.movable_corner);
@@ -314,6 +310,8 @@ public class MovableWindow {
 							Common.DEFAULT_WINDOW_BORDER_THICKNESS);
 					setWindowBorder(color, thickness);
 				}
+
+				initTitleBar(activity, decorView);
 			}
 		});
 	}
