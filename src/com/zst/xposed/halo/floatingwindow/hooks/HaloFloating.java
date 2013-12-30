@@ -273,8 +273,10 @@ public class HaloFloating {
 				if (!floatingWindow) return;
 				if ("android".equals((String) param.args[1])) return;
 				// Change boolean "createIfNeeded" to FALSE
-				param.args[param.args.length - 1] = Boolean.FALSE;
-				// Last param of the arguments
+				if (param.args[param.args.length - 1] instanceof Boolean) {
+					param.args[param.args.length - 1] = Boolean.FALSE;
+					// Last param of the arguments
+				}
 			}
 		});
 	}
