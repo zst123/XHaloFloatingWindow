@@ -350,8 +350,15 @@ public class NotificationShadeHook {
 	/* Android 4.2+ (Start) */
 	static Intent stolenIntent;
 	private static void injectQuickSettings(final LoadPackageParam lpp) throws Throwable{
-		final Class<?> clazz = findClass("com.android.systemui.quicksettings.QuickSettingsTile",
-				lpp.classLoader);
+		Class<?> qsclass;
+		try {
+			qsclass = findClass("com.android.systemui.quicksettings.QuickSettingsTile",
+					lpp.classLoader);
+		} catch (Throwable t) {
+			qsclass = findClass("com.android.systemui.statusbar.phone.QuickSettings",
+					lpp.classLoader);
+		}
+		final Class<?> clazz = qsclass;
 		findAndHookMethod(clazz, "startSettingsActivity", Intent.class, boolean.class, 
 				new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
