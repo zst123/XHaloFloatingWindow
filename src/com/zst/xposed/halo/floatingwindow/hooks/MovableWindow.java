@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
+import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
 import com.zst.xposed.halo.floatingwindow.helpers.OutlineLeftResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.OutlineRightResizable;
@@ -75,6 +76,7 @@ public class MovableWindow {
 	static boolean mActionBarDraggable;
 	static boolean mLiveResizing;
 	static int mPreviousOrientation;
+	static AeroSnap mAeroSnap;
 	
 	/* Title Bar */
 	static int mTitleBarHeight = Common.DEFAULT_WINDOW_TITLEBAR_SIZE;
@@ -129,6 +131,7 @@ public class MovableWindow {
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
 						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
+				mAeroSnap = new AeroSnap(activity.getWindow(), 3);
 			}
 		});
 		
@@ -644,6 +647,9 @@ public class MovableWindow {
 					}
 					break;
 				}
+				ActionBar ab = a.getActionBar();
+				int height = (ab != null) ? ab.getHeight() : dp(48, a.getApplicationContext());
+				if (viewY < height) mAeroSnap.dispatchTouchEvent(event);
 			}
 		});
 	}

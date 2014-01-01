@@ -9,6 +9,7 @@ import android.view.WindowManager.LayoutParams;
 public class Movable implements View.OnTouchListener {
         Window mWindow;
         LayoutParams param;
+        AeroSnap mAeroSnap;
         private static Float screenX ;
     	private static Float screenY ;
     	private static Float viewX ;
@@ -20,7 +21,7 @@ public class Movable implements View.OnTouchListener {
         public Movable(Window window){
                 mWindow=window;
         		param = mWindow.getAttributes(); 
-
+        		mAeroSnap = new AeroSnap(window, 3);
         }
         
         public Movable(Window window, View v){
@@ -50,6 +51,7 @@ public class Movable implements View.OnTouchListener {
         		updateView(mWindow, leftFromScreen, topFromScreen);
         		break;
         	}
+        	mAeroSnap.dispatchTouchEvent(event);
         	return false;
         }
         private void updateView(Window mWindow, float x , float y){

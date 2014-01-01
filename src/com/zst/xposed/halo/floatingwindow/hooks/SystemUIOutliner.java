@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.ShapeDrawable;
@@ -28,7 +27,7 @@ public class SystemUIOutliner {
 	private static View mOutline;
 	private static WindowManager mWm;
 	
-	static final int HIDE = -1;
+	static final int HIDE = -10000;
 	
 	public static void handleLoadPackage(LoadPackageParam lpp) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
@@ -59,8 +58,11 @@ public class SystemUIOutliner {
 		@Override
 		public void onReceive(Context ctx, Intent intent) {
 			int[] array = intent.getIntArrayExtra(Common.INTENT_APP_PARAMS);
+			int[] array2 = intent.getIntArrayExtra(Common.INTENT_APP_SNAP);
 			if (array != null) {
 				refreshOutlineView(ctx, array[0], array[1], array[2], array[3]);
+			} else if (array2 != null) {
+				refreshOutlineView(ctx, array2[0], array2[1], array2[2]);
 			} else {
 				refreshOutlineView(ctx, HIDE, HIDE, HIDE, HIDE);
 			}
@@ -94,6 +96,25 @@ public class SystemUIOutliner {
 		param.y = y;
 		param.height = height;
 		param.width = width;		
+		param.gravity = Gravity.TOP | Gravity.LEFT;
+		mWm.updateViewLayout(mOutline, param);
+		mOutline.setVisibility(View.VISIBLE);
+	}
+	
+	private static void refreshOutlineView(Context ctx, int w, int h, int g) {
+		if (h == HIDE || w == HIDE || g == HIDE) {
+			mOutline.setVisibility(View.GONE);
+			return;
+		}
+		if (mOutline == null) {
+			createOutlineView(ctx);
+		}
+		WindowManager.LayoutParams param = (WindowManager.LayoutParams) mOutline.getLayoutParams();
+		param.x = 0;
+		param.y = 0;
+		param.height = h;
+		param.width = w;		
+		param.gravity = g;
 		mWm.updateViewLayout(mOutline, param);
 		mOutline.setVisibility(View.VISIBLE);
 	}

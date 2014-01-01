@@ -124,4 +124,5 @@ public class Common {
 	public static final String INTENT_APP_ID = "id";
 	public static final String INTENT_APP_NOTIFICATION_HIDE = "notification_hide";
 	public static final String INTENT_APP_PARAMS = "layout_paramz";
+	public static final String INTENT_APP_SNAP = "layout_snap";
 }
