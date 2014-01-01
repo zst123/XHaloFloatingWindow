@@ -799,6 +799,7 @@ public class MovableWindow {
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
+		mWindow.setCloseOnTouchOutside(false);
 	}
 	
 	/* Uses screen dpi instead of app dpi */
