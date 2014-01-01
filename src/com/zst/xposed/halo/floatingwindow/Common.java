@@ -30,6 +30,8 @@ public class Common {
 	public static final String KEY_WINDOW_MOVING_RETAIN_START_POSITION = "window_moving_start_pos_enabled";
 	public static final String KEY_WINDOW_MOVING_CONSTANT_POSITION = "window_moving_move_pos_enabled";
 	public static final String KEY_WINDOW_RESIZING_LIVE_UPDATE = "window_resizing_live_updating";
+	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED = "window_resizing_aero_snap_enabled";
+	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_DELAY = "window_resizing_aero_snap_delay";
 	public static final String KEY_WINDOW_TITLEBAR_ENABLED = "window_moving_titlebar_enabled";
 	public static final String KEY_WINDOW_TITLEBAR_SIZE = "window_moving_titlebar_size";
 	public static final String KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED = "window_moving_move_ab_enabled";
@@ -80,6 +82,8 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION = true;
 	public static final boolean DEFAULT_WINDOW_MOVING_CONSTANT_POSITION = true;
 	public static final boolean DEFAULT_WINDOW_RESIZING_LIVE_UPDATE = false;
+	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED = false;
+	public static final int DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY = 1000;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = false;
 	public static final int DEFAULT_WINDOW_TITLEBAR_SIZE = 32;
 	public static final boolean DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED = true;

@@ -32,8 +32,6 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -131,7 +129,13 @@ public class MovableWindow {
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
 						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
-				mAeroSnap = new AeroSnap(activity.getWindow(), 3);
+				
+				boolean aero_snap_enabled = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED);
+				int aero_snap_delay = mPref.getInt(Common.KEY_WINDOW_RESIZING_AERO_SNAP_DELAY,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY);
+				mAeroSnap = aero_snap_enabled ? new AeroSnap(activity.getWindow(), aero_snap_delay) : null;
+				
 			}
 		});
 		
@@ -649,7 +653,9 @@ public class MovableWindow {
 				}
 				ActionBar ab = a.getActionBar();
 				int height = (ab != null) ? ab.getHeight() : dp(48, a.getApplicationContext());
-				if (viewY < height) mAeroSnap.dispatchTouchEvent(event);
+				if (viewY < height && mAeroSnap != null && mActionBarDraggable) {
+					mAeroSnap.dispatchTouchEvent(event);
+				}
 			}
 		});
 	}

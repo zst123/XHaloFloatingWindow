@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.ViewGroup;
@@ -74,10 +73,8 @@ public class AeroSnap {
 	}
 	
 	private void showSnap(int x, int y) {
-		Log.d("test1", "showsnap");
 		initSnappable(x, y);
 		calculateSnap();
-		Log.d("test1", "issnappable");
 		
 		if (isValidSnap()) {
 			broadcastShowWithTimeout();
@@ -227,7 +224,7 @@ public class AeroSnap {
 			};
 		}
 		mTimeoutRunning = true;
-		mHandler.postDelayed(mRunnable, 2000);
+		mHandler.postDelayed(mRunnable, mDelay);
 	}
 	
 	private void broadcastShow(Context ctx, int w, int h, int g) {

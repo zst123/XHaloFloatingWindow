@@ -84,6 +84,10 @@
     <string name="pref_movable_moving_move_pos_summary">When resizing or moving a window, windows of the same app behind it will also be updated.</string>
     <string name="pref_movable_resizing_live_update_title">Live Resize Updating </string>
     <string name="pref_movable_resizing_live_update_summary">When resizing windows, contents will refresh immediately instead of showing an outline.\n(May reduce performance)</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_title">Snap-in Windows</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_summary">Drag a window to the any 4 edges of the screen to resize it to the respective half of the screen, similar to Aero Snap in Windows OS.</string>
+    <string name="pref_movable_resizing_aero_snap_delay_title">Snap-in Delay</string>
+    <string name="pref_movable_resizing_aero_snap_delay_summary">Delay in milliseconds before snap-in outline is shown.</string>
     <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>
     <string name="pref_movable_moving_move_ab_summary">Use the ActionBar (or the top area for apps with no ActionBar) to move windows. </string>
     <string name="pref_movable_triangle_enable_title">Show Triangle</string>

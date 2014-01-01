@@ -171,6 +171,24 @@
                 android:key="window_resizing_live_updating"
                 android:summary="@string/pref_movable_resizing_live_update_summary"
                 android:title="@string/pref_movable_resizing_live_update_title" />
+            <PreferenceCategory 
+                android:title="@string/pref_movable_resizing_aero_snap_enabled_title" >
+                <SwitchPreference
+                    android:defaultValue="false"
+                    android:key="window_resizing_aero_snap_enabled"
+                    android:summary="@string/pref_movable_resizing_aero_snap_enabled_summary"
+                    android:title="@string/pref_movable_resizing_aero_snap_enabled_title" />
+                
+                <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+                	defaultValue="1000"
+                	maximum="10000"
+                	minimum="1"
+                	android:dependency="window_resizing_aero_snap_enabled"
+                	android:key="window_resizing_aero_snap_delay"
+                	android:summary="@string/pref_movable_resizing_aero_snap_delay_summary"
+                	android:title="@string/pref_movable_resizing_aero_snap_delay_title" />
+            </PreferenceCategory>
+
         </PreferenceScreen>
         
         <!-- Triangle -->
