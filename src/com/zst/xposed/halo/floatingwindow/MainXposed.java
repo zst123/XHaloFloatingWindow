@@ -42,13 +42,11 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		SystemMods.handleLoadPackage(lpparam, mPref);
 		SystemUIReceiver.handleLoadPackage(lpparam);
 		SystemUIOutliner.handleLoadPackage(lpparam);
-		
-		if (isBlacklisted(lpparam.packageName)) return;
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
 		HaloFloating.handleLoadPackage(lpparam, mPref);
 	}
 
-	private boolean isBlacklisted(String pkg) {
+	public static boolean isBlacklisted(String pkg) {
 		mBlacklist.reload();
 		return mBlacklist.contains(pkg);
 	}

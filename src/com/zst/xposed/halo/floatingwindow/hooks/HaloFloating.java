@@ -133,7 +133,9 @@ public class HaloFloating {
 				if (i == null) return;
 				// This is where the package gets its first context from the attribute-cache. In
 				// order to hook its attributes we set up our check for floating mutil windows here.
-				if (MainXposed.isWhitelisted(aInfo.applicationInfo.packageName)) {
+				boolean isBlacklisted = MainXposed.isBlacklisted(aInfo.applicationInfo.packageName);
+				
+				if (!isBlacklisted && MainXposed.isWhitelisted(aInfo.applicationInfo.packageName)) {
 					i.addFlags(Common.FLAG_FLOATING_WINDOW);
 				}
 				floatingWindow = (i.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
@@ -150,7 +152,7 @@ public class HaloFloating {
 						
 				boolean isFloating;
 				boolean taskAffinity;
-				if (alist.size() > 0 && !floatingWindow) {
+				if (alist.size() > 0 && !floatingWindow && !isBlacklisted) {
 					if (Build.VERSION.SDK_INT == 19) {
 						Object taskRecord = alist.get(alist.size() - 1);
 						Field taskRecord_intent_field = taskRecord.getClass().getDeclaredField("intent");
@@ -182,6 +184,12 @@ public class HaloFloating {
 						intentField.set(param.thisObject, newer);
 						floatingWindow = true;
 					}
+				}
+				if (isBlacklisted) {
+					floatingWindow = false;
+					int intent_flag = i.getFlags();
+					intent_flag &= ~Common.FLAG_FLOATING_WINDOW;
+					i.setFlags(intent_flag);
 				}
 				if (floatingWindow) {
 					int intent_flag = i.getFlags();
