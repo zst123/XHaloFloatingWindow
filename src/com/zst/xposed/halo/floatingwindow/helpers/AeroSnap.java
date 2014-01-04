@@ -175,23 +175,23 @@ public class AeroSnap {
 	private void calculateSnap() {
 		switch (mSnap) {
 		case SNAP_LEFT:
-			mSnapParam[0] = (int) ((mScreenWidth / 2) - 0.5f);
+			mSnapParam[0] = (mScreenWidth / 2) + 1;
 			mSnapParam[1] = ViewGroup.LayoutParams.MATCH_PARENT;
 			mSnapParam[2] = Gravity.TOP | Gravity.LEFT;
 			break;
 		case SNAP_RIGHT:
-			mSnapParam[0] = (int) ((mScreenWidth / 2) - 0.5f);
+			mSnapParam[0] = (mScreenWidth / 2) + 1;
 			mSnapParam[1] = ViewGroup.LayoutParams.MATCH_PARENT;
 			mSnapParam[2] = Gravity.RIGHT;
 			break;
 		case SNAP_TOP:
 			mSnapParam[0] = ViewGroup.LayoutParams.MATCH_PARENT;
-			mSnapParam[1] = (int) ((mScreenHeight / 2) - 0.5f);
+			mSnapParam[1] = (mScreenHeight / 2) + 1;
 			mSnapParam[2] = Gravity.TOP;
 			break;
 		case SNAP_BOTTOM:
 			mSnapParam[0] = ViewGroup.LayoutParams.MATCH_PARENT;
-			mSnapParam[1] = (int) ((mScreenHeight / 2) - 0.5f);
+			mSnapParam[1] = (mScreenHeight / 2) + 1;
 			mSnapParam[2] = Gravity.BOTTOM;
 			break;
 		case SNAP_NONE:
