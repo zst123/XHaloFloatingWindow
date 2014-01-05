@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 
 public class Util {
 	
@@ -37,5 +40,15 @@ public class Util {
 		float scale = c.getResources().getDisplayMetrics().density;
 		int pixel = (int) (dp * scale + 0.5f);
 		return pixel;
+	}
+	
+	/* Create a Border */
+	public static ShapeDrawable makeOutline(int color, int thickness) {
+		ShapeDrawable rectShapeDrawable = new ShapeDrawable(new RectShape());
+		Paint paint = rectShapeDrawable.getPaint();
+		paint.setColor(color);
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(thickness);
+		return rectShapeDrawable;
 	}
 }

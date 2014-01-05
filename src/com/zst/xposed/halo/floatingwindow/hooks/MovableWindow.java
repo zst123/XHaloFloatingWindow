@@ -24,11 +24,8 @@ import android.content.res.Configuration;
 import android.content.res.XModuleResources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.Menu;
@@ -331,13 +328,7 @@ public class MovableWindow {
 		if (thickness == 0) {
 			overlayView.setBackgroundResource(0);
 		} else {
-			// make the shape a drawable
-			ShapeDrawable rectShapeDrawable = new ShapeDrawable(new RectShape());
-			Paint paint = rectShapeDrawable.getPaint();
-			paint.setColor(color);
-			paint.setStyle(Paint.Style.STROKE);
-			paint.setStrokeWidth(thickness);
-			overlayView.setBackgroundDrawable(rectShapeDrawable);
+			overlayView.setBackgroundDrawable(Util.makeOutline(color, thickness));
 		}
 	}
 	

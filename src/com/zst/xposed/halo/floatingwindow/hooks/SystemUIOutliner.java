@@ -6,10 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -123,13 +120,7 @@ public class SystemUIOutliner {
 	
 	private static View getOutlineView(Context ctx, int color) {
 		FrameLayout outline = new FrameLayout(ctx);
-		
-		ShapeDrawable rectShapeDrawable = new ShapeDrawable(new RectShape());
-		Paint paint = rectShapeDrawable.getPaint();
-		paint.setColor(color);
-		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(Util.realDp(4, ctx));
-		outline.setBackgroundDrawable(rectShapeDrawable);
+		outline.setBackgroundDrawable(Util.makeOutline(color, Util.realDp(4, ctx)));
 		
 		View filling = new View(ctx);
 		filling.setBackgroundColor(color);
