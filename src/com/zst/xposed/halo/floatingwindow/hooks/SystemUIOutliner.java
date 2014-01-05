@@ -16,6 +16,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -127,7 +128,7 @@ public class SystemUIOutliner {
 		Paint paint = rectShapeDrawable.getPaint();
 		paint.setColor(color);
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(dp(4, ctx));
+		paint.setStrokeWidth(Util.realDp(4, ctx));
 		outline.setBackgroundDrawable(rectShapeDrawable);
 		
 		View filling = new View(ctx);
@@ -136,11 +137,5 @@ public class SystemUIOutliner {
 		outline.addView(filling);
 		
 		return outline;
-	}
-	
-	public static int dp(int dp, Context c) { // convert dp to px
-		float scale = c.getResources().getDisplayMetrics().density;
-		int pixel = (int) (dp * scale + 0.5f);
-		return pixel;
 	}
 }

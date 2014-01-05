@@ -1,8 +1,5 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
@@ -11,6 +8,7 @@ import com.zst.xposed.halo.floatingwindow.helpers.OutlineLeftResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.OutlineRightResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.Resizable;
 import com.zst.xposed.halo.floatingwindow.helpers.RightResizable;
+import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -128,8 +126,8 @@ public class MovableWindow {
 						Common.DEFAULT_WINDOW_TITLEBAR_ENABLED);
 				int titlebar_size = mPref.getInt(Common.KEY_WINDOW_TITLEBAR_SIZE,
 						Common.DEFAULT_WINDOW_TITLEBAR_SIZE);
-				mTitleBarHeight = titlebar_enabled ? realDp(titlebar_size, activity) : 0;
-				mTitleBarDivider = realDp(2, activity);
+				mTitleBarHeight = titlebar_enabled ? Util.realDp(titlebar_size, activity) : 0;
+				mTitleBarDivider = Util.realDp(2, activity);
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
 						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
@@ -642,7 +640,7 @@ public class MovableWindow {
 				case MotionEvent.ACTION_MOVE:
 					if (mActionBarDraggable) {					
 					ActionBar ab = a.getActionBar();
-					int height = (ab != null) ? ab.getHeight() : dp(48, a.getApplicationContext());
+					int height = (ab != null) ? ab.getHeight() : Util.dp(48, a.getApplicationContext());
 					
 					if (viewY < height) {
 						screenX = event.getRawX();
@@ -658,7 +656,7 @@ public class MovableWindow {
 					break;
 				}
 				ActionBar ab = a.getActionBar();
-				int height = (ab != null) ? ab.getHeight() : dp(48, a.getApplicationContext());
+				int height = (ab != null) ? ab.getHeight() : Util.dp(48, a.getApplicationContext());
 				if (viewY < height && mAeroSnap != null && mActionBarDraggable) {
 					mAeroSnap.dispatchTouchEvent(event);
 				}
@@ -807,34 +805,5 @@ public class MovableWindow {
 		mWindow.setAttributes(params);
 	}
 	
-	/* Uses screen dpi instead of app dpi */
-	public static int realDp(int dp, Context c) {
-		String dpi = "";
-		try {
-			Process p = new ProcessBuilder("/system/bin/getprop", "ro.sf.lcd_density")
-					.redirectErrorStream(true).start();
-			BufferedReader br = new BufferedReader(new InputStreamReader(p.getInputStream()));
-			String line = "";
-			while ((line = br.readLine()) != null) {
-				dpi = line;
-			}
-			p.destroy();
-		} catch (Exception e) {
-			dpi = "0";
-		}
-		float scale = Integer.parseInt(dpi);
-		if (scale == 0) {
-			scale = c.getResources().getDisplayMetrics().density;
-		} else {
-			scale = (scale / 160);
-		}
-		int pixel = (int) (dp * scale + 0.5f);
-		return pixel;
-	}
 	
-	public static int dp(int dp, Context c) { // convert dp to px
-		float scale = c.getResources().getDisplayMetrics().density;
-		int pixel = (int) (dp * scale + 0.5f);
-		return pixel;
-	}
 }
