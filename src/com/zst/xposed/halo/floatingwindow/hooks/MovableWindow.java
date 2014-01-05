@@ -566,13 +566,8 @@ public class MovableWindow {
 		});
 	}
 	
-	private static void minimizeAndShowNotification(Activity ac) {
-		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
-		i.putExtra(Common.INTENT_APP_TOKEN, ac.getActivityToken());
-		i.putExtra(Common.INTENT_APP_ID, ac.getTaskId());
-		i.putExtra(Common.INTENT_APP_NOTIFICATION_HIDE,
-				Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName());
-
+	private static void minimizeAndShowNotification(final Activity ac) {
+		Intent i = new Intent(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName());
 		ApplicationInfo app_info = ac.getApplication().getApplicationInfo();
 		PendingIntent intent = PendingIntent.getBroadcast(ac, 0, i, 
 				PendingIntent.FLAG_UPDATE_CURRENT);
@@ -598,6 +593,11 @@ public class MovableWindow {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				notificationManager.cancel(ID_NOTIFICATION_RESTORE);
+				Intent broadcast = new Intent(Common.CHANGE_APP_FOCUS);
+				broadcast.putExtra(Common.INTENT_APP_TOKEN, ac.getActivityToken());
+				broadcast.putExtra(Common.INTENT_APP_ID, ac.getTaskId());
+				context.sendBroadcast(broadcast);
+				context.unregisterReceiver(this);
 			}
 		}, new IntentFilter(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName()));
 	}

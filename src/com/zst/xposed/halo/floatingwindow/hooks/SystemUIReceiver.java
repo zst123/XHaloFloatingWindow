@@ -80,11 +80,6 @@ public class SystemUIReceiver {
 			Binder.restoreCallingIdentity(origId);
 			// Using "messy" boradcast intent since wm and am needs
 			// system-specific permission
-			
-			String notification_hide = intent.getStringExtra(Common.INTENT_APP_NOTIFICATION_HIDE);
-			if (notification_hide != null) {
-				context.sendBroadcast(new Intent(notification_hide));
-			}
 		}
 	};
 	
