@@ -200,7 +200,6 @@ public class NotificationShadeHook {
 							} else {
 								popup.getMenu().add(TEXT_OPEN_IN_NORMALLY);
 							}
-							// TODO put in strings.xml
 							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 								public boolean onMenuItemClick(MenuItem item) {
 									if (item.getTitle().equals(TEXT_APP_INFO)) {
@@ -273,7 +272,6 @@ public class NotificationShadeHook {
 							} else {
 								popup.getMenu().add(TEXT_OPEN_IN_NORMALLY);
 							}
-							//TODO put in strings.xml
 							popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 								public boolean onMenuItemClick(MenuItem item) {
 									if (item.getTitle().equals(TEXT_APP_INFO)) {

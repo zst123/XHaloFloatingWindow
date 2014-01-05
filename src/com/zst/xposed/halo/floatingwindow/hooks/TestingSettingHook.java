@@ -1,7 +1,5 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
-import android.util.Log;
-
 import com.zst.xposed.halo.floatingwindow.Common;
 
 import de.robv.android.xposed.XC_MethodHook;

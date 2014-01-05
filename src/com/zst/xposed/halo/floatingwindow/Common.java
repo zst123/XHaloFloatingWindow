@@ -116,7 +116,7 @@ public class Common {
 	public static final String REFRESH_APP_LAYOUT = THIS_PACKAGE_NAME + ".REFRESH_APP_LAYOUT";
 
 	/* Others */
-	public static final String LOG_TAG = "XHaloFloatingWindow(" + Build.VERSION.SDK_INT + ") - ";	
+	public static final String LOG_TAG = "XHaloFloatingWindow(SDK: " + Build.VERSION.SDK_INT + ") - ";	
 	public static final int LAYOUT_RECEIVER_TAG = android.R.id.background;
 	public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=2419287";
 	

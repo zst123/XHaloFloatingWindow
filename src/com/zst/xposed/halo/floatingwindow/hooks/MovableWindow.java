@@ -795,6 +795,4 @@ public class MovableWindow {
 		params.y = (int) y;
 		mWindow.setAttributes(params);
 	}
-	
-	
 }
