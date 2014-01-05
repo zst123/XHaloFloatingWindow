@@ -148,7 +148,6 @@ public class MovableWindow {
 					decorView.bringChildToFront(overlayView);
 				}
 				if (mMovableWindow) {
-					activity.getWindow().setCloseOnTouchOutside(false);
 					overlayView = activity.findViewById(ID_OVERLAY_VIEW);
 					triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 					quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);

@@ -15,7 +15,6 @@ public class LayoutScaling {
 		pref.reload();
 		boolean isMovable = pref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW);
 		if (isMovable) {
-			window.setCloseOnTouchOutside(false);
 			window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 		} else {
 			window.setCloseOnTouchOutsideIfNotSet(true);
