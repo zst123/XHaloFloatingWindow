@@ -74,7 +74,11 @@ public class MovableWindow {
 	static boolean mActionBarDraggable;
 	static boolean mLiveResizing;
 	static int mPreviousOrientation;
+	
+	/* AeroSnap*/
 	static AeroSnap mAeroSnap;
+	static boolean mAeroSnapEnabled;
+	static int mAeroSnapDelay;
 	
 	/* Title Bar */
 	static int mTitleBarHeight = Common.DEFAULT_WINDOW_TITLEBAR_SIZE;
@@ -130,11 +134,11 @@ public class MovableWindow {
 				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
 						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
 				
-				boolean aero_snap_enabled = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED,
+				mAeroSnapEnabled = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED);
-				int aero_snap_delay = mPref.getInt(Common.KEY_WINDOW_RESIZING_AERO_SNAP_DELAY,
+				mAeroSnapDelay = mPref.getInt(Common.KEY_WINDOW_RESIZING_AERO_SNAP_DELAY,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY);
-				mAeroSnap = aero_snap_enabled ? new AeroSnap(activity.getWindow(), aero_snap_delay) : null;
+				mAeroSnap = mAeroSnapEnabled ? new AeroSnap(activity.getWindow(), mAeroSnapDelay) : null;
 				
 			}
 		});
@@ -248,7 +252,8 @@ public class MovableWindow {
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_TRIANGLE_DRAGGING_ENABLED,
 							Common.DEFAULT_WINDOW_TRIANGLE_DRAGGING_ENABLED)) {
-						triangle.setOnTouchListener(new Movable(current_activity.getWindow(), triangle));
+						triangle.setOnTouchListener(new Movable(current_activity.getWindow(), triangle,
+								mAeroSnapEnabled, mAeroSnapDelay));
 					}
 					
 					triangle.setOnClickListener(new View.OnClickListener() {
@@ -284,7 +289,8 @@ public class MovableWindow {
 					
 					if (mPref.getBoolean(Common.KEY_WINDOW_QUADRANT_DRAGGING_ENABLED,
 							Common.DEFAULT_WINDOW_QUADRANT_DRAGGING_ENABLED)) {
-						quadrant.setOnTouchListener(new Movable(current_activity.getWindow(), quadrant));
+						quadrant.setOnTouchListener(new Movable(current_activity.getWindow(), quadrant,
+								mAeroSnapEnabled, mAeroSnapDelay));
 					}
 					
 					quadrant.setOnClickListener(new View.OnClickListener() {
@@ -516,12 +522,12 @@ public class MovableWindow {
 		max_button.setOnClickListener(click);
 		min_button.setOnClickListener(click);
 		more_button.setOnClickListener(click);	
-		header.setOnTouchListener(new Movable(a.getWindow()));
+		header.setOnTouchListener(new Movable(a.getWindow(), mAeroSnapEnabled, mAeroSnapDelay));
 	}
 	
 	private static void initActionBar(final Activity a) {
 		View header = overlayView.findViewById(R.id.movable_action_bar);
-		Movable moveable = new Movable(a.getWindow());
+		Movable moveable = new Movable(a.getWindow(), mAeroSnapEnabled, mAeroSnapDelay);
 		header.setOnTouchListener(moveable);
 		
 		final TextView dtm_title = (TextView) overlayView.findViewById(R.id.textView1);
