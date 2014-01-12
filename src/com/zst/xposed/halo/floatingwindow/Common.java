@@ -63,6 +63,7 @@ public class Common {
 	public static final String KEY_WHITELIST_APPS = "window_whitelist";
 	public static final String KEY_BLACKLIST_HELP = "window_blacklist_help";
 	public static final String KEY_WHITELIST_HELP = "window_whitelist_help";
+	public static final String KEY_WHITEBLACKLIST_OPTIONS = "window_whiteblacklist_options";
 	
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -110,6 +111,7 @@ public class Common {
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;
 	public static final boolean DEFAULT_FORCE_OPEN_APP_ABOVE_HALO = false;
+	public static final String DEFAULT_WHITEBLACKLIST_OPTIONS = "0";	
 	
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;

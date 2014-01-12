@@ -104,6 +104,14 @@
             android:key="window_blacklist"
             android:summary="@string/pref_blacklist_summary"
             android:title="@string/pref_blacklist_title" />
+        
+        <ListPreference
+                android:defaultValue="0"
+                android:entries="@array/option_whiteblacklist_entries"
+                android:entryValues="@array/option_whiteblacklist_values"
+                android:key="window_whiteblacklist_options"
+                android:summary="@string/pref_whiteblacklist_summary"
+                android:title="@string/pref_whiteblacklist_title" />
     </PreferenceScreen>
     
     <!-- Screen 4: Movable Resizable -->

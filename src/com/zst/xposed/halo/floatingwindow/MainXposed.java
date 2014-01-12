@@ -55,4 +55,9 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		mWhitelist.reload();
 		return mWhitelist.contains(pkg);
 	}
+	
+	public static int getBlackWhiteListOption() {
+		mPref.reload();
+		return Integer.parseInt(mPref.getString(Common.KEY_WHITEBLACKLIST_OPTIONS, Common.DEFAULT_WHITEBLACKLIST_OPTIONS));
+	}
 }

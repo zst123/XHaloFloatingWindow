@@ -58,6 +58,8 @@
     <string name="pref_whitelist_title">Whitelist Apps</string>
     <string name="pref_whitelist_summary">Choose a list of apps to always open in floating mode</string>
     <string name="pref_whitelist_dialog">Newly whitelisted apps needs to be force-closed for changes to take effect.\n\nYou may single press on the app icon for the app info to open. After which, you may select Force Stop.\n\nNote that blacklisting has a higher priority over whitelisting if you were to select the same app in both lists.</string>
+    <string name="pref_whiteblacklist_title">Whitelist/Blacklist Options</string>
+    <string name="pref_whiteblacklist_summary">Choose a different behavior to use the black and whitelist</string>
 
     <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Movable &amp; Resizable</string>
@@ -165,6 +167,12 @@
     <string name="pref_testing_problem_subtitle">You may visit the official thread on XDA Developers for help.</string>
     <string name="pref_testing_launch_thread">Visit XDA Thread</string>
 
+    
+    <!-- Whitelist / Blacklist Options-->
+    <string name="option_whiteblacklist_default">Default</string>
+    <string name="option_whiteblacklist_always_only">Always open apps in halo except blacklisted apps</string>
+    <string name="option_whiteblacklist_never_only">Never open apps in halo except whitelisted apps</string>
+    
     <!-- Keyboard Mode -->
     <string name="keyboard_default">Default</string>
     <string name="keyboard_pan">Pan Up</string>

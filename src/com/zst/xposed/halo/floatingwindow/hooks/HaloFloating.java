@@ -134,8 +134,20 @@ public class HaloFloating {
 				// This is where the package gets its first context from the attribute-cache. In
 				// order to hook its attributes we set up our check for floating mutil windows here.
 				boolean isBlacklisted = MainXposed.isBlacklisted(aInfo.applicationInfo.packageName);
+				boolean isWhitelisted = MainXposed.isWhitelisted(aInfo.applicationInfo.packageName);
+				int blackWhitelistOptions = MainXposed.getBlackWhiteListOption();
+
+				if (blackWhitelistOptions == 1) {
+					// Always open apps in halo except blacklisted apps
+					if (!isBlacklisted) {
+						isWhitelisted = true;
+					}
+				} else if (blackWhitelistOptions == 2) {
+					// Never open apps in halo except whitelisted apps
+					isBlacklisted = !isWhitelisted;
+				}
 				
-				if (!isBlacklisted && MainXposed.isWhitelisted(aInfo.applicationInfo.packageName)) {
+				if (!isBlacklisted && isWhitelisted) {
 					i.addFlags(Common.FLAG_FLOATING_WINDOW);
 				}
 				floatingWindow = (i.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
