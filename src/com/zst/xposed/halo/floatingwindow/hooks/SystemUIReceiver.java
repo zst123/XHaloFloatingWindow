@@ -25,6 +25,10 @@ public class SystemUIReceiver {
 	private static ActivityManager iActivityManager;
 	private static Context mSystemContext; // SystemUI Context
 	
+	/*
+	 * Catch the method if a throwable appears so the SystemUI wouldn't
+	 * continuously force-close
+	 */
 	public static void handleLoadPackage(LoadPackageParam lpp) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
 		
@@ -43,7 +47,6 @@ public class SystemUIReceiver {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				Service thiz = (Service) param.thisObject;
 				mSystemContext = thiz.getApplicationContext();
-				// Gets SystemUI Context which has the permissions
 				IntentFilter filters = new IntentFilter();
 				filters.addAction(Common.CHANGE_APP_FOCUS);
 				mSystemContext.registerReceiver(mIntentReceiver, filters, null, null);
@@ -51,6 +54,11 @@ public class SystemUIReceiver {
 		});
 	}
 	
+	/*
+	 * We use a broadcast receiver to change app focus since this requires System-specific
+	 * permissions. I used SystemUI since I can't find a universal Android System context
+	 * that is compatible with all devices
+	 * */
 	final static BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -78,8 +86,6 @@ public class SystemUIReceiver {
 				Log.e("test1", "Cannot move the activity to front", e);
 			}
 			Binder.restoreCallingIdentity(origId);
-			// Using "messy" boradcast intent since wm and am needs
-			// system-specific permission
 		}
 	};
 	
