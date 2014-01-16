@@ -377,12 +377,6 @@ public class NotificationShadeHook {
 	private static void launchFloating(PendingIntent pIntent, Context mContext) { 
 		Intent intent = new Intent();
 		intent.addFlags(Common.FLAG_FLOATING_WINDOW);
-		// intent.setFlags(intent.getFlags() &
-		// ~Intent.FLAG_ACTIVITY_SINGLE_TOP);
-		// intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-		// intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		// intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-		// intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 		launch(intent, pIntent, mContext);
 	}
 	private static void launch(Intent intent, PendingIntent pIntent, Context mContext) { 

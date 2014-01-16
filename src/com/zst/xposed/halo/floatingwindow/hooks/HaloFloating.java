@@ -307,14 +307,7 @@ public class HaloFloating {
 		XposedBridge.hookAllMethods(Activity.class, class_name, new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				Activity thiz = (Activity) param.thisObject;
-				String name = thiz.getWindow().getContext().getPackageName();
 				Intent intent = thiz.getIntent();
-				if (name.startsWith("com.android.systemui")) {
-					// How did halo flag get into SystemUI? Remove it.
-					intent.setFlags(intent.getFlags() & ~Common.FLAG_FLOATING_WINDOW);
-					isHoloFloat = false;
-					return;
-				}
 				isHoloFloat = (intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 				if (isHoloFloat) {
 					LayoutScaling.appleFloating(mPref, thiz.getWindow());
