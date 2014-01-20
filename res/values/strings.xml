@@ -171,7 +171,8 @@
     <!-- Whitelist / Blacklist Options-->
     <string name="option_whiteblacklist_default">Default</string>
     <string name="option_whiteblacklist_always_only">Always open apps in halo except blacklisted apps</string>
-    <string name="option_whiteblacklist_never_only">Never open apps in halo except whitelisted apps</string>
+    <string name="option_whiteblacklist_never_only">Never open apps in halo but force whitelisted apps in halo</string>
+    <string name="option_whiteblacklist_never_all">Blacklist all apps &amp; only allow whitelisted apps to be opened in halo</string>
     
     <!-- Keyboard Mode -->
     <string name="keyboard_default">Default</string>

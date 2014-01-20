@@ -140,13 +140,21 @@ public class HaloFloating {
 				int blackWhitelistOptions = MainXposed.getBlackWhiteListOption();
 
 				if (blackWhitelistOptions == 1) {
-					// Always open apps in halo except blacklisted apps
+					/* Always open apps in halo except blacklisted apps */
 					if (!isBlacklisted) {
 						isWhitelisted = true;
+						// if app is NOT blacklisted, whitelist the app
 					}
 				} else if (blackWhitelistOptions == 2) {
-					// Never open apps in halo except whitelisted apps
+					/* Never open apps in halo but force whitelisted apps in halo */
 					isBlacklisted = !isWhitelisted;
+					// if not whitelisted, then blacklist app
+				} else if (blackWhitelistOptions == 3) {
+					/* Blacklist all apps & only allow whitelisted apps to be opened in halo */
+					isBlacklisted = !isWhitelisted;
+					// if not in whitelist, then blacklist app
+					isWhitelisted = false;
+					// turn whilelist off since we are not forcing app in halo
 				}
 				
 				if (!isBlacklisted && isWhitelisted) {

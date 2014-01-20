@@ -27,12 +27,14 @@
         <item>@string/option_whiteblacklist_default</item>
         <item>@string/option_whiteblacklist_always_only</item>
         <item>@string/option_whiteblacklist_never_only</item>
+        <item>@string/option_whiteblacklist_never_all</item>
     </string-array>
     
     <string-array name="option_whiteblacklist_values">
         <item>0</item>
         <item>1</item>
         <item>2</item>
+        <item>3</item>
     </string-array>
 
 </resources>
