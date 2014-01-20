@@ -67,6 +67,7 @@ public class SystemUIOutliner {
 		}
 	};
 	
+	// Create a view in SystemUI window manager
 	private static void createOutlineView(Context ctx) {
 		WindowManager.LayoutParams layOutParams = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
@@ -82,6 +83,7 @@ public class SystemUIOutliner {
 		mWm.addView(mOutline, layOutParams);
 	}
 	
+	// show the outline with positioning (x,y)
 	private static void refreshOutlineView(Context ctx, int x, int y, int height, int width) {
 		if (x == HIDE || y == HIDE || height == HIDE || width == HIDE) {
 			mOutline.setVisibility(View.GONE);
@@ -100,6 +102,7 @@ public class SystemUIOutliner {
 		mOutline.setVisibility(View.VISIBLE);
 	}
 	
+	// show the outline with gravity
 	private static void refreshOutlineView(Context ctx, int w, int h, int g) {
 		if (h == HIDE || w == HIDE || g == HIDE) {
 			mOutline.setVisibility(View.GONE);
@@ -118,6 +121,7 @@ public class SystemUIOutliner {
 		mOutline.setVisibility(View.VISIBLE);
 	}
 	
+	// create outline view with translucent filling
 	private static View getOutlineView(Context ctx, int color) {
 		FrameLayout outline = new FrameLayout(ctx);
 		outline.setBackgroundDrawable(Util.makeOutline(color, Util.realDp(4, ctx)));

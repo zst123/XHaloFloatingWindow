@@ -44,6 +44,7 @@ public class AeroSnap {
 	 * An Aero Snap Class to check if the current pointer's coordinates
 	 * are in range of the snap region.
 	 */
+	// TODO : Clean up codes, make it more customizable
 	
 	
 	public AeroSnap(Window window, int delay) {
@@ -84,6 +85,7 @@ public class AeroSnap {
 		
 	}
 	
+	// do the snap by setting the variables and hiding the snap preview
 	private void finishSnap(boolean apply) {
 		if (apply) {
 			WindowManager.LayoutParams lpp = mWindow.getAttributes();
@@ -147,6 +149,7 @@ public class AeroSnap {
 				(mSnapParam[2] != UNKNOWN);
 	}
 	
+	// svae the position so we can restore it later
 	private boolean saveOldPosition() {
 		if (mSnapped) {
 			return (mSnap == SNAP_NONE) || (mTimeoutRunning);
@@ -158,6 +161,7 @@ public class AeroSnap {
 		return true;
 	}
 	
+	// undo the snap when moving the window out of the snap region
 	private boolean restoreOldPosition() {
 		if (!mSnapped) return false;
 		WindowManager.LayoutParams params = mWindow.getAttributes();
@@ -172,6 +176,7 @@ public class AeroSnap {
 		return true;
 	}
 	
+	// create a snap positioning based on the range of our touch coordinates
 	private void calculateSnap() {
 		switch (mSnap) {
 		case SNAP_LEFT:
@@ -201,16 +206,19 @@ public class AeroSnap {
 		}
 	}
 	
+	// send broadcast to sync the windows
 	private void refreshLayout() {
 		MovableWindow.initAndRefreshLayoutParams(mWindow, mContext, mContext.getPackageName());
 	}
 	
+	// stop the handler from continuing
 	private void discardTimeout() {
 		mTimeoutDone = false;
 		mTimeoutRunning = false;
 		mHandler.removeCallbacks(mRunnable);
 	}
 	
+	// send broadcast after the snap delay
 	private void broadcastShowWithTimeout() {
 		if (mTimeoutRunning) return;
 		if (mRunnable == null) {

@@ -11,6 +11,7 @@ import de.robv.android.xposed.XSharedPreferences;
 
 public class LayoutScaling {
 	
+	// set the relevent settings to have halo windows
 	public static void appleFloating(XSharedPreferences pref, Window window) {
 		pref.reload();
 		boolean isMovable = pref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW);
@@ -29,6 +30,8 @@ public class LayoutScaling {
 		params.alpha = alp;
 		params.dimAmount = dimm;
 		params.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
+		/* this private flag is only in JB and above to turn off move animation.
+		 * we need this to speed up our resizing */
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 		window.setWindowAnimations(android.R.style.Animation_Dialog);

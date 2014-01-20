@@ -108,6 +108,9 @@ public class MovableWindow {
 	}
 	
 	private static void activityHook(){
+		/* Initialize all the preference variables here.
+		 * TODO: Place some of the variables used below in this hook to reduce
+		 * preference.reload() calls */
 		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
@@ -138,6 +141,7 @@ public class MovableWindow {
 			}
 		});
 		
+		// re-initialize the variables when resuming as they may get replaced by another activity.
 		XposedBridge.hookAllMethods(Activity.class, "onResume", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
@@ -155,6 +159,7 @@ public class MovableWindow {
 			}
 		});
 		
+		// unregister the receiver for syncing window position
 		XposedBridge.hookAllMethods(Activity.class, "onDestroy", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
@@ -172,22 +177,29 @@ public class MovableWindow {
 				activity = (Activity) param.thisObject;
 				Window window = (Window) activity.getWindow();
 				
+				// register the receiver for syncing window position
 				registerLayoutBroadcastReceiver(window);
+				// set layout position from previous activity if available
 				setLayoutPositioning(window);
 				
 				Context context = window.getContext();
 				
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
 				if (decorView == null) return;
+				// make sure the titlebar/drag-to-move-bar is not behind the statusbar
 				decorView.setFitsSystemWindows(true);
 				try {
+					// disable resizing animation to speed up scaling (doesn't work on all roms)
 					XposedHelpers.callMethod(decorView, "hackTurnOffWindowResizeAnim", true);
 				} catch (Throwable e) {
 				}
 				
 				XmlResourceParser parser = mModRes.getLayout(R.layout.movable_window);
+				/* get the layout from our module. we cannot just use the R reference
+				 * since the layout is from the module, not the current app we are modifying */
 				overlayView = window.getLayoutInflater().inflate(parser, null);
 				
+				// set the id of our layout so we can find it again
 				overlayView.setId(ID_OVERLAY_VIEW);
 				
 				RelativeLayout.LayoutParams paramz = new RelativeLayout.LayoutParams(
@@ -196,6 +208,10 @@ public class MovableWindow {
 				
 				decorView.addView(overlayView, -1, paramz);
 				
+				// Create the drawables, alpha, size for the triangle and quadrant.
+				/* We do this programatically since when inflating, the system will
+				 * find the drawables in the CURRENT app, which will FAIL since the
+				 * drawables are in the MODULE */
 				String color_str = mPref.getString(Common.KEY_WINDOW_TRIANGLE_COLOR, Common.DEFAULT_WINDOW_TRIANGLE_COLOR);
 				Drawable triangle_background = mModRes.getDrawable(R.drawable.movable_corner);
 				if (!color_str.equals(Common.DEFAULT_WINDOW_TRIANGLE_COLOR)) { //If not white, apply
@@ -331,6 +347,7 @@ public class MovableWindow {
 		}
 	}
 	
+	// Corner Buttons (Triangle, Quadrant) Actions.
 	private static void cornerButtonClickAction(int type_of_action, Activity activity) {
 		String index = "0";
 		switch (type_of_action) {
@@ -379,6 +396,7 @@ public class MovableWindow {
 		}
 	}
 
+	// maximize and restore the window.
 	private static void maximizeApp(Activity activity) {
 		if ((activity.getWindow().getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT) ||
 			(activity.getWindow().getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT)) {
@@ -388,6 +406,7 @@ public class MovableWindow {
 			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT);
 		}
+		// after that, send a broadcast to sync the position of the window
 		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
 	}
 	// Show and hide the action bar we injected for dragging
@@ -438,6 +457,10 @@ public class MovableWindow {
 		bg.setVisibility(View.VISIBLE);
 	}
 	
+	// Create the Titlebar
+	/* We do this programatically since when inflating, the system will
+	 * find the drawables in the CURRENT app, which will FAIL since the
+	 * drawables are in the MODULE */
 	private static void initTitleBar(final Activity a, final FrameLayout decorView) {
 		if (mTitleBarHeight == 0) 
 			return;
@@ -513,6 +536,7 @@ public class MovableWindow {
 		header.setOnTouchListener(new Movable(a.getWindow(), mAeroSnapEnabled, mAeroSnapDelay));
 	}
 	
+	// Create the drag-to-move bar
 	private static void initActionBar(final Activity a) {
 		View header = overlayView.findViewById(R.id.movable_action_bar);
 		Movable moveable = new Movable(a.getWindow(), mAeroSnapEnabled, mAeroSnapDelay);
@@ -566,6 +590,7 @@ public class MovableWindow {
 		});
 	}
 	
+	// Send the app to the back, and show a notification to restore
 	private static void minimizeAndShowNotification(final Activity ac) {
 		Intent i = new Intent(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName());
 		ApplicationInfo app_info = ac.getApplication().getApplicationInfo();
@@ -602,6 +627,7 @@ public class MovableWindow {
 		}, new IntentFilter(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName()));
 	}
 	
+	// hook the touch events to move the window and have aero snap.
 	private static void inject_dispatchTouchEvent() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
