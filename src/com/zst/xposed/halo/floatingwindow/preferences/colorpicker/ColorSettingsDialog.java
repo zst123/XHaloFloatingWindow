@@ -23,7 +23,7 @@ public class ColorSettingsDialog extends AlertDialog implements
 	private ColorPanelView mNewColor;
 	private EditText mHexColor;
 	private Button mHexButton;
-	
+
 	private LayoutInflater mInflater;
 	private OnColorChangedListener mListener;
 
@@ -37,7 +37,7 @@ public class ColorSettingsDialog extends AlertDialog implements
 	private void setUp(int color, final String defColor) {
         mInflater = (LayoutInflater) getContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        
+
         View layout = mInflater.inflate(R.layout.dialog_colorpicker, null);
 
         mColorPicker = (ColorPickerView) layout.findViewById(R.id.color_picker_view);
@@ -62,7 +62,7 @@ public class ColorSettingsDialog extends AlertDialog implements
         		}
         	}
         });
-        
+
         setView(layout);
     }
 
@@ -70,7 +70,7 @@ public class ColorSettingsDialog extends AlertDialog implements
 	public void onColorChanged(int color) {
 		colorChange(color);
 	}
-	
+
 	private void colorChange(int color){
 		mNewColor.setColor(color);
 		mHexColor.setText(Integer.toHexString(color).toUpperCase(Locale.ENGLISH).substring(2));
@@ -78,7 +78,7 @@ public class ColorSettingsDialog extends AlertDialog implements
 			mListener.onColorChanged(color);
 		}
 	}
-	
+
 	public void setAlphaSliderVisible(boolean visible) {
 		mColorPicker.setAlphaSliderVisible(visible);
 	}
