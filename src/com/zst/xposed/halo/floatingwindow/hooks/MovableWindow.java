@@ -68,6 +68,7 @@ public class MovableWindow {
 	static boolean mMovableWindow;
 	static boolean mActionBarDraggable;
 	static boolean mLiveResizing;
+	static boolean mMinimizeToStatusbar;
 	static int mPreviousOrientation;
 
 	/* AeroSnap*/
@@ -136,6 +137,8 @@ public class MovableWindow {
 				mPreviousOrientation = activity.getResources().getConfiguration().orientation;
 				mLiveResizing = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_LIVE_UPDATE,
 						Common.DEFAULT_WINDOW_RESIZING_LIVE_UPDATE);
+				mMinimizeToStatusbar = mPref.getBoolean(Common.KEY_MINIMIZE_APP_TO_STATUSBAR,
+						Common.DEFAULT_MINIMIZE_APP_TO_STATUSBAR);
 
 				mAeroSnapEnabled = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED);
@@ -603,6 +606,11 @@ public class MovableWindow {
 
 	// Send the app to the back, and show a notification to restore
 	private static void minimizeAndShowNotification(final Activity ac) {
+		if (!mMinimizeToStatusbar) {
+			ac.moveTaskToBack(true);
+			return;
+		}
+
 		Intent i = new Intent(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName());
 		ApplicationInfo app_info = ac.getApplication().getApplicationInfo();
 		PendingIntent intent = PendingIntent.getBroadcast(ac, 0, i,

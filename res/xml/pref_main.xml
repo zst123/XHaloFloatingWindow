@@ -90,6 +90,12 @@
             android:title="@string/pref_show_recents_title" />
         
         <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="window_minimize_to_statusbar"
+            android:summary="@string/pref_minimize_to_statusbar_summary"
+            android:title="@string/pref_minimize_to_statusbar_title" />
+        
+        <CheckBoxPreference
             android:defaultValue="false"
             android:key="window_force_open_app_above_halo"
             android:summary="@string/pref_force_open_app_above_halo_summary"
