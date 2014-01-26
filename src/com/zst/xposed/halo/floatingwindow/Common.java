@@ -59,6 +59,7 @@ public class Common {
 	public static final String KEY_WINDOW_BORDER_THICKNESS = "window_border_thickness";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
+	public static final String KEY_FORCE_APP_IN_RECENTS = "window_force_recents";
 	public static final String KEY_MINIMIZE_APP_TO_STATUSBAR = "window_minimize_to_statusbar";
 	public static final String KEY_FLOATING_QUICK_SETTINGS = "system_notif_floating_quick_settings";
 	public static final String KEY_RESTART_SYSTEMUI = "restart_systemui";
@@ -116,6 +117,7 @@ public class Common {
 	public static final int DEFAULT_WINDOW_BORDER_THICKNESS = 0;
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
+	public static final boolean DEFAULT_FORCE_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_MINIMIZE_APP_TO_STATUSBAR = true;
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;
 	public static final boolean DEFAULT_FORCE_OPEN_APP_ABOVE_HALO = false;

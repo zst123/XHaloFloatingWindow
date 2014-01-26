@@ -220,6 +220,10 @@ public class HaloFloating {
 					i.addFlags(Common.FLAG_FLOATING_WINDOW);
 					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
 						i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+					} else if (mPref.getBoolean(Common.KEY_FORCE_APP_IN_RECENTS, Common.DEFAULT_FORCE_APP_IN_RECENTS)) {
+						int intent_flag2 = i.getFlags();
+						intent_flag2 &= ~Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
+						i.setFlags(intent_flag2);
 					}
 					i.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
 					Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");

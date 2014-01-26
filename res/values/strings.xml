@@ -49,6 +49,8 @@
     <string name="pref_disable_auto_close_summary">Disable closing the app window when screen turns off or home is pressed.</string>
     <string name="pref_show_recents_title">Show App in Recents</string>
     <string name="pref_show_recents_summary">Allows the app to be shown in the recents screen.</string>
+    <string name="pref_force_recents_title">Force App in Recents</string>
+    <string name="pref_force_recents_summary">Bypass hiding done by app launchers &amp; force the app to be shown in recents screen.</string>
     <string name="pref_force_open_app_above_halo_title">Force New Windows in Halo</string>
     <string name="pref_force_open_app_above_halo_summary">If an app is currently open in floating mode, new apps that open above it is forced to open in floating mode.</string>
     <string name="pref_blacklist_title">Blacklist Apps</string>
