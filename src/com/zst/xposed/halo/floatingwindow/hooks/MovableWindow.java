@@ -83,6 +83,7 @@ public class MovableWindow {
 	static ImageView quadrant;
 	static ImageView triangle;
 	static View overlayView;
+	static View borderOutline;
 
 	static final int ID_OVERLAY_VIEW = 1000000;
 	static final int ID_NOTIFICATION_RESTORE = 22222222;
@@ -162,6 +163,7 @@ public class MovableWindow {
 				}
 				if (mMovableWindow) {
 					overlayView = activity.findViewById(ID_OVERLAY_VIEW);
+					borderOutline = overlayView.findViewById(R.id.movable_background);
 					triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 					quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
 					ActionBarColorHook.setTitleBar(overlayView);
@@ -337,6 +339,8 @@ public class MovableWindow {
 				setDragActionBarVisibility(false, true);
 				initActionBar(activity);
 
+				borderOutline = overlayView.findViewById(R.id.movable_background);
+				borderOutline.bringToFront();
 				if (mPref.getBoolean(Common.KEY_WINDOW_BORDER_ENABLED,
 						Common.DEFAULT_WINDOW_BORDER_ENABLED)) {
 					final int color = Color.parseColor("#" + mPref.getString(
@@ -354,9 +358,9 @@ public class MovableWindow {
 
 	public static void setWindowBorder(int color, int thickness) {
 		if (thickness == 0) {
-			overlayView.setBackgroundResource(0);
+			borderOutline.setBackgroundResource(0);
 		} else {
-			overlayView.setBackgroundDrawable(Util.makeOutline(color, thickness));
+			borderOutline.setBackgroundDrawable(Util.makeOutline(color, thickness));
 		}
 	}
 

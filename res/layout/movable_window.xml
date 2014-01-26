@@ -9,6 +9,18 @@
     <!-- Set all drawables programatically. -->
     <!-- There'll be inflation problems cause we inflate as another activity -->
 
+    <View
+        android:id="@+id/movable_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
     <ImageView
         android:id="@+id/movable_quadrant"
         android:layout_width="36dp"
