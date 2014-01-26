@@ -413,6 +413,16 @@ public class MovableWindow {
 	private static void maximizeApp(Activity activity) {
 		if ((activity.getWindow().getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT) ||
 			(activity.getWindow().getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT)) {
+			if (AeroSnap.isSnapped()) {
+				// we need to maximize instead of restoring since it is snapped to the edge
+				mAeroSnap.restoreOldPositionWithoutRefresh();
+				// dont refresh since we need to maximize it again
+				saveNonMaximizedLayout(activity.getWindow());
+				// save our unsnapped position, then maximize
+				activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+						ViewGroup.LayoutParams.MATCH_PARENT);
+				return;
+			}
 			restoreNonMaximizedLayout(activity.getWindow());
 		} else {
 			saveNonMaximizedLayout(activity.getWindow());

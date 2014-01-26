@@ -192,6 +192,13 @@ public class AeroSnap {
 	// undo the snap when moving the window out of the snap region
 	private boolean restoreOldPosition() {
 		if (!mSnapped) return false;
+		restoreOldPositionWithoutRefresh();
+		refreshLayout();
+		return true;
+	}
+	
+	public void restoreOldPositionWithoutRefresh() {
+		if (!mSnapped) return;
 		WindowManager.LayoutParams params = mWindow.getAttributes();
 		params.x = mOldLayout[0];
 		params.y = mOldLayout[1];
@@ -201,8 +208,6 @@ public class AeroSnap {
 		mWindow.setAttributes(params);
 		mSnapped = false;
 		mRestorePosition = false;
-		refreshLayout();
-		return true;
 	}
 	
 	// create a snap positioning based on the range of our touch coordinates
@@ -273,5 +278,9 @@ public class AeroSnap {
 	
 	private void broadcastHide(Context ctx) {
 		ctx.sendBroadcast(new Intent(Common.SHOW_OUTLINE));
+	}
+	
+	public static boolean isSnapped() {
+		return mSnapped;
 	}
 }
