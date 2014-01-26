@@ -395,8 +395,8 @@ public class MovableWindow {
 		case 3: //Transparency Dialog
 			showTransparencyDialogVisibility(activity.getWindow());
 			break;
-		case 4: // Hide Entire App
-			activity.moveTaskToBack(true);
+		case 4: // Minimize / Hide Entire App
+			minimizeAndShowNotification(activity);
 			break;
 		case 5: // Drag & Move Bar w/o hiding corner
 			setDragActionBarVisibility(true, false);

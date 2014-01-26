@@ -145,7 +145,7 @@
     <string name="option_movable_corner_dnm_wo_corners">Show Drag To Move Bar (Don\'t Hide Corners)</string>
     <string name="option_movable_corner_close">Close App</string>
     <string name="option_movable_corner_transparency">Show Transparency Slider</string>
-    <string name="option_movable_corner_hide_app">Hide Entire App</string>
+    <string name="option_movable_corner_hide_app">@string/dnm_minimize</string>
     <string name="option_movable_corner_maximize">Maximize App</string>
 
     <!-- 5th Preference Screen -->
