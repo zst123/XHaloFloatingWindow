@@ -159,8 +159,7 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="#f000"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
+        android:clickable="true" >
 
         <TextView
             android:id="@+id/movable_titlebar_appname"
@@ -171,6 +170,7 @@
             android:layout_toLeftOf="@+id/movable_titlebar_min"
             android:layout_toRightOf="@+id/movable_titlebar_more"
             android:ellipsize="end"
+            android:focusable="false"
             android:gravity="center_vertical|center_horizontal"
             android:hint="App Name"
             android:maxLines="1"
