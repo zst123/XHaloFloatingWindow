@@ -57,6 +57,9 @@ public class Common {
 	public static final String KEY_WINDOW_BORDER_ENABLED = "window_border_enabled";
 	public static final String KEY_WINDOW_BORDER_COLOR = "window_border_color";
 	public static final String KEY_WINDOW_BORDER_THICKNESS = "window_border_thickness";
+	public static final String KEY_TINTED_TITLEBAR_ENABLED = "window_tinted_title_enabled";
+	public static final String KEY_TINTED_TITLEBAR_HSV = "window_tinted_title_hsv";
+	public static final String KEY_TINTED_TITLEBAR_BORDER_TINT = "window_tinted_title_bordertint";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
 	public static final String KEY_FORCE_APP_IN_RECENTS = "window_force_recents";
@@ -115,6 +118,9 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_BORDER_ENABLED = false;
 	public static final String DEFAULT_WINDOW_BORDER_COLOR = "FFFFFF";
 	public static final int DEFAULT_WINDOW_BORDER_THICKNESS = 0;
+	public static final boolean DEFAULT_TINTED_TITLEBAR_ENABLED = true;
+	public static final float DEFAULT_TINTED_TITLEBAR_HSV = 0.9f;
+	public static final boolean DEFAULT_TINTED_TITLEBAR_BORDER_TINT = true;
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FORCE_APP_IN_RECENTS = false;

@@ -138,6 +138,13 @@
     <string name="pref_movable_border_thickness_summary">Thickness of the border in pixels</string>
     <string name="pref_movable_others_minimize_to_statusbar_title">Minimize to Statusbar</string>
     <string name="pref_movable_others_minimize_to_statusbar_summary">Show applications in statusbar when minimized.</string>
+    <string name="pref_movable_others_tinted_title_enable_title">Tinted TitleBar</string>
+    <string name="pref_movable_others_tinted_title_enable_summary">Use the app\'s actionbar color for the titlebar.\nBased on Tinted StatusBar by MohammadAG. \n(Requires force-closing open apps to take effect)</string>
+    <string name="pref_movable_others_tinted_title_hsv_title">Max HS[V] for black icons</string>
+    <string name="pref_movable_others_tinted_title_hsv_summary">Maximum HS[V] before auto-switching to black icons \n(Ignored when action bar has a custom text color)</string>
+    <string name="pref_movable_others_tinted_title_border_title">Tint Window Border</string>
+    <string name="pref_movable_others_tinted_title_border_summary">Change the window border (if enabled) to the actionbar color.</string>
+    
 
     <!-- 4th Preference Corner Actions -->
     <string name="option_movable_corner_nothing">Do Nothing</string>

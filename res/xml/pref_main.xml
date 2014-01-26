@@ -404,6 +404,32 @@
 	            android:key="window_minimize_to_statusbar"
 	            android:summary="@string/pref_movable_others_minimize_to_statusbar_summary"
 	            android:title="@string/pref_movable_others_minimize_to_statusbar_title" />
+	        
+	        <PreferenceCategory
+	            android:title="@string/pref_movable_others_tinted_title_enable_title" >
+	            <SwitchPreference
+	                android:defaultValue="true"
+	                android:key="window_tinted_title_enabled"
+	                android:summary="@string/pref_movable_others_tinted_title_enable_summary"
+	                android:title="@string/pref_movable_others_tinted_title_enable_title" />
+
+	            <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+	                defaultValue="0.9"
+	                maximum="1"
+	                minimum="0"
+	                android:dependency="window_tinted_title_enabled"
+	                android:key="window_tinted_title_hsv"
+	                android:summary="@string/pref_movable_others_tinted_title_hsv_summary"
+	                android:title="@string/pref_movable_others_tinted_title_hsv_title" />
+
+	            <CheckBoxPreference
+	                android:defaultValue="true"
+	                android:dependency="window_tinted_title_enabled"
+	                android:key="window_tinted_title_bordertint"
+	                android:summary="@string/pref_movable_others_tinted_title_border_summary"
+	                android:title="@string/pref_movable_others_tinted_title_border_title" />
+	        </PreferenceCategory>
+
         </PreferenceScreen>
         
     </PreferenceScreen>

@@ -164,6 +164,7 @@ public class MovableWindow {
 					overlayView = activity.findViewById(ID_OVERLAY_VIEW);
 					triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 					quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
+					ActionBarColorHook.setTitleBar(overlayView);
 				}
 			}
 		});
@@ -343,6 +344,7 @@ public class MovableWindow {
 					final int thickness = mPref.getInt(Common.KEY_WINDOW_BORDER_THICKNESS,
 							Common.DEFAULT_WINDOW_BORDER_THICKNESS);
 					setWindowBorder(color, thickness);
+					ActionBarColorHook.setBorderThickness(thickness);
 				}
 
 				initTitleBar(activity, decorView);
@@ -350,7 +352,7 @@ public class MovableWindow {
 		});
 	}
 
-	private static void setWindowBorder(int color, int thickness) {
+	public static void setWindowBorder(int color, int thickness) {
 		if (thickness == 0) {
 			overlayView.setBackgroundResource(0);
 		} else {
