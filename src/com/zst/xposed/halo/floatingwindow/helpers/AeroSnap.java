@@ -21,6 +21,7 @@ public class AeroSnap {
 	final static int SNAP_TOP = 2;
 	final static int SNAP_RIGHT = 3;
 	final static int SNAP_BOTTOM = 4;
+	final static int MOVE_MAX_RANGE = 10;
 	
 	final Window mWindow;
 	final Handler mHandler;
@@ -39,6 +40,9 @@ public class AeroSnap {
 	static int[] mOldLayout;
 	static boolean mTimeoutRunning;
 	static boolean mTimeoutDone;
+	static boolean mRestorePosition;
+	static boolean mChangedPreviousRange;
+	static float[] mPreviousRange = new float[2];
 	
 	/**
 	 * An Aero Snap Class to check if the current pointer's coordinates
@@ -60,17 +64,37 @@ public class AeroSnap {
 		case MotionEvent.ACTION_UP:
 			finishSnap(isValidSnap() && mTimeoutDone);
 			discardTimeout();
+			mChangedPreviousRange = false;
 			break;
 		case MotionEvent.ACTION_DOWN:
-			if (!saveOldPosition()) {
-				restoreOldPosition();	
+			if (!mChangedPreviousRange) {
+				mPreviousRange[0] = event.getRawX();
+				mPreviousRange[1] = event.getRawY();
+				mChangedPreviousRange = true;
 			}
 			refreshScreenSize();
 			break;
 		case MotionEvent.ACTION_MOVE:
+			if (mRestorePosition && moveRangeAboveLimit(event)) {
+				restoreOldPosition();
+			}
 			showSnap((int) event.getRawX(), (int) event.getRawY());
 			
 		}
+	}
+	
+	// check if it is moved out of the snap and not just accidently moved a few px
+	private boolean moveRangeAboveLimit(MotionEvent event) {
+		final float x = event.getRawX();
+		final float y = event.getRawY();
+		
+		boolean returnValue = false;
+		if (Math.abs(mPreviousRange[0] - x) > MOVE_MAX_RANGE)
+			returnValue = true;
+		if (Math.abs(mPreviousRange[1] - y) > MOVE_MAX_RANGE)
+			returnValue = true;
+
+		return returnValue;
 	}
 	
 	private void showSnap(int x, int y) {
@@ -88,6 +112,9 @@ public class AeroSnap {
 	// do the snap by setting the variables and hiding the snap preview
 	private void finishSnap(boolean apply) {
 		if (apply) {
+			if (saveOldPosition()) {
+				mRestorePosition = true;
+			}
 			WindowManager.LayoutParams lpp = mWindow.getAttributes();
 			lpp.width = mSnapParam[0];
 			lpp.height = mSnapParam[1];
@@ -151,6 +178,7 @@ public class AeroSnap {
 	
 	// svae the position so we can restore it later
 	private boolean saveOldPosition() {
+		if (mRestorePosition) return true;
 		if (mSnapped) {
 			return (mSnap == SNAP_NONE) || (mTimeoutRunning);
 		}
@@ -172,6 +200,7 @@ public class AeroSnap {
 		params.gravity = Gravity.LEFT | Gravity.TOP;
 		mWindow.setAttributes(params);
 		mSnapped = false;
+		mRestorePosition = false;
 		refreshLayout();
 		return true;
 	}
