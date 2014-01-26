@@ -49,8 +49,6 @@
     <string name="pref_disable_auto_close_summary">Disable closing the app window when screen turns off or home is pressed.</string>
     <string name="pref_show_recents_title">Show App in Recents</string>
     <string name="pref_show_recents_summary">Allows the app to be shown in the recents screen.</string>
-    <string name="pref_minimize_to_statusbar_title">Minimize to Statusbar</string>
-    <string name="pref_minimize_to_statusbar_summary">Show applications in statusbar when minimized.</string>
     <string name="pref_force_open_app_above_halo_title">Force New Windows in Halo</string>
     <string name="pref_force_open_app_above_halo_summary">If an app is currently open in floating mode, new apps that open above it is forced to open in floating mode.</string>
     <string name="pref_blacklist_title">Blacklist Apps</string>
@@ -78,6 +76,8 @@
     <string name="pref_movable_sub_quadrant_summary">Change Bottom Right Quadrant Properties</string>
     <string name="pref_movable_sub_border_title">Border Settings</string>
     <string name="pref_movable_sub_border_summary">Change Window Border Properties</string>
+    <string name="pref_movable_sub_other_title">Other Settings</string>
+    <string name="pref_movable_sub_other_summary">Change Miscellaneous Properties</string>
     <string name="pref_movable_titlebar_enabled_title">Enable TitleBar</string>
     <string name="pref_movable_titlebar_enabled_summary">Show a titlebar at the top of the window for dragging</string>
     <string name="pref_movable_titlebar_size_title">TitleBar Size</string>
@@ -134,6 +134,8 @@
     <string name="pref_movable_border_color_summary">Color of the border</string>
     <string name="pref_movable_border_thickness_title">Border Width</string>
     <string name="pref_movable_border_thickness_summary">Thickness of the border in pixels</string>
+    <string name="pref_movable_others_minimize_to_statusbar_title">Minimize to Statusbar</string>
+    <string name="pref_movable_others_minimize_to_statusbar_summary">Show applications in statusbar when minimized.</string>
 
     <!-- 4th Preference Corner Actions -->
     <string name="option_movable_corner_nothing">Do Nothing</string>
