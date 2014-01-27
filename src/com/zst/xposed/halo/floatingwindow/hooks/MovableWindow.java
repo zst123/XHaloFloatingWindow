@@ -352,6 +352,7 @@ public class MovableWindow {
 				}
 
 				initTitleBar(activity, decorView);
+				ActionBarColorHook.setTitleBar(overlayView);
 			}
 		});
 	}
