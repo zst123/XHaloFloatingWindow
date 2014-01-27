@@ -1,5 +1,7 @@
 package com.zst.xposed.halo.floatingwindow.helpers;
  
+import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
+
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,5 +66,6 @@ public class Movable implements View.OnTouchListener {
     		param.x = (int)x;	
     		param.y = (int)y;
     		mWindow.setAttributes(param);
+    		MovableWindow.initAndRefreshLayoutParams(mWindow, mWindow.getContext(), mWindow.getContext().getPackageName());
     	}
 }
