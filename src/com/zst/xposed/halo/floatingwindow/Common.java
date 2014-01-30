@@ -60,6 +60,7 @@ public class Common {
 	public static final String KEY_TINTED_TITLEBAR_ENABLED = "window_tinted_title_enabled";
 	public static final String KEY_TINTED_TITLEBAR_HSV = "window_tinted_title_hsv";
 	public static final String KEY_TINTED_TITLEBAR_BORDER_TINT = "window_tinted_title_bordertint";
+	public static final String KEY_TINTED_TITLEBAR_CORNER_TINT = "window_tinted_title_cornertint";
 	public static final String KEY_DISABLE_AUTO_CLOSE = "window_disable_auto_close";
 	public static final String KEY_SHOW_APP_IN_RECENTS = "window_show_recents";
 	public static final String KEY_FORCE_APP_IN_RECENTS = "window_force_recents";
@@ -121,6 +122,7 @@ public class Common {
 	public static final boolean DEFAULT_TINTED_TITLEBAR_ENABLED = true;
 	public static final float DEFAULT_TINTED_TITLEBAR_HSV = 0.9f;
 	public static final boolean DEFAULT_TINTED_TITLEBAR_BORDER_TINT = true;
+	public static final boolean DEFAULT_TINTED_TITLEBAR_CORNER_TINT = true;
 	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FORCE_APP_IN_RECENTS = false;

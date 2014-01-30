@@ -428,6 +428,13 @@
 	                android:key="window_tinted_title_bordertint"
 	                android:summary="@string/pref_movable_others_tinted_title_border_summary"
 	                android:title="@string/pref_movable_others_tinted_title_border_title" />
+	            
+	            <CheckBoxPreference
+	                android:defaultValue="true"
+	                android:dependency="window_tinted_title_enabled"
+	                android:key="window_tinted_title_cornertint"
+	                android:summary="@string/pref_movable_others_tinted_title_corner_summary"
+	                android:title="@string/pref_movable_others_tinted_title_corner_title" />
 	        </PreferenceCategory>
 
         </PreferenceScreen>

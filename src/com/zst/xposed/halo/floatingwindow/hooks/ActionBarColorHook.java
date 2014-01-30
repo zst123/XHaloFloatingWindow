@@ -17,9 +17,11 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.robv.android.xposed.XC_MethodHook;
@@ -56,6 +58,8 @@ public class ActionBarColorHook {
 	static ImageButton mMaxButton;
 	static ImageButton mMinButton;
 	static ImageButton mMoreButton;
+	static ImageView mTriangle;
+	static ImageView mQuadrant;
 	static int mBorderThickness;
 	
 	public static void handleLoadPackage(LoadPackageParam llpp, XSharedPreferences pref) {
@@ -160,6 +164,8 @@ public class ActionBarColorHook {
 		mMaxButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_max);
 		mMinButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_min);
 		mMoreButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_more);
+		mTriangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
+		mQuadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
 	}
 	
 	public static void setBorderThickness(int thickness) {
@@ -181,6 +187,25 @@ public class ActionBarColorHook {
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_BORDER_TINT,
 				Common.DEFAULT_TINTED_TITLEBAR_BORDER_TINT)) {
 			MovableWindow.setWindowBorder(bg_color, mBorderThickness);
+		}
+		
+		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_CORNER_TINT,
+				Common.DEFAULT_TINTED_TITLEBAR_CORNER_TINT)) {
+			try {
+				Drawable triangle_background = mTriangle.getBackground();
+				triangle_background.setColorFilter(bg_color, Mode.SRC_ATOP);
+				Drawable quadrant_background = mQuadrant.getBackground();
+				quadrant_background.setColorFilter(bg_color, Mode.SRC_ATOP);
+				if (Build.VERSION.SDK_INT >= 16) {
+					mTriangle.setBackground(triangle_background);
+					mQuadrant.setBackground(quadrant_background);
+				} else {
+					mTriangle.setBackgroundDrawable(triangle_background);
+					mQuadrant.setBackgroundDrawable(quadrant_background);
+				}
+			} catch (NullPointerException e) {
+				Log.d("test1", Common.LOG_TAG + "ActionBarColorHook.java - changeTitleBarColor2 - NPE", e);
+			}
 		}
 		// if border is zero, the method will take care of it.
 	}
