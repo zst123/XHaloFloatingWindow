@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">XHaloFloatingWindow</string>
+    <string name="app_description">Плавающие окна из Paranoid Android с настройками перемещения и изменения размеров.(zst123)</string>
+    <string name="app_blacklist">Черный список</string>
+    <string name="app_whitelist">Белый список</string>
+    <string name="app_testing">Тестирование</string>
+    <string name="default_value">Значение по умолчанию</string>
+    <string name="save">Сохранить</string>
+    <string name="add">Добавить</string>
+    <string name="help">Помощь</string>
+    <string name="close_once">Напомнить позже</string>
+    <string name="close_forever">Не напоминать</string>
+    <string name="pref_window_top_title">Всплывающее окно</string>
+    <string name="pref_window_top_summary">Настройка свойств окна</string>
+    <string name="pref_alpha_title">Непрозрачность</string>
+    <string name="pref_alpha_summary">Непрозрачность окна</string>
+    <string name="pref_dim_title">Затемнение</string>
+    <string name="pref_dim_summary">Затемнение всплывающего окна при переходе на задний план</string>
+    <string name="pref_gravity_title">Позиция</string>
+    <string name="pref_gravity_summary">Позиция всплывающего окна</string>
+    <string name="pref_size_top_title">Размер всплывающего окна</string>
+    <string name="pref_size_top_summary">Настройка размера всплывающего окна</string>
+    <string name="pref_width_portrait_title">Ширина в портретном режиме</string>
+    <string name="pref_width_portrait_summary">Ширина всплывающего окна в портретном режиме</string>
+    <string name="pref_height_portrait_title">Высота в портретном режиме</string>
+    <string name="pref_height_portrait_summary">Всота всплывающего окна в портретном режиме</string>
+    <string name="pref_width_landscape_title">Ширина в панорамном режиме</string>
+    <string name="pref_width_landscape_summary">Ширина всплывающего окна в панорамном режиме</string>
+    <string name="pref_height_landscape_title">Высота в панорамном режиме</string>
+    <string name="pref_height_landscape_summary">Высота всплывающего окна в панорамном режиме</string>
+    <string name="pref_behave_top_title">Свойства</string>
+    <string name="pref_behave_top_summary">Настройка свойств всплывающих окон</string>
+    <string name="pref_app_pause_title">Приостановка приложения</string>
+    <string name="pref_app_pause_summary_off">Не приостанавливать приложение под всплывающим окном</string>
+    <string name="pref_app_pause_summary_on">Приостанавливать приложение под всплывающим окном (По умолчанию)</string>
+    <string name="pref_keyboard_title">Режим клавиатуры</string>
+    <string name="pref_keyboard_summary">Действие всплывающего окна при открытии клавиатуры.</string>
+    <string name="pref_disable_auto_close_title">Отключить автозакрытие</string>
+    <string name="pref_disable_auto_close_summary">Отключить закрытие окна приложения при выключении экрана или нажатии \"Домой\".</string>
+    <string name="pref_show_recents_title">Показывать в недавних</string>
+    <string name="pref_show_recents_summary">Показывать приложение в списке недавних.</string>
+    <string name="pref_force_recents_title">Принудительно показывать в недавних</string>
+    <string name="pref_force_recents_summary">Принудительный показ приложения в списке недавних.</string>	
+    <string name="pref_force_open_app_above_halo_title">Принудительный запуск новых приложений</string>
+    <string name="pref_force_open_app_above_halo_summary">Если текущее приложение открыто во всплывающем окне, новые приложения будут так же открываться во всплывающих окнах.</string>
+    <string name="pref_blacklist_title">Приложения черного списка</string>
+    <string name="pref_blacklist_summary">Список приложений, которые не будут запускаться во всплывающем режиме</string>
+    <string name="pref_blacklist_dialog">"Для вступления изменений в силу,помещенные в черный список приложения должны быть принудительно закрыты.
+
+Тапните по иконке приложения для открытия вкладки \"О приложении\". Затем нажмите \"Остановить\"."</string>
+    <string name="pref_blacklist_error">"Ошибка открытия \"О приложении\".
+Ошибка.
+
+"</string>
+    <string name="pref_whitelist_title">Приложения белого списка</string>
+    <string name="pref_whitelist_summary">Список приложений, которые будут запускаться во всплывающем режиме</string>
+    <string name="pref_whitelist_dialog">"Для вступления изменений в силу,помещенные в белый список приложения должны быть принудительно закрыты.
+
+Тапните по иконке приложения для открытия вкладки \"О приложении\". Затем нажмите \"Остановить\".
+
+Добавляя приложение в оба списка имейте ввиду, что у черного списка приоритет выше чем у белого."</string>
+    <string name="pref_whiteblacklist_title">Опции белого/черного списков</string>
+    <string name="pref_whiteblacklist_summary">Выберите предпочтения для использования черного и белого списков</string>
+    <string name="pref_movable_top_title">Перемещение и изменение размеров</string>
+    <string name="pref_movable_top_summary">Настройки мультизадачности .</string>
+    <string name="pref_movable_sub_titlebar_title">Настройки панели заголовка</string>
+    <string name="pref_movable_sub_titlebar_summary">Изменение верхней панели с заголовком всплывающего окна</string>
+    <string name="pref_movable_sub_moving_title">Настройки перемещения</string>
+    <string name="pref_movable_sub_moving_summary">Изменение настроек перемещения всплывающего окна</string>
+    <string name="pref_movable_sub_resizing_title">Настройки изменения размера</string>
+    <string name="pref_movable_sub_resizing_summary">Настройки изменения размера всплывающего окна</string>
+    <string name="pref_movable_sub_triangle_title">Настройки треугольника</string>
+    <string name="pref_movable_sub_triangle_summary">Изменение свойств треугольника внизу слева</string>
+    <string name="pref_movable_sub_quadrant_title">Настройки сектора</string>
+    <string name="pref_movable_sub_quadrant_summary">Изменение свойств сектора внизу справа</string>
+    <string name="pref_movable_sub_border_title">Настройки границ</string>
+    <string name="pref_movable_sub_border_summary">Измнение свойств границ всплывающего окна</string>
+	<string name="pref_movable_sub_other_title">Прочие настройки</string>
+    <string name="pref_movable_sub_other_summary"></string>
+    <string name="pref_movable_titlebar_enabled_title">Включить панель заголовка</string>
+    <string name="pref_movable_titlebar_enabled_summary">Показать строку заголовка вверху окна для его перетаскивания</string>
+    <string name="pref_movable_titlebar_size_title">Размер панели заголовка</string>
+    <string name="pref_movable_titlebar_size_summary">Высота пнели заголовка</string>
+	<string name="pref_movable_titlebar_separator_enabled_title">Включить разделитель в панели заголовка</string>
+    <string name="pref_movable_titlebar_separator_enabled_summary">Показывать разделительную линию под панелью заголовка</string>
+    <string name="pref_movable_titlebar_separator_size_title">Размер разделителя</string>
+    <string name="pref_movable_titlebar_separator_size_summary">Толщина разделительной линии под панелью заголовка</string>
+    <string name="pref_movable_titlebar_separator_color_title">Цвет разделительной линии</string>
+    <string name="pref_movable_titlebar_separator_color_summary">Цвет разделительной линии под панелью заголовка</string>
+    <string name="pref_movable_moving_start_pos_title">Сохранять положение окна при запуске</string>
+    <string name="pref_movable_moving_start_pos_summary">Открыв новое окно того же самого приложения, разместить его в ту же самую позицию и размер оригинала</string>
+    <string name="pref_movable_moving_move_pos_title">Постоянное положение окна</string>
+    <string name="pref_movable_moving_move_pos_summary">При изменении размера или перемещении окна,ранее открытые окна этого приложения будут также обновлены.</string>
+    <string name="pref_movable_resizing_live_update_title">Режим реального времени</string>
+    <string name="pref_movable_resizing_live_update_summary">"При изменении размеров окон их содержимое тоже будет обновляться.
+(Может ухудшить производительность)"</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_title">Захват окна</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_summary">Перетащите окно к любым 4 краям экрана, чтобы изменить его размер соответственно этой части экрана, подобно эффекту Aero Snap в ОС Windows.</string>
+    <string name="pref_movable_resizing_aero_snap_delay_title">Задержка захвата</string>
+    <string name="pref_movable_resizing_aero_snap_delay_summary">Задержка в миллисекундах перед показом схемы захвата окна.</string>
+    <string name="pref_movable_moving_move_ab_title">Разрешить использование верхней панели для перемещения</string>
+    <string name="pref_movable_moving_move_ab_summary">Использовать верхнюю панель (или верхнюю область для приложений без верхней панели), для перемещений окна.</string>
+    <string name="pref_movable_triangle_enable_title">Показывать треугольник</string>
+    <string name="pref_movable_triangle_enable_summary">Показывать треугольник в нижнем левом углу окна.</string>
+    <string name="pref_movable_triangle_color_title">Цвет</string>
+    <string name="pref_movable_triangle_color_summary" />
+    <string name="pref_movable_triangle_alpha_title">Непрозрачность</string>
+    <string name="pref_movable_triangle_alpha_summary" />
+    <string name="pref_movable_triangle_size_title">Размер</string>
+    <string name="pref_movable_triangle_size_summary" />
+    <string name="pref_movable_triangle_sp_action_title">Действие на одно нажатие</string>
+    <string name="pref_movable_triangle_sp_action_summary" />
+    <string name="pref_movable_triangle_lp_action_title">Действие на длинное нажатие</string>
+    <string name="pref_movable_triangle_lp_action_summary" />
+    <string name="pref_movable_quadrant_enable_title">Показывать сектор</string>
+    <string name="pref_movable_quadrant_enable_summary">Показывать сектор в нижнем правом углу окна.</string>
+    <string name="pref_movable_quadrant_color_title">Цвет</string>
+    <string name="pref_movable_quadrant_color_summary" />
+    <string name="pref_movable_quadrant_alpha_title">Непрозрачность</string>
+    <string name="pref_movable_quadrant_alpha_summary" />
+    <string name="pref_movable_quadrant_size_title">Размер</string>
+    <string name="pref_movable_quadrant_size_summary" />
+    <string name="pref_movable_quadrant_sp_action_title">Действие на одно нажатие</string>
+    <string name="pref_movable_quadrant_sp_action_summary" />
+    <string name="pref_movable_quadrant_lp_action_title">Действие на длинное нажатие</string>
+    <string name="pref_movable_quadrant_lp_action_summary" />
+    <string name="pref_movable_resize_enabled_title">Использовать для изменения размера окна</string>
+    <string name="pref_movable_resize_enabled_summary" />
+    <string name="pref_movable_dragging_enabled_title">Использовать для перетаскивания окна</string>
+    <string name="pref_movable_dragging_enabled_summary" />
+    <string name="pref_movable_border_enable_title">Показывать границы</string>
+    <string name="pref_movable_border_enable_summary">Показывать границы окна</string>
+    <string name="pref_movable_border_color_title">Цвет</string>
+    <string name="pref_movable_border_color_summary" />
+    <string name="pref_movable_border_thickness_title">Толщина</string>
+    <string name="pref_movable_border_thickness_summary">Толщина границ в пикселях (по умолчанию 0)</string>
+	 <string name="pref_movable_others_minimize_to_statusbar_title">Свернуть в статусбар</string>
+    <string name="pref_movable_others_minimize_to_statusbar_summary">Показывать приложение в статусбаре когда оно свернуто.</string>
+    <string name="pref_movable_others_tinted_title_enable_title">Оттенок панели заголовка</string>
+    <string name="pref_movable_others_tinted_title_enable_summary">"Использовать цвет строки меню приложения для строки заголовка.
+Основано на  Tinted StatusBar by MohammadAG. 
+(Для применения эффекта необходимо принудительно закрыть приложение)"</string>
+    <string name="pref_movable_others_tinted_title_hsv_title">Максимальный HS [V] для черных иконок</string>
+    <string name="pref_movable_others_tinted_title_hsv_summary">"Максимальный HS [V] перед автоматическим переключением к черным значкам 
+(Игнорируется, когда у строки меню есть пользовательский цвет текста),"</string>
+    <string name="pref_movable_others_tinted_title_border_title">Оттенок границы окна</string>
+    <string name="pref_movable_others_tinted_title_border_summary">Подгонка оттенка границы окна (если включено) к цвету строки меню.</string>
+    <string name="option_movable_corner_nothing">Ничего не делать</string>
+    <string name="option_movable_corner_dnm">Показывать область для перетаскивания (Спрятать углы)</string>
+    <string name="option_movable_corner_dnm_wo_corners">Показывать область для перетаскивания (Не прятать углы)</string>
+    <string name="option_movable_corner_close">Закрыть приложение</string>
+    <string name="option_movable_corner_transparency">Показывать слайдер непрозрачности</string>
+    <string name="option_movable_corner_hide_app">Свернуть окно</string>
+    <string name="option_movable_corner_maximize">Развернуть окно</string>
+    <string name="pref_systemui_top_title">Моды SystemUI</string>
+    <string name="pref_systemui_top_summary">Коллекция модификаций SystemUI</string>
+    <string name="pref_notif_warning">Это моды для AOSP-based прошивок и непроверены на других прошивках. Если SystemUI постоянно закрывается с ошибкой, немедленно отключите их.</string>
+    <string name="pref_notif_long_click_title">Длинное нажатие в уведомлениях</string>
+    <string name="pref_notif_long_click_summary">Добавить опцию \"Открыть в окне\" при длинном нажатии в уведомлениях.</string>
+    <string name="pref_notif_single_click_title">Одно нажатие в уведомлениях</string>
+    <string name="pref_notif_single_click_summary">Используйте вместе с \"Длинное нажатие в уведомлениях\". Наоборот, добавит \"Открыть нормально\" , в остальных случаях приложения будут открываться во всплывающих окнах.</string>
+    <string name="pref_notif_floating_qs_title">Быстрые настройки в окне</string>
+    <string name="pref_notif_floating_qs_summary">Кнопка быстрых настроек во всплывающем окне</string>
+    <string name="pref_prevent_home_to_front_title">Предотвращать переход домашнего экрана на передний план</string>
+    <string name="pref_prevent_home_to_front_summary">Предотвращать переход домашнего экрана на передний план после использования вкладки \"Последние\".</string>
+    <string name="pref_recents_long_click_title">Длинное нажатие в недавних приложениях</string>
+    <string name="pref_recents_long_click_summary">Добавляет опцию \"Открыть в окне\" на длинное нажатие элемента в недавних приложениях.</string>
+    <string name="pref_systemui_restart_title">Перезапустить SystemUI</string>
+    <string name="pref_systemui_restart_summary">"Перезапустить для применения эффектов.
+(Необходим root)"</string>
+    <string name="pref_testing_top_title">Тестирование</string>
+    <string name="pref_testing_top_summary">Тестирование открытия всплывающих окон</string>
+    <string name="pref_testing_active_title">Модуль активирован!</string>
+    <string name="pref_testing_active_subtitle">Вы можете запускать приложения в плавающих окнах.</string>
+    <string name="pref_testing_inactive_title">Модуль неактивирован</string>
+    <string name="pref_testing_inactive_subtitle">"Вы не можете запускать приложения в плавающих окнах.
+
+Попытайтесь выключить и включить этот модуль в Xposed Installer после чего перезагрузите устройство.
+
+ Если это не решило проблему, обратитесь за помощью по ссылке ниже."</string>
+    <string name="pref_testing_unknown_subtitle">Не могу загрузить модуль</string>
+    <string name="pref_testing_launch_settings">Запустить в окне \"Настройки\"</string>
+    <string name="pref_testing_launch_xinstaller">Запустить в окне Xposed Installer</string>
+    <string name="pref_testing_problem_title">Проблемы?</string>
+    <string name="pref_testing_problem_subtitle">"Для помощи Вы можете посетить официальную ветку на XDA Developers.
+Перевод: MdC aka migel13"</string>
+    <string name="pref_testing_launch_thread">Посетить ветку на XDA</string>
+    <string name="option_whiteblacklist_default">По умолчанию</string>
+    <string name="option_whiteblacklist_always_only">Открывать в окнах все приложения, кроме помещенных в черный список</string>
+    <string name="option_whiteblacklist_never_only">Открывать в окнах только приложения,помещенные в белый список</string>
+    <string name="option_whiteblacklist_never_all">Поместить в черный список все приложения, открывать в окнах только приложения помещенные в белый список</string>
+    <string name="keyboard_default">По умолчанию</string>
+    <string name="keyboard_pan">Поверх</string>
+    <string name="keyboard_scale">Масштаб</string>
+    <string name="option_gravity_1">Верхний левый угол</string>
+    <string name="option_gravity_2">Вверху по центру</string>
+    <string name="option_gravity_3">Верхний правый угол</string>
+    <string name="option_gravity_4">Слева по центру</string>
+    <string name="option_gravity_5">По центру (По умолчанию)</string>
+    <string name="option_gravity_6">Справа по центру</string>
+    <string name="option_gravity_7">Нижний левый угол</string>
+    <string name="option_gravity_8">Внизу по центру</string>
+    <string name="option_gravity_9">Нижний правый угол</string>
+    <string name="apply">Применить</string>
+    <string name="arrow_symbol">➙</string>
+    <string name="color_hex">Цвет Hex</string>
+    <string name="dnm_title">Область для перетаскивания</string>
+    <string name="dnm_transparency">Прозрачность</string>
+    <string name="dnm_close_app">Закрыть окно</string>
+    <string name="dnm_minimize">Свернуть приложение</string>
+    <string name="dnm_minimize_notif_title">Восстановить %1$s</string>
+    <string name="dnm_minimize_notif_summary">Это приложение было свернуто</string>
+    <string name="notif_open_halo">Открыть в окне</string>
+    <string name="notif_open_normal">Открыть нормально</string>
+    <string name="notif_app_info">О приложении</string>
+    <string name="notif_error_launching">"Ошибка запуска уведомления
+Пожалуйста, сообщите об этом в ветке по XHFW:
+"</string>
+    <string name="recents_remove_from_list">Удалить из списка</string>
+    <string name="recents_app_info">@string/notif_app_info</string>
+    <string name="recents_open_halo">@string/notif_open_halo</string>
+</resources>
