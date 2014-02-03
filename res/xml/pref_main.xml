@@ -78,7 +78,7 @@
             android:title="@string/pref_keyboard_title" />
         
         <CheckBoxPreference
-            android:defaultValue="false"
+            android:defaultValue="true"
             android:key="window_disable_auto_close"
             android:summary="@string/pref_disable_auto_close_summary"
             android:title="@string/pref_disable_auto_close_title" />
@@ -136,7 +136,7 @@
             android:summary="@string/pref_movable_sub_titlebar_summary"
             android:title="@string/pref_movable_sub_titlebar_title" >
             <SwitchPreference
-                android:defaultValue="false"
+                android:defaultValue="true"
                 android:key="window_moving_titlebar_enabled"
                 android:summary="@string/pref_movable_titlebar_enabled_summary"
                 android:title="@string/pref_movable_titlebar_enabled_title" />
@@ -312,7 +312,7 @@
             <CheckBoxPreference
             	android:defaultValue="false"
             	android:key="window_quadrant_resize_enabled"
-            	android:dependency="window_movable"
+            	android:dependency="window_quadrant_enabled"
             	android:summary="@string/pref_movable_resize_enabled_summary"
             	android:title="@string/pref_movable_resize_enabled_title" />
             
@@ -372,13 +372,13 @@
             android:summary="@string/pref_movable_sub_border_summary"
             android:title="@string/pref_movable_sub_border_title" >
             <SwitchPreference
-                android:defaultValue="false"
+                android:defaultValue="true"
                 android:key="window_border_enabled"
                 android:summary="@string/pref_movable_border_enable_summary"
                 android:title="@string/pref_movable_border_enable_title" />
             
             <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
-                defaultValue="FFFFFF"
+                defaultValue="000000"
                 android:dependency="window_border_enabled"
                 android:key="window_border_color"
                 android:summary="@string/pref_movable_border_color_summary"
@@ -441,7 +441,7 @@
         
     </PreferenceScreen>
 
-     <!-- Screen 5: Others -->
+     <!-- Screen 5: SystemUI -->
     <PreferenceScreen
         android:summary="@string/pref_systemui_top_summary"
         android:title="@string/pref_systemui_top_title" >

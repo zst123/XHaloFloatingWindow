@@ -94,7 +94,7 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_RESIZING_LIVE_UPDATE = false;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED = false;
 	public static final int DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY = 1000;
-	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = false;
+	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = true;
 	public static final int DEFAULT_WINDOW_TITLEBAR_SIZE = 32;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_SEPARATOR_ENABLED = false;
 	public static final int DEFAULT_WINDOW_TITLEBAR_SEPARATOR_SIZE = 2;
@@ -116,14 +116,14 @@ public class Common {
 	public static final String DEFAULT_WINDOW_QUADRANT_LONGPRESS_ACTION = "0";
 	public static final boolean DEFAULT_WINDOW_QUADRANT_RESIZE_ENABLED = false;
 	public static final boolean DEFAULT_WINDOW_QUADRANT_DRAGGING_ENABLED = false;
-	public static final boolean DEFAULT_WINDOW_BORDER_ENABLED = false;
-	public static final String DEFAULT_WINDOW_BORDER_COLOR = "FFFFFF";
+	public static final boolean DEFAULT_WINDOW_BORDER_ENABLED = true;
+	public static final String DEFAULT_WINDOW_BORDER_COLOR = "000000";
 	public static final int DEFAULT_WINDOW_BORDER_THICKNESS = 0;
 	public static final boolean DEFAULT_TINTED_TITLEBAR_ENABLED = true;
 	public static final float DEFAULT_TINTED_TITLEBAR_HSV = 0.9f;
 	public static final boolean DEFAULT_TINTED_TITLEBAR_BORDER_TINT = true;
 	public static final boolean DEFAULT_TINTED_TITLEBAR_CORNER_TINT = true;
-	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = false;
+	public static final boolean DEFAULT_DISABLE_AUTO_CLOSE = true;
 	public static final boolean DEFAULT_SHOW_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_FORCE_APP_IN_RECENTS = false;
 	public static final boolean DEFAULT_MINIMIZE_APP_TO_STATUSBAR = true;
