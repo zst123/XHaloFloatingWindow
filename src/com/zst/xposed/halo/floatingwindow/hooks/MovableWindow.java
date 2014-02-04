@@ -67,6 +67,8 @@ public class MovableWindow {
 	static boolean isHoloFloat = false; // Current app has floating flag?
 	static boolean mMovableWindow;
 	static boolean mActionBarDraggable;
+	static boolean mRetainStartPosition;
+	static boolean mConstantMovePosition;
 	static boolean mLiveResizing;
 	static boolean mMinimizeToStatusbar;
 	static int mPreviousOrientation;
@@ -111,8 +113,7 @@ public class MovableWindow {
 
 	private static void activityHook(){
 		/* Initialize all the preference variables here.
-		 * TODO: Place some of the variables used below in this hook to reduce
-		 * preference.reload() calls */
+		 */
 		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -124,6 +125,10 @@ public class MovableWindow {
 						Common.DEFAULT_MOVABLE_WINDOW);
 				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
 						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
+				mRetainStartPosition = mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
+						Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION);
+				mConstantMovePosition = mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
+						Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION);
 
 				boolean titlebar_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ENABLED,
 						Common.DEFAULT_WINDOW_TITLEBAR_ENABLED);
@@ -746,8 +751,7 @@ public class MovableWindow {
 	}
 
 	private static boolean initLayoutPositioning(Window window) {
-		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION))
+		if (!mRetainStartPosition)
 			return false;
 
 		final WindowManager.LayoutParams params = window.getAttributes();
@@ -763,9 +767,7 @@ public class MovableWindow {
 	private static void setLayoutPositioning(Window window) {
 		if (!layout_moved) return;
 
-		if (!mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION))
-			return;
+		if (!mRetainStartPosition) return;
 
 		WindowManager.LayoutParams params = window.getAttributes();
 		params.x = layout_x;
@@ -778,10 +780,7 @@ public class MovableWindow {
 	}
 
 	private static void registerLayoutBroadcastReceiver(final Window window) {
-		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
-			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
+		if (!(mRetainStartPosition || mConstantMovePosition))
 			return;
 
 		BroadcastReceiver br = new BroadcastReceiver() {
@@ -818,10 +817,7 @@ public class MovableWindow {
 	}
 
 	private static void unregisterLayoutBroadcastReceiver(Window window) {
-		if (!(mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_RETAIN_START_POSITION) ||
-			mPref.getBoolean(Common.KEY_WINDOW_MOVING_CONSTANT_POSITION,
-				Common.DEFAULT_WINDOW_MOVING_CONSTANT_POSITION)))
+		if (!(mRetainStartPosition || mConstantMovePosition))
 			return;
 
 		try {
