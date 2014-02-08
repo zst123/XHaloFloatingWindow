@@ -1,7 +1,6 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -29,6 +28,7 @@ public class HaloFloating {
 	static XSharedPreferences mPref;
 	static boolean isHoloFloat = false;
 	static boolean floatingWindow;
+	static boolean isPreviousActivityHome;
 	
 	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences pref) {
 		mPref = pref;
@@ -86,6 +86,13 @@ public class HaloFloating {
 			fixExceptionWhenResuming();
 		} catch (Throwable e) {
 			XposedBridge.log(Common.LOG_TAG + "(fixExceptionWhenResuming)");
+			XposedBridge.log(e);
+		}
+		/*********************************************/
+		try {
+			kitkatMoveHomeStackHook(l);
+		} catch (Throwable e) {
+			XposedBridge.log(Common.LOG_TAG + "(kitkatMoveHomeStackHook)");
 			XposedBridge.log(e);
 		}
 		/*********************************************/
@@ -180,7 +187,8 @@ public class HaloFloating {
 						Field taskRecord_intent_field = taskRecord.getClass().getDeclaredField("intent");
 						taskRecord_intent_field.setAccessible(true);
 						Intent taskRecord_intent = (Intent) taskRecord_intent_field.get(taskRecord);
-						isFloating = (taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+						isFloating = !isPreviousActivityHome &&
+								(taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 						String pkgName = taskRecord_intent.getPackage();
 						taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
 					} else {
@@ -230,10 +238,29 @@ public class HaloFloating {
 					tt.setAccessible(true);
 					tt.set(param.thisObject, Boolean.FALSE);
 				}
+				if (Build.VERSION.SDK_INT >= 19) {
+					isPreviousActivityHome = (Boolean) XposedHelpers.callMethod(stack, "isHomeStack");
+					//finally, update the value if home activity
+				}
 			}
 		});
 	}
 	
+	private static void kitkatMoveHomeStackHook(final LoadPackageParam lpp) throws Throwable {
+		if (Build.VERSION.SDK_INT < 19) return;
+		final Class<?> hookClass = findClass("com.android.server.am.ActivityStackSupervisor", lpp.classLoader);
+		XposedBridge.hookAllMethods(hookClass, "moveHomeStack", new XC_MethodHook() {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				isPreviousActivityHome = (Boolean) param.args[0];
+				// set out value so we can check later if home was before the next activity.
+				// we do this since starting from kitkat, home and normal apps are in different
+				// activity stacks and there is no way to see if the previous app was home.
+				
+				// param.args[0] is true when home is moved to the front, false if to the back
+				// we set it accordingly since we only want it set to true if moved to the front.
+			}
+		});
+	}
 	
 	/* 
 	 * It changes the "mResumedActivity" object to null.
