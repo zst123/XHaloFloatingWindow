@@ -172,6 +172,11 @@ public class MovableWindow {
 					triangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
 					quadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
 					ActionBarColorHook.setTitleBar(overlayView);
+					
+					activity.sendBroadcast(new Intent(Common.REMOVE_NOTIFICATION_RESTORE
+							+ activity.getPackageName()));
+					// send broadcast so the notification will be hidden if we 
+					// un-minimize the app without using the notification itself
 				}
 			}
 		});
