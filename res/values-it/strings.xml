@@ -30,23 +30,23 @@
     <string name="pref_height_landscape_summary">Altezza del Popup quando il telefono è in Orizzontale</string>
     <string name="pref_behave_top_title">Comportamento del Popup</string>
     <string name="pref_behave_top_summary">Personalizza il comportamento della finestra di popup in diverse situazioni</string>
-    <string name="pref_app_pause_title">Pausa l'App</string>
-    <string name="pref_app_pause_summary_off">Non mette in pausa l'app in secondo piano quanddo la finestra di halo è presente (Halo)</string>
-    <string name="pref_app_pause_summary_on">Mette in pasa l'app in secondo piano quando la finestra di halo è presente (Default)</string>
+    <string name="pref_app_pause_title">Pausa l\'App</string>
+    <string name="pref_app_pause_summary_off">Non mette in pausa l\'app in secondo piano quanddo la finestra di halo è presente (Halo)</string>
+    <string name="pref_app_pause_summary_on">Mette in pasa l\'app in secondo piano quando la finestra di halo è presente (Default)</string>
     <string name="pref_keyboard_title">Modalità Tastiera</string>
-    <string name="pref_keyboard_summary">L'azione che il popup farà quando si apre la tastiera.</string>
+    <string name="pref_keyboard_summary">L\'azione che il popup farà quando si apre la tastiera.</string>
     <string name="pref_disable_auto_close_title">Disabilità Auto-Close</string>
     <string name="pref_disable_auto_close_summary">Disabilità la chiusura della finestra quando lo schermo si spegne o viene premuto il tasto home.</string>
     <string name="pref_show_recents_title">Mostra le App nel Menù delle App Recenti</string>
-    <string name="pref_show_recents_summary">Consente all'app di essere nella lista delle app recenti.</string>
+    <string name="pref_show_recents_summary">Consente all\'app di essere nella lista delle app recenti.</string>
     <string name="pref_force_open_app_above_halo_title">Forza le Nuove Finestre ad aprirsi in XHalo</string>
-    <string name="pref_force_open_app_above_halo_summary">Se un'app è in modalità floattante, le app che aprirai saranno frozate ad aprirsi anche loro in modalità floattante.</string>
+    <string name="pref_force_open_app_above_halo_summary">Se un\'app è in modalità floattante, le app che aprirai saranno frozate ad aprirsi anche loro in modalità floattante.</string>
     <string name="pref_blacklist_title">Blacklist Apps</string>
     <string name="pref_blacklist_summary">Stila una lista di app da non far MAI aprire in XHalo</string>
     <string name="pref_blacklist_dialog">"Le app appena messe nella blacklist vanno terminate perchè le modifiche abbiano effetto.
 
 Lo puoi fare dal menu "Informazioni Applicazione."</string>
-    <string name="pref_blacklist_error">"C'è stato un errore nell'aprire le informazioni dell'App.
+    <string name="pref_blacklist_error">"C'è stato un errore nell\'aprire le informazioni dell\'App.
 Questo è un errore.
 
 "</string>
@@ -56,7 +56,7 @@ Questo è un errore.
 
 Lo puoi fare dal menu "Informazioni Applicazione.
 
-Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito un'app in tutte e due le liste, la blacklist avrà la precedenza)"</string>
+Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito un\'app in tutte e due le liste, la blacklist avrà la precedenza)"</string>
     <string name="pref_whiteblacklist_title">Opzioni della Whitelist/Blacklist</string>
     <string name="pref_whiteblacklist_summary">Scegli in che modo utilizzatre la black/whitelist</string>
     <string name="pref_movable_top_title">Mobilità &amp; Ridimensionabilità</string>
@@ -67,8 +67,6 @@ Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito
     <string name="pref_movable_sub_moving_summary">Change Moving Window Behaviour</string>
     <string name="pref_movable_sub_resizing_title">Opzioni della Ridimensionabilità</string>
     <string name="pref_movable_sub_resizing_summary">Cambia il comportamento della finestra quando la andiamo a ridimensionare</string>
-    ..
-    ..
     <string name="pref_movable_sub_triangle_title">Triangolo</string>
     <string name="pref_movable_sub_triangle_summary">Cambia le funzionalità del triangolo in basso a sinistra</string>
     <string name="pref_movable_sub_quadrant_title">Quadrato </string>
@@ -78,9 +76,9 @@ Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito
     <string name="pref_movable_titlebar_enabled_title">Attiva la Barra del Titolo</string>
     <string name="pref_movable_titlebar_enabled_summary">Utilizza la barra del titolo sopra la finestra per il trascinamento</string>
     <string name="pref_movable_titlebar_size_title">Grandezza Barra del Titolo</string>
-    <string name="pref_movable_titlebar_size_summary">Personalizza l'altezza</string>
-    <string name="pref_movable_moving_start_pos_title">Conservare la Posizione della Finestra all'Avvio</string>
-    <string name="pref_movable_moving_start_pos_summary">Quando apri in una finestra un'app già aperta in XHalo, posizionala nello stesso posto e con la stessa grandezza</string>
+    <string name="pref_movable_titlebar_size_summary">Personalizza l\'altezza</string>
+    <string name="pref_movable_moving_start_pos_title">Conservare la Posizione della Finestra all\'Avvio</string>
+    <string name="pref_movable_moving_start_pos_summary">Quando apri in una finestra un\'app già aperta in XHalo, posizionala nello stesso posto e con la stessa grandezza</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>
     <string name="pref_movable_moving_move_pos_summary">Quando modifichi grandezza/sposti una finestra, le finestre della stessa app aperte subiranno lo stesso cambiamento.</string>
     <string name="pref_movable_resizing_live_update_title">Ridimensionamento In Tempo Reale</string>
@@ -91,7 +89,7 @@ Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito
     <string name="pref_movable_resizing_aero_snap_delay_title">Ritardo dello Snap-in</string>
     <string name="pref_movable_resizing_aero_snap_delay_summary">Ritardo in millisecondi prima che compaia il contorco snap-in.</string>
     <string name="pref_movable_moving_move_ab_title">ActionBar</string>
-    <string name="pref_movable_moving_move_ab_summary">Usa l'ActionBar per muovere la finestra.</string>
+    <string name="pref_movable_moving_move_ab_summary">Usa l\'ActionBar per muovere la finestra.</string>
     <string name="pref_movable_triangle_enable_title">Mostra il  Triangolo</string>
     <string name="pref_movable_triangle_enable_summary">Crea un triangolino in basso a sinistra per ulteriori azioni.</string>
     <string name="pref_movable_triangle_color_title">Colore</string>
@@ -126,26 +124,26 @@ Nota che la blacklist ha una priorità maggiore sella whitelist (Se hai inserito
     <string name="pref_movable_border_color_summary">Colore dei bordi</string>
     <string name="pref_movable_border_thickness_title">Larghezza</string>
     <string name="pref_movable_border_thickness_summary">Larghezza dei bordi in pixel</string>
-    <string name="option_movable_corner_nothing">Nessun'Azione</string>
+    <string name="option_movable_corner_nothing">Nessun\'Azione</string>
     <string name="option_movable_corner_dnm">Mostra "Drag To Move Bar" (Nasconde gli Angoli)</string>
     <string name="option_movable_corner_dnm_wo_corners">"Mostra la Barra "Trascina Per Muovere" (Non Nasconde gli Angoli)"</string>
     <string name="option_movable_corner_close">Chiudi la Finestra</string>
     <string name="option_movable_corner_transparency">Mostra la Barra della Trasparenza</string>
-    <string name="option_movable_corner_hide_app">Nascondi l'App</string>
+    <string name="option_movable_corner_hide_app">Nascondi l\'App</string>
     <string name="option_movable_corner_maximize">Massimizza App</string>
     <string name="pref_systemui_top_title">SystemUI Mods</string>
     <string name="pref_systemui_top_summary">Raccolta di modifche riguardanti la UI di sitema (SystemUI)</string>
     <string name="pref_notif_warning">Queste mod sono testate solo su ROM AOSP. Se hai dei FC di systemUI.apk togli subito le modifiche che hai apportato!</string>
     <string name="pref_notif_long_click_title">Pressione Prolungata nel Menù Notifiche</string>
-    <string name="pref_notif_long_click_summary">Aggiunge l'opzione \"Apri in XHalo\" quando tieni premuto su una notifica.</string>
+    <string name="pref_notif_long_click_summary">Aggiunge l\'opzione \"Apri in XHalo\" quando tieni premuto su una notifica.</string>
     <string name="pref_notif_single_click_title">Pressione Singola nel Menù Notifiche</string>
-    <string name="pref_notif_single_click_summary">Al constrario di prima, aggiunge l'opzione \"Apri Normalmente\" con una pressione prolungata &amp; con la pressione singola apre l'app in XHalo.</string>
+    <string name="pref_notif_single_click_summary">Al constrario di prima, aggiunge l\'opzione \"Apri Normalmente\" con una pressione prolungata &amp; con la pressione singola apre l\'app in XHalo.</string>
     <string name="pref_notif_floating_qs_title">Quick Settings in Halo</string>
     <string name="pref_notif_floating_qs_summary">Apre i QuickSetting in una finestra XHalo</string>
     <string name="pref_prevent_home_to_front_title">Prevenire lo Spostamento della Home in Primo Piano</string>
     <string name="pref_prevent_home_to_front_summary">Previene lo spostamento della Home in primo piano quando si usa il menù delle app recenti.</string>
     <string name="pref_recents_long_click_title">Pressione Singola nel Menù delle App Recenti</string>
-    <string name="pref_recents_long_click_summary">Aggiunge l'opzione \"Apri in XHalo\" quando tieni premuto su una notifica.</string>
+    <string name="pref_recents_long_click_summary">Aggiunge l\'opzione \"Apri in XHalo\" quando tieni premuto su una notifica.</string>
     <string name="pref_systemui_restart_title">Riavvia SystemUI.apk</string>
     <string name="pref_systemui_restart_summary">"Il riavvio è necessario perchè le modifche abbiano effetto .
 (Richiede i Permessi di Root)"</string>
@@ -186,9 +184,9 @@ Prova a disabilitare &amp; abilitare questo modulo in Xposed poi riavvia.
     <string name="dnm_title">Trascina Per Muovere</string>
     <string name="dnm_transparency">Trasparenza</string>
     <string name="dnm_close_app">Chiudi la Finestra</string>
-    <string name="dnm_minimize">Minimizza l'App</string>
+    <string name="dnm_minimize">Minimizza l\'App</string>
     <string name="dnm_minimize_notif_title">Ripristina %1$s</string>
-    <string name="dnm_minimize_notif_summary">Quest'app è stata minimizzata</string>
+    <string name="dnm_minimize_notif_summary">Quest\'app è stata minimizzata</string>
     <string name="notif_open_halo">Apri in XHalo</string>
     <string name="notif_open_normal">Apri Normalmente</string>
     <string name="notif_app_info">Informazioni Applicazione</string>
