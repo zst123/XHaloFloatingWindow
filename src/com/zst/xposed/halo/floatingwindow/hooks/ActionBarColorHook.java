@@ -173,6 +173,9 @@ public class ActionBarColorHook {
 	}
 	
 	private static void changeTitleBarColor(int bg_color, int icon_color) {
+		if (!MovableWindow.isHoloFloat || !MovableWindow.mMovableWindow) return;
+		// if this is not movable or holo, it will just be null anyways.
+		
 		try {
 			mHeader.setBackgroundColor(bg_color);
 			mAppTitle.setTextColor(icon_color);
