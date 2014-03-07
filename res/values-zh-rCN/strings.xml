@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">XHaloFloatingWindow</string>
-    <string name="app_description">来自Paranoid Android的悬浮窗口功能的模块.请通过在模块内开启“移动与调整”来使用悬浮窗口功能.(模块开发者:zst123)</string>
+    <string name="app_description">从Paranoid Android移植的悬浮窗口功能的模块.请通过在模块内开启“移动与调整”来使用悬浮窗口功能.(开发by zst123)</string>
     <string name="app_blacklist">黑名单</string>
     <string name="app_whitelist">白名单</string>
     <string name="app_testing">测试</string>
@@ -135,15 +135,17 @@
     <string name="pref_movable_border_thickness_summary">悬浮窗口的边界像素厚度.</string>
     <string name="pref_movable_others_minimize_to_statusbar_title">最小化到状态栏</string>
     <string name="pref_movable_others_minimize_to_statusbar_summary">悬浮窗口最小化后在状态栏中显示应用程序.</string>
-    <string name="pref_movable_others_tinted_title_enable_title">标题栏自动调色</string>
+    <string name="pref_movable_others_tinted_title_enable_title">彩色标题栏</string>
     <string name="pref_movable_others_tinted_title_enable_summary">"自动检测并使用应用程序的顶部行动栏颜色做为标题栏的颜色.
 基于MohammadAG的彩色状态栏模块. 
 (需要强制关闭应用程序来生效)"</string>
     <string name="pref_movable_others_tinted_title_hsv_title">为黑色图标最大化HS[V]</string>
     <string name="pref_movable_others_tinted_title_hsv_summary">"自动切换到黑色图标之后最大化HS[V] 
 (行动栏有自定义的文本颜色时将会忽略)"</string>
-    <string name="pref_movable_others_tinted_title_border_title">窗口边界自动调色</string>
+    <string name="pref_movable_others_tinted_title_border_title">彩色窗口边界</string>
     <string name="pref_movable_others_tinted_title_border_summary">自动检测并使用应用程序的顶部行动栏颜色做为窗口的边界颜色.(如果已启用窗口边界)</string>
+    <string name="pref_movable_others_tinted_title_corner_title">彩色窗口角落</string>
+    <string name="pref_movable_others_tinted_title_corner_summary">自动检测并使用应用程序的顶部行动栏颜色做为三角形与半圆形按键的颜色.(如果已启用角落按键)</string>
     <string name="option_movable_corner_nothing">什么都不做</string>
     <string name="option_movable_corner_dnm">显示拖拽移动栏(隐藏在角落里)</string>
     <string name="option_movable_corner_dnm_wo_corners">显示拖拽移动栏(不隐藏在角落里)</string>
@@ -176,13 +178,13 @@
 
 请尝试在Xposed安装器中取消勾选此应用模块之后重新勾选，并重启你的设备.
 
-如果你的问题仍然没有解决，请通过访问XHaloFloatingWindow官方网站寻求帮助."</string>
+如果你的问题仍然没有解决, 请通过访问XHaloFloatingWindow官方网站寻求帮助."</string>
     <string name="pref_testing_unknown_subtitle">无法检测到模块的加载</string>
     <string name="pref_testing_launch_settings">在悬浮状态中启动系统设置</string>
     <string name="pref_testing_launch_xinstaller">在悬浮状态中启动Xposed安装器</string>
-    <string name="pref_testing_problem_title">有问题?</string>
-    <string name="pref_testing_problem_subtitle">你可以访问XDA开发社区官网获取帮助.</string>
-    <string name="pref_testing_launch_thread">访问XDA官网</string>
+    <string name="pref_testing_problem_title">有问题？</string>
+    <string name="pref_testing_problem_subtitle">你可以通过访问XDA官网来获取帮助.</string>
+    <string name="pref_testing_launch_thread">访问XDA</string>
     <string name="option_whiteblacklist_default">默认</string>
     <string name="option_whiteblacklist_always_only">总是打开已列入黑名单的应用程序为悬浮窗口</string>
     <string name="option_whiteblacklist_never_only">从不打开已列入白名单的应用程序为悬浮窗口</string>
