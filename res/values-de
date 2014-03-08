@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">XHaloFloatingWindow</string>
+    <string name="app_description">Halo Floating Windows von Paranoid Android, verschiebbar &amp; größenveränderbar.(zst123)</string>
+    <string name="app_blacklist">Blacklist</string>
+    <string name="app_whitelist">Whitelist</string>
+    <string name="app_testing">Testen</string>
+
+    <!-- Preference Strings -->
+    <string name="default_value">Standardwert</string>
+    <string name="save">Speichern</string>
+    <string name="add">Hinzufügen</string>
+    <string name="help">Hilfe</string>
+    <string name="close_once">Erinnere mich später</string>
+    <string name="close_forever">Schließe für immer</string>
+
+    <!-- First Preference Screen -->
+    <string name="pref_window_top_title">Popup-Fenster</string>
+    <string name="pref_window_top_summary">Passe die Eigenschaften des Fensters an</string>
+    <string name="pref_alpha_title">Popup-Sichtbarkeit</string>
+    <string name="pref_alpha_summary">Transparenz des Fensters</string>
+    <string name="pref_dim_title">Popup-Verdunklung</string>
+    <string name="pref_dim_summary">Verdunklung des Hintergrunds des Popup's</string>
+    <string name="pref_gravity_title">Position</string>
+    <string name="pref_gravity_summary">Position des Popup's</string>
+
+    <!-- 2nd Preference Screen -->
+    <string name="pref_size_top_title">Popup-Größe</string>
+    <string name="pref_size_top_summary">Passe die Größe des Popup's an</string>
+    <string name="pref_width_portrait_title">Portrait Breite</string>
+    <string name="pref_width_portrait_summary">Breite des Popup's im Portrait-Modus</string>
+    <string name="pref_height_portrait_title">Portrait Höhe</string>
+    <string name="pref_height_portrait_summary">Höhe des Popup's im Portrait-Modus</string>
+    <string name="pref_width_landscape_title">Landscape Breite</string>
+    <string name="pref_width_landscape_summary">Breite des Popup's im Landscape-Modus</string>
+    <string name="pref_height_landscape_title">Landscape Höhe</string>
+    <string name="pref_height_landscape_summary">Höhe des Popup's im Landscape-Modus</string>
+
+    <!-- 3rd Preference Screen -->
+    <string name="pref_behave_top_title">Popup-Verhalten</string>
+    <string name="pref_behave_top_summary">Passe das Verhalten des Popup-Fensters an</string>
+    <string name="pref_app_pause_title">App Pausieren</string>
+    <string name="pref_app_pause_summary_off">Pausiere nicht die untere App, wenn sich ein Halo-Fenster darüber befindet (Halo)</string>
+    <string name="pref_app_pause_summary_on">Pausiere die untere App, wenn sich ein Halo-Fenster darüber befindet (Standard)</string>
+    <string name="pref_keyboard_title">Tastatur-Modus</string>
+    <string name="pref_keyboard_summary">Die Aktion, die das Popup macht, wenn sich die Tastatur öffnet.</string>
+    <string name="pref_disable_auto_close_title">Deaktiviere Auto-Schließen</string>
+    <string name="pref_disable_auto_close_summary">Deaktiviere das Schließen des App-Fensters, wenn der Bildschirm ausgeschaltet ist oder "Home" gedrückt wird.</string>
+    <string name="pref_show_recents_title">Zeige App im Task-Manager</string>
+    <string name="pref_show_recents_summary">Erlaubt der App, im Task-Manager gezeigt zu werden.</string>
+    <string name="pref_force_recents_title">Zwinge App in Task-Manager</string>
+    <string name="pref_force_recents_summary">Verschwinden umgehen, was Launcher machen &amp; Zwinge die App, im Task-Manager gezeigt zu werden.</string>
+    <string name="pref_force_open_app_above_halo_title">Erzwinge neues Fenster in Halo</string>
+    <string name="pref_force_open_app_above_halo_summary">Wenn eine App zur Zeit im schwebenden Modus geöffnet ist, sind neue Apps, die dadurch geöffnet werden, dazu gezwungen auch im schwebenden Modus geöffnet zu werden.</string>
+    <string name="pref_blacklist_title">Blacklist Apps</string>
+    <string name="pref_blacklist_summary">Erstelle eine Liste von Apps die nie im schwebenden Modus geöffnet werden sollen</string>
+    <string name="pref_blacklist_dialog">Neuen in die Blacklist hinzugefügten Apps muss erst das Beenden erzwungen werden, damit die Veränderungen Wirkung zeigen.\n\nDu kannst im Task-Manager länger auf das App-Symbol gedrückt halten und in die App-Info gehen, wo du dann "Beenden erzwingen" wählen kannst.</string>
+    <string name="pref_blacklist_error">Es gab einen Fehler beim Öffnen der App-Info.\nDies ist der Fehler.\n\n</string>
+    <string name="pref_whitelist_title">Whitelist Apps</string>
+    <string name="pref_whitelist_summary">Erstelle eine Liste von Apps die immer im schwebenden Modus geöffnet werden sollen</string>
+    <string name="pref_whitelist_dialog">Neuen in die Whitelist hinzugefügten Apps muss erst das Beenden erzwungen werden, damit die Veränderungen Wirkung zeigen.\n\nDu kannst im Task-Manager länger auf das App-Symbol gedrückt halten und in die App-Info gehen, wo du dann "Beenden erzwingen" wählen kannst.\n\nBeachte dabei, dass die Blacklist sich über die Whitelist hinwegsetzt, wenn du die selbe App in beiden Listen auswählst.</string>
+    <string name="pref_whiteblacklist_title">Whitelist/Blacklist Optionen</string>
+    <string name="pref_whiteblacklist_summary">Wähle ein bestimmtes Verhalten, auf welche Art und Weise die Black- und Whitelist verwendet werden sollen</string>
+
+    <!-- 4rd Preference Screen -->
+    <string name="pref_movable_top_title">Verschiebbar &amp; Größenveränderbar</string>
+    <string name="pref_movable_top_summary">Eine Eigenschaft, ähnlich wie Multi-Window für wahres Multi-Tasking.</string>
+    <string name="pref_movable_sub_titlebar_title">Titelleiste Einstellungen</string>
+    <string name="pref_movable_sub_titlebar_summary">Verändere das Verhalten der Titelleiste</string>
+    <string name="pref_movable_sub_moving_title">Verschieben Einstellungen</string>
+    <string name="pref_movable_sub_moving_summary">Verändere das Verhalten des Verschiebens</string>
+    <string name="pref_movable_sub_resizing_title">Größe verändern Einstellungen</string>
+    <string name="pref_movable_sub_resizing_summary">Verändere das Verhalten des Größenveränderns</string>
+    <string name="pref_movable_sub_triangle_title">Dreieck Einstellungen</string>
+    <string name="pref_movable_sub_triangle_summary">Verändere die Eigenschaften des Dreiecks unten links</string>
+    <string name="pref_movable_sub_quadrant_title">Viereck Einstellungen</string>
+    <string name="pref_movable_sub_quadrant_summary">Verändere die Eigenschaften des Vierecks unten rechts</string>
+    <string name="pref_movable_sub_border_title">Grenzen Einstellungen</string>
+    <string name="pref_movable_sub_border_summary">Verändere die Eigenschaften der Grenzen des Fensters</string>
+    <string name="pref_movable_sub_other_title">Andere Einstellungen</string>
+    <string name="pref_movable_sub_other_summary">Verändere verschiedene Eigenschaften</string>
+    <string name="pref_movable_titlebar_enabled_title">Aktiviere Titelleiste</string>
+    <string name="pref_movable_titlebar_enabled_summary">Zeige eine Titelleiste an der oberen Kante des Fensters zum Umherziehen des Fensters</string>
+    <string name="pref_movable_titlebar_size_title">Größe der Titelleiste</string>
+    <string name="pref_movable_titlebar_size_summary">Höhe der Titelleiste</string>
+    <string name="pref_movable_titlebar_separator_enabled_title">Aktiviere Trennlinie für die Titelleiste</string>
+    <string name="pref_movable_titlebar_separator_enabled_summary">Zeige eine Trennlinie unterhalb der Titelleiste</string>
+    <string name="pref_movable_titlebar_separator_size_title">Größe der Trennlinie</string>
+    <string name="pref_movable_titlebar_separator_size_summary">Höhe der Trennlinie unterhalb der Titelleiste</string>
+    <string name="pref_movable_titlebar_separator_color_title">Farbe der Trennlinie</string>
+    <string name="pref_movable_titlebar_separator_color_summary">Die Farbe der Trenninie unterhalb der Titelleiste</string>
+    <string name="pref_movable_moving_start_pos_title">Bewahre Fensterposition beim Start</string>
+    <string name="pref_movable_moving_start_pos_summary">Beim öffnen eines neuen Fensters der selben App, wird dieses Fenster in der gleichen Position und Größe erscheinen, wie das ursprünglicche Fenster</string>
+    <string name="pref_movable_moving_move_pos_title">Konstante Fensterposition</string>
+    <string name="pref_movable_moving_move_pos_summary">Beim Verschieben oder in der Größe verändern eines neuen Fensters der selben App, wird das Fenster dahinter auch aktualisiert.</string>
+    <string name="pref_movable_resizing_live_update_title">Direkte Aktualisierung beim Verändern der Größe</string>
+    <string name="pref_movable_resizing_live_update_summary">Beim Verändern der Größe eines Fensters wird der Inhalt sofort nachgeladen, anstatt die Umrahmung zu zeigen\n(Reduziert eventuell die Leistung)</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_title">Snap-in Fenster</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_summary">Ziehe ein Fenster in eine der 4 Ecken des Bildschirms, um die Größe auf die Hälfte des Bildschirms anzupassen, vergleichbar mit Aero Snap in Windows OS.</string>
+    <string name="pref_movable_resizing_aero_snap_delay_title">Snap-in Dauer</string>
+    <string name="pref_movable_resizing_aero_snap_delay_summary">Dauer in Millisekunden, bevor die Snap-in-Umrahmung gezeigt wird.</string>
+    <string name="pref_movable_moving_move_ab_title">Erlaube Verschiebung der Aktionsleiste</string>
+    <string name="pref_movable_moving_move_ab_summary">Verwende die Aktionsleiste (oder den oberen Bereich für Apps ohne Aktionsleiste), um das Fenster zu verschieben. </string>
+    <string name="pref_movable_triangle_enable_title">Zeige Dreieck</string>
+    <string name="pref_movable_triangle_enable_summary">Zeige ein Dreieck an der unteren linken Ecke für zusätzliche Funktionen.</string>
+    <string name="pref_movable_triangle_color_title">Dreiecksfarbe</string>
+    <string name="pref_movable_triangle_color_summary">Farbe des Dreiecks</string>
+    <string name="pref_movable_triangle_alpha_title">Sichtbarkeit des Dreiecks</string>
+    <string name="pref_movable_triangle_alpha_summary">Transparenz des Dreiecks</string>
+    <string name="pref_movable_triangle_size_title">Dreiecksgröße</string>
+    <string name="pref_movable_triangle_size_summary">Größe des Dreiecks</string>
+    <string name="pref_movable_triangle_sp_action_title">Dreieck Ein-Klick-Aktion</string>
+    <string name="pref_movable_triangle_sp_action_summary">Die Aktion, die ausgeführt wird, wenn kurz auf das Dreieck gedrückt wird.</string>
+    <string name="pref_movable_triangle_lp_action_title">Dreieck Lang-Klick-Aktion</string>
+    <string name="pref_movable_triangle_lp_action_summary">Die Aktion, die ausgeführt wird, wenn lange auf das Dreieck gedrückt wird.</string>
+    <string name="pref_movable_quadrant_enable_title">Zeige Viereck</string>
+    <string name="pref_movable_quadrant_enable_summary">Zeige ein Viereck an der unteren linken Ecke für zusätzliche Funktionen.</string>
+    <string name="pref_movable_quadrant_color_title">Vierecksfarbe</string>
+    <string name="pref_movable_quadrant_color_summary">Farbe des Vierecks</string>
+    <string name="pref_movable_quadrant_alpha_title">Sichtbarkeit des Vierecks</string>
+    <string name="pref_movable_quadrant_alpha_summary">Transparenz des Vierecks</string>
+    <string name="pref_movable_quadrant_size_title">Vierecksgröße</string>
+    <string name="pref_movable_quadrant_size_summary">Größe des Vierecks</string>
+    <string name="pref_movable_quadrant_sp_action_title">Viereck Ein-Klick-Aktion</string>
+    <string name="pref_movable_quadrant_sp_action_summary">Die Aktion, die ausgeführt wird, wenn kurz auf das Viereck gedrückt wird.</string>
+    <string name="pref_movable_quadrant_lp_action_title">Viereck Lang-Klick-Aktion</string>
+    <string name="pref_movable_quadrant_lp_action_summary">Die Aktion, die ausgeführt wird, wenn lange auf das Dreieck gedrückt wird.</string>
+    <string name="pref_movable_resize_enabled_title">Aktiviere Größenveränderung</string>
+    <string name="pref_movable_resize_enabled_summary">Verwende, um die Größe von Fenstern zu verändern.</string>
+    <string name="pref_movable_dragging_enabled_title">Aktiviere Ziehen</string>
+    <string name="pref_movable_dragging_enabled_summary">Verwende, um das Fenster zu verschieben.</string>
+    <string name="pref_movable_border_enable_title">Zeige Grenzen</string>
+    <string name="pref_movable_border_enable_summary">Zeigen eine Grenze um die Kanten des Fensters herum</string>
+    <string name="pref_movable_border_color_title">Grenzfarbe</string>
+    <string name="pref_movable_border_color_summary">Farbe der Grenze</string>
+    <string name="pref_movable_border_thickness_title">Grenzbreite</string>
+    <string name="pref_movable_border_thickness_summary">Dicke der Grenze in Pixeln</string>
+    <string name="pref_movable_others_minimize_to_statusbar_title">Minimiere in die Statusleiste</string>
+    <string name="pref_movable_others_minimize_to_statusbar_summary">Zeige minimierte Apps in der Stausleiste.</string>
+    <string name="pref_movable_others_tinted_title_enable_title">Farbige Titelleiste</string>
+    <string name="pref_movable_others_tinted_title_enable_summary">Verwende die Farbe der Aktionsleiste für die Titelleiste.\nBasiert auf Tinted StatusBar von MohammadAG. \n(Erfordert Neustart von geöffneten Apps, um Wirkung zu zeigen)</string>
+    <string name="pref_movable_others_tinted_title_hsv_title">Maximale HS[V] für schwarze Symbole</string>
+    <string name="pref_movable_others_tinted_title_hsv_summary">Maximale HS[V] vor dem Auto-Wechsel zu schwarzen Symbolen\n(Wird ignoriert, wenn die Aktionsleiste eine eigene Textfarbe hat)</string>
+    <string name="pref_movable_others_tinted_title_border_title">Farbige Fenstergrenze</string>
+    <string name="pref_movable_others_tinted_title_border_summary">Verändere die Farbe der Fenstergrenzen (falls aktiviert) in die Farbe der Aktionsleiste.</string>
+    <string name="pref_movable_others_tinted_title_corner_title">Farbige Fensterecken</string>
+    <string name="pref_movable_others_tinted_title_corner_summary">Verändere die Farbe des Dreiecks und Vierecks (falls aktiviert) in die Farbe der Aktionsleiste.</string>
+
+
+    <!-- 4th Preference Corner Actions -->
+    <string name="option_movable_corner_nothing">Nichts</string>
+    <string name="option_movable_corner_dnm">Ziehen, um Fenster zu verschieben (Ecken entfernen)</string>
+    <string name="option_movable_corner_dnm_wo_corners">Ziehen, um Fenster zu verschieben (Ecken nicht entfernen)</string>
+    <string name="option_movable_corner_close">App schließen</string>
+    <string name="option_movable_corner_transparency">Zeige Transparenz-Regler</string>
+    <string name="option_movable_corner_hide_app">@string/dnm_minimize</string>
+    <string name="option_movable_corner_maximize">App maximieren</string>
+
+    <!-- 5th Preference Screen -->
+    <string name="pref_systemui_top_title">SystemUI Mods</string>
+    <string name="pref_systemui_top_summary">Sammlung an SystemUI Modifikationen</string>
+    <string name="pref_notif_warning">Diese Modifikationen sind für AOSP-ROMs und daher ungetestet mit anderen ROMs. Wenn du feststelst, dass die SystemUI kontinuierlich beendet wird, deaktiviere sofort diese Modifikationen.</string>
+    <string name="pref_notif_long_click_title">Benachrichtigung Lang-Klick-Aktion</string>
+    <string name="pref_notif_long_click_summary">Fügt eine \"In Halo öffnen\" Option bei langem Drücken auf eine Benachrichtigung hinzu.</string>
+    <string name="pref_notif_single_click_title">Benachrichtigung Ein-Klick-Aktion</string>
+    <string name="pref_notif_single_click_summary">Zusammen verwenden mit \"Benachrichtigung Lang-Klick-Aktion\". Wenn die Verknüpfung mit der oberen Option aufgehoben wird, wird bei langem Drücken \"Normal öffnen\" hinzugefügt &amp; bei einfachem Klick auf die Benachrichtigung wird diese im Halo-Fenster geöffnet.</string>
+    <string name="pref_notif_floating_qs_title">Schnelleinstellungen in Halo</string>
+    <string name="pref_notif_floating_qs_summary">Öffne Schneeinstellungs-Kacheln im schwebenden Fenster</string>
+    <string name="pref_prevent_home_to_front_title">Verhindere Homescreen in den Vordergrund</string>
+    <string name="pref_prevent_home_to_front_summary">Hindert den Homescreen daran, in den Vordergrund zu treten, wenn der Task-Manager geöffnet wird.</string>
+    <string name="pref_recents_long_click_title">Task-Manager App-Symbol Lang-Klick-Aktion</string>
+    <string name="pref_recents_long_click_summary">Fügt eine \"In Halo öffnen\" Option bei langem Drücken auf ein App-Symbol im Task-Manager hinzu.</string>
+    <string name="pref_systemui_restart_title">SystemUI neu starten</string>
+    <string name="pref_systemui_restart_summary">SystemUI neu starten, falls Veränderungen nicht angezeigt werden.\n (Erfordert SU Erlaubnis)</string>
+
+    <!-- 6th Preference Screen -->
+    <string name="pref_testing_top_title">Testbereich</string>
+    <string name="pref_testing_top_summary">Teste das Öffnen des schwebenden Fensters</string>
+    <string name="pref_testing_active_title">Das Modul ist aktiviert!</string>
+    <string name="pref_testing_active_subtitle">Du solltest im Stande sein Apps im schwebenden Modus zu starten.</string>
+    <string name="pref_testing_inactive_title">Das Modul ist nicht aktiv</string>
+    <string name="pref_testing_inactive_subtitle">Du solltest nicht im Stande sein Apps im schwebenden Modus zu starten.\n\nBitte versuche dieses Modul im Xposed Installer zu deaktivieren &amp; wieder zu aktivieren gefolgt von einem weiteren Neustart.\n\n Wenn das dein Problem nicht behoben hat, suche nach Hilfe im offiziellen XHaloFloatingWindow Thread, Link ist unten.</string>
+    <string name="pref_testing_unknown_subtitle">Es ist nicht möglich das Modul laden zu erkennen</string>
+    <string name="pref_testing_launch_settings">Starte Einstellungen in Halo</string>
+    <string name="pref_testing_launch_xinstaller">Starte Xposed Installer in Halo</string>
+    <string name="pref_testing_problem_title">Hast du noch Fragen?</string>
+    <string name="pref_testing_problem_subtitle">Dann schau doch mal in den offiziellen Thread bei XDA Developers.</string>
+    <string name="pref_testing_launch_thread">Schaue in den XDA Thread</string>
+
+    
+    <!-- Whitelist / Blacklist Options-->
+    <string name="option_whiteblacklist_default">Standard</string>
+    <string name="option_whiteblacklist_always_only">Öffne alle Apps in Halo außer die in der Blacklist/string>
+    <string name="option_whiteblacklist_never_only">Öffne nie Apps in Halo außer die in der Whitelist</string>
+    <string name="option_whiteblacklist_never_all">Verschiebe alle Apps in die Blacklist &amp; erlaube nur Apps in der Whitelist in Halo geöffnet werden zu dürfen</string>
+    
+    <!-- Keyboard Mode -->
+    <string name="keyboard_default">Standard</string>
+    <string name="keyboard_pan">Nach oben verschieben</string>
+    <string name="keyboard_scale">Verkleinern</string>
+
+    <!-- Gravity -->
+    <string name="option_gravity_1">Oben Links</string>
+    <string name="option_gravity_2">Oben Mitte</string>
+    <string name="option_gravity_3">Oben Rechts</string>
+    <string name="option_gravity_4">Links Mitte</string>
+    <string name="option_gravity_5">Mitte (Default)</string>
+    <string name="option_gravity_6">Rechts Mitte</string>
+    <string name="option_gravity_7">Unten Links</string>
+    <string name="option_gravity_8">Unten Mitte</string>
+    <string name="option_gravity_9">Unten Rechts</string>
+
+    <!-- ColorPicker -->
+    <string name="apply">Anwenden</string>
+    <string name="arrow_symbol">➙</string>
+    <string name="color_hex">Hex-Code</string>
+
+    <!-- Drag & Move Bar -->
+    <string name="dnm_title">Ziehen zum Verschieben</string>
+    <string name="dnm_transparency">Transparenz</string>
+    <string name="dnm_close_app">Fenster schließen</string>
+    <string name="dnm_minimize">App minimieren</string>
+    <string name="dnm_minimize_notif_title">Wiederherstellen %1$s</string>
+    <string name="dnm_minimize_notif_summary">Diese schwebende App wurde minimiert</string>
+    
+    <!-- Notification Shade -->
+    <string name="notif_open_halo">In Halo öffnen</string>
+    <string name="notif_open_normal">Normal öffnenstring>
+    <string name="notif_app_info">App-Info</string>
+    <string name="notif_error_launching">Es gab einen Fehler beim Öffnen der Benachrichtigung\nBitte melde das beim XHFW Thread:\n</string>
+
+    <!-- Recent Apps Screen -->
+    <string name="recents_remove_from_list">Aus Liste entfernen</string>
+    <string name="recents_app_info">@string/notif_app_info</string>
+    <string name="recents_open_halo">@string/notif_open_halo</string>
+
+</resources>
