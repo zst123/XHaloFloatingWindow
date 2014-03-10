@@ -205,7 +205,6 @@ public class MovableWindow {
 				registerLayoutBroadcastReceiver(window);
 				// set layout position from previous activity if available
 				setLayoutPositioning(window);
-				initLayoutPositioning(window);
 
 				Context context = window.getContext();
 
