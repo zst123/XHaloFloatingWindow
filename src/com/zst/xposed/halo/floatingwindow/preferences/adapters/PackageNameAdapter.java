@@ -67,7 +67,7 @@ public class PackageNameAdapter extends BaseAdapter {
 			@Override
 			public void run() {
 				synchronized (mApps) {
-					mApps.clear();
+					final List<PackageItem> temp = new LinkedList<PackageItem>();
 					for (String pkg_name : app_array) {
 						try {
 						ApplicationInfo ai = mPackageManager.getApplicationInfo(pkg_name, 0);
@@ -75,19 +75,14 @@ public class PackageNameAdapter extends BaseAdapter {
 						item.title = ai.loadLabel(mPackageManager);
 						item.icon =  ai.loadIcon(mPackageManager);
 						item.packageName = ai.packageName;
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								final int index = Collections.binarySearch(mApps, item);
-								if (index < 0) {
-									mApps.add((-index - 1), item);
-								}
-							}
-						});
-						} catch (Exception e) {
-							
+						final int index = Collections.binarySearch(temp, item);
+						if (index < 0)
+							temp.add((-index - 1), item);
+						} catch (Exception e) {				
 						}
 					}
+					mApps.clear();
+					mApps = temp;
 					notifyDataSetChangedOnHandler();
 				}
 			}

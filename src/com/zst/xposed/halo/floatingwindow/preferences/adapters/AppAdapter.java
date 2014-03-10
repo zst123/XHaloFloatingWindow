@@ -61,15 +61,10 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 						item.title = info.applicationInfo.loadLabel(mPackageManager);
 						item.icon = info.applicationInfo.loadIcon(mPackageManager);
 						item.packageName = info.packageName;
-						mHandler.post(new Runnable() {
-							@Override
-							public void run() {
-								final int index = Collections.binarySearch(temp, item);
-								if (index < 0) {
-									temp.add((-index - 1), item);
-								}
-							}
-						});
+						final int index = Collections.binarySearch(temp, item);
+						if (index < 0) {
+							temp.add((-index - 1), item);
+						}
 					}
 					mInstalledApps = temp;
 					notifyDataSetChangedOnHandler();
