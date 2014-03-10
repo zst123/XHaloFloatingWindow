@@ -38,7 +38,6 @@ public class ActionBarColorHook {
 	 */
 	
 	/* Constants */
-	static final int COLOR_PLAY_MUSIC_ORANGE = Color.parseColor("#f4842d");
 	static final String COLOR_BLACK = "#000000";
 	static final String COLOR_WHITE = "#FFFFFF";
 	static final String COLOR_DEFAULT_TITLEBAR_BACKGROUND = COLOR_BLACK;
@@ -108,12 +107,9 @@ public class ActionBarColorHook {
 			findAndHookMethod(ActivityClass, "onResume", new XC_MethodHook() {
 				@Override
 				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					if (!isMovableWindow()) return;
 					Activity activity = (Activity) param.thisObject;
 					ActionBar actionBar = activity.getActionBar();
-					
-					if ((activity.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW)
-							!= Common.FLAG_FLOATING_WINDOW) return;
-					
 					if (actionBar != null && actionBar.isShowing()) {
 						// If it's not showing, we shouldn't detect it.
 						changeColorFromActionBarObject(actionBar);
@@ -173,9 +169,6 @@ public class ActionBarColorHook {
 	}
 	
 	private static void changeTitleBarColor(int bg_color, int icon_color) {
-		if (!MovableWindow.isHoloFloat || !MovableWindow.mMovableWindow) return;
-		// if this is not movable or holo, it will just be null anyways.
-		
 		try {
 			mHeader.setBackgroundColor(bg_color);
 			mAppTitle.setTextColor(icon_color);
@@ -185,6 +178,7 @@ public class ActionBarColorHook {
 			mMoreButton.setColorFilter(icon_color, Mode.SRC_ATOP);
 		} catch (NullPointerException npe) {
 			Log.d("test1", Common.LOG_TAG + "ActionBarColorHook.java - changeTitleBarColor - NPE", npe);
+			// It shouldn't be null since we had checked if it was a movable window
 		}
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_BORDER_TINT,
@@ -260,6 +254,10 @@ public class ActionBarColorHook {
 		}
 		
 		return bitmap;
+	}
+	
+	private static boolean isMovableWindow() {
+		return (MovableWindow.isHoloFloat && !MovableWindow.mMovableWindow);
 	}
 	
 	private static float getHsvMax() {
