@@ -31,8 +31,7 @@ import android.widget.Toast;
 
 public class PackageNameAdapter extends BaseAdapter {
 	
-	final WhitelistActivity mWhite;
-	final BlacklistActivity mBlack;
+	final Activity mActivity;
 	final Handler mHandler;
 	final PackageManager mPackageManager;
 	final LayoutInflater mLayoutInflater;
@@ -42,19 +41,8 @@ public class PackageNameAdapter extends BaseAdapter {
 	
 	// temp. list holding the filtered items
 	
-	public PackageNameAdapter(BlacklistActivity act, Set<String> app_array) {
-		mBlack = act;
-		mWhite = null;
-		mHandler = new Handler();
-		mPackageManager = act.getBaseContext().getPackageManager();
-		mLayoutInflater = (LayoutInflater) act.getBaseContext()
-				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		update(app_array);
-	}
-	
-	public PackageNameAdapter(WhitelistActivity act, Set<String> app_array) {
-		mWhite = act;
-		mBlack = null;
+	public PackageNameAdapter(Activity act, Set<String> app_array) {
+		mActivity = act;
 		mHandler = new Handler();
 		mPackageManager = act.getBaseContext().getPackageManager();
 		mLayoutInflater = (LayoutInflater) act.getBaseContext()
@@ -139,21 +127,11 @@ public class PackageNameAdapter extends BaseAdapter {
 					Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 							Uri.fromParts("package", appInfo.packageName, null));
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					if (mWhite != null) {
-						mWhite.startActivity(intent);
-					}else{
-						mBlack.startActivity(intent);
-					}
+					mActivity.startActivity(intent);
 				} catch (Exception e) {
-					Activity mStarter;
-					if (mWhite != null) {
-						mStarter = mWhite;
-					}else{
-						mStarter = mBlack;
-					}
-					final String txt = mStarter.getResources().getString(R.string.pref_blacklist_error)
+					final String txt = mActivity.getResources().getString(R.string.pref_blacklist_error)
 							+ appInfo.packageName + "\n" + e.toString();
-					Toast.makeText(mStarter, txt, Toast.LENGTH_LONG).show();
+					Toast.makeText(mActivity, txt, Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}				
 			}
@@ -161,10 +139,10 @@ public class PackageNameAdapter extends BaseAdapter {
 		holder.remove.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				if (mWhite != null) {
-					mWhite.removeApp(appInfo.packageName);;
-				}else{
-					mBlack.removeApp(appInfo.packageName);;
+				if (mActivity instanceof WhitelistActivity) {
+					((WhitelistActivity)mActivity).removeApp(appInfo.packageName);;
+				}else if (mActivity instanceof BlacklistActivity) {
+					((BlacklistActivity)mActivity).removeApp(appInfo.packageName);;
 				}
 			}
 		});

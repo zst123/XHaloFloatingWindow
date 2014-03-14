@@ -24,10 +24,10 @@
 
     <ImageView
         android:id="@+android:id/icon"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="6dip"
-        android:layout_marginRight="6dip"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="6dp"
         android:scaleType="fitCenter" />
 
     <LinearLayout
