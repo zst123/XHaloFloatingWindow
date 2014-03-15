@@ -42,6 +42,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_GRAVITY).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_KEYBOARD_MODE).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
+		findPreference(Common.KEY_STATUSBAR_TASKBAR_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_WHITELIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_TESTING_SCREEN).setOnPreferenceClickListener(this);
@@ -59,7 +60,8 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		}else if (k.equals(Common.KEY_KEYBOARD_MODE)) {
 			showKeyboardDialog();
 			return true;
-		}else if (k.equals(Common.KEY_RESTART_SYSTEMUI)) {
+		} else if (k.equals(Common.KEY_RESTART_SYSTEMUI)
+				|| k.equals(Common.KEY_STATUSBAR_TASKBAR_RESTART_SYSTEMUI)) {
 			showKillPackageDialog("com.android.systemui");
 			return true;
 		}else if (k.equals(Common.KEY_BLACKLIST_APPS)) {

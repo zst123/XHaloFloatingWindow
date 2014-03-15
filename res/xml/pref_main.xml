@@ -496,12 +496,33 @@
              android:key="statusbar_taskbar_enabled"
              android:summary="@string/pref_statusbar_taskbar_enable_summary"
              android:title="@string/pref_statusbar_taskbar_enable_title" />
+         
+         <CheckBoxPreference
+             android:defaultValue="true"
+             android:key="statusbar_taskbar_running_enabled"
+             android:summary="@string/pref_statusbar_taskbar_running_enable_summary"
+             android:title="@string/pref_statusbar_taskbar_running_enable_title"
+             android:dependency="statusbar_taskbar_enabled" />
+         
+         <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+             defaultValue="5"
+             maximum="15"
+             minimum="1"
+             android:key="statusbar_taskbar_number"
+             android:summary="@string/pref_statusbar_taskbar_number_summary"
+             android:title="@string/pref_statusbar_taskbar_number_title"
+             android:dependency="statusbar_taskbar_running_enabled" />
 
          <Preference
              android:key="statusbar_taskbar_pin_apps"
              android:summary="@string/pref_statusbar_taskbar_pin_apps_summary"
              android:title="@string/pref_statusbar_taskbar_pin_apps_title"
              android:dependency="statusbar_taskbar_enabled" />
+         
+         <Preference
+            android:key="statusbar_taskbar_restart_systemui"
+            android:summary="@string/pref_systemui_restart_summary"
+            android:title="@string/pref_systemui_restart_title" />
          
      </PreferenceScreen>
     

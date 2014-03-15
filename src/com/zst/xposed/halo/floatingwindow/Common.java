@@ -77,6 +77,10 @@ public class Common {
 	public static final String KEY_WHITEBLACKLIST_OPTIONS = "window_whiteblacklist_options";
 	public static final String KEY_STATUSBAR_TASKBAR_ENABLED = "statusbar_taskbar_enabled";
 	public static final String KEY_STATUSBAR_TASKBAR_PINNED_APPS = "statusbar_taskbar_pin_apps";
+	public static final String KEY_STATUSBAR_TASKBAR_RESTART_SYSTEMUI = "statusbar_taskbar_restart_systemui";
+	public static final String KEY_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED = "statusbar_taskbar_running_enabled";
+	public static final String KEY_STATUSBAR_TASKBAR_NUMBER = "statusbar_taskbar_number";
+	
 
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -135,6 +139,8 @@ public class Common {
 	public static final boolean DEFAULT_FORCE_OPEN_APP_ABOVE_HALO = false;
 	public static final String DEFAULT_WHITEBLACKLIST_OPTIONS = "0";
 	public static final boolean DEFAULT_STATUSBAR_TASKBAR_ENABLED = false;
+	public static final boolean DEFAULT_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED = true;
+	public static final int DEFAULT_STATUSBAR_TASKBAR_NUMBER = 5;
 
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
