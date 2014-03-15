@@ -50,6 +50,7 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 	}
 	
 	public void update() {
+		isUpdating = true;
 		notifyDataSetChangedOnHandler();
 		toggleProgressBarVisible(true);
 		new Thread(new Runnable() {
@@ -69,6 +70,7 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 					mInstalledApps = temp;
 					notifyDataSetChangedOnHandler();
 					toggleProgressBarVisible(false);
+					isUpdating = false;
 			}
 		}).start();
 	}
@@ -133,6 +135,7 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 	}
 	
 	boolean isFiltering;
+	boolean isUpdating;
 	@Override
 	public Filter getFilter() {
 		return new Filter() {
@@ -142,12 +145,9 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 			
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
-				if (isFiltering) {
+				if (isFiltering || isUpdating) {
 					return new FilterResults();
 				}
-				isFiltering = true;
-				
-				ArrayList<PackageInfo> FilteredList = new ArrayList<PackageInfo>();
 				
 				if (TextUtils.isEmpty(constraint)) {
 					// No filter implemented we return all the list
@@ -156,10 +156,11 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 					return new FilterResults();
 				}
 				
-				for (int i = 0; i < mInstalledAppInfo.size(); i++) {
+				isFiltering = true;
+				ArrayList<PackageInfo> FilteredList = new ArrayList<PackageInfo>();
+				for (PackageInfo data : mInstalledAppInfo) {
 					final String filterText = constraint.toString().toLowerCase(Locale.ENGLISH);
 					try {
-						PackageInfo data = mInstalledAppInfo.get(i);
 						if (data.applicationInfo.loadLabel(mPackageManager).toString()
 								.toLowerCase(Locale.ENGLISH).contains(filterText)) {
 							FilteredList.add(data);
