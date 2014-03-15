@@ -47,6 +47,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.zst.xposed.halo.floatingwindow.preferences.StatusbarTaskbarPinAppActivity"
+            android:label="@string/app_statusbar_taskbar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.zst.xposed.halo.floatingwindow.TestingActivity"
             android:label="@string/app_testing" >
             <intent-filter>

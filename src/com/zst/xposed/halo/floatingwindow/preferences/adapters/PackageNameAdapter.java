@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.preferences.BlacklistActivity;
+import com.zst.xposed.halo.floatingwindow.preferences.StatusbarTaskbarPinAppActivity;
 import com.zst.xposed.halo.floatingwindow.preferences.WhitelistActivity;
 
 import android.app.Activity;
@@ -143,6 +144,8 @@ public class PackageNameAdapter extends BaseAdapter {
 					((WhitelistActivity)mActivity).removeApp(appInfo.packageName);;
 				}else if (mActivity instanceof BlacklistActivity) {
 					((BlacklistActivity)mActivity).removeApp(appInfo.packageName);;
+				}else if (mActivity instanceof StatusbarTaskbarPinAppActivity) {
+					((StatusbarTaskbarPinAppActivity)mActivity).removeApp(appInfo.packageName);
 				}
 			}
 		});

@@ -45,6 +45,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_WHITELIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_TESTING_SCREEN).setOnPreferenceClickListener(this);
+		findPreference(Common.KEY_STATUSBAR_TASKBAR_PINNED_APPS).setOnPreferenceClickListener(this);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
 	}
@@ -69,6 +70,9 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			return true;
 		}else if (k.equals(Common.KEY_TESTING_SCREEN)) {
 			showTestScreen();
+			return true;
+		}else if (k.equals(Common.KEY_STATUSBAR_TASKBAR_PINNED_APPS)) {
+			showStatusbarTaskbarPinAppActivity();
 			return true;
 		}
 		return false;
@@ -212,6 +216,10 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 				}
 			}
 		}).start();
+	}
+	
+	private void showStatusbarTaskbarPinAppActivity() {
+		startActivity(new Intent(getActivity(), StatusbarTaskbarPinAppActivity.class));
 	}
 	
 	private void showWhitelistActivity() {

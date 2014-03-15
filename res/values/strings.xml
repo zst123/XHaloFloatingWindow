@@ -6,6 +6,7 @@
     <string name="app_blacklist">Blacklist</string>
     <string name="app_whitelist">Whitelist</string>
     <string name="app_testing">Testing</string>
+    <string name="app_statusbar_taskbar">Statusbar Taskbar</string>
 
     <!-- Preference Strings -->
     <string name="default_value">Default Value</string>
@@ -234,5 +235,13 @@
     <string name="recents_remove_from_list">Remove from list</string>
     <string name="recents_app_info">@string/notif_app_info</string>
     <string name="recents_open_halo">@string/notif_open_halo</string>
-
+    
+    <!-- Statusbar Taskbar -->
+    <string name="pref_statusbar_taskbar_top_summary">Show a taskbar in the notifications shade</string>
+    <string name="pref_statusbar_taskbar_top_title">@string/app_statusbar_taskbar</string>
+    <string name="pref_statusbar_taskbar_enable_summary">Turn on and off the statusbar application launcher</string>
+    <string name="pref_statusbar_taskbar_enable_title">Enable StatusBar Launcher</string>
+    <string name="pref_statusbar_taskbar_pin_apps_summary">Choose the applications to be always shown in the statusbar taskbar</string>
+    <string name="pref_statusbar_taskbar_pin_apps_title">Pin Apps</string>
+    
 </resources>

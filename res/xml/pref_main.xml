@@ -486,6 +486,25 @@
 
     </PreferenceScreen>
     
+    <!-- Screen 7: StatusBar Taskbar -->
+     <PreferenceScreen
+         android:title="@string/pref_statusbar_taskbar_top_title"
+         android:summary="@string/pref_statusbar_taskbar_top_summary" >
+         
+         <SwitchPreference
+             android:defaultValue="false"
+             android:key="statusbar_taskbar_enabled"
+             android:summary="@string/pref_statusbar_taskbar_enable_summary"
+             android:title="@string/pref_statusbar_taskbar_enable_title" />
+
+         <Preference
+             android:key="statusbar_taskbar_pin_apps"
+             android:summary="@string/pref_statusbar_taskbar_pin_apps_summary"
+             android:title="@string/pref_statusbar_taskbar_pin_apps_title"
+             android:dependency="statusbar_taskbar_enabled" />
+         
+     </PreferenceScreen>
+    
     <!-- Screen 6: Testing -->
     <Preference
         android:key="testing_screen"

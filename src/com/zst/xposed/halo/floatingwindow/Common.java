@@ -10,6 +10,8 @@ public class Common {
 	public static final String PREFERENCE_MAIN_FILE = THIS_PACKAGE_NAME + "_main";
 	public static final String PREFERENCE_BLACKLIST_FILE = THIS_PACKAGE_NAME + "_blacklist";
 	public static final String PREFERENCE_WHITELIST_FILE = THIS_PACKAGE_NAME + "_whitelist";
+	public static final String PREFERENCE_STATUSBAR_LAUNCHER_FILE = THIS_PACKAGE_NAME + "_statusbar_launcher";
+	
 
 	/* Preference keys */
 	public static final String KEY_TESTING_SCREEN = "testing_screen";
@@ -73,6 +75,8 @@ public class Common {
 	public static final String KEY_BLACKLIST_HELP = "window_blacklist_help";
 	public static final String KEY_WHITELIST_HELP = "window_whitelist_help";
 	public static final String KEY_WHITEBLACKLIST_OPTIONS = "window_whiteblacklist_options";
+	public static final String KEY_STATUSBAR_TASKBAR_ENABLED = "statusbar_taskbar_enabled";
+	public static final String KEY_STATUSBAR_TASKBAR_PINNED_APPS = "statusbar_taskbar_pin_apps";
 
 	/* Preference defaults */
 	public static final float DEFAULT_ALPHA = 1f;
@@ -130,6 +134,7 @@ public class Common {
 	public static final boolean DEFAULT_FLOATING_QUICK_SETTINGS = false;
 	public static final boolean DEFAULT_FORCE_OPEN_APP_ABOVE_HALO = false;
 	public static final String DEFAULT_WHITEBLACKLIST_OPTIONS = "0";
+	public static final boolean DEFAULT_STATUSBAR_TASKBAR_ENABLED = false;
 
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
@@ -141,6 +146,8 @@ public class Common {
 	public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=2419287";
 
 	/* SystemUI Broadcast */
+	public static final String STATUSBAR_TASKBAR_REFRESH = THIS_PACKAGE_NAME + ".STATUSBAR_TASKBAR_REFRESH";
+	public static final String STATUSBAR_TASKBAR_LAUNCH = THIS_PACKAGE_NAME + ".STATUSBAR_TASKBAR_LAUNCH";
 	public static final String CHANGE_APP_FOCUS = THIS_PACKAGE_NAME + ".CHANGE_APP_FOCUS";
 	public static final String SHOW_OUTLINE = THIS_PACKAGE_NAME + ".SHOW_OUTLINE";
 	public static final String REMOVE_NOTIFICATION_RESTORE = THIS_PACKAGE_NAME + ".REMOVE_NOTIFICATION_RESTORE.";
