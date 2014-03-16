@@ -260,8 +260,15 @@ public class AeroSnap {
 				@Override
 				public void run() {
 					broadcastShow(mContext,mSnapParam[0],mSnapParam[1],mSnapParam[2]);
-					mTimeoutRunning = false;
-					mTimeoutDone = true;
+					mHandler.postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							mTimeoutRunning = false;
+							mTimeoutDone = true;
+							// Delay to offset the lag because broadcastShow
+							// will have some delay in inflating the view.
+						}
+					}, 250);
 				}
 			};
 		}
