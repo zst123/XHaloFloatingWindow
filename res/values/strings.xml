@@ -101,6 +101,8 @@
     <string name="pref_movable_resizing_aero_snap_enabled_summary">Drag a window to the any 4 edges of the screen to resize it to the respective half of the screen, similar to Aero Snap in Windows OS.</string>
     <string name="pref_movable_resizing_aero_snap_delay_title">Snap-in Delay</string>
     <string name="pref_movable_resizing_aero_snap_delay_summary">Delay in milliseconds before snap-in outline is shown.</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_title">Split Bar</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_summary">When 2 windows are snapped-in to each half of the screen, show a split bar between to resize the window splitting.</string>
     <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>
     <string name="pref_movable_moving_move_ab_summary">Use the ActionBar (or the top area for apps with no ActionBar) to move windows. </string>
     <string name="pref_movable_triangle_enable_title">Show Triangle</string>

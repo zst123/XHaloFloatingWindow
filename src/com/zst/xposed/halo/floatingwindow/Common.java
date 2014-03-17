@@ -34,6 +34,7 @@ public class Common {
 	public static final String KEY_WINDOW_RESIZING_LIVE_UPDATE = "window_resizing_live_updating";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED = "window_resizing_aero_snap_enabled";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_DELAY = "window_resizing_aero_snap_delay";
+	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = "window_resizing_aero_snap_splitbar";
 	public static final String KEY_WINDOW_TITLEBAR_ENABLED = "window_moving_titlebar_enabled";
 	public static final String KEY_WINDOW_TITLEBAR_SIZE = "window_moving_titlebar_size";
 	public static final String KEY_WINDOW_TITLEBAR_SEPARATOR_ENABLED = "window_moving_titlebar_separator_enabled";
@@ -102,6 +103,7 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_RESIZING_LIVE_UPDATE = false;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED = true;
 	public static final int DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY = 1000;
+	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = true;
 	public static final int DEFAULT_WINDOW_TITLEBAR_SIZE = 32;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_SEPARATOR_ENABLED = false;

@@ -152,8 +152,11 @@ public class MovableWindow {
 				mAeroSnapDelay = mPref.getInt(Common.KEY_WINDOW_RESIZING_AERO_SNAP_DELAY,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY);
 				mAeroSnap = mAeroSnapEnabled ? new AeroSnap(activity.getWindow(), mAeroSnapDelay) : null;
+				
+				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
 
-				MultiWindowDragger.setEnabled(true);
+				MultiWindowDragger.setEnabled(splitbar_enabled);
 				if (!isHoloFloat) {
 					MultiWindowDragger.appsSignalHideDragger(activity);
 					// Signal to the dragger that a non-halo window is open. There's

@@ -225,6 +225,13 @@
                 	android:key="window_resizing_aero_snap_delay"
                 	android:summary="@string/pref_movable_resizing_aero_snap_delay_summary"
                 	android:title="@string/pref_movable_resizing_aero_snap_delay_title" />
+                
+                <SwitchPreference
+                    android:defaultValue="true"
+                    android:dependency="window_resizing_aero_snap_enabled"
+                    android:key="window_resizing_aero_snap_splitbar"
+                    android:summary="@string/pref_movable_resizing_aero_snap_splitbar_summary"
+                    android:title="@string/pref_movable_resizing_aero_snap_splitbar_title" />
             </PreferenceCategory>
 
         </PreferenceScreen>
