@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">XHaloFloatingWindow</string>
     <string name="app_description">Halo Floating Windows von Paranoid Android, verschiebbar &amp; größenveränderbar.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
     <string name="app_whitelist">Whitelist</string>
@@ -21,21 +20,21 @@
     <string name="pref_alpha_title">Popup-Sichtbarkeit</string>
     <string name="pref_alpha_summary">Transparenz des Fensters</string>
     <string name="pref_dim_title">Popup-Verdunklung</string>
-    <string name="pref_dim_summary">Verdunklung des Hintergrunds des Popup's</string>
+    <string name="pref_dim_summary">Verdunklung des Hintergrunds des Popup\'s</string>
     <string name="pref_gravity_title">Position</string>
-    <string name="pref_gravity_summary">Position des Popup's</string>
+    <string name="pref_gravity_summary">Position des Popup\'s</string>
 
     <!-- 2nd Preference Screen -->
     <string name="pref_size_top_title">Popup-Größe</string>
-    <string name="pref_size_top_summary">Passe die Größe des Popup's an</string>
+    <string name="pref_size_top_summary">Passe die Größe des Popup\'s an</string>
     <string name="pref_width_portrait_title">Portrait Breite</string>
-    <string name="pref_width_portrait_summary">Breite des Popup's im Portrait-Modus</string>
+    <string name="pref_width_portrait_summary">Breite des Popup\'s im Portrait-Modus</string>
     <string name="pref_height_portrait_title">Portrait Höhe</string>
-    <string name="pref_height_portrait_summary">Höhe des Popup's im Portrait-Modus</string>
+    <string name="pref_height_portrait_summary">Höhe des Popup\'s im Portrait-Modus</string>
     <string name="pref_width_landscape_title">Landscape Breite</string>
-    <string name="pref_width_landscape_summary">Breite des Popup's im Landscape-Modus</string>
+    <string name="pref_width_landscape_summary">Breite des Popup\'s im Landscape-Modus</string>
     <string name="pref_height_landscape_title">Landscape Höhe</string>
-    <string name="pref_height_landscape_summary">Höhe des Popup's im Landscape-Modus</string>
+    <string name="pref_height_landscape_summary">Höhe des Popup\'s im Landscape-Modus</string>
 
     <!-- 3rd Preference Screen -->
     <string name="pref_behave_top_title">Popup-Verhalten</string>
@@ -191,7 +190,7 @@
     
     <!-- Whitelist / Blacklist Options-->
     <string name="option_whiteblacklist_default">Standard</string>
-    <string name="option_whiteblacklist_always_only">Öffne alle Apps in Halo außer die in der Blacklist/string>
+    <string name="option_whiteblacklist_always_only">Öffne alle Apps in Halo außer die in der Blacklist</string>
     <string name="option_whiteblacklist_never_only">Öffne nie Apps in Halo außer die in der Whitelist</string>
     <string name="option_whiteblacklist_never_all">Verschiebe alle Apps in die Blacklist &amp; erlaube nur Apps in der Whitelist in Halo geöffnet werden zu dürfen</string>
     
@@ -213,7 +212,6 @@
 
     <!-- ColorPicker -->
     <string name="apply">Anwenden</string>
-    <string name="arrow_symbol">➙</string>
     <string name="color_hex">Hex-Code</string>
 
     <!-- Drag & Move Bar -->
@@ -226,7 +224,7 @@
     
     <!-- Notification Shade -->
     <string name="notif_open_halo">In Halo öffnen</string>
-    <string name="notif_open_normal">Normal öffnenstring>
+    <string name="notif_open_normal">Normal öffnen</string>
     <string name="notif_app_info">App-Info</string>
     <string name="notif_error_launching">Es gab einen Fehler beim Öffnen der Benachrichtigung\nBitte melde das beim XHFW Thread:\n</string>
 
