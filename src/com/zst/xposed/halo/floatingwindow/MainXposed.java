@@ -7,6 +7,7 @@ import com.zst.xposed.halo.floatingwindow.hooks.NotificationShadeHook;
 import com.zst.xposed.halo.floatingwindow.hooks.RecentAppsHook;
 import com.zst.xposed.halo.floatingwindow.hooks.StatusbarTaskbar;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemMods;
+import com.zst.xposed.halo.floatingwindow.hooks.SystemUIMultiWindow;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIOutliner;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIReceiver;
 import com.zst.xposed.halo.floatingwindow.hooks.TestingSettingHook;
@@ -44,6 +45,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		SystemMods.handleLoadPackage(lpparam, mPref);
 		SystemUIReceiver.handleLoadPackage(lpparam);
 		SystemUIOutliner.handleLoadPackage(lpparam);
+		SystemUIMultiWindow.handleLoadPackage(lpparam);
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
 		HaloFloating.handleLoadPackage(lpparam, mPref);
 		ActionBarColorHook.handleLoadPackage(lpparam, mPref);

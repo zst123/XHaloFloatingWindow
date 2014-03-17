@@ -15,12 +15,13 @@ import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 
 public class AeroSnap {
 	
-	final static int UNKNOWN = -10000;
-	final static int SNAP_NONE = 0;
-	final static int SNAP_LEFT = 1;
-	final static int SNAP_TOP = 2;
-	final static int SNAP_RIGHT = 3;
-	final static int SNAP_BOTTOM = 4;
+	public final static int SNAP_NONE = 0;
+	public final static int SNAP_LEFT = 1;
+	public final static int SNAP_TOP = 2;
+	public final static int SNAP_RIGHT = 3;
+	public final static int SNAP_BOTTOM = 4;
+	
+	public final static int UNKNOWN = -10000;
 	final static int MOVE_MAX_RANGE = 10;
 	
 	final Window mWindow;
@@ -122,6 +123,7 @@ public class AeroSnap {
 			lpp.x = (lpp.gravity == Gravity.RIGHT) ? (mScreenWidth / 2) : 0;
 			lpp.y = (lpp.gravity == Gravity.BOTTOM) ? (mScreenHeight / 2) : 0;
 			mWindow.setAttributes(lpp);
+			MultiWindowDragger.appsSignalShowDragger(mContext, mSnap);
 		} else {
 			mSnap = SNAP_NONE;
 		}
@@ -194,6 +196,7 @@ public class AeroSnap {
 		if (!mSnapped) return false;
 		restoreOldPositionWithoutRefresh();
 		refreshLayout();
+		MultiWindowDragger.appsSignalHideDragger(mContext);
 		return true;
 	}
 	

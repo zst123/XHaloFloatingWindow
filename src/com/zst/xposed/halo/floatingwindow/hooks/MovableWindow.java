@@ -4,6 +4,7 @@ import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.Movable;
+import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowDragger;
 import com.zst.xposed.halo.floatingwindow.helpers.OutlineLeftResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.OutlineRightResizable;
 import com.zst.xposed.halo.floatingwindow.helpers.Resizable;
@@ -152,6 +153,12 @@ public class MovableWindow {
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY);
 				mAeroSnap = mAeroSnapEnabled ? new AeroSnap(activity.getWindow(), mAeroSnapDelay) : null;
 
+				MultiWindowDragger.setEnabled(true);
+				if (!isHoloFloat) {
+					MultiWindowDragger.appsSignalHideDragger(activity);
+					// Signal to the dragger that a non-halo window is open. There's
+					// no need to check if it is snapped properly and hide immediately
+				}
 			}
 		});
 
@@ -178,6 +185,10 @@ public class MovableWindow {
 					// send broadcast so the notification will be hidden if we 
 					// un-minimize the app without using the notification itself
 				}
+				
+				MultiWindowDragger.mWindow = activity.getWindow();				
+				// register listener for multiwindow dragger
+				MultiWindowDragger.appsRegisterListener(activity, true);
 			}
 		});
 
@@ -186,6 +197,7 @@ public class MovableWindow {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
+				MultiWindowDragger.appsRegisterListener((Activity) param.thisObject, false);
 			}
 		});
 	}
@@ -690,6 +702,7 @@ public class MovableWindow {
 					viewX = event.getX();
 					viewY = event.getY();
 					changeFocusApp(a);
+					MultiWindowDragger.appsTouchSignal(a);
 					if (a.getWindow().getAttributes().gravity != (Gravity.LEFT | Gravity.TOP)) {
 						// Fix First Resize moving into corner
 						screenX = event.getRawX();
