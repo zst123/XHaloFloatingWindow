@@ -212,7 +212,7 @@
             <PreferenceCategory 
                 android:title="@string/pref_movable_resizing_aero_snap_enabled_title" >
                 <SwitchPreference
-                    android:defaultValue="false"
+                    android:defaultValue="true"
                     android:key="window_resizing_aero_snap_enabled"
                     android:summary="@string/pref_movable_resizing_aero_snap_enabled_summary"
                     android:title="@string/pref_movable_resizing_aero_snap_enabled_title" />
