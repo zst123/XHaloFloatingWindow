@@ -189,7 +189,7 @@ public class MovableWindow {
 					// un-minimize the app without using the notification itself
 				}
 				
-				MultiWindowDragger.mWindow = activity.getWindow();				
+				MultiWindowDragger.setWindow(activity.getWindow());				
 				// register listener for multiwindow dragger
 				MultiWindowDragger.appsRegisterListener(activity, true);
 			}

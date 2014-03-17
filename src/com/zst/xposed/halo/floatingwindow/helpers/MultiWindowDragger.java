@@ -16,7 +16,7 @@ import android.view.WindowManager;
 public class MultiWindowDragger {
 	
 	/* System Objects */
-	public static Window mWindow;
+	private static Window mWindow;
 	private static WindowManager mWindowManager;
 	
 	/* Values */
@@ -27,15 +27,15 @@ public class MultiWindowDragger {
 	private static int mCachedSnappedSide;
 	// Current snapped sides are saved unless it is SNAP_NONE
 	
-	
-	/*
-	 * This class is a helper to send info of the current app to the SystemUI
-	 * receiver. The SystemUI receiver will calculate the rest for us.
-	 */
+	/* This class is a helper to send info of the current app to the SystemUI
+	 * receiver. The SystemUI receiver will calculate the rest for us. */
 	
 	public static void setEnabled(boolean enable) {
 		mEnabled = enable;
-		// TODO
+	}
+	
+	public static void setWindow(Window w) {
+		mWindow = w;
 	}
 	
 	public static void appsRegisterListener(Context context, boolean register) {
@@ -82,7 +82,6 @@ public class MultiWindowDragger {
 			}
 		}
 	};
-
 	
 	public static void appsSignalHideDragger(Context context) {
 		if (!mEnabled) return;
@@ -128,7 +127,6 @@ public class MultiWindowDragger {
 		appsSignalShowDragger(context, mCachedSnappedSide, true);
 		mHasAskedForHide = false;
 	}
-	
 	
 	private static void scaleWindow(boolean top_bottom, boolean closest_to_edge,
 			int pixels_from_edge) {

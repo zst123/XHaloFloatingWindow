@@ -12,16 +12,12 @@ import android.content.IntentFilter;
 import android.content.res.XmlResourceParser;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.PopupMenu;
-
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
@@ -33,12 +29,10 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class SystemUIMultiWindow {
 	
-	/*
-	 * This class is to manage the multiwindow slider that you get in the
+	/* This class is to manage the multiwindow slider that you get in the
 	 * middle of the screen with 2 split screen apps.
 	 * Since we are dealing with movable and resizable windows, we make use
-	 * of Aero Snap to deal with this.
-	 */
+	 * of Aero Snap to deal with this. */
 	
 	private static final int MIN_SIZE = 40;
 	private static final int COLOR_PRESSED = 0xBB3d464d;
@@ -67,11 +61,10 @@ public class SystemUIMultiWindow {
 	private static int mScreenHeight;
 	private static int mScreenWidth;
 	private static boolean mUseOldDraggerLocation;
-
 	
 	public static void handleLoadPackage(LoadPackageParam lpparam) {
 		if (!lpparam.packageName.equals("com.android.systemui")) return;
-
+		
 		try {
 			final Class<?> hookClass = findClass("com.android.systemui.SystemUIService",
 					lpparam.classLoader);
@@ -101,8 +94,6 @@ public class SystemUIMultiWindow {
 			mUseOldDraggerLocation = intent.getBooleanExtra(Common.INTENT_APP_EXTRA, false);
 			// to tell the dragger that it was accidentally
 			// removed and it should reappear at the same location
-			
-			Log.d("test1", "QQQQQ BROADCAST_RECEIVER" + pkg_name + snap_side);//XXX
 			
 			mTopList.remove(pkg_name);
 			mBottomList.remove(pkg_name);
@@ -165,37 +156,12 @@ public class SystemUIMultiWindow {
 				mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 				break;
 			}
-			int touch_location = (int) (mTopBottomSplit ? event.getRawY() : event.getRawX());
-				Log.d("zst123", touch_location+"YYYYYY bottom or right" + mTopBottomSplit);//XXX
 			return false;
 		}
 	};
-	
-	private static final  View.OnLongClickListener MENU_LISTENER = new View.OnLongClickListener() {
-		@Override
-		public boolean onLongClick(View v) {
-			PopupMenu popup = new PopupMenu(v.getContext(), v);
-			popup.getMenu().add("test");
-			popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-				public boolean onMenuItemClick(MenuItem item) {
-					if (item.getTitle().equals("test")) {
-						
-					} else {
-						return false;
-					}
-					return true;
-				}
-			});
-			popup.show();
-			return false;
-		}
-	};
-	
-
 	
 	// check if the current window snapping is suitable for our dragger
 	private static void checkIfDraggerShowNeeded(int current_app_snap) {
-		Log.d("test1", "QQQQQ checkIfDraggerShowNeeded A" );//XXX
 		if (mTopList.size() > 0 && mBottomList.size() > 0) {
 			if (current_app_snap == AeroSnap.SNAP_TOP ||
 				current_app_snap == AeroSnap.SNAP_BOTTOM) {
@@ -217,9 +183,7 @@ public class SystemUIMultiWindow {
 	
 	// Check if a non-spit view that corresponds to the dragger is showing
 	private static boolean checkIfDraggerHideNeeded(int snap_side) {
-		Log.d("test1", "QQQQQ checkIfDraggerHideNeeded 1" );//XXX
 		if (!isSplitView) return false;
-		Log.d("test1", "QQQQQ checkIfDraggerHideNeeded 2" );//XXX
 		if (mTopBottomSplit) {
 			if ((snap_side == AeroSnap.SNAP_BOTTOM) ||
 				(snap_side == AeroSnap.SNAP_TOP)) {
@@ -233,7 +197,6 @@ public class SystemUIMultiWindow {
 				return false;
 			}	
 		}
-		Log.d("test1", "QQQQQ checkIfDraggerHideNeeded 3" );//XXX
 		// If it doesn't correspond, we will reach here
 		return true;
 	}
@@ -271,10 +234,6 @@ public class SystemUIMultiWindow {
 		XmlResourceParser parser = MainXposed.sModRes
 				.getLayout(R.layout.movable_multiwindow_dragger);
 		mViewContent = mInflater.inflate(parser, null);
-		
-		final View other_view_dragger = mViewContent
-				.findViewById((!top_bottom) ? android.R.id.button1 : android.R.id.button2);
-		other_view_dragger.setVisibility(View.GONE);
 			
 		// hide the button of the other orientation
 		mViewDragger = mViewContent.findViewById(top_bottom ? android.R.id.button1
@@ -282,11 +241,14 @@ public class SystemUIMultiWindow {
 		mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 		mViewDragger.setOnTouchListener(DRAG_LISTENER);
 		
+		final View other_view_dragger = mViewContent
+				.findViewById((!top_bottom) ? android.R.id.button1 : android.R.id.button2);
+		other_view_dragger.setVisibility(View.GONE);
+		
 		mWm.addView(mViewContent, mParamz);
 	}
 	
 	private static void hideDragger() {
-		Log.d("test1", "QQQQQ hideDragger 1" ); //XXX
 		isSplitView = false;
 		mTopBottomSplit = false;
 		try {
