@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.XmlResourceParser;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.Drawable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
@@ -18,10 +19,12 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
+import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -46,6 +49,8 @@ public class SystemUIMultiWindow {
 	// Dragger Views
 	private static View mViewContent;
 	private static View mViewDragger;
+	private static View mViewFocusIndicator;
+	private static Drawable mIndicatorDrawable;
 	private static WindowManager.LayoutParams mParamz;
 	
 	// App Snap Lists
@@ -78,6 +83,8 @@ public class SystemUIMultiWindow {
 					
 					mContext.registerReceiver(BROADCAST_RECEIVER,
 							new IntentFilter(Common.SHOW_MULTIWINDOW_DRAGGER));
+					mContext.registerReceiver(APP_TOUCH_RECEIVER,
+							new IntentFilter(Common.SEND_MULTIWINDOW_APP_FOCUS));
 				}
 			});
 		} catch (Throwable e) {
@@ -122,6 +129,38 @@ public class SystemUIMultiWindow {
 				hideDragger();
 			} else {
 				checkIfDraggerShowNeeded(snap_side);
+			}
+		}
+	};
+	
+	// receives the current app's snap and change the focus indicator to point to the app.
+	private final static BroadcastReceiver APP_TOUCH_RECEIVER = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context ctx, Intent intent) {
+			float angle = 0;
+			switch (intent.getIntExtra(Common.INTENT_APP_SNAP, AeroSnap.SNAP_NONE)) {
+			case AeroSnap.SNAP_TOP:
+				angle = 270;
+				break;
+			case AeroSnap.SNAP_BOTTOM:
+				angle = 90;
+				break;
+			case AeroSnap.SNAP_LEFT:
+				angle = 180;
+				break;
+			case AeroSnap.SNAP_RIGHT:
+				angle = 0;
+				break;
+			case AeroSnap.SNAP_NONE:
+				return;
+			}
+			if (mIndicatorDrawable == null) {
+				mIndicatorDrawable = ctx.getResources().getDrawable(
+						android.R.drawable.ic_media_play);
+			}
+			if (mViewFocusIndicator != null) {
+				mViewFocusIndicator.setBackgroundDrawable(Util.getRotateDrawable(
+						mIndicatorDrawable, angle));
 			}
 		}
 	};
@@ -240,6 +279,9 @@ public class SystemUIMultiWindow {
 				: android.R.id.button2);
 		mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 		mViewDragger.setOnTouchListener(DRAG_LISTENER);
+		
+		mViewFocusIndicator = mViewContent.findViewById(android.R.id.hint);
+		mViewFocusIndicator.setBackgroundResource(0);
 		
 		final View other_view_dragger = mViewContent
 				.findViewById((!top_bottom) ? android.R.id.button1 : android.R.id.button2);

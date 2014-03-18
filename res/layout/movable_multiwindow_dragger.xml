@@ -23,4 +23,13 @@
         android:layout_centerInParent="true"
         android:background="@android:color/darker_gray" />
 
+    <View
+        android:id="@android:id/hint"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:focusableInTouchMode="false"
+        android:background="@android:drawable/ic_media_play" />
+
 </RelativeLayout>

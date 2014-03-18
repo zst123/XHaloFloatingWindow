@@ -4,7 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
 
@@ -54,5 +57,19 @@ public class Util {
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(thickness);
 		return rectShapeDrawable;
+	}
+	
+	/* Rotate a drawable given an angle */
+	public static Drawable getRotateDrawable(final Drawable d, final float angle) {
+		final Drawable[] array = { d };
+		return new LayerDrawable(array) {
+			@Override
+			public void draw(final Canvas canvas) {
+				canvas.save();
+				canvas.rotate(angle, d.getBounds().width() / 2, d.getBounds().height() / 2);
+				super.draw(canvas);
+				canvas.restore();
+			}
+		};
 	}
 }

@@ -160,6 +160,7 @@ public class Common {
 	public static final String SHOW_OUTLINE = THIS_PACKAGE_NAME + ".SHOW_OUTLINE";
 	public static final String SHOW_MULTIWINDOW_DRAGGER = THIS_PACKAGE_NAME + ".SHOW_MULTIWINDOW_DRAGGER";
 	public static final String SEND_MULTIWINDOW_INFO = THIS_PACKAGE_NAME + ".SEND_MULTIWINDOW_INFO";
+	public static final String SEND_MULTIWINDOW_APP_FOCUS = THIS_PACKAGE_NAME + ".SEND_MULTIWINDOW_APP_FOCUS";
 	public static final String REMOVE_NOTIFICATION_RESTORE = THIS_PACKAGE_NAME + ".REMOVE_NOTIFICATION_RESTORE.";
 	public static final String INTENT_APP_TOKEN = "token";
 	public static final String INTENT_APP_ID = "id";

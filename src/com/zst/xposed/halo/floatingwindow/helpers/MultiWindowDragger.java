@@ -122,10 +122,17 @@ public class MultiWindowDragger {
 	// Tell us that the app is touched
 	public static void appsTouchSignal(Context context) {
 		if (!mEnabled) return;
-		if (!mHasAskedForHide) return;
-		// the bar is now hidden, but the app is still open
-		appsSignalShowDragger(context, mCachedSnappedSide, true);
-		mHasAskedForHide = false;
+		
+		if (mHasAskedForHide) {
+			// the bar is now hidden, but the app is still open
+			appsSignalShowDragger(context, mCachedSnappedSide, true);
+			mHasAskedForHide = false;
+		}
+		
+		Intent intent = new Intent(Common.SEND_MULTIWINDOW_APP_FOCUS);
+		intent.putExtra(Common.INTENT_APP_SNAP, mSnappedSide);
+		context.sendBroadcast(intent);
+		// Send currently focused app's position
 	}
 	
 	private static void scaleWindow(boolean top_bottom, boolean closest_to_edge,
