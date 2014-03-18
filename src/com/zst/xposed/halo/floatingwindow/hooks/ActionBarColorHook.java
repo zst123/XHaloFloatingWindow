@@ -257,7 +257,7 @@ public class ActionBarColorHook {
 	}
 	
 	private static boolean isMovableWindow() {
-		return (MovableWindow.isHoloFloat && !MovableWindow.mMovableWindow);
+		return (MovableWindow.isHoloFloat && MovableWindow.mMovableWindow);
 	}
 	
 	private static float getHsvMax() {
