@@ -46,7 +46,11 @@ public class MultiWindowDragger {
 			mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 			appsSignalLaunch(context);
 		} else {
-			context.unregisterReceiver(BROADCAST_RECEIVER);
+			try {
+				context.unregisterReceiver(BROADCAST_RECEIVER);
+			} catch (Exception e) {
+				// already unregistered
+			}
 			mHasAskedForHide = true;
 			appsSignalHideDragger(context);
 		}
