@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">XHaloFloatingWindow</string>
+    <string name="app_description">從Paranoid Android移植而來的懸浮窗口功能的模塊。請通過在模塊內開啟"移動與調整"來使用懸浮窗口功能。（開發by zst123）</string>
+    <string name="app_blacklist">黑名單</string>
+    <string name="app_whitelist">白名單</string>
+    <string name="app_testing">測試</string>
+    <string name="app_statusbar_taskbar">狀態欄任務欄</string>
+    <string name="default_value">默認值</string>
+    <string name="save">保存</string>
+    <string name="add">添加</string>
+    <string name="help">幫助</string>
+    <string name="close_once">下次提醒</string>
+    <string name="close_forever">不再提醒</string>
+    <string name="pref_window_top_title">彈出窗口</string>
+    <string name="pref_window_top_summary">自定義彈出窗口的屬性。</string>
+    <string name="pref_alpha_title">彈出窗口透明度</string>
+    <string name="pref_alpha_summary">窗口的透明度。</string>
+    <string name="pref_dim_title">彈出窗口明亮度</string>
+    <string name="pref_dim_summary">彈出窗口的背景亮度值。</string>
+    <string name="pref_gravity_title">彈出窗口位置</string>
+    <string name="pref_gravity_summary">調整窗口彈出時的初始位置。</string>
+    <string name="pref_size_top_title">彈出窗口大小</string>
+    <string name="pref_size_top_summary">調整窗口彈出時的初始大小。</string>
+    <string name="pref_width_portrait_title">豎屏寬度</string>
+    <string name="pref_width_portrait_summary">豎屏時彈出窗口的寬度值。</string>
+    <string name="pref_height_portrait_title">豎屏高度</string>
+    <string name="pref_height_portrait_summary">豎屏時彈出窗口的高度值。</string>
+    <string name="pref_width_landscape_title">橫屏寬度</string>
+    <string name="pref_width_landscape_summary">橫屏時彈出窗口的寬度值。</string>
+    <string name="pref_height_landscape_title">橫屏高度</string>
+    <string name="pref_height_landscape_summary">橫屏時彈出窗口的高度值。</string>
+    <string name="pref_behave_top_title">彈出窗口行為</string>
+    <string name="pref_behave_top_summary">彈出窗口的行為設置。</string>
+    <string name="pref_app_pause_title">暫停應用程序</string>
+    <string name="pref_app_pause_summary_off">當一個彈出窗口在上面時不暫停下面的應用程序（懸浮狀態）。</string>
+    <string name="pref_app_pause_summary_on">當一個彈出窗口在上面時暫停下面的應用程序（默認狀態）。</string>
+    <string name="pref_keyboard_title">鍵盤模式</string>
+    <string name="pref_keyboard_summary">當鍵盤打開時彈出窗口所會做出的行動。</string>
+    <string name="pref_disable_auto_close_title">禁用自動關閉</string>
+    <string name="pref_disable_auto_close_summary">禁用屏幕關閉或按下home鍵時自動關閉應用程序窗口。</string>
+    <string name="pref_show_recents_title">在最近任務界面顯示應用程序</string>
+    <string name="pref_show_recents_summary">允許應用程序在最近任務界面中顯示。</string>
+    <string name="pref_force_recents_title">強制應用程序在最近任務界面中</string>
+    <string name="pref_force_recents_summary">忽略隱藏包括啟動器程序在內的所有應用程序使其強制顯示在最近任務界面中。</string>
+    <string name="pref_force_open_app_above_halo_title">強制新窗口為懸浮狀態</string>
+    <string name="pref_force_open_app_above_halo_summary">如果一個應用程序目前正處于懸浮模式，打開新的應用程序將強制在上面同樣變為懸浮模式。</string>
+    <string name="pref_blacklist_title">應用程序黑名單</string>
+    <string name="pref_blacklist_summary">選擇一個永遠不會打開為懸浮模式的應用程序列表。</string>
+    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。 
+
+你可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。</string>
+    <string name="pref_blacklist_error">"打開應用程序信息時發生了一個錯誤。
+這是錯誤。
+
+"</string>
+    <string name="pref_whitelist_title">應用程序白名單</string>
+    <string name="pref_whitelist_summary">選擇一個永遠打開為懸浮模式的應用程序列表。</string>
+    <string name="pref_whitelist_dialog">"新列入白名單的應用程序需要強制關閉以使更改生效。
+    
+你可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。
+
+注意，列入黑名單的應用程序不能列入白名單。如果你將同一個應用程序同時列入白名單和黑名單中，黑名單中的應用程序將有更高的優先級。"</string>
+    <string name="pref_whiteblacklist_title">白/黑名單選項</string>
+    <string name="pref_whiteblacklist_summary">選擇一個不同的行為來使用黑名單和白名單。</string>
+    <string name="pref_movable_top_title">移動與調整</string>
+    <string name="pref_movable_top_summary">一個類似于多窗口的真正多任務功能。</string>
+    <string name="pref_movable_sub_titlebar_title">標題欄設置</string>
+    <string name="pref_movable_sub_titlebar_summary">更改頂部標題欄的行為。</string>
+    <string name="pref_movable_sub_moving_title">移動設置</string>
+    <string name="pref_movable_sub_moving_summary">更改窗口移動的行為。</string>
+    <string name="pref_movable_sub_resizing_title">調整設置</string>
+    <string name="pref_movable_sub_resizing_summary">更改窗口調整的行為。</string>
+    <string name="pref_movable_sub_triangle_title">三角形設置</string>
+    <string name="pref_movable_sub_triangle_summary">更改懸浮窗口左下角的三角形按鈕的屬性。</string>
+    <string name="pref_movable_sub_quadrant_title">半圓形設置</string>
+    <string name="pref_movable_sub_quadrant_summary">更改懸浮窗口右下角的半圓形按鈕的屬性。</string>
+    <string name="pref_movable_sub_border_title">邊界設置</string>
+    <string name="pref_movable_sub_border_summary">更改懸浮窗口的邊界屬性。</string>
+    <string name="pref_movable_sub_other_title">其他設置</string>
+    <string name="pref_movable_sub_other_summary">更改懸浮窗口的其他屬性。</string>
+    <string name="pref_movable_titlebar_enabled_title">啟用標題欄</string>
+    <string name="pref_movable_titlebar_enabled_summary">顯示一個標題欄在懸浮窗口的頂部以便拖動窗口。</string>
+    <string name="pref_movable_titlebar_size_title">標題欄大小</string>
+    <string name="pref_movable_titlebar_size_summary">標題欄的高度。</string>
+    <string name="pref_movable_titlebar_separator_enabled_title">啟用標題欄分割線</string>
+    <string name="pref_movable_titlebar_separator_enabled_summary">在標題欄的下方顯示一條分割線。</string>
+    <string name="pref_movable_titlebar_separator_size_title">分割線大小</string>
+    <string name="pref_movable_titlebar_separator_size_summary">標題欄下方的分割線高度。</string>
+    <string name="pref_movable_titlebar_separator_color_title">分割線顏色</string>
+    <string name="pref_movable_titlebar_separator_color_summary">標題欄下方的分割線顏色。</string>
+    <string name="pref_movable_moving_start_pos_title">保留窗口的彈出位置</string>
+    <string name="pref_movable_moving_start_pos_summary">打開同一個應用程序的新窗口後，新窗口與原來的懸浮窗口位置和大小相同。</string>
+    <string name="pref_movable_moving_move_pos_title">不改變浮動窗口的位置</string>
+    <string name="pref_movable_moving_move_pos_summary">當調整或移動一個懸浮窗口時，同一應用程序背後的其他懸浮窗口也將與其做出同樣的改變。</string>
+    <string name="pref_movable_resizing_live_update_title">即時更新調整</string>
+    <string name="pref_movable_resizing_live_update_summary">"調整懸浮窗口時，窗口內的內容將會立即刷新，而不是顯示輪廓。
+（會減少性能）"</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_title">窗口分屏</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_summary">開啟此功能可實現類似于Windows系統的窗口一樣使懸浮窗口分屏顯示。</string>
+    <string name="pref_movable_resizing_aero_snap_delay_title">分屏延遲</string>
+    <string name="pref_movable_resizing_aero_snap_delay_summary">窗口分屏的輪廓出現之前的毫秒延遲。</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_title">分隔欄</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_summary">當兩個窗口處于分屏狀態互相佔據一邊的屏幕時， 顯示一條分隔欄在窗口中間以調整窗口的分隔狀況。</string>
+    <string name="pref_movable_moving_move_ab_title">允許使用行動欄來移動</string>
+    <string name="pref_movable_moving_move_ab_summary">使用行動欄（或者該應用程序頂部區域設有的行動欄）來移動窗口。</string>
+    <string name="pref_movable_triangle_enable_title">顯示三角形按鈕</string>
+    <string name="pref_movable_triangle_enable_summary">顯示一個三角形按鈕在懸浮窗口的左下角以便使用其他功能。</string>
+    <string name="pref_movable_triangle_color_title">三角形顏色</string>
+    <string name="pref_movable_triangle_color_summary">角落里的三角形按鈕的顏色。</string>
+    <string name="pref_movable_triangle_alpha_title">三角形透明度</string>
+    <string name="pref_movable_triangle_alpha_summary">角落里的三角形按鈕的透明度。</string>
+    <string name="pref_movable_triangle_size_title">三角形大小</string>
+    <string name="pref_movable_triangle_size_summary">角落里的三角形按鈕的大小。</string>
+    <string name="pref_movable_triangle_sp_action_title">點擊三角形的行為</string>
+    <string name="pref_movable_triangle_sp_action_summary">點擊角落里的三角形按鈕所觸發的行動。</string>
+    <string name="pref_movable_triangle_lp_action_title">長按三角形的行為</string>
+    <string name="pref_movable_triangle_lp_action_summary">長按角落里的三角形按鈕所觸發的行動。</string>
+    <string name="pref_movable_quadrant_enable_title">顯示半圓形按鈕</string>
+    <string name="pref_movable_quadrant_enable_summary">顯示一個半圓形按鈕在懸浮窗口的右下角以便使用其他功能。</string>
+    <string name="pref_movable_quadrant_color_title">半圓形顏色</string>
+    <string name="pref_movable_quadrant_color_summary">角落里的半圓形按鈕的顏色。</string>
+    <string name="pref_movable_quadrant_alpha_title">半圓形透明度</string>
+    <string name="pref_movable_quadrant_alpha_summary">角落里的半圓形按鈕的透明度。</string>
+    <string name="pref_movable_quadrant_size_title">半圓形大小</string>
+    <string name="pref_movable_quadrant_size_summary">角落里的半圓形按鈕的大小。</string>
+    <string name="pref_movable_quadrant_sp_action_title">點擊半圓形的行為</string>
+    <string name="pref_movable_quadrant_sp_action_summary">點擊角落里的半圓形按鈕所觸發的行動。</string>
+    <string name="pref_movable_quadrant_lp_action_title">長按半圓形的行為</string>
+    <string name="pref_movable_quadrant_lp_action_summary">長按角落里的半圓形按鈕所觸發的行動。</string>
+    <string name="pref_movable_resize_enabled_title">激活調整</string>
+    <string name="pref_movable_resize_enabled_summary">用來調整拖動後的窗口。</string>
+    <string name="pref_movable_dragging_enabled_title">激活拖動</string>
+    <string name="pref_movable_dragging_enabled_summary">用來移動拖動後的窗口。</string>
+    <string name="pref_movable_border_enable_title">顯示邊界</string>
+    <string name="pref_movable_border_enable_summary">在懸浮窗口的邊緣顯示邊界。</string>
+    <string name="pref_movable_border_color_title">邊界顏色</string>
+    <string name="pref_movable_border_color_summary">懸浮窗口的邊界顏色。</string>
+    <string name="pref_movable_border_thickness_title">邊界寬度</string>
+    <string name="pref_movable_border_thickness_summary">懸浮窗口的邊界像素厚度。</string>
+    <string name="pref_movable_others_minimize_to_statusbar_title">最小化到狀態欄</string>
+    <string name="pref_movable_others_minimize_to_statusbar_summary">懸浮窗口最小化後在狀態欄中顯示應用程序。</string>
+    <string name="pref_movable_others_tinted_title_enable_title">彩色標題欄</string>
+    <string name="pref_movable_others_tinted_title_enable_summary">"自動檢測並使用應用程序的頂部行動欄顏色做為標題欄的顏色。
+基于MohammadAG的彩色狀態欄模塊。 
+（需要強制關閉應用程序來生效）"</string>
+    <string name="pref_movable_others_tinted_title_hsv_title">為黑色圖標最大化HS[V]</string>
+    <string name="pref_movable_others_tinted_title_hsv_summary">"自動切換到黑色圖標之後最大化HS[V] 
+（行動欄有自定義的文本顏色時將會忽略）"</string>
+    <string name="pref_movable_others_tinted_title_border_title">彩色窗口邊界</string>
+    <string name="pref_movable_others_tinted_title_border_summary">自動檢測並使用應用程序的頂部行動欄顏色做為窗口的邊界顏色。（如果已啟用窗口邊界）</string>
+    <string name="pref_movable_others_tinted_title_corner_title">彩色窗口角落</string>
+    <string name="pref_movable_others_tinted_title_corner_summary">自動檢測並使用應用程序的頂部行動欄顏色做為三角形與半圓形按鍵的顏色。（如果已啟用角落按鍵）</string>
+    <string name="option_movable_corner_nothing">什麼都不做</string>
+    <string name="option_movable_corner_dnm">顯示拖拽移動欄（隱藏在角落里）</string>
+    <string name="option_movable_corner_dnm_wo_corners">顯示拖拽移動欄（不隱藏在角落里）</string>
+    <string name="option_movable_corner_close">關閉應用程序</string>
+    <string name="option_movable_corner_transparency">顯示透明度調整滑塊</string>
+    <string name="option_movable_corner_hide_app">@string/dnm_minimize</string>
+    <string name="option_movable_corner_maximize">最大化應用程序</string>
+    <string name="pref_systemui_top_title">SystemUI插件</string>
+    <string name="pref_systemui_top_summary">系統用戶界面（SystemUI）的修改合集。</string>
+    <string name="pref_notif_warning">這些插件是給AOSP-based的ROM使用的，未測試過其他的ROM。如果你使用後頻繁提示SystemUI強制關閉，請立即禁用這些插件。</string>
+    <string name="pref_notif_long_click_title">長按通知項目時的選項</string>
+    <string name="pref_notif_long_click_summary">長按通知欄中的某個通知項目時添加一個 \"打開為懸浮窗口\" 選項。</string>
+    <string name="pref_notif_single_click_title">打開通知項目為懸浮狀態</string>
+    <string name="pref_notif_single_click_summary">和 \"長按通知項目時的選項\"一起使用。和上面不一樣，它添加了長按通知項目時顯示 \"正常打開\"選項，可以通過長按通知項目點擊此選項或者單獨點擊通知項目來決定是否打開為懸浮模式。</string>
+    <string name="pref_notif_floating_qs_title">懸浮狀態下的快速設置</string>
+    <string name="pref_notif_floating_qs_summary">（安卓4.2.x+）在懸浮狀態下可以打開通知欄中的快速設置瓷塊。</string>
+    <string name="pref_prevent_home_to_front_title">防止桌面程序被移動到前面</string>
+    <string name="pref_prevent_home_to_front_summary">防止打開最近任務界面時桌面程序被顯示到前面。</string>
+    <string name="pref_recents_long_click_title">長按最近任務項目時的選項</string>
+    <string name="pref_recents_long_click_summary">長按最近任務界面中的某個最近任務項目時添加一個 \"打開為懸浮窗口\" 選項。</string>
+    <string name="pref_systemui_restart_title">重啟系統用戶界面</string>
+    <string name="pref_systemui_restart_summary">"重啟SystemUI以使設置或更改生效。
+（需授予root權限）"</string>
+    <string name="pref_testing_top_title">測試區域</string>
+    <string name="pref_testing_top_summary">測試懸浮窗口的運作情況。</string>
+    <string name="pref_testing_active_title">應用模塊正在運作！</string>
+    <string name="pref_testing_active_subtitle">你可以在懸浮模式中啟動應用程序。</string>
+    <string name="pref_testing_inactive_title">應用模塊沒有運作！</string>
+    <string name="pref_testing_inactive_subtitle">"你無法在懸浮模式中啟動應用程序。
+
+請嘗試在Xposed安裝器中取消勾選此應用模塊之後重新勾選，並重啟你的設備。
+
+如果你的問題仍然沒有解決， 請通過訪問XHaloFloatingWindow官方網站尋求幫助。"</string>
+    <string name="pref_testing_unknown_subtitle">無法檢測到模塊的加載</string>
+    <string name="pref_testing_launch_settings">在懸浮狀態中啟動系統設置</string>
+    <string name="pref_testing_launch_xinstaller">在懸浮狀態中啟動Xposed安裝器</string>
+    <string name="pref_testing_problem_title">有問題？</string>
+    <string name="pref_testing_problem_subtitle">你可以通過訪問XDA官網來獲取幫助。</string>
+    <string name="pref_testing_launch_thread">訪問XDA</string>
+    <string name="option_whiteblacklist_default">默認</string>
+    <string name="option_whiteblacklist_always_only">總是打開已列入黑名單的應用程序為懸浮窗口</string>
+    <string name="option_whiteblacklist_never_only">從不打開已列入白名單的應用程序為懸浮窗口</string>
+    <string name="option_whiteblacklist_never_all">黑名單與白名單中的所有應用程序打開在懸浮模式</string>
+    <string name="keyboard_default">默認</string>
+    <string name="keyboard_pan">覆蓋窗口</string>
+    <string name="keyboard_scale">擠壓窗口</string>
+    <string name="option_gravity_1">左上角</string>
+    <string name="option_gravity_2">中間頂部</string>
+    <string name="option_gravity_3">右上角</string>
+    <string name="option_gravity_4">左邊中間</string>
+    <string name="option_gravity_5">正中央（默認）</string>
+    <string name="option_gravity_6">右邊中間</string>
+    <string name="option_gravity_7">左下角</string>
+    <string name="option_gravity_8">中間底部</string>
+    <string name="option_gravity_9">右下角</string>
+    <string name="apply">應用</string>
+    <string name="arrow_symbol">➙</string>
+    <string name="color_hex">顏色代碼</string>
+    <string name="dnm_title">拖拽移動</string>
+    <string name="dnm_transparency">透明度</string>
+    <string name="dnm_close_app">關閉窗口</string>
+    <string name="dnm_minimize">最小化應用程序</string>
+    <string name="dnm_minimize_notif_title">恢復 %1$s</string>
+    <string name="dnm_minimize_notif_summary">此懸浮應用程序已最小化。</string>
+    <string name="notif_open_halo">打開為懸浮窗口</string>
+    <string name="notif_open_normal">正常打開</string>
+    <string name="notif_app_info">應用程序信息</string>
+    <string name="notif_error_launching">"啟動通知時有一個錯誤
+請到XHFW官網報告此錯誤:
+"</string>
+    <string name="recents_remove_from_list">從列表中刪除</string>
+    <string name="recents_app_info">@string/notif_app_info</string>
+    <string name="recents_open_halo">@string/notif_open_halo</string>
+    <string name="pref_statusbar_taskbar_top_summary">在通知欄中顯示一個任務欄</string>
+    <string name="pref_statusbar_taskbar_top_title">@string/app_statusbar_taskbar</string>
+    <string name="pref_statusbar_taskbar_enable_summary">開啟與關閉狀態欄應用程序啟動器</string>
+    <string name="pref_statusbar_taskbar_enable_title">啟用狀態欄啟動器</string>
+    <string name="pref_statusbar_taskbar_running_enable_summary">"顯示一排最近運行的應用程序來實現多任務效果
+（需重啟SystemUI）"</string>
+    <string name="pref_statusbar_taskbar_running_enable_title">啟用正在運行的應用程序</string>
+    <string name="pref_statusbar_taskbar_pin_apps_summary">選擇永遠顯示在狀態欄上任務欄中的應用程序</string>
+    <string name="pref_statusbar_taskbar_pin_apps_title">自定義應用程序</string>
+    <string name="pref_statusbar_taskbar_number_summary">"選擇顯示在通知欄中的應用程序的數量最大值
+（需重啟SystemUI）"</string>
+    <string name="pref_statusbar_taskbar_number_title">應用程序最大值</string>
+
+</resources>
