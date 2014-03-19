@@ -4,12 +4,14 @@ import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.hooks.ActionBarColorHook;
 import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -52,6 +54,7 @@ public class MovableOverlayView extends RelativeLayout {
 	private ImageView mQuadrant;
 	private ImageView mTriangle;
 	private View mBorderOutline;
+	private View mTransparencyDialog;
 	
 	/* Title Bar */
 	private static int mTitleBarHeight = Common.DEFAULT_WINDOW_TITLEBAR_SIZE;
@@ -381,7 +384,7 @@ public class MovableOverlayView extends RelativeLayout {
 	private void initDragToMoveBar() {
 		mDragToMoveBar.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap));
 		
-		final TextView dtm_title = (TextView) mDragToMoveBar.findViewById(R.id.textView1);
+		final TextView dtm_title = (TextView) mDragToMoveBar.findViewById(R.id.movable_dtm_title);
 		dtm_title.setText(mResource.getString(R.string.dnm_title));
 		
 		final ImageButton done = (ImageButton) mDragToMoveBar.findViewById(R.id.movable_done);
@@ -426,41 +429,46 @@ public class MovableOverlayView extends RelativeLayout {
 	}
 	
 	private void showTransparencyDialogVisibility() {
-		final View bg = findViewById(R.id.movable_bg);
-		final TextView number = (TextView) findViewById(R.id.movable_textView8);
-		final SeekBar t = (SeekBar) findViewById(R.id.movable_seekBar1);
-		
-		float oldValue = mActivity.getWindow().getAttributes().alpha;
-		number.setText((int) (oldValue * 100) + "%");
-		t.setProgress((int) (oldValue * 100) - 10);
-		t.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-			}
+		final RelativeLayout bg = (RelativeLayout) findViewById(R.id.movable_transparency_holder);
+		if (mTransparencyDialog == null) {
+			XmlResourceParser parser = mResource.getLayout(R.layout.movable_dialog_transparency);
+			mTransparencyDialog = mActivity.getWindow().getLayoutInflater().inflate(parser, bg);
 			
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
+			final TextView title = (TextView) mTransparencyDialog.findViewById(android.R.id.text1);
+			final TextView numb = (TextView) mTransparencyDialog.findViewById(android.R.id.text2);
+			final SeekBar bar = (SeekBar) mTransparencyDialog.findViewById(android.R.id.progress);
+
+			title.setText(mResource.getString(R.string.dnm_transparency));
 			
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				int newProgress = (progress + 10);
-				number.setText(newProgress + "%");
-				
-				WindowManager.LayoutParams params = mActivity.getWindow().getAttributes();
-				params.alpha = newProgress * 0.01f;
-				mActivity.getWindow().setAttributes(params);
-			}
-		});
-		
-		bg.setOnTouchListener(new View.OnTouchListener() {
-			@Override
-			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-				bg.setVisibility(View.INVISIBLE);
-				return true;
-			}
-		});
-		
+			final float current_alpha = mActivity.getWindow().getAttributes().alpha;
+			numb.setText((int) (current_alpha * 100) + "%");
+			bar.setProgress((int) (current_alpha * 100) - 10);
+			bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+				@Override
+				public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+					final int newProgress = (progress + 10);
+					numb.setText(newProgress + "%");
+					
+					WindowManager.LayoutParams params = mActivity.getWindow().getAttributes();
+					params.alpha = newProgress * 0.01f;
+					mActivity.getWindow().setAttributes(params);
+				}
+				@Override
+				public void onStopTrackingTouch(SeekBar seekBar) {}
+				@Override
+				public void onStartTrackingTouch(SeekBar seekBar) {}
+			});
+			
+			bg.setOnTouchListener(new View.OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					if (event.getAction() == MotionEvent.ACTION_UP) {
+						bg.setVisibility(View.INVISIBLE);
+					}
+					return true;
+				}
+			});
+		}
 		bg.setVisibility(View.VISIBLE);
 	}
 	
