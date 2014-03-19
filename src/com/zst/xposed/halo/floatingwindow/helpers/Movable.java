@@ -12,8 +12,6 @@ public class Movable implements View.OnTouchListener {
         Window mWindow;
         LayoutParams param;
         AeroSnap mAeroSnap;
-        boolean mAeroSnapEnabled;
-        int mAeroSnapDelay;
         private static Float screenX ;
     	private static Float screenY ;
     	private static Float viewX ;
@@ -22,16 +20,14 @@ public class Movable implements View.OnTouchListener {
     	private static Float topFromScreen ;
     	private View offsetView;
        
-        public Movable(Window window, boolean snap_enabled, int snap_delay){
+        public Movable(Window window, AeroSnap aerosnap) {
                 mWindow=window;
         		param = mWindow.getAttributes(); 
-        		mAeroSnapEnabled = snap_enabled;
-        		mAeroSnapDelay = snap_delay;
-        		mAeroSnap = new AeroSnap(window, mAeroSnapDelay);
+        		mAeroSnap = aerosnap;
         }
         
-        public Movable(Window window, View v, boolean snap_enabled, int snap_delay){
-        	this(window, snap_enabled, snap_delay);
+        public Movable(Window window, View v, AeroSnap aerosnap){
+        	this(window, aerosnap);
         	offsetView = v;
         }
         
@@ -57,7 +53,7 @@ public class Movable implements View.OnTouchListener {
         		updateView(mWindow, leftFromScreen, topFromScreen);
         		break;
         	}
-        	if (mAeroSnapEnabled) {
+        	if (mAeroSnap != null) {
         		mAeroSnap.dispatchTouchEvent(event);
         	}
         	return false;

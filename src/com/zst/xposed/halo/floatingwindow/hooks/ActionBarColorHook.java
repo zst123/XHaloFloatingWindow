@@ -183,7 +183,7 @@ public class ActionBarColorHook {
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_BORDER_TINT,
 				Common.DEFAULT_TINTED_TITLEBAR_BORDER_TINT)) {
-			MovableWindow.setWindowBorder(bg_color, mBorderThickness);
+			MovableWindow.mOverlayView.setWindowBorder(bg_color, mBorderThickness);
 		}
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_CORNER_TINT,

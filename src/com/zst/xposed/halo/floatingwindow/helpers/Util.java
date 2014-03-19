@@ -10,6 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.os.Build;
+import android.view.View;
 
 public class Util {
 	
@@ -71,5 +73,14 @@ public class Util {
 				canvas.restore();
 			}
 		};
+	}
+	
+	/* Set background drawable based on the API */
+	public static void setBackgroundDrawable(View view, Drawable drawable) {
+		if (Build.VERSION.SDK_INT >= 16) {
+			view.setBackground(drawable);
+		} else {
+			view.setBackgroundDrawable(drawable);
+		}
 	}
 }
