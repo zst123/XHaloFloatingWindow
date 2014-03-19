@@ -16,9 +16,11 @@ import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.PopupMenu;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
@@ -164,7 +166,49 @@ public class SystemUIMultiWindow {
 			}
 		}
 	};
-		
+
+	private static final View.OnLongClickListener LONGPRESS_MENU = new View.OnLongClickListener() {
+		@Override
+		public boolean onLongClick(View v) {
+	    	PopupMenu popup = new PopupMenu(mContext, mViewFocusIndicator);
+			popup.getMenu().add("Swap Windows");
+			popup.getMenu().add("Reset Positions");
+			// TODO: Remove hardcode, add to strings.xml
+			
+			popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+				public boolean onMenuItemClick(MenuItem item) {
+					if (item.getTitle().equals("Swap Windows")) {
+						sendWindowInfo(mTopBottomSplit, mPixelsFromEdge, true);
+						// Tell apps to swap positions
+						if (mTopBottomSplit) {
+							final HashSet<String> old_top = mTopList;
+							final HashSet<String> old_bottom = mBottomList;
+							mTopList = old_bottom;
+							mBottomList = old_top;
+						} else {
+							final HashSet<String> old_left = mLeftList;
+							final HashSet<String> old_right = mRightList;
+							mLeftList = old_right;
+							mRightList = old_left;
+						}
+					} else if (item.getTitle().equals("Reset Positions")) {
+						mPixelsFromEdge = (mTopBottomSplit ? (mScreenHeight / 2) : (mScreenWidth / 2));
+						mParamz.x = mTopBottomSplit ? 0 : mPixelsFromEdge;
+						mParamz.y = mTopBottomSplit ? mPixelsFromEdge : 0;
+						mWm.updateViewLayout(mViewContent, mParamz);
+						sendWindowInfo(mTopBottomSplit, mPixelsFromEdge, false);
+						// Reset dragger to middle
+					} else {
+						return false;
+					}
+					return true;
+				}
+			});
+			popup.show();
+			return false;
+	    }   
+	};
+	
 	private static final View.OnTouchListener DRAG_LISTENER = new View.OnTouchListener() {
 		@Override
 		public boolean onTouch(View v, MotionEvent event) {
@@ -191,7 +235,7 @@ public class SystemUIMultiWindow {
 				mWm.updateViewLayout(mViewContent, mParamz);
 				break;
 			case MotionEvent.ACTION_UP:
-				sendWindowInfo(mTopBottomSplit, mPixelsFromEdge);
+				sendWindowInfo(mTopBottomSplit, mPixelsFromEdge, false);
 				mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 				break;
 			}
@@ -279,6 +323,7 @@ public class SystemUIMultiWindow {
 				: android.R.id.button2);
 		mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 		mViewDragger.setOnTouchListener(DRAG_LISTENER);
+		mViewDragger.setOnLongClickListener(LONGPRESS_MENU);
 		
 		mViewFocusIndicator = mViewContent.findViewById(android.R.id.hint);
 		mViewFocusIndicator.setBackgroundResource(0);
@@ -324,7 +369,7 @@ public class SystemUIMultiWindow {
 		return (offset_value < MIN_SIZE) ? MIN_SIZE : offset_value;
 	}
 	
-	private static void sendWindowInfo(boolean top_bottom, int pixels) {
+	private static void sendWindowInfo(boolean top_bottom, int pixels, boolean swap) {
 		Intent intent = new Intent(Common.SEND_MULTIWINDOW_INFO);
 		intent.putExtra(Common.INTENT_APP_SNAP, top_bottom); 
 		// Top-Bottom or Left-Right App Splitting?
@@ -333,6 +378,8 @@ public class SystemUIMultiWindow {
 		intent.putExtra(Common.INTENT_APP_EXTRA,
 				top_bottom ? mViewDragger.getHeight() : mViewDragger.getWidth()); 
 		// extra space so app is not overlapped by dragger bar
+		intent.putExtra(Common.INTENT_APP_SWAP, swap);
+		// tell app to swap position
 		mContext.sendBroadcast(intent);
 	}
 }

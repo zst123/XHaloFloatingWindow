@@ -69,6 +69,33 @@ public class MultiWindowDragger {
 			int pixels_offset_from_dragger = intent.getIntExtra(Common.INTENT_APP_EXTRA, 10);
 			// extra space so app is not overlapped by dragger bar
 			boolean top_bottom = intent.getBooleanExtra(Common.INTENT_APP_SNAP, true);
+			
+			if (intent.getBooleanExtra(Common.INTENT_APP_SWAP, false)) {
+				// We must swap positions
+				if (top_bottom) {
+					if (mSnappedSide == AeroSnap.SNAP_TOP) {
+						mSnappedSide = AeroSnap.SNAP_BOTTOM;
+						mCachedSnappedSide = AeroSnap.SNAP_BOTTOM;
+						scaleWindow(true, false, pixels_from_edge + pixels_offset_from_dragger);
+					} else if (mSnappedSide == AeroSnap.SNAP_BOTTOM) {
+						mSnappedSide = AeroSnap.SNAP_TOP;
+						mCachedSnappedSide = AeroSnap.SNAP_TOP;
+						scaleWindow(true, true, pixels_from_edge);
+					}
+				} else {
+					if (mSnappedSide == AeroSnap.SNAP_LEFT) {
+						mSnappedSide = AeroSnap.SNAP_RIGHT;
+						mCachedSnappedSide = AeroSnap.SNAP_RIGHT;
+						scaleWindow(false, false, pixels_from_edge + pixels_offset_from_dragger);
+					} else if (mSnappedSide == AeroSnap.SNAP_RIGHT) {
+						mSnappedSide = AeroSnap.SNAP_LEFT;
+						mCachedSnappedSide = AeroSnap.SNAP_LEFT;
+						scaleWindow(false, true, pixels_from_edge);
+					}
+				}
+				return;
+			}
+			
 			if (top_bottom) {
 				// Check if we are top or bottom app.
 				if (mSnappedSide == AeroSnap.SNAP_TOP) {
