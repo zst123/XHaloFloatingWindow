@@ -80,7 +80,7 @@ public class StatusbarTaskbar {
 				if (main_pref.getBoolean(Common.KEY_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED,
 						Common.DEFAULT_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED)) {
 					final Handler handler = new Handler(context.getMainLooper());
-					handler.postDelayed(new Runnable() {
+					final Runnable runnable = new Runnable() {
 						@Override
 						public void run() {
 							ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -88,7 +88,22 @@ public class StatusbarTaskbar {
 							handler.postDelayed(this, 15000);
 							refreshRunningApps(context);
 						}
-					}, 15000);
+					};
+					handler.postDelayed(runnable, 15000);
+					
+					final IntentFilter filter = new IntentFilter();
+					filter.addAction(Intent.ACTION_SCREEN_ON);
+					filter.addAction(Intent.ACTION_SCREEN_OFF);
+					context.registerReceiver(new BroadcastReceiver() {
+						@Override
+						public void onReceive(Context ctx, Intent intent) {
+							if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)){
+								handler.removeCallbacks(runnable);
+							} else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)){
+								handler.postDelayed(runnable, 15000);
+							}
+						}
+					}, filter, null, null);
 				}
 				clearNotifications(context, NOTIFICATION_ID_RUNNING);
 				setup(context);
