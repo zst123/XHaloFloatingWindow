@@ -132,6 +132,23 @@ public class AeroSnap {
 	}
 	
 	/**
+	 * Forces the window to snap to this side programatically without user input
+	 * @param side - Side of the screen to snap to.
+	 */
+	public void forceSnap(int side) {
+		if (side == SNAP_NONE) {
+			restoreOldPosition();
+			return;
+		}
+		if (isSnapped()) {
+			restoreOldPositionWithoutRefresh();
+		}
+		mSnap = side;
+		calculateSnap();
+		finishSnap(true);
+	}
+	
+	/**
 	 * Initializes the current screen size with respect to rotation.
 	 */
 	private void refreshScreenSize() {

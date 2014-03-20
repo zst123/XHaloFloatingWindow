@@ -17,6 +17,7 @@ import android.os.Build;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -449,6 +450,11 @@ public class MovableOverlayView extends RelativeLayout {
 		final String menu_item1 = mResource.getString(R.string.dnm_transparency);
 		final String menu_item3 = mResource.getString(R.string.dnm_minimize);
 		final String menu_item2 = mResource.getString(R.string.dnm_close_app);
+		final String menu_item4 = mResource.getString(R.string.dnm_snap_window);
+		final String menu_item4_sub1 = mResource.getString(R.string.dnm_snap_window_sub1);
+		final String menu_item4_sub2 = mResource.getString(R.string.dnm_snap_window_sub2);
+		final String menu_item4_sub3 = mResource.getString(R.string.dnm_snap_window_sub3);
+		final String menu_item4_sub4 = mResource.getString(R.string.dnm_snap_window_sub4);
 		
 		final ImageButton overflow = (ImageButton) findViewByIdHelper(mDragToMoveBar,
 				R.id.movable_overflow, "movable_overflow");
@@ -461,6 +467,13 @@ public class MovableOverlayView extends RelativeLayout {
 				menu.add(menu_item1);
 				menu.add(menu_item3);
 				menu.add(menu_item2);
+				
+				SubMenu submenu_item4 = menu.addSubMenu(menu_item4);
+				submenu_item4.add(menu_item4_sub1);
+				submenu_item4.add(menu_item4_sub2);
+				submenu_item4.add(menu_item4_sub3);
+				submenu_item4.add(menu_item4_sub4);
+				
 				popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -470,6 +483,14 @@ public class MovableOverlayView extends RelativeLayout {
 							mActivity.finish();
 						} else if (item.getTitle().equals(menu_item3)) {
 							MovableWindow.minimizeAndShowNotification(mActivity);
+						} else if (item.getTitle().equals(menu_item4_sub1)) {
+							mAeroSnap.forceSnap(AeroSnap.SNAP_TOP);
+						} else if (item.getTitle().equals(menu_item4_sub2)) {
+							mAeroSnap.forceSnap(AeroSnap.SNAP_BOTTOM);
+						} else if (item.getTitle().equals(menu_item4_sub3)) {
+							mAeroSnap.forceSnap(AeroSnap.SNAP_LEFT);
+						} else if (item.getTitle().equals(menu_item4_sub4)) {
+							mAeroSnap.forceSnap(AeroSnap.SNAP_RIGHT);
 						}
 						return false;
 					}
