@@ -5,7 +5,8 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 
 import com.zst.xposed.halo.floatingwindow.Common;
-import com.zst.xposed.halo.floatingwindow.R;
+import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
+import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -17,7 +18,6 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -59,6 +59,7 @@ public class ActionBarColorHook {
 	static ImageButton mMoreButton;
 	static ImageView mTriangle;
 	static ImageView mQuadrant;
+	static MovableOverlayView mOverlay;
 	static int mBorderThickness;
 	
 	public static void handleLoadPackage(LoadPackageParam llpp, XSharedPreferences pref) {
@@ -152,16 +153,16 @@ public class ActionBarColorHook {
 		changeTitleBarColor(color, iconTint);
 	}
 	
-	// cache references since finding views are expensive
-	public static void setTitleBar(View overlayView) {
-		mHeader = (RelativeLayout) overlayView.findViewById(R.id.movable_titlebar);
-		mAppTitle = (TextView) overlayView.findViewById(R.id.movable_titlebar_appname);
-		mCloseButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_close);
-		mMaxButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_max);
-		mMinButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_min);
-		mMoreButton = (ImageButton) overlayView.findViewById(R.id.movable_titlebar_more);
-		mTriangle = (ImageView) overlayView.findViewById(R.id.movable_corner);
-		mQuadrant = (ImageView) overlayView.findViewById(R.id.movable_quadrant);
+	public static void setTitleBar(MovableOverlayView overlayView) {
+		mOverlay = overlayView;
+		mHeader = overlayView.mTitleBarHeader;
+		mAppTitle = overlayView.mTitleBarTitle;
+		mCloseButton = overlayView.mTitleBarClose;
+		mMaxButton = overlayView.mTitleBarMax;
+		mMinButton = overlayView.mTitleBarMin;
+		mMoreButton = overlayView.mTitleBarMore;
+		mTriangle = overlayView.mTriangle;
+		mQuadrant = overlayView.mQuadrant;
 	}
 	
 	public static void setBorderThickness(int thickness) {
@@ -183,7 +184,7 @@ public class ActionBarColorHook {
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_BORDER_TINT,
 				Common.DEFAULT_TINTED_TITLEBAR_BORDER_TINT)) {
-			MovableWindow.mOverlayView.setWindowBorder(bg_color, mBorderThickness);
+			mOverlay.setWindowBorder(bg_color, mBorderThickness);
 		}
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_CORNER_TINT,
@@ -193,13 +194,8 @@ public class ActionBarColorHook {
 				triangle_background.setColorFilter(bg_color, Mode.SRC_ATOP);
 				Drawable quadrant_background = mQuadrant.getBackground();
 				quadrant_background.setColorFilter(bg_color, Mode.SRC_ATOP);
-				if (Build.VERSION.SDK_INT >= 16) {
-					mTriangle.setBackground(triangle_background);
-					mQuadrant.setBackground(quadrant_background);
-				} else {
-					mTriangle.setBackgroundDrawable(triangle_background);
-					mQuadrant.setBackgroundDrawable(quadrant_background);
-				}
+				Util.setBackgroundDrawable(mTriangle, triangle_background);
+				Util.setBackgroundDrawable(mQuadrant, quadrant_background);
 			} catch (NullPointerException e) {
 				Log.d("test1", Common.LOG_TAG + "ActionBarColorHook.java - changeTitleBarColor2 - NPE", e);
 			}

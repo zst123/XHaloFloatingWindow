@@ -49,10 +49,18 @@ public class MovableOverlayView extends RelativeLayout {
 	private SharedPreferences mPref;
 	
 	// Views
-	private View mDragToMoveBar;
-	private ImageView mQuadrant;
-	private ImageView mTriangle;
-	private View mBorderOutline;
+	public View mDragToMoveBar;
+	public ImageView mQuadrant;
+	public ImageView mTriangle;
+	public View mBorderOutline;
+	
+	public RelativeLayout mTitleBarHeader;
+	public ImageButton mTitleBarClose;
+	public ImageButton mTitleBarMin;
+	public ImageButton mTitleBarMax;
+	public ImageButton mTitleBarMore;
+	public TextView mTitleBarTitle;
+	
 	private View mTransparencyDialog;
 	
 	/* Title Bar */
@@ -413,6 +421,13 @@ public class MovableOverlayView extends RelativeLayout {
 		min_button.setOnClickListener(click);
 		more_button.setOnClickListener(click);
 		header.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap));
+		
+		mTitleBarHeader = header;
+		mTitleBarTitle = app_title;
+		mTitleBarClose = close_button;
+		mTitleBarMin = min_button;
+		mTitleBarMax = max_button;
+		mTitleBarMore = more_button;
 	}
 	
 	// Create the drag-to-move bar
