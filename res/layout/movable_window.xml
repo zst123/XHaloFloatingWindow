@@ -63,6 +63,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="center_vertical|center_horizontal"
+            android:tag="movable_dtm_title"
             android:text="Drag to Move"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#ffff"
@@ -78,7 +79,8 @@
             android:layout_alignParentTop="true"
             android:background="@null"
             android:scaleType="fitXY"
-            android:src="@null" />
+            android:src="@null"
+            android:tag="movable_done" />
 
         <ImageButton
             android:id="@+id/movable_overflow"
@@ -91,7 +93,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:scaleType="fitXY"
-            android:src="@null" />
+            android:src="@null"
+            android:tag="movable_overflow" />
 
     </RelativeLayout>
 
@@ -116,7 +119,8 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:background="#f000"
-        android:clickable="true" >
+        android:clickable="true"
+        android:tag="movable_titlebar" >
 
         <TextView
             android:id="@+id/movable_titlebar_appname"
@@ -130,6 +134,7 @@
             android:focusable="false"
             android:gravity="center_vertical|center_horizontal"
             android:maxLines="1"
+            android:tag="movable_titlebar_appname"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#ffff"
             android:textSize="14sp"
@@ -148,7 +153,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:scaleType="fitCenter"
-            android:src="#fff" />
+            android:src="#fff"
+            android:tag="movable_titlebar_close" />
 
         <ImageButton
             android:id="@+id/movable_titlebar_max"
@@ -162,7 +168,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:scaleType="fitCenter"
-            android:src="#FFF" />
+            android:src="#FFF"
+            android:tag="movable_titlebar_max" />
 
         <ImageButton
             android:id="@+id/movable_titlebar_min"
@@ -176,7 +183,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="0dp"
             android:scaleType="fitCenter"
-            android:src="#FFF" />
+            android:src="#FFF"
+            android:tag="movable_titlebar_min" />
 
         <ImageButton
             android:id="@+id/movable_titlebar_more"
@@ -190,7 +198,8 @@
             android:paddingLeft="0dp"
             android:paddingRight="2dp"
             android:scaleType="fitCenter"
-            android:src="#FFF" />
+            android:src="#FFF"
+            android:tag="movable_titlebar_more" />
 
         <View
             android:id="@+id/movable_titlebar_line"
@@ -200,7 +209,8 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:background="#fff"
-            android:minHeight="5dp" />
+            android:minHeight="5dp"
+            android:tag="movable_titlebar_line" />
 
     </RelativeLayout>
 

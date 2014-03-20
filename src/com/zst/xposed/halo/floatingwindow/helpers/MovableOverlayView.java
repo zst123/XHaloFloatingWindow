@@ -11,7 +11,6 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -87,12 +86,17 @@ public class MovableOverlayView extends RelativeLayout {
 		// http://sriramramani.wordpress.com/2012/07/25/infamous-viewholder-pattern/
 		
 		setId(ID_OVERLAY_VIEW);
+		setIsRootNamespace(false);
 		
 		mDragToMoveBar = findViewById(R.id.movable_action_bar);
 		mTriangle = (ImageView) findViewById(R.id.movable_corner);
 		mQuadrant = (ImageView) findViewById(R.id.movable_quadrant);
 		mBorderOutline = findViewById(R.id.movable_background);
 		mBorderOutline.bringToFront();
+		
+		setIsRootNamespace(true);
+		// this is to prevent findViewById from searching us so we do
+		// not affect the current app as our id's might be the same
 		
 		// set preferences values
 		boolean titlebar_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ENABLED,
@@ -111,6 +115,31 @@ public class MovableOverlayView extends RelativeLayout {
 		// init stuff
 		initCornersViews();
 	}
+	
+	private View findViewByIdHelper(View view, int id, String tag) {
+		View v = view.findViewById(id);
+		if (v == null) {
+			v = findViewWithTag(view, tag);
+		}
+		return v;
+    }
+	
+	private View findViewWithTag(View view, String text) {
+		if (view.getTag() instanceof String) {
+			if (((String) view.getTag()).equals(text))
+				return view;
+		}
+		if (view instanceof ViewGroup) {
+			final ViewGroup group = (ViewGroup) view;
+			for (int i = 0; i < group.getChildCount(); ++i) {
+				final View child = group.getChildAt(i);
+				final View found = findViewWithTag(child, text);
+				if (found != null)
+					return found;
+			}
+		}
+        return null;
+    }
 	
 	/**
 	 * Initializes the triangle and quadrant's transparency, color, size etc.
@@ -309,15 +338,21 @@ public class MovableOverlayView extends RelativeLayout {
 		parammm.setMargins(0, mTitleBarHeight, 0, 0);
 		child.setLayoutParams(parammm);
 		
-		final View divider = findViewById(R.id.movable_titlebar_line);
-		final TextView app_title = (TextView) findViewById(R.id.movable_titlebar_appname);
-		final ImageButton max_button = (ImageButton) findViewById(R.id.movable_titlebar_max);
-		final ImageButton min_button = (ImageButton) findViewById(R.id.movable_titlebar_min);
-		final ImageButton more_button = (ImageButton) findViewById(R.id.movable_titlebar_more);
-		final ImageButton close_button = (ImageButton) findViewById(R.id.movable_titlebar_close);
-		final RelativeLayout header = (RelativeLayout) findViewById(R.id.movable_titlebar);
-
-		
+		final RelativeLayout header = (RelativeLayout) findViewByIdHelper(this,
+				R.id.movable_titlebar, "movable_titlebar");
+		final View divider = findViewByIdHelper(header,
+				R.id.movable_titlebar_line, "movable_titlebar_line");
+		final TextView app_title = (TextView) findViewByIdHelper(header,
+				R.id.movable_titlebar_appname, "movable_titlebar_appname");
+		final ImageButton max_button = (ImageButton) findViewByIdHelper(header,
+				R.id.movable_titlebar_max, "movable_titlebar_max");
+		final ImageButton min_button = (ImageButton) findViewByIdHelper(header,
+				R.id.movable_titlebar_min, "movable_titlebar_min");
+		final ImageButton more_button = (ImageButton) findViewByIdHelper(header,
+				R.id.movable_titlebar_more, "movable_titlebar_more");
+		final ImageButton close_button = (ImageButton) findViewByIdHelper(header,
+				R.id.movable_titlebar_close, "movable_titlebar_close");
+	
 		app_title.setText(mActivity.getApplicationInfo().loadLabel(mActivity.getPackageManager()));
 		close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close));
 		max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max));
@@ -384,10 +419,12 @@ public class MovableOverlayView extends RelativeLayout {
 	private void initDragToMoveBar() {
 		mDragToMoveBar.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap));
 		
-		final TextView dtm_title = (TextView) mDragToMoveBar.findViewById(R.id.movable_dtm_title);
+		TextView dtm_title = (TextView) findViewByIdHelper(mDragToMoveBar,
+				R.id.movable_dtm_title, "movable_dtm_title");
 		dtm_title.setText(mResource.getString(R.string.dnm_title));
 		
-		final ImageButton done = (ImageButton) mDragToMoveBar.findViewById(R.id.movable_done);
+		final ImageButton done = (ImageButton) findViewByIdHelper(mDragToMoveBar,
+				R.id.movable_done, "movable_done");
 		done.setImageDrawable(mResource.getDrawable(R.drawable.movable_done));
 		done.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -400,7 +437,8 @@ public class MovableOverlayView extends RelativeLayout {
 		final String menu_item3 = mResource.getString(R.string.dnm_minimize);
 		final String menu_item2 = mResource.getString(R.string.dnm_close_app);
 		
-		final ImageButton overflow = (ImageButton) mDragToMoveBar.findViewById(R.id.movable_overflow);
+		final ImageButton overflow = (ImageButton) findViewByIdHelper(mDragToMoveBar,
+				R.id.movable_overflow, "movable_overflow");
 		overflow.setImageDrawable(mResource.getDrawable(R.drawable.movable_overflow));
 		overflow.setOnClickListener(new View.OnClickListener() {
 			@Override
