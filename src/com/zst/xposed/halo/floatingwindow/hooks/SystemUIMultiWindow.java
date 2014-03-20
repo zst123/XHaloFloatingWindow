@@ -294,8 +294,8 @@ public class SystemUIMultiWindow {
 		mScreenHeight = metrics.heightPixels;
 				
 		mParamz = new WindowManager.LayoutParams(
-				WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
+				top_bottom ? WindowManager.LayoutParams.MATCH_PARENT : WindowManager.LayoutParams.WRAP_CONTENT,
+				top_bottom ? WindowManager.LayoutParams.WRAP_CONTENT : WindowManager.LayoutParams.MATCH_PARENT,
 				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
 				0 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
 					WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
