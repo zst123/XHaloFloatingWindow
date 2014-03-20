@@ -111,11 +111,6 @@ public class MovableWindow {
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
 
 				MultiWindowDragger.setEnabled(splitbar_enabled);
-				if (!isHoloFloat) {
-					MultiWindowDragger.appsSignalHideDragger(activity);
-					// Signal to the dragger that a non-halo window is open. There's
-					// no need to check if it is snapped properly and hide immediately
-				}
 			}
 		});
 
@@ -124,7 +119,12 @@ public class MovableWindow {
 			@Override
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
-				if (!isHoloFloat) return;
+				if (!isHoloFloat) {
+					MultiWindowDragger.appsSignalHideDragger(activity);
+					// Signal to the dragger that a non-halo window is
+					// currently shown and we should hide the bar now
+					return;
+				}
 				if (mMovableWindow) {
 					FrameLayout decor_view = (FrameLayout) activity.getWindow()
 							.peekDecorView().getRootView();
