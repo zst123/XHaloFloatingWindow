@@ -1,45 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
-    android:background="@android:drawable/toast_frame" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_gravity="center" >
 
-    <TextView
-        android:id="@android:id/text1"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="false"
-        android:gravity="center"
-        android:text="Transparency"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFF"
-        android:textStyle="bold"
-        android:typeface="sans" />
-
-    <SeekBar
-        android:id="@android:id/progress"
-        style="@android:style/Widget.DeviceDefault.SeekBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@android:id/text1"
+        android:layout_centerHorizontal="true"
         android:layout_centerInParent="true"
-        android:max="90"
-        android:minHeight="10dp" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:background="@android:drawable/toast_frame" >
 
-    <TextView
-        android:id="@android:id/text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:text="100%"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="#FFF"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        <TextView
+            android:id="@android:id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="false"
+            android:gravity="center"
+            android:text="Transparency"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFF"
+            android:textStyle="bold"
+            android:typeface="sans" />
+
+        <SeekBar
+            android:id="@android:id/progress"
+            style="@android:style/Widget.DeviceDefault.SeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@android:id/text1"
+            android:layout_centerInParent="true"
+            android:max="90"
+            android:minHeight="10dp" />
+
+        <TextView
+            android:id="@android:id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="100%"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#FFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
 </RelativeLayout>
