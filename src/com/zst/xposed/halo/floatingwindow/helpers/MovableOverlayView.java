@@ -396,23 +396,21 @@ public class MovableOverlayView extends RelativeLayout {
 		final View.OnClickListener click = new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				switch (v.getId()) {
-				case R.id.movable_titlebar_close:
+				String tag = (v.getTag() instanceof String) ? (String) v.getTag() : "";
+				int id = v.getId();
+				
+				if (id == R.id.movable_titlebar_close || tag.equals("movable_titlebar_close")) {
 					if (Build.VERSION.SDK_INT >= 16) {
 						mActivity.finishAffinity();
 					} else {
 						mActivity.finish();
 					}
-					break;
-				case R.id.movable_titlebar_max:
+				} else if (id == R.id.movable_titlebar_max || tag.equals("movable_titlebar_max")) {
 					MovableWindow.maximizeApp(mActivity);
-					break;
-				case R.id.movable_titlebar_min:
+				} else if (id == R.id.movable_titlebar_min || tag.equals("movable_titlebar_min")) {
 					MovableWindow.minimizeAndShowNotification(mActivity);
-					break;
-				case R.id.movable_titlebar_more:
+				} else if (id == R.id.movable_titlebar_more || tag.equals("movable_titlebar_more")) {
 					popupMenu.show();
-					break;
 				}
 			}
 		};
