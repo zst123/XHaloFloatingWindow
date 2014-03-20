@@ -110,6 +110,7 @@
         android:clickable="true"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:tag="movable_transparency_holder"
         android:visibility="invisible" >
 
     </RelativeLayout>

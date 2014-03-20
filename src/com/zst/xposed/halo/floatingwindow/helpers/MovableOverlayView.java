@@ -480,7 +480,8 @@ public class MovableOverlayView extends RelativeLayout {
 	}
 	
 	private void showTransparencyDialogVisibility() {
-		final RelativeLayout bg = (RelativeLayout) findViewById(R.id.movable_transparency_holder);
+		final RelativeLayout bg = (RelativeLayout) findViewByIdHelper(this, 
+				R.id.movable_transparency_holder, "movable_transparency_holder");
 		if (mTransparencyDialog == null) {
 			XmlResourceParser parser = mResource.getLayout(R.layout.movable_dialog_transparency);
 			mTransparencyDialog = mActivity.getWindow().getLayoutInflater().inflate(parser, bg);
