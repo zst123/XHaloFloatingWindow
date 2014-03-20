@@ -138,7 +138,7 @@ public class MovableWindow {
 					// un-minimize the app without using the notification itself
 				}
 				
-				MultiWindowDragger.setWindow(activity.getWindow());				
+				MultiWindowDragger.setWindow(activity.getWindow());
 				// register listener for multiwindow dragger
 				MultiWindowDragger.appsRegisterListener(activity, true);
 			}
@@ -425,6 +425,8 @@ public class MovableWindow {
 	private static void refreshLayoutParams(Context ctx, String pkg) {
 		Intent intent = new Intent(Common.REFRESH_APP_LAYOUT);
 		intent.putExtra(INTENT_APP_PKG, pkg);
+		intent.setPackage(pkg);
+		// set package so this is broadcasted only to our own package
 		ctx.sendBroadcast(intent);
 	}
 	/* (End) Layout Position Method Helpers */

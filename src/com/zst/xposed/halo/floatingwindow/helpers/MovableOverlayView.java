@@ -459,21 +459,22 @@ public class MovableOverlayView extends RelativeLayout {
 		final ImageButton overflow = (ImageButton) findViewByIdHelper(mDragToMoveBar,
 				R.id.movable_overflow, "movable_overflow");
 		overflow.setImageDrawable(mResource.getDrawable(R.drawable.movable_overflow));
+		
+		final PopupMenu popupMenu = new PopupMenu(overflow.getContext(), overflow);
+		Menu menu = popupMenu.getMenu();
+		menu.add(menu_item1);
+		menu.add(menu_item3);
+		menu.add(menu_item2);
+		
+		SubMenu submenu_item4 = menu.addSubMenu(menu_item4);
+		submenu_item4.add(menu_item4_sub1);
+		submenu_item4.add(menu_item4_sub2);
+		submenu_item4.add(menu_item4_sub3);
+		submenu_item4.add(menu_item4_sub4);
+		
 		overflow.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				PopupMenu popupMenu = new PopupMenu(overflow.getContext(), overflow);
-				Menu menu = popupMenu.getMenu();
-				menu.add(menu_item1);
-				menu.add(menu_item3);
-				menu.add(menu_item2);
-				
-				SubMenu submenu_item4 = menu.addSubMenu(menu_item4);
-				submenu_item4.add(menu_item4_sub1);
-				submenu_item4.add(menu_item4_sub2);
-				submenu_item4.add(menu_item4_sub3);
-				submenu_item4.add(menu_item4_sub4);
-				
 				popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 					@Override
 					public boolean onMenuItemClick(MenuItem item) {
@@ -536,7 +537,7 @@ public class MovableOverlayView extends RelativeLayout {
 				@Override
 				public boolean onTouch(View v, MotionEvent event) {
 					if (event.getAction() == MotionEvent.ACTION_UP) {
-						bg.setVisibility(View.INVISIBLE);
+						bg.setVisibility(View.GONE);
 					}
 					return true;
 				}
@@ -546,7 +547,7 @@ public class MovableOverlayView extends RelativeLayout {
 	}
 	
 	private void setDragActionBarVisibility(boolean visible, boolean with_corner) {
-		mDragToMoveBar.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+		mDragToMoveBar.setVisibility(visible ? View.VISIBLE : View.GONE);
 		if (with_corner) {
 			mTriangle.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
 			mQuadrant.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
