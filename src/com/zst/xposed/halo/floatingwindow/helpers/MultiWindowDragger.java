@@ -173,7 +173,7 @@ public class MultiWindowDragger {
 		display.getMetrics(metrics);
 		
 		WindowManager.LayoutParams lpp = mWindow.getAttributes();
-		if (top_bottom && (metrics.heightPixels > metrics.widthPixels)) {
+		if (top_bottom) {
 			// Portrait = Top-Bottom Split
 			lpp.width = metrics.widthPixels;
 			lpp.height = closest_to_edge ? pixels_from_edge
