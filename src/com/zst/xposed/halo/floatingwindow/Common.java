@@ -151,6 +151,7 @@ public class Common {
 	/* Others */
 	public static final String LOG_TAG = "XHaloFloatingWindow(SDK: " + Build.VERSION.SDK_INT + ") - ";
 	public static final int LAYOUT_RECEIVER_TAG = android.R.id.background;
+	public static final int LAYOUT_OVERLAY_TAG = android.R.id.extractArea;
 	public static final String XDA_THREAD = "http://forum.xda-developers.com/showthread.php?t=2419287";
 
 	/* SystemUI Broadcast */

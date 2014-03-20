@@ -125,14 +125,11 @@ public class MovableWindow {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
 				if (!isHoloFloat) return;
-				if (mOverlayView != null) {
-					FrameLayout decorView = (FrameLayout) activity.getWindow()
-							.peekDecorView().getRootView();
-					decorView.bringChildToFront(mOverlayView);
-				}
 				if (mMovableWindow) {
-					mOverlayView = (MovableOverlayView) activity
-							.findViewById(MovableOverlayView.ID_OVERLAY_VIEW);
+					FrameLayout decor_view = (FrameLayout) activity.getWindow()
+							.peekDecorView().getRootView();
+					mOverlayView = (MovableOverlayView) decor_view.getTag(Common.LAYOUT_OVERLAY_TAG);
+					decor_view.bringChildToFront(mOverlayView);
 					ActionBarColorHook.setTitleBar(mOverlayView);
 					
 					activity.sendBroadcast(new Intent(Common.REMOVE_NOTIFICATION_RESTORE
@@ -185,6 +182,7 @@ public class MovableWindow {
 
 				mOverlayView = new MovableOverlayView(activity, mModRes, mPref, mAeroSnap);
 				decorView.addView(mOverlayView, -1, MovableOverlayView.getParams());
+				decorView.setTagInternal(Common.LAYOUT_OVERLAY_TAG, mOverlayView);
 				// Add our overlay view
 				
 				ActionBarColorHook.setTitleBar(mOverlayView);
