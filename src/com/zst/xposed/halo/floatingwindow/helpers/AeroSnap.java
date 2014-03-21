@@ -142,6 +142,7 @@ public class AeroSnap {
 		}
 		if (isSnapped()) {
 			restoreOldPositionWithoutRefresh();
+			MultiWindowDragger.appsSignalHideDragger(mContext);
 		}
 		mSnap = side;
 		calculateSnap();
