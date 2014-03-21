@@ -64,7 +64,7 @@
     <string name="pref_whiteblacklist_summary">Wähle ein bestimmtes Verhalten, auf welche Art und Weise die Black- und Whitelist verwendet werden sollen</string>
 
     <!-- 4rd Preference Screen -->
-    <string name="pref_movable_top_title">Verschieben &amp; Größen verändern</string>
+    <string name="pref_movable_top_title">Verschieben &amp; Größe verändern</string>
     <string name="pref_movable_top_summary">Eine Eigenschaft, ähnlich wie Multi-Window für wahres Multi-Tasking.</string>
     <string name="pref_movable_sub_titlebar_title">Titelleiste Einstellungen</string>
     <string name="pref_movable_sub_titlebar_summary">Verändere das Verhalten der Titelleiste</string>
@@ -100,6 +100,8 @@
     <string name="pref_movable_resizing_aero_snap_enabled_summary">Ziehe ein Fenster in eine der 4 Ecken des Bildschirms, um die Größe auf die Hälfte des Bildschirms anzupassen, vergleichbar mit Aero Snap in Windows OS.</string>
     <string name="pref_movable_resizing_aero_snap_delay_title">Snap-in Dauer</string>
     <string name="pref_movable_resizing_aero_snap_delay_summary">Dauer in Millisekunden, bevor die Snap-in-Umrahmung gezeigt wird.</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_title">Teilungsbalken</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_summary">Zeigt einen Teilungsbalken, wenn 2 Fenster in jeweils eine Hälfte des Bildschirms eingerastet sind, um deren Teilungsverhältnis zu verändern.</string>
     <string name="pref_movable_moving_move_ab_title">Erlaube Verschieben mit Aktionsleiste</string>
     <string name="pref_movable_moving_move_ab_summary">Verwende die Aktionsleiste (oder den oberen Bereich für Apps ohne Aktionsleiste), um das Fenster zu verschieben. </string>
     <string name="pref_movable_triangle_enable_title">Zeige Dreieck</string>
@@ -172,7 +174,7 @@
     <string name="pref_recents_long_click_title">Task-Manager App-Symbol Lang-Klick-Aktion</string>
     <string name="pref_recents_long_click_summary">Fügt eine \"In Halo öffnen\" Option bei langem Drücken auf ein App-Symbol im Task-Manager hinzu.</string>
     <string name="pref_systemui_restart_title">SystemUI neu starten</string>
-    <string name="pref_systemui_restart_summary">SystemUI neu starten, falls Veränderungen nicht angezeigt werden.\n (Erfordert SU Erlaubnis)</string>
+    <string name="pref_systemui_restart_summary">SystemUI neu starten, falls Veränderungen nicht angezeigt werden.\n(Erfordert SU Erlaubnis)</string>
 
     <!-- 6th Preference Screen -->
     <string name="pref_testing_top_title">Testbereich</string>
