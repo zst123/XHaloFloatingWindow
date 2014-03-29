@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">XHaloFloatingWindow</string>
     <string name="app_description">Halo Floating Windows von Paranoid Android, verschiebbar &amp; größenveränderbar.(zst123)</string>
     <string name="app_blacklist">Blacklist</string>
     <string name="app_whitelist">Whitelist</string>
@@ -161,8 +162,8 @@
 
     <!-- 5th Preference Screen -->
     <string name="pref_systemui_top_title">SystemUI Mods</string>
-    <string name="pref_systemui_top_summary">Sammlung an SystemUI Modifikationen</string>
-    <string name="pref_notif_warning">Diese Modifikationen sind für AOSP-ROMs und daher nicht getestet mit anderen ROMs. Wenn du feststellst, dass die SystemUI kontinuierlich beendet wird, deaktiviere diese Modifikationen.</string>
+    <string name="pref_systemui_top_summary">Sammlung an SystemUI-Modifikationen</string>
+    <string name="pref_notif_warning">Diese Modifikationen sind für AOSP-ROMs und daher ungetestet mit anderen ROMs. Wenn du feststellst, dass die SystemUI kontinuierlich beendet wird, deaktiviere diese Modifikationen.</string>
     <string name="pref_notif_long_click_title">Benachrichtigung Lang-Klick-Aktion</string>
     <string name="pref_notif_long_click_summary">Fügt eine \"In Halo öffnen\" Option bei langem Drücken auf eine Benachrichtigung hinzu.</string>
     <string name="pref_notif_single_click_title">Benachrichtigung Ein-Klick-Aktion</string>
@@ -207,7 +208,7 @@
     <string name="option_gravity_2">Oben Mitte</string>
     <string name="option_gravity_3">Oben Rechts</string>
     <string name="option_gravity_4">Links Mitte</string>
-    <string name="option_gravity_5">Mitte (Default)</string>
+    <string name="option_gravity_5">Mitte (Standard)</string>
     <string name="option_gravity_6">Rechts Mitte</string>
     <string name="option_gravity_7">Unten Links</string>
     <string name="option_gravity_8">Unten Mitte</string>
@@ -215,6 +216,7 @@
 
     <!-- ColorPicker -->
     <string name="apply">Anwenden</string>
+    <string name="arrow_symbol">➙</string>
     <string name="color_hex">Hex-Code</string>
 
     <!-- Drag & Move Bar -->
@@ -222,7 +224,12 @@
     <string name="dnm_transparency">Transparenz</string>
     <string name="dnm_close_app">Fenster schließen</string>
     <string name="dnm_minimize">App minimieren</string>
-    <string name="dnm_minimize_notif_title">Wiederherstellen %1$s</string>
+    <string name="dnm_snap_window">Fenster einrasten</string>
+    <string name="dnm_snap_window_sub1">Oben</string>
+    <string name="dnm_snap_window_sub2">Unten</string>
+    <string name="dnm_snap_window_sub3">Links</string>
+    <string name="dnm_snap_window_sub4">Rechts</string>
+    <string name="dnm_minimize_notif_title">%1$s wiederherstellen</string>
     <string name="dnm_minimize_notif_summary">Diese schwebende App wurde minimiert</string>
     
     <!-- Notification Shade -->
@@ -248,5 +255,4 @@
     <string name="pref_statusbar_taskbar_number_summary">Wähle die maximale Anzahl an Apps, die in der Taskleiste gezeigt werden sollen\n(Erfordert Neustart der SystemUI)</string>
     <string name="pref_statusbar_taskbar_number_title">Maximale Anzahl an Apps</string>
     
-
 </resources>
