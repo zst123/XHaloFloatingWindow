@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">XHaloFloatingWindow</string>
-    <string name="app_description">從Paranoid Android移植而來的懸浮窗口功能的模塊。請通過在模塊內開啟"移動與調整"來使用懸浮窗口功能。（開發by zst123）</string>
+    <string name="app_description">從Paranoid Android移植而來的懸浮窗口功能的模塊。請通過在模塊內開啟“移動與調整”來使用懸浮窗口功能。（開發by zst123）</string>
     <string name="app_blacklist">黑名單</string>
     <string name="app_whitelist">白名單</string>
     <string name="app_testing">測試</string>
@@ -48,8 +47,8 @@
     <string name="pref_force_open_app_above_halo_summary">如果一個應用程序目前正處于懸浮模式，打開新的應用程序將強制在上面同樣變為懸浮模式。</string>
     <string name="pref_blacklist_title">應用程序黑名單</string>
     <string name="pref_blacklist_summary">選擇一個永遠不會打開為懸浮模式的應用程序列表。</string>
-    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。 
-
+    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。
+    
 你可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。</string>
     <string name="pref_blacklist_error">"打開應用程序信息時發生了一個錯誤。
 這是錯誤。
@@ -214,6 +213,11 @@
     <string name="dnm_transparency">透明度</string>
     <string name="dnm_close_app">關閉窗口</string>
     <string name="dnm_minimize">最小化應用程序</string>
+    <string name="dnm_snap_window">窗口分屏</string>
+    <string name="dnm_snap_window_sub1">頂部</string>
+    <string name="dnm_snap_window_sub2">底部</string>
+    <string name="dnm_snap_window_sub3">左側</string>
+    <string name="dnm_snap_window_sub4">右側</string>
     <string name="dnm_minimize_notif_title">恢復 %1$s</string>
     <string name="dnm_minimize_notif_summary">此懸浮應用程序已最小化。</string>
     <string name="notif_open_halo">打開為懸浮窗口</string>
@@ -237,5 +241,4 @@
     <string name="pref_statusbar_taskbar_number_summary">"選擇顯示在通知欄中的應用程序的數量最大值
 （需重啟SystemUI）"</string>
     <string name="pref_statusbar_taskbar_number_title">應用程序最大值</string>
-
 </resources>
