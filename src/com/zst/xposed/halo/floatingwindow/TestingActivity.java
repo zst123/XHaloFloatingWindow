@@ -1,28 +1,47 @@
 package com.zst.xposed.halo.floatingwindow;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TestingActivity extends Activity implements View.OnClickListener {
+public class TestingActivity extends Fragment implements View.OnClickListener {
+	
+	static TestingActivity mInstance;
+	
+	public static TestingActivity getInstance() {
+		if (mInstance == null) {
+			mInstance = new TestingActivity();
+		}
+		return mInstance;
+	}
 	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_testing);
+	}
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
+        return inflater.inflate(R.layout.activity_testing, container, false);
+    }
+	
+	@Override
+	public void onViewCreated(View view, Bundle savedInstanceState) {
 		initXposedLoaded(false);
 		initButtons();
 	}
 	
 	/* Hooked by this class to change loaded to true */
 	public void initXposedLoaded(boolean loaded) {
-		TextView title = (TextView) findViewById(android.R.id.title);
-		TextView subtitle = (TextView) findViewById(android.R.id.message);
-		View bg = findViewById(android.R.id.background);
+		TextView title = (TextView) getView().findViewById(android.R.id.title);
+		TextView subtitle = (TextView) getView().findViewById(android.R.id.message);
+		View bg = getView().findViewById(android.R.id.background);
 		if (loaded) {
 			bg.setBackgroundColor(0xFF669900);
 			title.setText(R.string.pref_testing_active_title);
@@ -35,9 +54,9 @@ public class TestingActivity extends Activity implements View.OnClickListener {
 	}
 	
 	private void initButtons() {
-		findViewById(R.id.button1).setOnClickListener(this);
-		findViewById(R.id.button2).setOnClickListener(this);
-		findViewById(R.id.Button01).setOnClickListener(this);
+		getView().findViewById(R.id.button1).setOnClickListener(this);
+		getView().findViewById(R.id.button2).setOnClickListener(this);
+		getView().findViewById(R.id.Button01).setOnClickListener(this);
 	}
 	
 	@Override
@@ -49,7 +68,7 @@ public class TestingActivity extends Activity implements View.OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.button2:
-			final Intent intent1 = new Intent(getPackageManager().getLaunchIntentForPackage(
+			final Intent intent1 = new Intent(getActivity().getPackageManager().getLaunchIntentForPackage(
 					"de.robv.android.xposed.installer"));
 			intent1.addFlags(Common.FLAG_FLOATING_WINDOW);
 			startActivity(intent1);

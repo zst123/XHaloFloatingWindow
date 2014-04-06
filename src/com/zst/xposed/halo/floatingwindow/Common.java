@@ -14,7 +14,6 @@ public class Common {
 	
 
 	/* Preference keys */
-	public static final String KEY_TESTING_SCREEN = "testing_screen";
 	public static final String KEY_ALPHA = "window_alpha";
 	public static final String KEY_DIM = "window_dim";
 	public static final String KEY_PORTRAIT_WIDTH = "window_portrait_width";

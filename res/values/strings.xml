@@ -16,6 +16,7 @@
     <string name="close_once">Remind me later</string>
     <string name="close_forever">Close Forever</string>
 
+	<string name="pref_main_top_title">Main Settings</string>
     <!-- First Preference Screen -->
     <string name="pref_window_top_title">Popup Window</string>
     <string name="pref_window_top_summary">Customize Window Properties</string>

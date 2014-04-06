@@ -26,12 +26,18 @@ import android.widget.Toast;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
-import com.zst.xposed.halo.floatingwindow.TestingActivity;
 
 public class MainFragment extends PreferenceFragment implements OnPreferenceClickListener {
 	
+	static MainFragment mInstance;
 	SharedPreferences mPref;
 	
+	public static MainFragment getInstance() {
+		if (mInstance == null) {
+			mInstance = new MainFragment();
+		}
+		return mInstance;
+	}
 	@Override
 	@SuppressLint("WorldReadableFiles")
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,6 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_STATUSBAR_TASKBAR_RESTART_SYSTEMUI).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_WHITELIST_APPS).setOnPreferenceClickListener(this);
-		findPreference(Common.KEY_TESTING_SCREEN).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_STATUSBAR_TASKBAR_PINNED_APPS).setOnPreferenceClickListener(this);
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
@@ -69,9 +74,6 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 			return true;
 		}else if (k.equals(Common.KEY_WHITELIST_APPS)) {
 			showWhitelistActivity();
-			return true;
-		}else if (k.equals(Common.KEY_TESTING_SCREEN)) {
-			showTestScreen();
 			return true;
 		}else if (k.equals(Common.KEY_STATUSBAR_TASKBAR_PINNED_APPS)) {
 			showStatusbarTaskbarPinAppActivity();
@@ -230,9 +232,5 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 	
 	private void showBlacklistActivity() {
 		startActivity(new Intent(getActivity(), BlacklistActivity.class));
-	}
-	
-	private void showTestScreen() {
-		startActivity(new Intent(getActivity(), TestingActivity.class));
 	}
 }
