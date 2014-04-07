@@ -39,6 +39,7 @@ public class SystemUIMultiWindow {
 	 * Since we are dealing with movable and resizable windows, we make use
 	 * of Aero Snap to deal with this. */
 	
+	private static final int MOVE_MAX_RANGE = 10;
 	private static final int MIN_SIZE = 40;
 	private static final int COLOR_PRESSED = 0xBB3d464d;
 	private static final int COLOR_DEFAULT = 0xFF2f3238;
@@ -64,6 +65,7 @@ public class SystemUIMultiWindow {
 	// Window Management Values
 	private static boolean isSplitView;
 	private static boolean mTopBottomSplit;
+	private static boolean mIsFingerDraggingBar;
 	private static int mPixelsFromEdge;
 	private static int mScreenHeight;
 	private static int mScreenWidth;
@@ -170,6 +172,8 @@ public class SystemUIMultiWindow {
 	private static final View.OnLongClickListener LONGPRESS_MENU = new View.OnLongClickListener() {
 		@Override
 		public boolean onLongClick(View v) {
+			if (mIsFingerDraggingBar) return false;
+			
 	    	PopupMenu popup = new PopupMenu(mContext, mViewFocusIndicator);
 			popup.getMenu().add("Swap Windows");
 			popup.getMenu().add("Reset Positions");
@@ -221,6 +225,9 @@ public class SystemUIMultiWindow {
 				mViewDragger.setBackgroundColor(COLOR_PRESSED);
 				break;
 			case MotionEvent.ACTION_MOVE:
+				if (moveRangeAboveLimit(event)) {
+					mIsFingerDraggingBar = true;
+				}
 				mPixelsFromEdge = (int) (mTopBottomSplit ? event.getRawY() : event.getRawX());
 				mPixelsFromEdge = adjustPixelsFromEdge(mPixelsFromEdge, mTopBottomSplit);
 				if (mTopBottomSplit) {
@@ -235,6 +242,7 @@ public class SystemUIMultiWindow {
 				mWm.updateViewLayout(mViewContent, mParamz);
 				break;
 			case MotionEvent.ACTION_UP:
+				mIsFingerDraggingBar = false;
 				sendWindowInfo(mTopBottomSplit, mPixelsFromEdge, false);
 				mViewDragger.setBackgroundColor(COLOR_DEFAULT);
 				break;
@@ -381,5 +389,19 @@ public class SystemUIMultiWindow {
 		intent.putExtra(Common.INTENT_APP_SWAP, swap);
 		// tell app to swap position
 		mContext.sendBroadcast(intent);
+	}
+	
+	static float[] mPreviousRange = new float[2];
+	private static boolean moveRangeAboveLimit(MotionEvent event) {
+		final float x = event.getRawX();
+		final float y = event.getRawY();
+		
+		boolean returnValue = false;
+		if (Math.abs(mPreviousRange[0] - x) > MOVE_MAX_RANGE)
+			returnValue = true;
+		if (Math.abs(mPreviousRange[1] - y) > MOVE_MAX_RANGE)
+			returnValue = true;
+
+		return returnValue;
 	}
 }
