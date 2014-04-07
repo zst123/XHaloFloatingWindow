@@ -339,8 +339,8 @@ public class MovableWindow {
 		return true;
 	}
 
-	private static boolean initLayoutPositioning(Window window) {
-		if (!mRetainStartPosition)
+	private static boolean initLayoutPositioning(Window window, boolean force) {
+		if (!mRetainStartPosition && !force)
 			return false;
 
 		final WindowManager.LayoutParams params = window.getAttributes();
@@ -418,8 +418,23 @@ public class MovableWindow {
 	}
 
 	public static void initAndRefreshLayoutParams(Window w, Context ctx, String pkg) {
-		if (initLayoutPositioning(w)) {
+		initAndRefreshLayoutParams(w, ctx, pkg, false);
+	}
+	
+	public static void initAndRefreshLayoutParams(Window w, Context ctx, String pkg, boolean force) {
+		if (initLayoutPositioning(w, false)) {
 			refreshLayoutParams(ctx, pkg);
+		} else if (force) {
+			if (initLayoutPositioning(w, true)) {
+				WindowManager.LayoutParams params = w.getAttributes();
+				params.x = layout_x;
+				params.y = layout_y;
+				params.width = layout_width;
+				params.height = layout_height;
+				params.alpha = layout_alpha;
+				params.gravity = Gravity.LEFT | Gravity.TOP;
+				w.setAttributes(params);
+			}
 		}
 	}
 	private static void refreshLayoutParams(Context ctx, String pkg) {

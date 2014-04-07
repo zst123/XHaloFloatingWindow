@@ -265,7 +265,7 @@ public class AeroSnap {
 	
 	// send broadcast to sync the windows
 	private void refreshLayout() {
-		MovableWindow.initAndRefreshLayoutParams(mWindow, mContext, mContext.getPackageName());
+		MovableWindow.initAndRefreshLayoutParams(mWindow, mContext, mContext.getPackageName(), true);
 	}
 	
 	// stop the handler from continuing
