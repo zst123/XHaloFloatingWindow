@@ -63,7 +63,9 @@ public class AeroSnap {
 	public void dispatchTouchEvent(MotionEvent event) {
 		switch (event.getAction()) {
 		case MotionEvent.ACTION_UP:
-			finishSnap(isValidSnap() && mTimeoutDone);
+			if (!mSnapped) {
+				finishSnap(isValidSnap() && mTimeoutDone);
+			}
 			discardTimeout();
 			mChangedPreviousRange = false;
 			break;
