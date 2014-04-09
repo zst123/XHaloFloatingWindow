@@ -97,15 +97,11 @@ public class MovableOverlayView extends RelativeLayout {
 		setId(ID_OVERLAY_VIEW);
 		setIsRootNamespace(false);
 		
-		mDragToMoveBar = findViewById(R.id.movable_action_bar);
-		mTriangle = (ImageView) findViewById(R.id.movable_corner);
-		mQuadrant = (ImageView) findViewById(R.id.movable_quadrant);
-		mBorderOutline = findViewById(R.id.movable_background);
+		mDragToMoveBar = findViewByIdHelper(this, R.id.movable_action_bar, "movable_action_bar");
+		mTriangle = (ImageView) findViewByIdHelper(this, R.id.movable_corner, "movable_corner");
+		mQuadrant = (ImageView) findViewByIdHelper(this, R.id.movable_quadrant, "movable_quadrant");
+		mBorderOutline = findViewByIdHelper(this, R.id.movable_background, "movable_background");
 		mBorderOutline.bringToFront();
-		
-		setIsRootNamespace(true);
-		// this is to prevent findViewById from searching us so we do
-		// not affect the current app as our id's might be the same
 		
 		// set preferences values
 		boolean titlebar_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ENABLED,
@@ -123,6 +119,10 @@ public class MovableOverlayView extends RelativeLayout {
 		
 		// init stuff
 		initCornersViews();
+		
+		setIsRootNamespace(true);
+		// After initializing everything, set this to tell findViewById to skip
+		// our layout. We do this to prevent id's conflicting with the current app.
 	}
 	
 	private View findViewByIdHelper(View view, int id, String tag) {

@@ -16,6 +16,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:tag="movable_background"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false" />
@@ -27,6 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:background="#ffffff"
+        android:tag="movable_quadrant"
         android:clickable="true"
         android:longClickable="true"
         android:scaleType="fitXY" />
@@ -38,6 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:background="#ffffff"
+        android:tag="movable_corner"
         android:clickable="true"
         android:longClickable="true"
         android:scaleType="fitXY" />
@@ -50,6 +53,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="false"
         android:layout_below="@+id/movable_titlebar"
+        android:tag="movable_action_bar"
         android:background="#b0333333"
         android:focusable="true"
         android:focusableInTouchMode="true" >
