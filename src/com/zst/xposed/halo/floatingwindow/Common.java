@@ -168,4 +168,5 @@ public class Common {
 	public static final String INTENT_APP_EXTRA = "layout_extra";
 	public static final String INTENT_APP_SWAP = "layout_swap";
 	public static final String INTENT_APP_SNAP = "layout_snap";
+	public static final String INTENT_APP_TIME = "time";
 }

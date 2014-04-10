@@ -388,6 +388,7 @@ public class SystemUIMultiWindow {
 		// extra space so app is not overlapped by dragger bar
 		intent.putExtra(Common.INTENT_APP_SWAP, swap);
 		// tell app to swap position
+		intent.putExtra(Common.INTENT_APP_TIME, System.currentTimeMillis());
 		mContext.sendBroadcast(intent);
 	}
 	

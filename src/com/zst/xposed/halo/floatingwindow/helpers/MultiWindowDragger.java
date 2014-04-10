@@ -56,14 +56,22 @@ public class MultiWindowDragger {
 		}
 	}
 	
+	static long mPreviousTimeOfReceiver;
 	final static BroadcastReceiver BROADCAST_RECEIVER = new BroadcastReceiver() {
 		@Override
-		public void onReceive(Context ctx, Intent intent) {
+		public synchronized void onReceive(Context ctx, Intent intent) {
 			if (!mEnabled) return;
 			
 			if (!AeroSnap.isSnapped()) {
 				return;
 			}
+			
+			long current_time = intent.getLongExtra(Common.INTENT_APP_TIME, -1);
+			if (current_time == mPreviousTimeOfReceiver) {
+				// This broadcast receiver was called twice. Skip.
+				return;
+			}
+			mPreviousTimeOfReceiver = current_time;
 			
 			int pixels_from_edge = intent.getIntExtra(Common.INTENT_APP_PARAMS, 100);
 			int pixels_offset_from_dragger = intent.getIntExtra(Common.INTENT_APP_EXTRA, 10);
