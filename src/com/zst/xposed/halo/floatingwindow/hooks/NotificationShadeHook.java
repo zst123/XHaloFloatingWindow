@@ -123,13 +123,12 @@ public class NotificationShadeHook {
 									.getDeclaredField(("pkg")).get(sbn);
 							final Notification n = (Notification) sbn.getClass()
 									.getDeclaredField(("notification")).get(sbn);
-							final PendingIntent contentIntent = n.contentIntent;
 							
 							if (packageNameF == null) return;
 							if (v.getWindowToken() == null) return;
 							
 							try {
-								launchFloating(contentIntent, v.getContext());
+								launchFloating(n.contentIntent, v.getContext());
 								closeNotificationShade(v.getContext());
 							} catch (Exception e) {
 								android.widget.Toast.makeText(v.getContext(),
@@ -185,7 +184,6 @@ public class NotificationShadeHook {
 									.getDeclaredField(("pkg")).get(sbn);
 							final Notification n = (Notification) sbn.getClass()
 									.getDeclaredField(("notification")).get(sbn);
-							final PendingIntent contentIntent = n.contentIntent;
 							
 						if (packageNameF == null) return false;
 						if (v.getWindowToken() == null) return false;
@@ -210,10 +208,10 @@ public class NotificationShadeHook {
 										ctx.startActivity(intent);
 										closeNotificationShade(ctx);
 									} else if (item.getTitle().equals(TEXT_OPEN_IN_HALO)) {
-										launchFloating(contentIntent, ctx);
+										launchFloating(n.contentIntent, ctx);
 										closeNotificationShade(ctx);
 									} else if (item.getTitle().equals(TEXT_OPEN_IN_NORMALLY)) {
-										launch(new Intent(), contentIntent, ctx);
+										launch(new Intent(), n.contentIntent, ctx);
 										closeNotificationShade(ctx);
 									} else {
 										return false;
@@ -260,8 +258,6 @@ public class NotificationShadeHook {
 							final Notification n = (Notification) sbn.getClass()
 									.getDeclaredField(("notification")).get(sbn);
 							
-							final PendingIntent contentIntent = n.contentIntent;
-							
 							if (packageNameF == null) return false;
 							if (v.getWindowToken() == null) return false;
 
@@ -283,10 +279,10 @@ public class NotificationShadeHook {
 													mContext.startActivity(intent);
 													closeNotificationShade(mContext);
 									} else if (item.getTitle().equals(TEXT_OPEN_IN_HALO)) {
-										launchFloating(contentIntent, mContext);
+										launchFloating(n.contentIntent, mContext);
 										closeNotificationShade(mContext);
 									} else if (item.getTitle().equals(TEXT_OPEN_IN_NORMALLY)) {
-										launch(new Intent(), contentIntent, mContext);
+										launch(new Intent(), n.contentIntent, mContext);
 										closeNotificationShade(mContext);
 									} else {
 										return false;
@@ -380,6 +376,7 @@ public class NotificationShadeHook {
 		launch(intent, pIntent, mContext);
 	}
 	private static void launch(Intent intent, PendingIntent pIntent, Context mContext) { 
+		if (pIntent == null) return;
 		try {
 			android.app.ActivityManagerNative.getDefault().resumeAppSwitches();
 			android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
