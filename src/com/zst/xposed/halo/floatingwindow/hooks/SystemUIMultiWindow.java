@@ -66,7 +66,7 @@ public class SystemUIMultiWindow {
 	private static boolean isSplitView;
 	private static boolean mTopBottomSplit;
 	private static boolean mIsFingerDraggingBar;
-	private static int mPixelsFromEdge;
+	private static int mPixelsFromEdge = -1;
 	private static int mScreenHeight;
 	private static int mScreenWidth;
 	private static boolean mUseOldDraggerLocation;
@@ -293,6 +293,13 @@ public class SystemUIMultiWindow {
 	}
 	
 	private static void showDragger(boolean top_bottom) {
+		try {
+			// try removing in case it wasn't already
+			// so as to prevent duplicated bars
+			mWm.removeView(mViewContent);
+		} catch (Exception e) {
+			// it is already removed
+		}
 		isSplitView = true;
 		
 		DisplayMetrics metrics = new DisplayMetrics();
@@ -316,7 +323,7 @@ public class SystemUIMultiWindow {
 		mParamz.x = top_bottom ? 0 : (mScreenWidth / 2);
 		mParamz.y = top_bottom ? (mScreenHeight / 2) : 0;
 		
-		if (mUseOldDraggerLocation) {
+		if (mUseOldDraggerLocation && mPixelsFromEdge != -1) {
 			mParamz.x = top_bottom ? 0 : mPixelsFromEdge;
 			mParamz.y = top_bottom ? mPixelsFromEdge : 0;
 			mUseOldDraggerLocation = false;
