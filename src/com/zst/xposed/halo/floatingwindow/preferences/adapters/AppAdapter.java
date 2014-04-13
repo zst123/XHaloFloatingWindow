@@ -65,6 +65,8 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 						final int index = Collections.binarySearch(temp, item);
 						if (index < 0) {
 							temp.add((-index - 1), item);
+						} else {
+							temp.add((index + 1), item);
 						}
 					}
 					mInstalledApps = temp;
