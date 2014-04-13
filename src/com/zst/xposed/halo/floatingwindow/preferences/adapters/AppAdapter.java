@@ -49,13 +49,15 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 		update();
 	}
 	
-	public void update() {
-		isUpdating = true;
-		notifyDataSetChangedOnHandler();
+	public synchronized void update() {
+		if (isUpdating == true) {
+			return;
+		}
 		toggleProgressBarVisible(true);
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+					isUpdating = true;
 					final List<AppItem> temp = new LinkedList<AppItem>(); 
 					for (PackageInfo info : mTemporarylist) {
 						final AppItem item = new AppItem();
@@ -69,22 +71,19 @@ public class AppAdapter extends BaseAdapter implements Filterable {
 							temp.add((index + 1), item);
 						}
 					}
-					mInstalledApps = temp;
-					notifyDataSetChangedOnHandler();
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mInstalledApps = temp;
+							notifyDataSetChanged();
+							isUpdating = false;
+						}
+					});					
 					toggleProgressBarVisible(false);
-					isUpdating = false;
 			}
 		}).start();
 	}
 	
-	private void notifyDataSetChangedOnHandler() {
-		mHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				notifyDataSetChanged();
-			}
-		});
-	}
 	private void toggleProgressBarVisible(final boolean b) {
 		mHandler.post(new Runnable() {
 			@Override

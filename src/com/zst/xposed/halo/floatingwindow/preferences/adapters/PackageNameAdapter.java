@@ -65,26 +65,26 @@ public class PackageNameAdapter extends BaseAdapter {
 						item.icon =  ai.loadIcon(mPackageManager);
 						item.packageName = ai.packageName;
 						final int index = Collections.binarySearch(temp, item);
-						if (index < 0)
+						if (index < 0) {
 							temp.add((-index - 1), item);
+						} else {
+							temp.add((index + 1), item);
+						}
+						
 						} catch (Exception e) {				
 						}
 					}
 					mApps.clear();
-					mApps = temp;
-					notifyDataSetChangedOnHandler();
+					mHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							mApps = temp;
+							notifyDataSetChanged();
+						}
+					});
 				}
 			}
 		}).start();
-	}
-	
-	private void notifyDataSetChangedOnHandler() {
-		mHandler.post(new Runnable() {
-			@Override
-			public void run() {
-				notifyDataSetChanged();
-			}
-		});
 	}
 	
 	@Override
