@@ -141,6 +141,16 @@ public class MovableWindow {
 				MultiWindowDragger.setWindow(activity.getWindow());
 				// register listener for multiwindow dragger
 				MultiWindowDragger.appsRegisterListener(activity, true);
+				
+				if (mMovableWindow && isHoloFloat && mAeroSnap != null) {
+					final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
+							AeroSnap.SNAP_NONE);
+					if (snap != AeroSnap.SNAP_NONE) {
+						mAeroSnap.forceSnap(snap);
+						//FIXME bug with whatsapp starting up normally and not snapped.
+					}
+					activity.getIntent().removeExtra(Common.EXTRA_SNAP_SIDE);
+				}
 			}
 		});
 

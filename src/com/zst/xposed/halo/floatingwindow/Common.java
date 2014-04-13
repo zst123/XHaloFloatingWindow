@@ -145,6 +145,7 @@ public class Common {
 
 	/* Xposed Constants */
 	public static final int FLAG_FLOATING_WINDOW = 0x00002000;
+	public static final String EXTRA_SNAP_SIDE = THIS_PACKAGE_NAME + ".EXTRA_SNAP_SIDE";
 	public static final String REFRESH_APP_LAYOUT = THIS_PACKAGE_NAME + ".REFRESH_APP_LAYOUT";
 
 	/* Others */
