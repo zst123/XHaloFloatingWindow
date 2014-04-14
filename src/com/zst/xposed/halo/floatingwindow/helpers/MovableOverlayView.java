@@ -43,11 +43,11 @@ public class MovableOverlayView extends RelativeLayout {
 	private static final int ACTION_CLICK_QUADRANT = 0x2;
 	private static final int ACTION_LONGPRESS_QUADRANT = 0x3;
 	
-	// App Objects
-	private Activity mActivity;
-	private Resources mResource;
-	private AeroSnap mAeroSnap;
-	private SharedPreferences mPref;
+	// (constants) App Objects
+	private final Activity mActivity;
+	private final Resources mResource;
+	private final AeroSnap mAeroSnap;
+	private final SharedPreferences mPref;
 	
 	// Views
 	public View mDragToMoveBar;
