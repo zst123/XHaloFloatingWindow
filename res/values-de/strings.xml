@@ -15,7 +15,8 @@
     <string name="help">Hilfe</string>
     <string name="close_once">Erinnere mich später</string>
     <string name="close_forever">Schließe für immer</string>
-
+    
+        <string name="pref_main_top_title">Haupteinstellungen</string>
     <!-- First Preference Screen -->
     <string name="pref_window_top_title">Popup-Fenster</string>
     <string name="pref_window_top_summary">Passe die Eigenschaften des Fensters an</string>
@@ -46,7 +47,7 @@
     <string name="pref_app_pause_summary_on">Pausiere die untere App, wenn sich ein Halo-Fenster darüber befindet (Standard)</string>
     <string name="pref_keyboard_title">Tastatur-Modus</string>
     <string name="pref_keyboard_summary">Die Aktion, die das Popup macht, wenn sich die Tastatur öffnet.</string>
-    <string name="pref_disable_auto_close_title">Deaktiviere Auto-Schließen</string>
+    <string name="pref_disable_auto_close_title">Deaktiviere automatisches Schließen</string>
     <string name="pref_disable_auto_close_summary">Deaktiviere das Schließen des App-Fensters, wenn der Bildschirm ausgeschaltet ist oder "Home" gedrückt wird.</string>
     <string name="pref_show_recents_title">Zeige App im Task-Manager</string>
     <string name="pref_show_recents_summary">Erlaubt der App, im Task-Manager gezeigt zu werden.</string>
@@ -79,8 +80,8 @@
     <string name="pref_movable_sub_quadrant_summary">Verändere die Eigenschaften des Viertelkreises unten rechts</string>
     <string name="pref_movable_sub_border_title">Rand Einstellungen</string>
     <string name="pref_movable_sub_border_summary">Verändere die Eigenschaften der Grenze des Fensters</string>
-    <string name="pref_movable_sub_other_title">Andere Einstellungen</string>
-    <string name="pref_movable_sub_other_summary">Verändere verschiedene Eigenschaften</string>
+    <string name="pref_movable_sub_other_title">Weitere Einstellungen</string>
+    <string name="pref_movable_sub_other_summary">Ändere verschiedene Einstellungen</string>
     <string name="pref_movable_titlebar_enabled_title">Aktiviere Titelleiste</string>
     <string name="pref_movable_titlebar_enabled_summary">Zeige eine Titelleiste an der oberen Kante des Fensters zum Umherziehen des Fensters</string>
     <string name="pref_movable_titlebar_size_title">Größe der Titelleiste</string>
@@ -92,7 +93,7 @@
     <string name="pref_movable_titlebar_separator_color_title">Farbe der Trennlinie</string>
     <string name="pref_movable_titlebar_separator_color_summary">Die Farbe der Trennlinie unterhalb der Titelleiste</string>
     <string name="pref_movable_moving_start_pos_title">Behalte Fensterposition beim Start</string>
-    <string name="pref_movable_moving_start_pos_summary">Beim öffnen eines neuen Fensters der selben App, wird dieses Fenster in der gleichen Position und Größe erscheinen, wie das ursprünglicche Fenster</string>
+    <string name="pref_movable_moving_start_pos_summary">Beim Öffnen eines neuen Fensters der selben App, wird dieses Fenster in der gleichen Position und Größe erscheinen, wie das ursprüngliche Fenster.</string>
     <string name="pref_movable_moving_move_pos_title">Konstante Fensterposition</string>
     <string name="pref_movable_moving_move_pos_summary">Beim Verschieben oder in der Größe verändern eines neuen Fensters der selben App, wird das Fenster dahinter auch aktualisiert.</string>
     <string name="pref_movable_resizing_live_update_title">Direkte Aktualisierung beim Verändern der Größe</string>
@@ -103,6 +104,8 @@
     <string name="pref_movable_resizing_aero_snap_delay_summary">Dauer in Millisekunden, bevor die Snap-in-Umrahmung gezeigt wird.</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_title">Teilungsbalken</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_summary">Zeigt einen Teilungsbalken, wenn 2 Fenster in jeweils eine Hälfte des Bildschirms eingerastet sind, um deren Teilungsverhältnis zu verändern.</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_title">Zur nächsten App wischen</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_summary">Wische mit 2 Fingern von rechts bzw. links, wenn 2 oder mehrere Fenster in die selbe Seite des Bildschirms eingerastet sind, um zwischen ihnen zu wechseln.</string>
     <string name="pref_movable_moving_move_ab_title">Erlaube Verschieben mit Aktionsleiste</string>
     <string name="pref_movable_moving_move_ab_summary">Verwende die Aktionsleiste (oder den oberen Bereich für Apps ohne Aktionsleiste), um das Fenster zu verschieben. </string>
     <string name="pref_movable_triangle_enable_title">Zeige Dreieck</string>
@@ -139,7 +142,7 @@
     <string name="pref_movable_border_color_summary">Farbe der Grenze</string>
     <string name="pref_movable_border_thickness_title">Randbreite</string>
     <string name="pref_movable_border_thickness_summary">Dicke der Grenze in Pixeln</string>
-    <string name="pref_movable_others_minimize_to_statusbar_title">Minimiere in die Statusleiste</string>
+    <string name="pref_movable_others_minimize_to_statusbar_title">In die Statusleiste minimieren</string>
     <string name="pref_movable_others_minimize_to_statusbar_summary">Zeige minimierte Apps in der Stausleiste.</string>
     <string name="pref_movable_others_tinted_title_enable_title">Farbige Titelleiste</string>
     <string name="pref_movable_others_tinted_title_enable_summary">Verwende die Farbe der Aktionsleiste für die Titelleiste.\nBasiert auf Tinted StatusBar von MohammadAG. \n(Erfordert Neustart von geöffneten Apps, um Wirkung zu zeigen)</string>
