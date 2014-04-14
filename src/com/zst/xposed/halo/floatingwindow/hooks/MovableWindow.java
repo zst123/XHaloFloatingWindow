@@ -5,6 +5,7 @@ import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
 import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowDragger;
+import com.zst.xposed.halo.floatingwindow.helpers.SwipeToNextApp;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import android.app.ActionBar;
@@ -60,6 +61,7 @@ public class MovableWindow {
 	static AeroSnap mAeroSnap;
 	static boolean mAeroSnapEnabled;
 	static int mAeroSnapDelay;
+	static boolean mAeroSnapSwipeApp;
 
 	static final int ID_NOTIFICATION_RESTORE = 22222222;
 
@@ -106,6 +108,9 @@ public class MovableWindow {
 				mAeroSnapDelay = mPref.getInt(Common.KEY_WINDOW_RESIZING_AERO_SNAP_DELAY,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY);
 				mAeroSnap = mAeroSnapEnabled ? new AeroSnap(activity.getWindow(), mAeroSnapDelay) : null;
+				
+				mAeroSnapSwipeApp = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP);
 				
 				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
@@ -316,6 +321,11 @@ public class MovableWindow {
 				int height = (ab != null) ? ab.getHeight() : Util.dp(48, a.getApplicationContext());
 				if (viewY < height && mAeroSnap != null && mActionBarDraggable) {
 					mAeroSnap.dispatchTouchEvent(event);
+				}
+				
+				if (!mActionBarDraggable || viewY >= height) {
+					if (mAeroSnapSwipeApp && AeroSnap.isSnapped())
+						SwipeToNextApp.onTouchEvent(param, a, event, mOverlayView.mBorderOutline);
 				}
 			}
 		});

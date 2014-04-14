@@ -8,7 +8,7 @@
     <!-- Set all drawables programatically. -->
     <!-- There'll be inflation problems cause we inflate as another activity -->
 
-    <View
+    <ImageView
         android:id="@+id/movable_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,6 +19,7 @@
         android:tag="movable_background"
         android:clickable="false"
         android:focusable="false"
+        android:scaleType="fitXY"
         android:focusableInTouchMode="false" />
 
     <ImageView

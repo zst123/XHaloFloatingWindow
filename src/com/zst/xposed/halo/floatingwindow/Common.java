@@ -33,6 +33,7 @@ public class Common {
 	public static final String KEY_WINDOW_RESIZING_LIVE_UPDATE = "window_resizing_live_updating";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED = "window_resizing_aero_snap_enabled";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_DELAY = "window_resizing_aero_snap_delay";
+	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP = "window_resizing_aero_snap_swipe_app";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = "window_resizing_aero_snap_splitbar";
 	public static final String KEY_WINDOW_TITLEBAR_ENABLED = "window_moving_titlebar_enabled";
 	public static final String KEY_WINDOW_TITLEBAR_SIZE = "window_moving_titlebar_size";
@@ -102,6 +103,7 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_RESIZING_LIVE_UPDATE = false;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED = true;
 	public static final int DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY = 1000;
+	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP = false;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = true;
 	public static final int DEFAULT_WINDOW_TITLEBAR_SIZE = 32;
@@ -163,6 +165,7 @@ public class Common {
 	public static final String SEND_MULTIWINDOW_INFO = THIS_PACKAGE_NAME + ".SEND_MULTIWINDOW_INFO";
 	public static final String SEND_MULTIWINDOW_APP_FOCUS = THIS_PACKAGE_NAME + ".SEND_MULTIWINDOW_APP_FOCUS";
 	public static final String REMOVE_NOTIFICATION_RESTORE = THIS_PACKAGE_NAME + ".REMOVE_NOTIFICATION_RESTORE.";
+	public static final String SEND_MULTIWINDOW_SWIPE = THIS_PACKAGE_NAME + ".SEND_MULTIWINDOW_SWIPE.";
 	public static final String INTENT_APP_TOKEN = "token";
 	public static final String INTENT_APP_ID = "id";
 	public static final String INTENT_APP_PARAMS = "layout_paramz";

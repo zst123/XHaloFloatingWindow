@@ -2,7 +2,8 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
@@ -57,10 +58,10 @@ public class SystemUIMultiWindow {
 	private static WindowManager.LayoutParams mParamz;
 	
 	// App Snap Lists
-	private static HashSet<String> mTopList = new HashSet<String>();
-	private static HashSet<String> mBottomList = new HashSet<String>();
-	private static HashSet<String> mLeftList = new HashSet<String>();
-	private static HashSet<String> mRightList = new HashSet<String>();
+	private static LinkedHashSet<String> mTopList = new LinkedHashSet<String>();
+	private static LinkedHashSet<String> mBottomList = new LinkedHashSet<String>();
+	private static LinkedHashSet<String> mLeftList = new LinkedHashSet<String>();
+	private static LinkedHashSet<String> mRightList = new LinkedHashSet<String>();
 	
 	// Window Management Values
 	private static boolean isSplitView;
@@ -89,6 +90,17 @@ public class SystemUIMultiWindow {
 							new IntentFilter(Common.SHOW_MULTIWINDOW_DRAGGER));
 					mContext.registerReceiver(APP_TOUCH_RECEIVER,
 							new IntentFilter(Common.SEND_MULTIWINDOW_APP_FOCUS));
+					mContext.registerReceiver(new BroadcastReceiver() {
+
+						@Override
+						public void onReceive(Context context, Intent intent) {
+							swipeToNextApp(intent.getStringExtra(Common.INTENT_APP_ID), // pkg name
+									intent.getIntExtra(Common.INTENT_APP_SNAP, AeroSnap.SNAP_NONE),
+									intent.getBooleanExtra(Common.INTENT_APP_EXTRA, false)); // direction
+						}
+						
+					},
+							new IntentFilter(Common.SEND_MULTIWINDOW_SWIPE));
 				}
 			});
 		} catch (Throwable e) {
@@ -185,13 +197,13 @@ public class SystemUIMultiWindow {
 						sendWindowInfo(mTopBottomSplit, mPixelsFromEdge, true);
 						// Tell apps to swap positions
 						if (mTopBottomSplit) {
-							final HashSet<String> old_top = mTopList;
-							final HashSet<String> old_bottom = mBottomList;
+							final LinkedHashSet<String> old_top = mTopList;
+							final LinkedHashSet<String> old_bottom = mBottomList;
 							mTopList = old_bottom;
 							mBottomList = old_top;
 						} else {
-							final HashSet<String> old_left = mLeftList;
-							final HashSet<String> old_right = mRightList;
+							final LinkedHashSet<String> old_left = mLeftList;
+							final LinkedHashSet<String> old_right = mRightList;
 							mLeftList = old_right;
 							mRightList = old_left;
 						}
@@ -411,5 +423,68 @@ public class SystemUIMultiWindow {
 			returnValue = true;
 
 		return returnValue;
+	}
+	
+	/**
+	 * Switch to another app on swipe gesture
+	 * @param current_app_pkg - Package name of App that received swipe gesture
+	 * @param app_position - The Snap Position of the App that received the swipe gesture
+	 * @param swiped_before - The swipe of the gesture from the left/top(before) or right/bottom(after)
+	 * @return true if the swipe was successful
+	 */
+	private static boolean swipeToNextApp(String current_app_pkg, int app_position, boolean swiped_before) {
+		ArrayList<String> list;
+		
+		switch (app_position) {
+		case AeroSnap.SNAP_TOP:
+			list = new ArrayList<String>(mTopList);
+			break;
+		case AeroSnap.SNAP_BOTTOM:
+			list = new ArrayList<String>(mBottomList);
+			break;
+		case AeroSnap.SNAP_LEFT:
+			list = new ArrayList<String>(mLeftList);
+			break;
+		case AeroSnap.SNAP_RIGHT:
+			list = new ArrayList<String>(mRightList);
+			break;
+		case AeroSnap.SNAP_NONE:
+		default:
+			return false;
+		}
+
+		final int index = list.indexOf(current_app_pkg);
+		if (index == -1) 
+			return false;
+		
+		String next_app_pkg;
+		
+		if (!swiped_before) {
+			// swiped to right/bottom
+			if (index + 1 < list.size()) {
+				next_app_pkg = list.get(index + 1);
+			} else {
+				next_app_pkg = list.get(0);
+			}
+		} else {
+			// swiped to left/top
+			if (index - 1 >= 0) {
+				next_app_pkg = list.get(index - 1);
+			} else {
+				next_app_pkg = list.get(list.size() - 1);
+			}
+		}
+		
+		try {
+			Intent next_intent = mContext.getPackageManager()
+					.getLaunchIntentForPackage(next_app_pkg);
+			next_intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+			next_intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			next_intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			mContext.startActivity(next_intent);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }

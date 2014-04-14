@@ -106,6 +106,13 @@
                 android:key="window_resizing_aero_snap_splitbar"
                 android:summary="@string/pref_movable_resizing_aero_snap_splitbar_summary"
                 android:title="@string/pref_movable_resizing_aero_snap_splitbar_title" />
+            
+            <SwitchPreference
+                android:defaultValue="false"
+                android:dependency="window_resizing_aero_snap_enabled"
+                android:key="window_resizing_aero_snap_swipe_app"
+                android:summary="@string/pref_movable_resizing_aero_snap_swipe_app_summary"
+                android:title="@string/pref_movable_resizing_aero_snap_swipe_app_title" />
         </PreferenceCategory>
     </PreferenceScreen>
 

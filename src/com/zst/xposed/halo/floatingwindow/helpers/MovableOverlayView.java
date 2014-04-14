@@ -53,7 +53,7 @@ public class MovableOverlayView extends RelativeLayout {
 	public View mDragToMoveBar;
 	public ImageView mQuadrant;
 	public ImageView mTriangle;
-	public View mBorderOutline;
+	public ImageView mBorderOutline;
 	
 	public RelativeLayout mTitleBarHeader;
 	public ImageButton mTitleBarClose;
@@ -100,7 +100,7 @@ public class MovableOverlayView extends RelativeLayout {
 		mDragToMoveBar = findViewByIdHelper(this, R.id.movable_action_bar, "movable_action_bar");
 		mTriangle = (ImageView) findViewByIdHelper(this, R.id.movable_corner, "movable_corner");
 		mQuadrant = (ImageView) findViewByIdHelper(this, R.id.movable_quadrant, "movable_quadrant");
-		mBorderOutline = findViewByIdHelper(this, R.id.movable_background, "movable_background");
+		mBorderOutline = (ImageView) findViewByIdHelper(this, R.id.movable_background, "movable_background");
 		mBorderOutline.bringToFront();
 		
 		// set preferences values
