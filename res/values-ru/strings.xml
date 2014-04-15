@@ -5,12 +5,18 @@
     <string name="app_blacklist">Черный список</string>
     <string name="app_whitelist">Белый список</string>
     <string name="app_testing">Тестирование</string>
+    <string name="app_statusbar_taskbar">Панель задач в статусбаре</string>
+	
+    <!-- Preference Strings -->
     <string name="default_value">Значение по умолчанию</string>
     <string name="save">Сохранить</string>
     <string name="add">Добавить</string>
     <string name="help">Помощь</string>
     <string name="close_once">Напомнить позже</string>
     <string name="close_forever">Не напоминать</string>
+	
+    <!-- First Preference Screen -->
+    <string name="pref_main_top_title">Основные настройки</string>
     <string name="pref_window_top_title">Всплывающее окно</string>
     <string name="pref_window_top_summary">Настройка свойств окна</string>
     <string name="pref_alpha_title">Непрозрачность</string>
@@ -19,6 +25,8 @@
     <string name="pref_dim_summary">Затемнение всплывающего окна при переходе на задний план</string>
     <string name="pref_gravity_title">Позиция</string>
     <string name="pref_gravity_summary">Позиция всплывающего окна</string>
+	
+    <!-- 2nd Preference Screen -->
     <string name="pref_size_top_title">Размер всплывающего окна</string>
     <string name="pref_size_top_summary">Настройка размера всплывающего окна</string>
     <string name="pref_width_portrait_title">Ширина в портретном режиме</string>
@@ -29,6 +37,8 @@
     <string name="pref_width_landscape_summary">Ширина всплывающего окна в панорамном режиме</string>
     <string name="pref_height_landscape_title">Высота в панорамном режиме</string>
     <string name="pref_height_landscape_summary">Высота всплывающего окна в панорамном режиме</string>
+	
+    <!-- 3rd Preference Screen -->
     <string name="pref_behave_top_title">Свойства</string>
     <string name="pref_behave_top_summary">Настройка свойств всплывающих окон</string>
     <string name="pref_app_pause_title">Приостановка приложения</string>
@@ -62,6 +72,8 @@
 Добавляя приложение в оба списка имейте ввиду, что у черного списка приоритет выше чем у белого."</string>
     <string name="pref_whiteblacklist_title">Опции белого/черного списков</string>
     <string name="pref_whiteblacklist_summary">Выберите предпочтения для использования черного и белого списков</string>
+	
+    <!-- 4rd Preference Screen -->
     <string name="pref_movable_top_title">Перемещение и изменение размеров</string>
     <string name="pref_movable_top_summary">Настройки мультизадачности .</string>
     <string name="pref_movable_sub_titlebar_title">Настройки панели заголовка</string>
@@ -99,6 +111,10 @@
     <string name="pref_movable_resizing_aero_snap_enabled_summary">Перетащите окно к любым 4 краям экрана, чтобы изменить его размер соответственно этой части экрана, подобно эффекту Aero Snap в ОС Windows.</string>
     <string name="pref_movable_resizing_aero_snap_delay_title">Задержка захвата</string>
     <string name="pref_movable_resizing_aero_snap_delay_summary">Задержка в миллисекундах перед показом схемы захвата окна.</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_title">Разделитель</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_summary">Когда 2 окна зафиксированы на правой и левой половинах экрана, показывать разделитель между ними для изменения размера.</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_title">Переход к следующему приложению</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_summary">Когда 2 или больше окна зафиксированы на одной стороне экрана, используйте свайп вправо или влево 2 пальцами, чтобы переключиться между ними.</string>
     <string name="pref_movable_moving_move_ab_title">Разрешить использование верхней панели для перемещения</string>
     <string name="pref_movable_moving_move_ab_summary">Использовать верхнюю панель (или верхнюю область для приложений без верхней панели), для перемещений окна.</string>
     <string name="pref_movable_triangle_enable_title">Показывать треугольник</string>
@@ -146,6 +162,11 @@
 (Игнорируется, когда у строки меню есть пользовательский цвет текста),"</string>
     <string name="pref_movable_others_tinted_title_border_title">Оттенок границы окна</string>
     <string name="pref_movable_others_tinted_title_border_summary">Подгонка оттенка границы окна (если включено) к цвету строки меню.</string>
+    <string name="pref_movable_others_tinted_title_corner_title">Оттенок углов окна</string>
+    <string name="pref_movable_others_tinted_title_corner_summary">Подгонка цвета треугольника и сектора (если включено) к цвету строки меню.</string>
+	
+	
+    <!-- 4th Preference Corner Actions -->
     <string name="option_movable_corner_nothing">Ничего не делать</string>
     <string name="option_movable_corner_dnm">Показывать область для перетаскивания (Спрятать углы)</string>
     <string name="option_movable_corner_dnm_wo_corners">Показывать область для перетаскивания (Не прятать углы)</string>
@@ -153,6 +174,8 @@
     <string name="option_movable_corner_transparency">Показывать слайдер непрозрачности</string>
     <string name="option_movable_corner_hide_app">Свернуть окно</string>
     <string name="option_movable_corner_maximize">Развернуть окно</string>
+	
+    <!-- 5th Preference Screen -->
     <string name="pref_systemui_top_title">Моды SystemUI</string>
     <string name="pref_systemui_top_summary">Коллекция модификаций SystemUI</string>
     <string name="pref_notif_warning">Это моды для AOSP-based прошивок и непроверены на других прошивках. Если SystemUI постоянно закрывается с ошибкой, немедленно отключите их.</string>
@@ -169,6 +192,8 @@
     <string name="pref_systemui_restart_title">Перезапустить SystemUI</string>
     <string name="pref_systemui_restart_summary">"Перезапустить для применения эффектов.
 (Необходим root)"</string>
+
+    <!-- 6th Preference Screen -->
     <string name="pref_testing_top_title">Тестирование</string>
     <string name="pref_testing_top_summary">Тестирование открытия всплывающих окон</string>
     <string name="pref_testing_active_title">Модуль активирован!</string>
@@ -186,13 +211,20 @@
     <string name="pref_testing_problem_subtitle">"Для помощи Вы можете посетить официальную ветку на XDA Developers.
 Перевод: MdC aka migel13"</string>
     <string name="pref_testing_launch_thread">Посетить ветку на XDA</string>
+	
+	
+    <!-- Whitelist / Blacklist Options-->
     <string name="option_whiteblacklist_default">По умолчанию</string>
     <string name="option_whiteblacklist_always_only">Открывать в окнах все приложения, кроме помещенных в черный список</string>
     <string name="option_whiteblacklist_never_only">Открывать в окнах только приложения,помещенные в белый список</string>
     <string name="option_whiteblacklist_never_all">Поместить в черный список все приложения, открывать в окнах только приложения помещенные в белый список</string>
+	
+    <!-- Keyboard Mode -->
     <string name="keyboard_default">По умолчанию</string>
     <string name="keyboard_pan">Поверх</string>
     <string name="keyboard_scale">Масштаб</string>
+	
+    <!-- Gravity -->
     <string name="option_gravity_1">Верхний левый угол</string>
     <string name="option_gravity_2">Вверху по центру</string>
     <string name="option_gravity_3">Верхний правый угол</string>
@@ -202,22 +234,48 @@
     <string name="option_gravity_7">Нижний левый угол</string>
     <string name="option_gravity_8">Внизу по центру</string>
     <string name="option_gravity_9">Нижний правый угол</string>
+	
+    <!-- ColorPicker -->
     <string name="apply">Применить</string>
     <string name="arrow_symbol">➙</string>
     <string name="color_hex">Цвет Hex</string>
+	
+    <!-- Drag & Move Bar -->
     <string name="dnm_title">Область для перетаскивания</string>
     <string name="dnm_transparency">Прозрачность</string>
     <string name="dnm_close_app">Закрыть окно</string>
+    <string name="dnm_snap_window">Прикрепить окно</string>
+    <string name="dnm_snap_window_sub1">Сверху</string>
+    <string name="dnm_snap_window_sub2">Снизу</string>
+    <string name="dnm_snap_window_sub3">Слева</string>
+    <string name="dnm_snap_window_sub4">Справа</string>
     <string name="dnm_minimize">Свернуть приложение</string>
     <string name="dnm_minimize_notif_title">Восстановить %1$s</string>
     <string name="dnm_minimize_notif_summary">Это приложение было свернуто</string>
+	
+    <!-- Notification Shade -->
     <string name="notif_open_halo">Открыть в окне</string>
     <string name="notif_open_normal">Открыть нормально</string>
     <string name="notif_app_info">О приложении</string>
     <string name="notif_error_launching">"Ошибка запуска уведомления
 Пожалуйста, сообщите об этом в ветке по XHFW:
 "</string>
+
+    <!-- Recent Apps Screen -->
     <string name="recents_remove_from_list">Удалить из списка</string>
     <string name="recents_app_info">@string/notif_app_info</string>
     <string name="recents_open_halo">@string/notif_open_halo</string>
+	
+    <!-- Statusbar Taskbar -->
+    <string name="pref_statusbar_taskbar_top_summary">Показать панель задач в панели уведомлений</string>
+    <string name="pref_statusbar_taskbar_top_title">@string/app_statusbar_taskbar</string>
+    <string name="pref_statusbar_taskbar_enable_summary">Включение/отключение панели запуска приложений в статусбаре</string>
+    <string name="pref_statusbar_taskbar_enable_title">Панель запуска приложений</string>
+    <string name="pref_statusbar_taskbar_running_enable_summary">Показывать запущеные приложения для быстрого переключения между ними\n (Требуется перезапуск SystemUI)</string>
+    <string name="pref_statusbar_taskbar_running_enable_title">Показать запущеные приложения</string>
+    <string name="pref_statusbar_taskbar_pin_apps_summary">Выберите приложения, которые будут всегда показываться в панели задач строки состояния.</string>
+    <string name="pref_statusbar_taskbar_pin_apps_title">Закреплённые приложения</string>
+    <string name="pref_statusbar_taskbar_number_summary">Установить количество приложений,отображаемых в уведомлениях\n(Требуется перезапуск SystemUI)</string>
+    <string name="pref_statusbar_taskbar_number_title">Максимальное количество приложений</string>
+	
 </resources>
