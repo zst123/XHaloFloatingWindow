@@ -13,7 +13,7 @@ import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class MultiWindowDragger {
+public class MultiWindowAppManager {
 	
 	/* System Objects */
 	private static Window mWindow;

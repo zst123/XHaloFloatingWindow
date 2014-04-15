@@ -125,7 +125,7 @@ public class AeroSnap {
 			lpp.x = (lpp.gravity == Gravity.RIGHT) ? (mScreenWidth / 2) : 0;
 			lpp.y = (lpp.gravity == Gravity.BOTTOM) ? (mScreenHeight / 2) : 0;
 			mWindow.setAttributes(lpp);
-			MultiWindowDragger.appsSignalShowDragger(mContext, mSnap);
+			MultiWindowAppManager.appsSignalShowDragger(mContext, mSnap);
 		} else {
 			mSnap = SNAP_NONE;
 		}
@@ -144,7 +144,7 @@ public class AeroSnap {
 		}
 		if (isSnapped()) {
 			restoreOldPositionWithoutRefresh();
-			MultiWindowDragger.appsSignalHideDragger(mContext);
+			MultiWindowAppManager.appsSignalHideDragger(mContext);
 		}
 		mSnap = side;
 		calculateSnap();
@@ -216,7 +216,7 @@ public class AeroSnap {
 		if (!mSnapped) return false;
 		restoreOldPositionWithoutRefresh();
 		refreshLayout();
-		MultiWindowDragger.appsSignalHideDragger(mContext);
+		MultiWindowAppManager.appsSignalHideDragger(mContext);
 		return true;
 	}
 	

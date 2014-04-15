@@ -4,7 +4,7 @@ import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
-import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowDragger;
+import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowAppManager;
 import com.zst.xposed.halo.floatingwindow.helpers.SwipeToNextApp;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
@@ -115,7 +115,7 @@ public class MovableWindow {
 				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
 
-				MultiWindowDragger.setEnabled(splitbar_enabled);
+				MultiWindowAppManager.setEnabled(splitbar_enabled);
 			}
 		});
 
@@ -125,7 +125,7 @@ public class MovableWindow {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
 				if (!isHoloFloat) {
-					MultiWindowDragger.appsSignalHideDragger(activity);
+					MultiWindowAppManager.appsSignalHideDragger(activity);
 					// Signal to the dragger that a non-halo window is
 					// currently shown and we should hide the bar now
 					return;
@@ -143,9 +143,9 @@ public class MovableWindow {
 					// un-minimize the app without using the notification itself
 				}
 				
-				MultiWindowDragger.setWindow(activity.getWindow());
+				MultiWindowAppManager.setWindow(activity.getWindow());
 				// register listener for multiwindow dragger
-				MultiWindowDragger.appsRegisterListener(activity, true);
+				MultiWindowAppManager.appsRegisterListener(activity, true);
 				
 				if (mMovableWindow && isHoloFloat && mAeroSnap != null) {
 					final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
@@ -164,7 +164,7 @@ public class MovableWindow {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
-				MultiWindowDragger.appsRegisterListener((Activity) param.thisObject, false);
+				MultiWindowAppManager.appsRegisterListener((Activity) param.thisObject, false);
 			}
 		});
 	}
@@ -288,7 +288,7 @@ public class MovableWindow {
 					viewX = event.getX();
 					viewY = event.getY();
 					changeFocusApp(a);
-					MultiWindowDragger.appsTouchSignal(a);
+					MultiWindowAppManager.appsTouchSignal(a);
 					if (a.getWindow().getAttributes().gravity != (Gravity.LEFT | Gravity.TOP)) {
 						// Fix First Resize moving into corner
 						screenX = event.getRawX();
