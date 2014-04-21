@@ -6,9 +6,11 @@ import java.io.InputStreamReader;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.view.View;
@@ -59,6 +61,17 @@ public class Util {
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(thickness);
 		return rectShapeDrawable;
+	}
+	
+	public static ShapeDrawable makeCircle(int color, int diameter) {
+		ShapeDrawable shape = new ShapeDrawable(new OvalShape());
+		Paint paint = shape.getPaint();
+		paint.setColor(color);
+		paint.setStyle(Style.FILL);
+		paint.setAntiAlias(true);
+		shape.setIntrinsicHeight(diameter);
+		shape.setIntrinsicWidth(diameter);
+		return shape;
 	}
 	
 	/* Rotate a drawable given an angle */
