@@ -55,9 +55,7 @@
         android:layout_alignParentTop="false"
         android:layout_below="@+id/movable_titlebar"
         android:tag="movable_action_bar"
-        android:background="#b0333333"
-        android:focusable="true"
-        android:focusableInTouchMode="true" >
+        android:background="#b0333333" >
 
         <TextView
             android:id="@+id/movable_dtm_title"

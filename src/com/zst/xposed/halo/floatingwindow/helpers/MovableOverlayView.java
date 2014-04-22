@@ -438,7 +438,7 @@ public class MovableOverlayView extends RelativeLayout {
 		max_button.setOnClickListener(click);
 		min_button.setOnClickListener(click);
 		more_button.setOnClickListener(click);
-		header.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap));
+		header.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap, true));
 		
 		mTitleBarHeader = header;
 		mTitleBarTitle = app_title;
@@ -450,7 +450,7 @@ public class MovableOverlayView extends RelativeLayout {
 	
 	// Create the drag-to-move bar
 	private void initDragToMoveBar() {
-		mDragToMoveBar.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap));
+		mDragToMoveBar.setOnTouchListener(new Movable(mActivity.getWindow(), mAeroSnap, true));
 		
 		TextView dtm_title = (TextView) findViewByIdHelper(mDragToMoveBar,
 				R.id.movable_dtm_title, "movable_dtm_title");

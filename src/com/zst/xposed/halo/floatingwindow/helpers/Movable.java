@@ -9,9 +9,11 @@ import android.view.Window;
 import android.view.WindowManager.LayoutParams;
  
 public class Movable implements View.OnTouchListener {
-        Window mWindow;
-        LayoutParams param;
-        AeroSnap mAeroSnap;
+        final Window mWindow;
+        final LayoutParams param;
+        final AeroSnap mAeroSnap;
+        final boolean mReturn;
+        
         private static Float screenX ;
     	private static Float screenY ;
     	private static Float viewX ;
@@ -20,14 +22,15 @@ public class Movable implements View.OnTouchListener {
     	private static Float topFromScreen ;
     	private View offsetView;
        
-        public Movable(Window window, AeroSnap aerosnap) {
+        public Movable(Window window, AeroSnap aerosnap, boolean return_value) {
                 mWindow=window;
         		param = mWindow.getAttributes(); 
         		mAeroSnap = aerosnap;
+        		mReturn = return_value;
         }
         
         public Movable(Window window, View v, AeroSnap aerosnap){
-        	this(window, aerosnap);
+        	this(window, aerosnap, false);
         	offsetView = v;
         }
         
@@ -56,7 +59,7 @@ public class Movable implements View.OnTouchListener {
         	if (mAeroSnap != null) {
         		mAeroSnap.dispatchTouchEvent(event);
         	}
-        	return false;
+        	return mReturn;
         }
         private void updateView(Window mWindow, float x , float y){
     		param.x = (int)x;	
