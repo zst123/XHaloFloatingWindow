@@ -22,6 +22,7 @@ import android.content.res.Configuration;
 import android.content.res.XModuleResources;
 import android.view.Gravity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -195,9 +196,22 @@ public class MovableWindow {
 				} catch (Throwable e) {
 				}
 
-				mOverlayView = new MovableOverlayView(activity, mModRes, mPref, mAeroSnap);
-				decorView.addView(mOverlayView, -1, MovableOverlayView.getParams());
-				decorView.setTagInternal(Common.LAYOUT_OVERLAY_TAG, mOverlayView);
+				mOverlayView = (MovableOverlayView) decorView.getTag(Common.LAYOUT_OVERLAY_TAG);
+				for (int i = 0; i < decorView.getChildCount(); ++i) {
+					final View child = decorView.getChildAt(i);
+					if (child instanceof MovableOverlayView && mOverlayView != child) {
+						// If our tag is different or null, then the
+						// view we found should be removed by now.
+						decorView.removeView(decorView.getChildAt(i));
+						break;
+					}
+				}
+				
+				if (mOverlayView == null) {
+					mOverlayView = new MovableOverlayView(activity, mModRes, mPref, mAeroSnap);
+					decorView.addView(mOverlayView, -1, MovableOverlayView.getParams());
+					decorView.setTagInternal(Common.LAYOUT_OVERLAY_TAG, mOverlayView);
+				}
 				// Add our overlay view
 				
 				ActionBarColorHook.setTitleBar(mOverlayView);
