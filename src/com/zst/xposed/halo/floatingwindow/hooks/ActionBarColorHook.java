@@ -57,8 +57,8 @@ public class ActionBarColorHook {
 	static ImageButton mMaxButton;
 	static ImageButton mMinButton;
 	static ImageButton mMoreButton;
-	static ImageView mTriangle;
-	static ImageView mQuadrant;
+	static View mTriangle;
+	static View mQuadrant;
 	static MovableOverlayView mOverlay;
 	static int mBorderThickness;
 	

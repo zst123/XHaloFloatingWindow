@@ -22,7 +22,7 @@
         android:scaleType="fitXY"
         android:focusableInTouchMode="false" />
 
-    <ImageView
+    <View
         android:id="@+id/movable_quadrant"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -31,10 +31,9 @@
         android:background="#ffffff"
         android:tag="movable_quadrant"
         android:clickable="true"
-        android:longClickable="true"
-        android:scaleType="fitXY" />
+        android:longClickable="true" />
 
-    <ImageView
+    <View
         android:id="@+id/movable_corner"
         android:layout_width="36dp"
         android:layout_height="36dp"
@@ -43,8 +42,7 @@
         android:background="#ffffff"
         android:tag="movable_corner"
         android:clickable="true"
-        android:longClickable="true"
-        android:scaleType="fitXY" />
+        android:longClickable="true" />
 
     <RelativeLayout
         android:id="@+id/movable_action_bar"

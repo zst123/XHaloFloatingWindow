@@ -50,10 +50,10 @@ public class MovableOverlayView extends RelativeLayout {
 	private final SharedPreferences mPref;
 	
 	// Views
-	public View mDragToMoveBar;
-	public ImageView mQuadrant;
-	public ImageView mTriangle;
-	public ImageView mBorderOutline;
+	public final View mDragToMoveBar;
+	public final View mQuadrant;
+	public final View mTriangle;
+	public final ImageView mBorderOutline;
 	
 	public RelativeLayout mTitleBarHeader;
 	public ImageButton mTitleBarClose;
@@ -65,9 +65,9 @@ public class MovableOverlayView extends RelativeLayout {
 	private View mTransparencyDialog;
 	
 	/* Title Bar */
-	private static int mTitleBarHeight = Common.DEFAULT_WINDOW_TITLEBAR_SIZE;
-	private static int mTitleBarDivider = Common.DEFAULT_WINDOW_TITLEBAR_SEPARATOR_SIZE;
-	private static boolean mLiveResizing;
+	private final int mTitleBarHeight;
+	private final int mTitleBarDivider;
+	private final boolean mLiveResizing;
 	
 	/**
 	 * Create the overlay view for Movable and Resizable feature
@@ -98,8 +98,8 @@ public class MovableOverlayView extends RelativeLayout {
 		setIsRootNamespace(false);
 		
 		mDragToMoveBar = findViewByIdHelper(this, R.id.movable_action_bar, "movable_action_bar");
-		mTriangle = (ImageView) findViewByIdHelper(this, R.id.movable_corner, "movable_corner");
-		mQuadrant = (ImageView) findViewByIdHelper(this, R.id.movable_quadrant, "movable_quadrant");
+		mTriangle = findViewByIdHelper(this, R.id.movable_corner, "movable_corner");
+		mQuadrant = findViewByIdHelper(this, R.id.movable_quadrant, "movable_quadrant");
 		mBorderOutline = (ImageView) findViewByIdHelper(this, R.id.movable_background, "movable_background");
 		mBorderOutline.bringToFront();
 		
