@@ -153,9 +153,7 @@ public class MovableWindow {
 							AeroSnap.SNAP_NONE);
 					if (snap != AeroSnap.SNAP_NONE) {
 						mAeroSnap.forceSnap(snap);
-						//FIXME bug with whatsapp starting up normally and not snapped.
 					}
-					activity.getIntent().removeExtra(Common.EXTRA_SNAP_SIDE);
 				}
 			}
 		});
@@ -391,6 +389,8 @@ public class MovableWindow {
 		if (!layout_moved) return;
 
 		if (!mRetainStartPosition) return;
+
+		activity.getIntent().removeExtra(Common.EXTRA_SNAP_SIDE);
 
 		WindowManager.LayoutParams params = window.getAttributes();
 		params.x = layout_x;

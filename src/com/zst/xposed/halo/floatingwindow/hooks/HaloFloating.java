@@ -13,6 +13,7 @@ import android.view.Window;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
+import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.LayoutScaling;
 
 import de.robv.android.xposed.XC_MethodHook;
@@ -179,6 +180,7 @@ public class HaloFloating {
 				mHistoryField.setAccessible(true);
 				ArrayList<?> alist = (ArrayList<?>) mHistoryField.get(stack);
 						
+				int snapSide = AeroSnap.SNAP_NONE;
 				boolean isFloating;
 				boolean taskAffinity;
 				if (alist.size() > 0 && !floatingWindow && !isBlacklisted) {
@@ -191,6 +193,8 @@ public class HaloFloating {
 								(taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 						String pkgName = taskRecord_intent.getPackage();
 						taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
+						snapSide = taskRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
+								AeroSnap.SNAP_NONE);
 					} else {
 						Object baseRecord = alist.get(alist.size() - 1); // ActivityRecord
 						Field baseRecordField = baseRecord.getClass().getDeclaredField("intent");
@@ -202,6 +206,8 @@ public class HaloFloating {
 						String baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
 						taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
 						/*baseRecord.packageName*/
+						snapSide = baseRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
+								AeroSnap.SNAP_NONE);
 					}
 					// If the current intent is not a new task we will check its top parent.
 					// Perhaps it started out as a multiwindow in which case we pass the flag on
@@ -211,6 +217,9 @@ public class HaloFloating {
 						intentField.setAccessible(true);
 						Intent newer = (Intent) intentField.get(param.thisObject);
 						newer.addFlags(Common.FLAG_FLOATING_WINDOW);
+						if (taskAffinity && snapSide != AeroSnap.SNAP_NONE) {
+							newer.putExtra(Common.EXTRA_SNAP_SIDE, snapSide);
+						}
 						intentField.set(param.thisObject, newer);
 						floatingWindow = true;
 					}
