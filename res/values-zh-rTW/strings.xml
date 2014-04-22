@@ -12,6 +12,7 @@
     <string name="help">幫助</string>
     <string name="close_once">下次提醒</string>
     <string name="close_forever">不再提醒</string>
+    <string name="pref_main_top_title">主要設置</string>
     <string name="pref_window_top_title">彈出窗口</string>
     <string name="pref_window_top_summary">自定義彈出窗口的屬性。</string>
     <string name="pref_alpha_title">彈出窗口透明度</string>
@@ -47,9 +48,9 @@
     <string name="pref_force_open_app_above_halo_summary">如果一個應用程序目前正處于懸浮模式，打開新的應用程序將強制在上面同樣變為懸浮模式。</string>
     <string name="pref_blacklist_title">應用程序黑名單</string>
     <string name="pref_blacklist_summary">選擇一個永遠不會打開為懸浮模式的應用程序列表。</string>
-    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。
-    
-你可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。</string>
+    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。 
+
+您可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。</string>
     <string name="pref_blacklist_error">"打開應用程序信息時發生了一個錯誤。
 這是錯誤。
 
@@ -58,9 +59,9 @@
     <string name="pref_whitelist_summary">選擇一個永遠打開為懸浮模式的應用程序列表。</string>
     <string name="pref_whitelist_dialog">"新列入白名單的應用程序需要強制關閉以使更改生效。
     
-你可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。
+您可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。
 
-注意，列入黑名單的應用程序不能列入白名單。如果你將同一個應用程序同時列入白名單和黑名單中，黑名單中的應用程序將有更高的優先級。"</string>
+注意，列入黑名單的應用程序不能列入白名單。如果您將同一個應用程序同時列入白名單和黑名單中，黑名單中的應用程序將有更高的優先級。"</string>
     <string name="pref_whiteblacklist_title">白/黑名單選項</string>
     <string name="pref_whiteblacklist_summary">選擇一個不同的行為來使用黑名單和白名單。</string>
     <string name="pref_movable_top_title">移動與調整</string>
@@ -102,6 +103,8 @@
     <string name="pref_movable_resizing_aero_snap_delay_summary">窗口分屏的輪廓出現之前的毫秒延遲。</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_title">分隔欄</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_summary">當兩個窗口處于分屏狀態互相佔據一邊的屏幕時， 顯示一條分隔欄在窗口中間以調整窗口的分隔狀況。</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_title">滑動至下個應用程序</string>
+    <string name="pref_movable_resizing_aero_snap_swipe_app_summary">當兩個或者更多窗口在屏幕中分屏為同樣的大小時，使用兩個手指來向左或者向右滑動以在它們之間互相切換。</string>
     <string name="pref_movable_moving_move_ab_title">允許使用行動欄來移動</string>
     <string name="pref_movable_moving_move_ab_summary">使用行動欄（或者該應用程序頂部區域設有的行動欄）來移動窗口。</string>
     <string name="pref_movable_triangle_enable_title">顯示三角形按鈕</string>
@@ -158,9 +161,9 @@
     <string name="option_movable_corner_transparency">顯示透明度調整滑塊</string>
     <string name="option_movable_corner_hide_app">@string/dnm_minimize</string>
     <string name="option_movable_corner_maximize">最大化應用程序</string>
-    <string name="pref_systemui_top_title">SystemUI插件</string>
+    <string name="pref_systemui_top_title">系統界面插件</string>
     <string name="pref_systemui_top_summary">系統用戶界面（SystemUI）的修改合集。</string>
-    <string name="pref_notif_warning">這些插件是給AOSP-based的ROM使用的，未測試過其他的ROM。如果你使用後頻繁提示SystemUI強制關閉，請立即禁用這些插件。</string>
+    <string name="pref_notif_warning">這些插件是給AOSP-based的ROM使用的，未測試過其他的ROM。如果您使用後頻繁提示SystemUI強制關閉，請立即禁用這些插件。</string>
     <string name="pref_notif_long_click_title">長按通知項目時的選項</string>
     <string name="pref_notif_long_click_summary">長按通知欄中的某個通知項目時添加一個 \"打開為懸浮窗口\" 選項。</string>
     <string name="pref_notif_single_click_title">打開通知項目為懸浮狀態</string>
@@ -177,18 +180,18 @@
     <string name="pref_testing_top_title">測試區域</string>
     <string name="pref_testing_top_summary">測試懸浮窗口的運作情況。</string>
     <string name="pref_testing_active_title">應用模塊正在運作！</string>
-    <string name="pref_testing_active_subtitle">你可以在懸浮模式中啟動應用程序。</string>
+    <string name="pref_testing_active_subtitle">您可以在懸浮模式中啟動應用程序。</string>
     <string name="pref_testing_inactive_title">應用模塊沒有運作！</string>
-    <string name="pref_testing_inactive_subtitle">"你無法在懸浮模式中啟動應用程序。
+    <string name="pref_testing_inactive_subtitle">"您無法在懸浮模式中啟動應用程序。
 
-請嘗試在Xposed安裝器中取消勾選此應用模塊之後重新勾選，並重啟你的設備。
+請嘗試在Xposed安裝器中取消勾選此應用模塊之後重新勾選，並重啟您的設備。
 
-如果你的問題仍然沒有解決， 請通過訪問XHaloFloatingWindow官方網站尋求幫助。"</string>
+如果您的問題仍然沒有解決， 請通過訪問XHaloFloatingWindow官方網站尋求幫助。"</string>
     <string name="pref_testing_unknown_subtitle">無法檢測到模塊的加載</string>
     <string name="pref_testing_launch_settings">在懸浮狀態中啟動系統設置</string>
     <string name="pref_testing_launch_xinstaller">在懸浮狀態中啟動Xposed安裝器</string>
     <string name="pref_testing_problem_title">有問題？</string>
-    <string name="pref_testing_problem_subtitle">你可以通過訪問XDA官網來獲取幫助。</string>
+    <string name="pref_testing_problem_subtitle">您可以通過訪問XDA官網來獲取幫助。</string>
     <string name="pref_testing_launch_thread">訪問XDA</string>
     <string name="option_whiteblacklist_default">默認</string>
     <string name="option_whiteblacklist_always_only">總是打開已列入黑名單的應用程序為懸浮窗口</string>
