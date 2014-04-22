@@ -337,7 +337,13 @@ public class MovableOverlayView extends RelativeLayout {
 	
 	// Create the Titlebar
 	private void initTitleBar() {
-		if (mTitleBarHeight == 0) return;
+		final RelativeLayout header = (RelativeLayout) findViewByIdHelper(this,
+				R.id.movable_titlebar, "movable_titlebar");
+		
+		if (mTitleBarHeight == 0) {
+			removeView(header);
+			return;
+		}
 		
 		final FrameLayout decorView = (FrameLayout) mActivity.getWindow().peekDecorView()
 				.getRootView();
@@ -347,8 +353,6 @@ public class MovableOverlayView extends RelativeLayout {
 		parammm.setMargins(0, mTitleBarHeight, 0, 0);
 		child.setLayoutParams(parammm);
 		
-		final RelativeLayout header = (RelativeLayout) findViewByIdHelper(this,
-				R.id.movable_titlebar, "movable_titlebar");
 		final View divider = findViewByIdHelper(header,
 				R.id.movable_titlebar_line, "movable_titlebar_line");
 		final TextView app_title = (TextView) findViewByIdHelper(header,
