@@ -80,6 +80,7 @@ public class Common {
 	public static final String KEY_STATUSBAR_TASKBAR_PINNED_APPS = "statusbar_taskbar_pin_apps";
 	public static final String KEY_STATUSBAR_TASKBAR_RESTART_SYSTEMUI = "statusbar_taskbar_restart_systemui";
 	public static final String KEY_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED = "statusbar_taskbar_running_enabled";
+	public static final String KEY_STATUSBAR_TASKBAR_HIDE_ICON = "statusbar_taskbar_hide_icon";
 	public static final String KEY_STATUSBAR_TASKBAR_NUMBER = "statusbar_taskbar_number";
 	
 
@@ -143,6 +144,7 @@ public class Common {
 	public static final String DEFAULT_WHITEBLACKLIST_OPTIONS = "0";
 	public static final boolean DEFAULT_STATUSBAR_TASKBAR_ENABLED = false;
 	public static final boolean DEFAULT_STATUSBAR_TASKBAR_RUNNING_APPS_ENABLED = true;
+	public static final boolean DEFAULT_STATUSBAR_TASKBAR_HIDE_ICON = false;
 	public static final int DEFAULT_STATUSBAR_TASKBAR_NUMBER = 5;
 
 	/* Xposed Constants */

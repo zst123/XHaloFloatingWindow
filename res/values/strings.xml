@@ -253,6 +253,8 @@
     <string name="pref_statusbar_taskbar_enable_title">Enable StatusBar Launcher</string>
     <string name="pref_statusbar_taskbar_running_enable_summary">Shows a row of recently running apps for multi-tasking\n(Requires SystemUI restart)</string>
     <string name="pref_statusbar_taskbar_running_enable_title">Enable Running Apps</string>
+    <string name="pref_statusbar_taskbar_hide_icon_summary">Remove the notification icon\n(Requires SystemUI restart)</string>
+    <string name="pref_statusbar_taskbar_hide_icon_title">Hide Icon</string>
     <string name="pref_statusbar_taskbar_pin_apps_summary">Choose the applications to be always shown in the statusbar taskbar</string>
     <string name="pref_statusbar_taskbar_pin_apps_title">Pin Apps</string>
     <string name="pref_statusbar_taskbar_number_summary">Choose the maximum applications to be show in the notification\n(Requires SystemUI restart)</string>

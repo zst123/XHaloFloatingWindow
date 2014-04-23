@@ -37,6 +37,7 @@ public class StatusbarTaskbar {
 	private static NotificationManager mNotificationManager;
 	private static List<RunningTaskInfo> mRunningAppsList;
 	private static int mNumber;
+	private static boolean mHideIcon;
 	
 	public static void handleLoadPackage(LoadPackageParam lpp, final XSharedPreferences main_pref) {
 		if (!lpp.packageName.equals("com.android.systemui")) return;
@@ -50,6 +51,9 @@ public class StatusbarTaskbar {
 		
 		mNumber = main_pref.getInt(Common.KEY_STATUSBAR_TASKBAR_NUMBER, 
 				Common.DEFAULT_STATUSBAR_TASKBAR_NUMBER);
+		
+		mHideIcon = main_pref.getBoolean(Common.KEY_STATUSBAR_TASKBAR_HIDE_ICON,
+				Common.DEFAULT_STATUSBAR_TASKBAR_HIDE_ICON);
 		
 		final Class<?> hookClass = findClass("com.android.systemui.statusbar.phone.PhoneStatusBarView", lpp.classLoader);
 		XposedBridge.hookAllConstructors(hookClass, new XC_MethodHook() {
@@ -158,7 +162,8 @@ public class StatusbarTaskbar {
 	public static void addNotification(Context context, RemoteViews view, int id) {
 		Notification.Builder nb = new Notification.Builder(context)
 				.setContent(view)
-				.setSmallIcon(android.R.drawable.presence_invisible)
+				.setSmallIcon(mHideIcon ? android.R.drawable.list_selector_background :
+					android.R.drawable.presence_invisible)
 				.setOngoing(true)
 				.setWhen(0);
 		Notification notification;
