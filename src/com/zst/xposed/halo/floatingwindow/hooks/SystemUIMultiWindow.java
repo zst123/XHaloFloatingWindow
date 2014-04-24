@@ -56,6 +56,8 @@ public class SystemUIMultiWindow {
 	private static boolean mTopBottomSplit;
 	private static boolean mIsFingerDraggingBar;
 	private static int mPixelsFromEdge = -1;
+	private static float mPixelsFromSideX;
+	private static float mPixelsFromSideY;
 	private static boolean mUseOldDraggerLocation;
 	
 	public static void handleLoadPackage(LoadPackageParam lpparam) {
@@ -196,6 +198,8 @@ public class SystemUIMultiWindow {
 				}
 				mPixelsFromEdge = (int) (mTopBottomSplit ? event.getRawY() : event.getRawX());
 				mPixelsFromEdge = mViewManager.adjustPixelsFromEdge(mPixelsFromEdge, mTopBottomSplit);
+				mPixelsFromSideX = event.getRawX();
+				mPixelsFromSideY = event.getRawY();
 				mViewManager.setDraggerViewPosition(mTopBottomSplit, mPixelsFromEdge, 
 						event.getRawX(), event.getRawY());
 				mViewManager.setTouchedViewPosition(event.getRawX(), event.getRawY());
@@ -260,16 +264,23 @@ public class SystemUIMultiWindow {
 	private static void showDragger(boolean top_bottom) {
 		isSplitView = true;
 		
-		mViewManager.createDraggerView();
-		mViewManager.mViewContent.setOnTouchListener(DRAG_LISTENER);
-		mViewManager.mViewContent.setOnClickListener(DRAGGER_MENU);
+		if (!(mUseOldDraggerLocation && mViewManager.mViewContent != null)) {
+			// if we need to use old location, don't recreate the view again
+			mViewManager.createDraggerView();
+			mViewManager.mViewContent.setOnTouchListener(DRAG_LISTENER);
+			mViewManager.mViewContent.setOnClickListener(DRAGGER_MENU);
+		}
 		
 		if (mUseOldDraggerLocation && mPixelsFromEdge != -1) {
 			if (top_bottom) {
 				mViewManager.mContentParamz.y = (int) (mPixelsFromEdge - 
 						(0.5f * mViewManager.mCircleDiameter));
+				mViewManager.mContentParamz.x = (int) (mPixelsFromSideX - 
+						(0.5f * mViewManager.mCircleDiameter));
 			} else {
 				mViewManager.mContentParamz.x = (int) (mPixelsFromEdge - 
+						(0.5f * mViewManager.mCircleDiameter));
+				mViewManager.mContentParamz.y = (int) (mPixelsFromSideY - 
 						(0.5f * mViewManager.mCircleDiameter));
 			}
 			mUseOldDraggerLocation = false;
