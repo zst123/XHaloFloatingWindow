@@ -5,6 +5,8 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -38,6 +40,7 @@ public class SystemUIMultiWindow {
 	/* System Values */
 	private static Context mContext;
 	private static WindowManager mWm;
+	private static ActivityManager mAm;
 	
 	// Dragger Views
 	private static MultiWindowViewManager mViewManager;
@@ -67,6 +70,7 @@ public class SystemUIMultiWindow {
 					final Service thiz = (Service) param.thisObject;
 					mContext = thiz.getApplicationContext();
 					mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
+					mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 					mViewManager = new MultiWindowViewManager(mContext, mWm, MainXposed.sModRes, Util.dp(24, mContext));
 					// TODO option to change size
 					
@@ -99,6 +103,15 @@ public class SystemUIMultiWindow {
 			// to tell the dragger that it was accidentally
 			// removed and it should reappear at the same location
 			
+			if (AeroSnap.UNKNOWN == snap_side) {
+				for (RunningTaskInfo info : mAm.getRunningTasks(50)) {
+					if (info.topActivity.getPackageName().equals(pkg_name)) {
+						if (info.numActivities > 0) {
+							return;
+						}
+					}
+				}
+			}
 			mTopList.remove(pkg_name);
 			mBottomList.remove(pkg_name);
 			mLeftList.remove(pkg_name);

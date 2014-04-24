@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
@@ -38,7 +39,7 @@ public class MultiWindowAppManager {
 		mWindow = w;
 	}
 	
-	public static void appsRegisterListener(Context context, boolean register) {
+	public static void appsRegisterListener(final Context context, boolean register) {
 		if (!mEnabled) return;
 		if (register) {
 			context.registerReceiver(BROADCAST_RECEIVER, new IntentFilter(
@@ -46,13 +47,18 @@ public class MultiWindowAppManager {
 			mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 			appsSignalLaunch(context);
 		} else {
-			try {
-				context.unregisterReceiver(BROADCAST_RECEIVER);
-			} catch (Exception e) {
-				// already unregistered
-			}
-			mHasAskedForHide = true;
-			appsSignalHideDragger(context);
+			new Handler(context.getMainLooper()).postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					mHasAskedForHide = true;
+					Intent intent = new Intent(Common.SHOW_MULTIWINDOW_DRAGGER);
+					intent.putExtra(Common.INTENT_APP_SNAP, AeroSnap.UNKNOWN);
+					intent.putExtra(Common.INTENT_APP_ID, context.getPackageName());
+					context.sendBroadcast(intent);
+				}
+			}, 500);
+			// Delay hiding the app so the system ActivityManager has enough
+			// time to remove the current app from the running apps list
 		}
 	}
 	
