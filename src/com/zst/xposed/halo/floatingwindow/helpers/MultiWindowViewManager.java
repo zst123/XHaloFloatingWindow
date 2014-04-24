@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
@@ -21,7 +20,6 @@ public class MultiWindowViewManager {
 
 	public final WindowManager mWM;
 	public final Context mContext;
-	public final ShapeDrawable mDraggerDrawable;
 	public final Drawable mTouchDrawableTB;
 	public final Drawable mTouchDrawableLR;
 	public final int mCircleDiameter;
@@ -41,13 +39,13 @@ public class MultiWindowViewManager {
 	int mPreviousFocusAppSide;
 
 	// General
+	public int mColor;
 	public int mScreenHeight;
 	public int mScreenWidth;
 	
 	public MultiWindowViewManager(Context context, WindowManager wm, Resources res, int circle_size) {
 		mContext = context;
 		mWM = wm;
-		mDraggerDrawable = Util.makeCircle(0xFF33b5e5, circle_size);
 		mTouchDrawableTB = res.getDrawable(R.drawable.multiwindow_dragger_press_ud);
 		mTouchDrawableLR = res.getDrawable(R.drawable.multiwindow_dragger_press_lr);
 		mCircleDiameter = circle_size;
@@ -59,7 +57,7 @@ public class MultiWindowViewManager {
 		// so as to prevent duplicated views
 		
 		mViewContent = new ImageView(mContext);
-		mViewContent.setImageDrawable(mDraggerDrawable);
+		mViewContent.setImageDrawable(Util.makeCircle(mColor, mCircleDiameter));
 		
 		DisplayMetrics metrics = new DisplayMetrics();
 		Display display = mWM.getDefaultDisplay();
@@ -137,6 +135,7 @@ public class MultiWindowViewManager {
 		
 		ImageView iv = new ImageView(mContext);
 		iv.setImageDrawable(top_bottom ? mTouchDrawableTB : mTouchDrawableLR);
+		//TODO colorize the drawable
 		
 		mViewTouched = new FrameLayout(mContext);
 		mViewTouched.addView(iv);
@@ -222,10 +221,10 @@ public class MultiWindowViewManager {
 		// TODO make option to change thickness
 		if (mViewFocusOutline == null) {
 			mViewFocusOutline = new View(mContext);
-			Util.setBackgroundDrawable(mViewFocusOutline,
-					Util.makeOutline(0xFF33b5e5, outline_thickness));
-			//TODO make option to change color
 		}
+		
+		Util.setBackgroundDrawable(mViewFocusOutline,
+				Util.makeOutline(mColor, outline_thickness));
 		
 		WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 		params.flags = 0 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
@@ -318,5 +317,9 @@ public class MultiWindowViewManager {
 		final int offset_value = value - (dragger_thickness / 2);
 		// calculate the position at the MIDDLE of the dragger and not the SIDE
 		return (offset_value < SIZE_MINIMUM) ? SIZE_MINIMUM : offset_value;
+	}
+	
+	public void setColor(int color) {
+		mColor = color;
 	}
 }

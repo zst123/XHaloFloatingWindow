@@ -20,6 +20,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.content.res.XModuleResources;
+import android.graphics.Color;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -115,8 +116,10 @@ public class MovableWindow {
 				
 				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
+				int splitbar_color = Color.parseColor("#" + mPref.getString(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR));
 
-				MultiWindowAppManager.setEnabled(splitbar_enabled);
+				MultiWindowAppManager.setEnabled(splitbar_enabled, splitbar_color);
 			}
 		});
 

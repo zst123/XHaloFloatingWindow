@@ -104,6 +104,8 @@
     <string name="pref_movable_resizing_aero_snap_delay_summary">Delay in milliseconds before snap-in outline is shown.</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_title">Split Bar</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_summary">When 2 windows are snapped-in to each half of the screen, show a split bar between to resize the window splitting.</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_title">Split Bar Color</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_summary">Set Color for Split Bar</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_title">Swiping to next app</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_summary">When 2 or more windows are snapped to the same side of the screen, use 2 fingers to swipe left or right to switch between them.</string>
     <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>

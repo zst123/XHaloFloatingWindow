@@ -21,6 +21,7 @@ public class MultiWindowAppManager {
 	private static WindowManager mWindowManager;
 	
 	/* Values */
+	private static int mColor;
 	private static boolean mEnabled;
 	private static boolean mHasAskedForHide;
 	private static int mSnappedSide;
@@ -31,8 +32,9 @@ public class MultiWindowAppManager {
 	/* This class is a helper to send info of the current app to the SystemUI
 	 * receiver. The SystemUI receiver will calculate the rest for us. */
 	
-	public static void setEnabled(boolean enable) {
+	public static void setEnabled(boolean enable, int color) {
 		mEnabled = enable;
+		mColor = color;
 	}
 	
 	public static void setWindow(Window w) {
@@ -151,6 +153,7 @@ public class MultiWindowAppManager {
 			intent.putExtra(Common.INTENT_APP_EXTRA, true);
 			// tell dragger it is cached and try to use old location of bar.
 		}
+		intent.putExtra(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR, mColor);
 		context.sendBroadcast(intent);
 		mSnappedSide = snap_side;
 		mCachedSnappedSide = snap_side;

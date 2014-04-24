@@ -59,6 +59,7 @@ public class SystemUIMultiWindow {
 	private static float mPixelsFromSideX;
 	private static float mPixelsFromSideY;
 	private static boolean mUseOldDraggerLocation;
+	private static int mColor;
 	
 	public static void handleLoadPackage(LoadPackageParam lpparam) {
 		if (!lpparam.packageName.equals("com.android.systemui")) return;
@@ -102,6 +103,7 @@ public class SystemUIMultiWindow {
 			String pkg_name = intent.getStringExtra(Common.INTENT_APP_ID);
 			int snap_side = intent.getIntExtra(Common.INTENT_APP_SNAP, AeroSnap.SNAP_NONE);
 			mUseOldDraggerLocation = intent.getBooleanExtra(Common.INTENT_APP_EXTRA, false);
+			mColor = intent.getIntExtra(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR, 0);
 			// to tell the dragger that it was accidentally
 			// removed and it should reappear at the same location
 			
@@ -266,6 +268,7 @@ public class SystemUIMultiWindow {
 		
 		if (!(mUseOldDraggerLocation && mViewManager.mViewContent != null)) {
 			// if we need to use old location, don't recreate the view again
+			mViewManager.setColor(mColor);
 			mViewManager.createDraggerView();
 			mViewManager.mViewContent.setOnTouchListener(DRAG_LISTENER);
 			mViewManager.mViewContent.setOnClickListener(DRAGGER_MENU);
