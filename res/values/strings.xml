@@ -92,6 +92,8 @@
     <string name="pref_movable_titlebar_separator_size_summary">Height of the separator line below the titlebar</string>
     <string name="pref_movable_titlebar_separator_color_title">Separator Line Color</string>
     <string name="pref_movable_titlebar_separator_color_summary">The color of the separator line below the titlebar</string>
+    <string name="pref_movable_titlebar_max_hide_title">Hide TitleBar when maximized</string>
+    <string name="pref_movable_titlebar_max_hide_summary">Hides the titlebar when maximized and show it again when resizing.</string>
     <string name="pref_movable_moving_start_pos_title">Retain Window Position on Start</string>
     <string name="pref_movable_moving_start_pos_summary">When opening a new window of the same app, place them in the same position and size of the original</string>
     <string name="pref_movable_moving_move_pos_title">Constant Window Position</string>

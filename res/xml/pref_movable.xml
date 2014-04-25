@@ -55,6 +55,13 @@
             android:dependency="window_moving_titlebar_enabled"
             android:summary="@string/pref_movable_resizing_aero_snap_titlebar_hide_summary"
             android:title="@string/pref_movable_resizing_aero_snap_titlebar_hide_title" />
+        
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="window_moving_titlebar_max_hide"
+            android:dependency="window_moving_titlebar_enabled"
+            android:summary="@string/pref_movable_titlebar_max_hide_summary"
+            android:title="@string/pref_movable_titlebar_max_hide_title" />
     </PreferenceScreen>
 
     <!-- Moving -->

@@ -55,6 +55,9 @@ public class OutlineRightResizable implements View.OnTouchListener {
 			}
 			broadcast(true);
 			MovableWindow.mAeroSnap.restoreOldPosition();
+			if (MovableWindow.mMaximizeChangeTitleBarVisibility) {
+				MovableWindow.mOverlayView.setTitleBarVisibility(true);
+			}
 			break;
 		case MotionEvent.ACTION_UP:
 			broadcast(false);

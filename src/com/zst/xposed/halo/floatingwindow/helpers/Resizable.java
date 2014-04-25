@@ -70,6 +70,9 @@ public class Resizable implements View.OnTouchListener {
                 MovableWindow.initAndRefreshLayoutParams(window, context,
     					context.getApplicationInfo().packageName);
                 MovableWindow.mAeroSnap.restoreOldPosition();
+                if (MovableWindow.mMaximizeChangeTitleBarVisibility) {
+    				MovableWindow.mOverlayView.setTitleBarVisibility(true);
+    			}
               //I split the if statements because if say the width is at it's minimum that shouldn't keep the height from adjusting
                 //which may not be at it's minimum. Basically width and height should be independent
                 return false;

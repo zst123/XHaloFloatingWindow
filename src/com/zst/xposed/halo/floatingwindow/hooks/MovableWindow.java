@@ -58,6 +58,7 @@ public class MovableWindow {
 	static int mPreviousOrientation;
 	
 	public static MovableOverlayView mOverlayView;
+	public static boolean mMaximizeChangeTitleBarVisibility;
 
 	/* AeroSnap*/
 	public static AeroSnap mAeroSnap;
@@ -116,6 +117,9 @@ public class MovableWindow {
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP);
 				mAeroSnapChangeTitleBarVisibility = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE);
+				
+				mMaximizeChangeTitleBarVisibility = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_MAXIMIZE_HIDE,
+						Common.DEFAULT_WINDOW_TITLEBAR_MAXIMIZE_HIDE);
 				
 				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
@@ -218,6 +222,14 @@ public class MovableWindow {
 				}
 				// Add our overlay view
 				
+				boolean is_maximized = 
+						window.getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT ||
+						window.getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT;
+				if ((mMaximizeChangeTitleBarVisibility && is_maximized) ||
+					(mAeroSnapChangeTitleBarVisibility && AeroSnap.isSnapped())) {
+					mOverlayView.setTitleBarVisibility(false);
+				}
+				
 				ActionBarColorHook.setTitleBar(mOverlayView);
 			}
 		});
@@ -238,10 +250,16 @@ public class MovableWindow {
 				return;
 			}
 			restoreNonMaximizedLayout(activity.getWindow());
+			if (mMaximizeChangeTitleBarVisibility) {
+				mOverlayView.setTitleBarVisibility(true);
+			}
 		} else {
 			saveNonMaximizedLayout(activity.getWindow());
 			activity.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT);
+			if (mMaximizeChangeTitleBarVisibility) {
+				mOverlayView.setTitleBarVisibility(false);
+			}
 		}
 		// after that, send a broadcast to sync the position of the window
 		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
