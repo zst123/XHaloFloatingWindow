@@ -34,6 +34,7 @@ public class Common {
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_ENABLED = "window_resizing_aero_snap_enabled";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_DELAY = "window_resizing_aero_snap_delay";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP = "window_resizing_aero_snap_swipe_app";
+	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE = "window_resizing_aero_snap_titlebar_hide";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = "window_resizing_aero_snap_splitbar";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR = "window_resizing_aero_snap_splitbar_color";
 	public static final String KEY_WINDOW_TITLEBAR_ENABLED = "window_moving_titlebar_enabled";
@@ -106,6 +107,7 @@ public class Common {
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_ENABLED = true;
 	public static final int DEFAULT_WINDOW_RESIZING_AERO_SNAP_DELAY = 1000;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP = false;
+	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE = true;
 	public static final boolean DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = true;
 	public static final String DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR = "33b5e5";
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_ENABLED = true;

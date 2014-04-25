@@ -345,14 +345,6 @@ public class MovableOverlayView extends RelativeLayout {
 			return;
 		}
 		
-		final FrameLayout decorView = (FrameLayout) mActivity.getWindow().peekDecorView()
-				.getRootView();
-		
-		View child = decorView.getChildAt(0);
-		FrameLayout.LayoutParams parammm = (FrameLayout.LayoutParams) child.getLayoutParams();
-		parammm.setMargins(0, mTitleBarHeight, 0, 0);
-		child.setLayoutParams(parammm);
-		
 		final View divider = findViewByIdHelper(header,
 				R.id.movable_titlebar_line, "movable_titlebar_line");
 		final TextView app_title = (TextView) findViewByIdHelper(header,
@@ -450,6 +442,8 @@ public class MovableOverlayView extends RelativeLayout {
 		mTitleBarMin = min_button;
 		mTitleBarMax = max_button;
 		mTitleBarMore = more_button;
+		
+		setTitleBarVisibility(true);
 	}
 	
 	// Create the drag-to-move bar
@@ -574,6 +568,19 @@ public class MovableOverlayView extends RelativeLayout {
 		if (with_corner) {
 			mTriangle.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
 			mQuadrant.setVisibility(visible ? View.INVISIBLE : View.VISIBLE);
+		}
+	}
+	
+	public void setTitleBarVisibility(boolean visible) {
+		if (mTitleBarHeader != null) {
+			mTitleBarHeader.setVisibility(visible ? View.VISIBLE : View.GONE);
+			
+			final FrameLayout decorView = (FrameLayout) mActivity.getWindow().peekDecorView()
+					.getRootView();
+			final View child = decorView.getChildAt(0);
+			FrameLayout.LayoutParams parammm = (FrameLayout.LayoutParams) child.getLayoutParams();
+			parammm.setMargins(0, visible ? mTitleBarHeight : 0, 0, 0);
+			child.setLayoutParams(parammm);
 		}
 	}
 	

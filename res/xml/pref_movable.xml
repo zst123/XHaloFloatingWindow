@@ -48,6 +48,13 @@
             android:key="window_moving_titlebar_separator_color"
             android:summary="@string/pref_movable_titlebar_separator_color_summary"
             android:title="@string/pref_movable_titlebar_separator_color_title" />
+        
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="window_resizing_aero_snap_titlebar_hide"
+            android:dependency="window_moving_titlebar_enabled"
+            android:summary="@string/pref_movable_resizing_aero_snap_titlebar_hide_summary"
+            android:title="@string/pref_movable_resizing_aero_snap_titlebar_hide_title" />
     </PreferenceScreen>
 
     <!-- Moving -->

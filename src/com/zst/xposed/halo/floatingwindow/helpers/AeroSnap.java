@@ -126,6 +126,9 @@ public class AeroSnap {
 			lpp.y = (lpp.gravity == Gravity.BOTTOM) ? (mScreenHeight / 2) : 0;
 			mWindow.setAttributes(lpp);
 			MultiWindowAppManager.appsSignalShowDragger(mContext, mSnap);
+			if (MovableWindow.mAeroSnapChangeTitleBarVisibility) {
+				MovableWindow.mOverlayView.setTitleBarVisibility(false);
+			}
 		} else {
 			mSnap = SNAP_NONE;
 		}
@@ -231,6 +234,9 @@ public class AeroSnap {
 		mWindow.setAttributes(params);
 		mSnapped = false;
 		mRestorePosition = false;
+		if (MovableWindow.mAeroSnapChangeTitleBarVisibility) {
+			MovableWindow.mOverlayView.setTitleBarVisibility(true);
+		}
 	}
 	
 	// create a snap positioning based on the range of our touch coordinates

@@ -108,6 +108,8 @@
     <string name="pref_movable_resizing_aero_snap_splitbar_color_summary">Set Color for Split Bar</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_title">Swiping to next app</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_summary">When 2 or more windows are snapped to the same side of the screen, use 2 fingers to swipe left or right to switch between them.</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_title">Hide TitleBar when snapped</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_summary">Hides the titlebar when snapping and show it again when unsnapping or resizing.\n(Requires Snap-in Windows to be enabled)</string>
     <string name="pref_movable_moving_move_ab_title">Allow ActionBar to Move</string>
     <string name="pref_movable_moving_move_ab_summary">Use the ActionBar (or the top area for apps with no ActionBar) to move windows. </string>
     <string name="pref_movable_triangle_enable_title">Show Triangle</string>

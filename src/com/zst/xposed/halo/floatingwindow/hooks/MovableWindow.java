@@ -61,6 +61,7 @@ public class MovableWindow {
 
 	/* AeroSnap*/
 	public static AeroSnap mAeroSnap;
+	public static boolean mAeroSnapChangeTitleBarVisibility;
 	static boolean mAeroSnapEnabled;
 	static int mAeroSnapDelay;
 	static boolean mAeroSnapSwipeApp;
@@ -113,6 +114,8 @@ public class MovableWindow {
 				
 				mAeroSnapSwipeApp = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SWIPE_APP);
+				mAeroSnapChangeTitleBarVisibility = mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE,
+						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE);
 				
 				boolean splitbar_enabled = mAeroSnapEnabled ? mPref.getBoolean(Common.KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED,
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED) : false;
