@@ -60,7 +60,7 @@ public class MovableWindow {
 	public static MovableOverlayView mOverlayView;
 
 	/* AeroSnap*/
-	static AeroSnap mAeroSnap;
+	public static AeroSnap mAeroSnap;
 	static boolean mAeroSnapEnabled;
 	static int mAeroSnapDelay;
 	static boolean mAeroSnapSwipeApp;

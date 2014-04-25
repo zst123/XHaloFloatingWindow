@@ -52,6 +52,7 @@ public class RightResizable implements View.OnTouchListener {
 			window.setLayout(calculatedW, calculatedH);
 			MovableWindow.initAndRefreshLayoutParams(window, context,
 					context.getApplicationInfo().packageName);
+			MovableWindow.mAeroSnap.restoreOldPosition();
 			break;
 		}
 		return false;

@@ -69,6 +69,7 @@ public class Resizable implements View.OnTouchListener {
                 window.getCallback().onWindowAttributesChanged(param);
                 MovableWindow.initAndRefreshLayoutParams(window, context,
     					context.getApplicationInfo().packageName);
+                MovableWindow.mAeroSnap.restoreOldPosition();
               //I split the if statements because if say the width is at it's minimum that shouldn't keep the height from adjusting
                 //which may not be at it's minimum. Basically width and height should be independent
                 return false;

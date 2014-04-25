@@ -212,7 +212,7 @@ public class AeroSnap {
 	}
 	
 	// undo the snap when moving the window out of the snap region
-	private boolean restoreOldPosition() {
+	public boolean restoreOldPosition() {
 		if (!mSnapped) return false;
 		restoreOldPositionWithoutRefresh();
 		refreshLayout();

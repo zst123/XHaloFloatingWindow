@@ -54,6 +54,7 @@ public class OutlineRightResizable implements View.OnTouchListener {
 				calculatedH = minSize;
 			}
 			broadcast(true);
+			MovableWindow.mAeroSnap.restoreOldPosition();
 			break;
 		case MotionEvent.ACTION_UP:
 			broadcast(false);

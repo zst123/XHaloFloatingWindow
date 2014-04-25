@@ -65,6 +65,7 @@ public class OutlineLeftResizable implements View.OnTouchListener {
 				futureH = calculatedH;
 			}
 			broadcast(true);
+			MovableWindow.mAeroSnap.restoreOldPosition();
 			break;
 		case MotionEvent.ACTION_UP:
 			param.x = futureX;
