@@ -21,7 +21,6 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import de.robv.android.xposed.XC_MethodHook;
@@ -184,7 +183,12 @@ public class ActionBarColorHook {
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_BORDER_TINT,
 				Common.DEFAULT_TINTED_TITLEBAR_BORDER_TINT)) {
-			mOverlay.setWindowBorder(bg_color, mBorderThickness);
+			try {
+				mOverlay.setWindowBorder(bg_color, mBorderThickness);
+			} catch (NullPointerException e) {
+				Log.d("test1", Common.LOG_TAG
+						+ "ActionBarColorHook.java - changeTitleBarColor3 - NPE", e);
+			}
 		}
 		
 		if (mPref.getBoolean(Common.KEY_TINTED_TITLEBAR_CORNER_TINT,
