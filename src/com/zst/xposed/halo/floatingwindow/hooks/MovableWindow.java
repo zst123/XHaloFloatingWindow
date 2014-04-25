@@ -388,7 +388,7 @@ public class MovableWindow {
 		return true;
 	}
 
-	private static void setLayoutPositioning(Window window) {
+	public static void setLayoutPositioning(Window window) {
 		if (!layout_moved) return;
 
 		if (!mRetainStartPosition) return;
@@ -405,7 +405,7 @@ public class MovableWindow {
 		window.setAttributes(params);
 	}
 
-	private static void registerLayoutBroadcastReceiver(final Window window) {
+	public static void registerLayoutBroadcastReceiver(final Window window) {
 		if (!(mRetainStartPosition || mConstantMovePosition))
 			return;
 

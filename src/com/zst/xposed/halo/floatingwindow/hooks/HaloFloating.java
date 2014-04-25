@@ -424,12 +424,19 @@ public class HaloFloating {
 		Class<?> cls = findClass("com.android.internal.policy.impl.PhoneWindow", lpp.classLoader);
 		XposedBridge.hookAllMethods(cls, "generateLayout", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				if (!(isHoloFloat && floatingWindow)) return;
+				if (!isHoloFloat) return;
 				Window window = (Window) param.thisObject;
 				String name = window.getContext().getPackageName();
 				if (name.startsWith("com.android.systemui")) return;
+				if (name.equals("android")) return;
 				
-				LayoutScaling.appleFloating(mPref, window);
+				if (MovableWindow.layout_moved) {
+					MovableWindow.setLayoutPositioning(window);
+					// register the receiver for syncing window position
+					MovableWindow.registerLayoutBroadcastReceiver(window);
+				} else {
+					LayoutScaling.appleFloating(mPref, window);
+				}
 			}
 		});
 	}
