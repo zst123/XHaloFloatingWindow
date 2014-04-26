@@ -91,11 +91,15 @@ public class MovableWindow {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				activity = (Activity) param.thisObject;
-				mPref.reload();
 				isHoloFloat = (activity.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW)
 						== Common.FLAG_FLOATING_WINDOW;
+				if (!isHoloFloat) return;
+				
+				mPref.reload();
 				mMovableWindow = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW,
 						Common.DEFAULT_MOVABLE_WINDOW);
+				if (!mMovableWindow) return;
+				
 				mActionBarDraggable = mPref.getBoolean(Common.KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED,
 						Common.DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED);
 				mRetainStartPosition = mPref.getBoolean(Common.KEY_WINDOW_MOVING_RETAIN_START_POSITION,
@@ -173,6 +177,7 @@ public class MovableWindow {
 		XposedBridge.hookAllMethods(Activity.class, "onDestroy", new XC_MethodHook() {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				if (!isHoloFloat) return;
 				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
 				MultiWindowAppManager.appsRegisterListener((Activity) param.thisObject, false);
 			}
@@ -185,7 +190,6 @@ public class MovableWindow {
 			@Override
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!isHoloFloat) return;
-				mPref.reload();
 				if (!mMovableWindow) return;
 				activity = (Activity) param.thisObject;
 				Window window = (Window) activity.getWindow();
@@ -313,12 +317,10 @@ public class MovableWindow {
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook() {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				if (!isHoloFloat) return;
 				if (!mMovableWindow) return;
 
 				Activity a = (Activity) param.thisObject;
-				boolean isHoloFloat = (a.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-				if (!isHoloFloat) return;
-
 				MotionEvent event = (MotionEvent) param.args[0];
 				switch (event.getAction()) {
 				case MotionEvent.ACTION_DOWN:

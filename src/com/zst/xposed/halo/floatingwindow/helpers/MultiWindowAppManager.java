@@ -131,7 +131,6 @@ public class MultiWindowAppManager {
 	};
 	
 	public static void appsSignalHideDragger(Context context) {
-		if (!mEnabled) return;
 		Intent intent = new Intent(Common.SHOW_MULTIWINDOW_DRAGGER);
 		intent.putExtra(Common.INTENT_APP_SNAP, AeroSnap.SNAP_NONE);
 		intent.putExtra(Common.INTENT_APP_ID, context.getPackageName());
