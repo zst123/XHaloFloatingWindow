@@ -204,13 +204,6 @@ public class MovableWindow {
 				// make sure the titlebar/drag-to-move-bar is not behind the statusbar
 				decorView.setFitsSystemWindows(true);
 				try {
-					int view_flag = XposedHelpers.getIntField(decorView, "mViewFlags");
-					view_flag &= ~0x00000800; //OPTIONAL_FITS_SYSTEM_WINDOWS
-					XposedHelpers.setIntField(decorView, "mViewFlags", view_flag);
-				} catch (Throwable e) {
-				}
-				
-				try {
 					// disable resizing animation to speed up scaling (doesn't work on all roms)
 					XposedHelpers.callMethod(decorView, "hackTurnOffWindowResizeAnim", true);
 				} catch (Throwable e) {
