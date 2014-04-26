@@ -34,7 +34,6 @@ public class LayoutScaling {
 		 * we need this to speed up our resizing */
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
-		window.setWindowAnimations(android.R.style.Animation_Dialog);
 		window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
