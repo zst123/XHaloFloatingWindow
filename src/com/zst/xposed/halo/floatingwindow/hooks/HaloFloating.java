@@ -394,6 +394,14 @@ public class HaloFloating {
 			}
 		});
 		
+		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
+			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				Activity thiz = (Activity) param.thisObject;
+				Intent intent = thiz.getIntent();
+				isHoloFloat = (intent.getFlags() & Common.FLAG_FLOATING_WINDOW)
+						== Common.FLAG_FLOATING_WINDOW;
+			}
+		});
 	}
 	
 	/*
