@@ -158,7 +158,8 @@ public class MovableWindow {
 				// register listener for multiwindow dragger
 				MultiWindowAppManager.appsRegisterListener(activity, true);
 				
-				if (mMovableWindow && isHoloFloat && mAeroSnap != null) {
+				if (mMovableWindow && isHoloFloat && mAeroSnap != null &&
+						activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE)) {
 					final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
 							AeroSnap.SNAP_NONE);
 					if (snap != AeroSnap.SNAP_NONE) {

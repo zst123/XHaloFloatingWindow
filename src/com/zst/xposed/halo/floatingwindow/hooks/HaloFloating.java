@@ -193,8 +193,10 @@ public class HaloFloating {
 								(taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 						String pkgName = taskRecord_intent.getPackage();
 						taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
-						snapSide = taskRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
-								AeroSnap.SNAP_NONE);
+						if (taskRecord_intent.hasExtra(Common.EXTRA_SNAP_SIDE)) {
+							snapSide = taskRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
+									AeroSnap.SNAP_NONE);
+						}
 					} else {
 						Object baseRecord = alist.get(alist.size() - 1); // ActivityRecord
 						Field baseRecordField = baseRecord.getClass().getDeclaredField("intent");
@@ -206,8 +208,10 @@ public class HaloFloating {
 						String baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
 						taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
 						/*baseRecord.packageName*/
-						snapSide = baseRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
-								AeroSnap.SNAP_NONE);
+						if (baseRecord_intent.hasExtra(Common.EXTRA_SNAP_SIDE)) {
+							snapSide = baseRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
+									AeroSnap.SNAP_NONE);
+						}
 					}
 					// If the current intent is not a new task we will check its top parent.
 					// Perhaps it started out as a multiwindow in which case we pass the flag on
