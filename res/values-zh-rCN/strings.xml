@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">XHaloFloatingWindow</string>
-    <string name="app_description">从Paranoid Android移植而来的悬浮窗口功能的模块。请通过在模块内开启“移动与调整”来使用悬浮窗口功能。（开发by zst123）</string>
+    <string name="app_description">从Paranoid Android移植而来的具有悬浮窗口功能的模块。请通过在模块内开启“移动与调整”来使用悬浮窗口功能。（开发by zst123）</string>
     <string name="app_blacklist">黑名单</string>
     <string name="app_whitelist">白名单</string>
     <string name="app_testing">测试</string>
@@ -90,21 +90,28 @@
     <string name="pref_movable_titlebar_separator_size_summary">标题栏下方的分割线高度。</string>
     <string name="pref_movable_titlebar_separator_color_title">分割线颜色</string>
     <string name="pref_movable_titlebar_separator_color_summary">标题栏下方的分割线颜色。</string>
+    <string name="pref_movable_titlebar_max_hide_title">全屏状态下隐藏标题栏</string>
+    <string name="pref_movable_titlebar_max_hide_summary">窗口最大化后自动隐藏标题栏，调整大小时会再次显示出来。</string>
     <string name="pref_movable_moving_start_pos_title">保留窗口的弹出位置</string>
     <string name="pref_movable_moving_start_pos_summary">打开同一个应用程序的新窗口后，新窗口与原来的悬浮窗口位置和大小相同。</string>
     <string name="pref_movable_moving_move_pos_title">不改变浮动窗口的位置</string>
     <string name="pref_movable_moving_move_pos_summary">当调整或移动一个悬浮窗口时，同一应用程序背后的其他悬浮窗口也将与其做出同样的改变。</string>
-    <string name="pref_movable_resizing_live_update_title">即时更新调整</string>
-    <string name="pref_movable_resizing_live_update_summary">"调整悬浮窗口时，窗口内的内容将会立即刷新，而不是显示轮廓。
+    <string name="pref_movable_resizing_live_update_title">即时调整窗口</string>
+    <string name="pref_movable_resizing_live_update_summary">"调整悬浮窗口的大小时，窗口内的内容将会立即刷新，而不是显示外边的轮廓。
 （会减少性能）"</string>
     <string name="pref_movable_resizing_aero_snap_enabled_title">窗口分屏</string>
-    <string name="pref_movable_resizing_aero_snap_enabled_summary">开启此功能可实现类似于Windows系统的窗口一样使悬浮窗口分屏显示。</string>
+    <string name="pref_movable_resizing_aero_snap_enabled_summary">开启此功能可实现类似于Windows系统的窗口一样使悬浮窗口在屏幕的四个位置内分屏显示。</string>
     <string name="pref_movable_resizing_aero_snap_delay_title">分屏延迟</string>
     <string name="pref_movable_resizing_aero_snap_delay_summary">窗口分屏的轮廓出现之前的毫秒延迟。</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_title">分隔栏</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_summary">当两个窗口处于分屏状态互相占据一边的屏幕时， 显示一条分隔栏在窗口中间以调整窗口的分隔状况。</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_title">分隔栏颜色</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_summary">设置分隔栏的颜色</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_title">滑动至下个应用程序</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_summary">当两个或者更多窗口在屏幕中分屏为同样的大小时，使用两个手指来向左或者向右滑动以在它们之间互相切换。</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_title">分屏状态下隐藏标题栏</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_summary">"窗口分屏后自动隐藏标题栏，取消分屏或者调整大小时会再次显示出来。
+(需要先启用窗口分屏功能)"</string>
     <string name="pref_movable_moving_move_ab_title">允许使用行动栏来移动</string>
     <string name="pref_movable_moving_move_ab_summary">使用行动栏（或者该应用程序顶部区域设有的行动栏）来移动窗口。</string>
     <string name="pref_movable_triangle_enable_title">显示三角形按钮</string>
@@ -227,18 +234,21 @@
     <string name="notif_open_normal">正常打开</string>
     <string name="notif_app_info">应用程序信息</string>
     <string name="notif_error_launching">"启动通知时有一个错误
-请到XHFW官网报告此错误:
+请到XHFW官网报告此错误：
 "</string>
     <string name="recents_remove_from_list">从列表中删除</string>
     <string name="recents_app_info">@string/notif_app_info</string>
     <string name="recents_open_halo">@string/notif_open_halo</string>
     <string name="pref_statusbar_taskbar_top_summary">在通知栏中显示一个任务栏</string>
     <string name="pref_statusbar_taskbar_top_title">@string/app_statusbar_taskbar</string>
-    <string name="pref_statusbar_taskbar_enable_summary">开启与关闭状态栏应用程序启动器</string>
+    <string name="pref_statusbar_taskbar_enable_summary">开启或者关闭状态栏应用程序启动器</string>
     <string name="pref_statusbar_taskbar_enable_title">启用状态栏启动器</string>
     <string name="pref_statusbar_taskbar_running_enable_summary">"显示一排最近运行的应用程序来实现多任务效果
 （需重启SystemUI）"</string>
     <string name="pref_statusbar_taskbar_running_enable_title">启用正在运行的应用程序</string>
+    <string name="pref_statusbar_taskbar_hide_icon_summary">"删除通知图标
+(需重启SystemUI)"</string>
+    <string name="pref_statusbar_taskbar_hide_icon_title">隐藏图标</string>
     <string name="pref_statusbar_taskbar_pin_apps_summary">选择永远显示在状态栏上任务栏中的应用程序</string>
     <string name="pref_statusbar_taskbar_pin_apps_title">自定义应用程序</string>
     <string name="pref_statusbar_taskbar_number_summary">"选择显示在通知栏中的应用程序的数量最大值
