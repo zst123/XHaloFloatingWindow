@@ -68,7 +68,7 @@ public class MultiWindowViewManager {
 		mContentParamz = new WindowManager.LayoutParams(
 				mCircleDiameter,
 				mCircleDiameter,
-				WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
+				WindowManager.LayoutParams.TYPE_PHONE,
 				0 | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
 					WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM |
 					WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
@@ -234,7 +234,7 @@ public class MultiWindowViewManager {
 				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
 				WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
 		params.format = PixelFormat.TRANSLUCENT;
-		params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+		params.type = WindowManager.LayoutParams.TYPE_PHONE;
 		switch (side) {
 		case AeroSnap.SNAP_TOP:
 			if (!top_bottom_split) {
