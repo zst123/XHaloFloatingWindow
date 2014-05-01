@@ -69,7 +69,9 @@ public class Resizable implements View.OnTouchListener {
                 window.getCallback().onWindowAttributesChanged(param);
                 MovableWindow.initAndRefreshLayoutParams(window, context,
     					context.getApplicationInfo().packageName);
-                MovableWindow.mAeroSnap.restoreOldPosition();
+                if (MovableWindow.mAeroSnap != null) {
+    				MovableWindow.mAeroSnap.restoreOldPosition();
+    			}
                 if (MovableWindow.mMaximizeChangeTitleBarVisibility) {
     				MovableWindow.mOverlayView.setTitleBarVisibility(true);
     			}

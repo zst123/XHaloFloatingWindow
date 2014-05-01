@@ -65,7 +65,9 @@ public class OutlineLeftResizable implements View.OnTouchListener {
 				futureH = calculatedH;
 			}
 			broadcast(true);
-			MovableWindow.mAeroSnap.restoreOldPosition();
+			if (MovableWindow.mAeroSnap != null) {
+				MovableWindow.mAeroSnap.restoreOldPosition();
+			}
 			if (MovableWindow.mMaximizeChangeTitleBarVisibility) {
 				MovableWindow.mOverlayView.setTitleBarVisibility(true);
 			}

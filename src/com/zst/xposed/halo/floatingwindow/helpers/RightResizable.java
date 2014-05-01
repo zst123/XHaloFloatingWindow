@@ -52,7 +52,9 @@ public class RightResizable implements View.OnTouchListener {
 			window.setLayout(calculatedW, calculatedH);
 			MovableWindow.initAndRefreshLayoutParams(window, context,
 					context.getApplicationInfo().packageName);
-			MovableWindow.mAeroSnap.restoreOldPosition();
+			if (MovableWindow.mAeroSnap != null) {
+				MovableWindow.mAeroSnap.restoreOldPosition();
+			}
 			if (MovableWindow.mMaximizeChangeTitleBarVisibility) {
 				MovableWindow.mOverlayView.setTitleBarVisibility(true);
 			}
