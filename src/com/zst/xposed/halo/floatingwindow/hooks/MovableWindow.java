@@ -180,6 +180,8 @@ public class MovableWindow {
 				if (!isHoloFloat) return;
 				unregisterLayoutBroadcastReceiver(((Activity) param.thisObject).getWindow());
 				MultiWindowAppManager.appsRegisterListener((Activity) param.thisObject, false);
+				// hide the resizing outline
+				activity.sendBroadcast(new Intent(Common.SHOW_OUTLINE));
 			}
 		});
 	}
