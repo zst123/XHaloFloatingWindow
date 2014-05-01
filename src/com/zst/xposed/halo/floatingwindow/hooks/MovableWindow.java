@@ -131,6 +131,8 @@ public class MovableWindow {
 						Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR));
 
 				MultiWindowAppManager.setEnabled(splitbar_enabled, splitbar_color);
+				
+				checkIfInitialSnapNeeded(false);
 			}
 		});
 
@@ -156,20 +158,13 @@ public class MovableWindow {
 							+ activity.getPackageName()));
 					// send broadcast so the notification will be hidden if we 
 					// un-minimize the app without using the notification itself
+					
+					checkIfInitialSnapNeeded(true);
 				}
 				
 				MultiWindowAppManager.setWindow(activity.getWindow());
 				// register listener for multiwindow dragger
 				MultiWindowAppManager.appsRegisterListener(activity, true);
-				
-				if (mMovableWindow && isHoloFloat && mAeroSnap != null &&
-						activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE)) {
-					final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
-							AeroSnap.SNAP_NONE);
-					if (snap != AeroSnap.SNAP_NONE) {
-						mAeroSnap.forceSnap(snap);
-					}
-				}
 			}
 		});
 
@@ -270,6 +265,18 @@ public class MovableWindow {
 		}
 		// after that, send a broadcast to sync the position of the window
 		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
+	}
+	
+	private static void checkIfInitialSnapNeeded(boolean apply) {
+		if (mMovableWindow && isHoloFloat && mAeroSnap != null &&
+				activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE)) {
+			final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
+					AeroSnap.SNAP_NONE);
+			if (snap != AeroSnap.SNAP_NONE) {
+				layout_moved = false;
+				if (apply) mAeroSnap.forceSnap(snap);
+			}
+		}
 	}
 
 	// Send the app to the back, and show a notification to restore
