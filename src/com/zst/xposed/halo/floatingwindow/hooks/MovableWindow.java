@@ -66,6 +66,7 @@ public class MovableWindow {
 	static boolean mAeroSnapEnabled;
 	static int mAeroSnapDelay;
 	static boolean mAeroSnapSwipeApp;
+	static int mPreviousForceAeroSnap;
 
 	static final int ID_NOTIFICATION_RESTORE = 22222222;
 
@@ -272,9 +273,17 @@ public class MovableWindow {
 				activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE)) {
 			final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
 					AeroSnap.SNAP_NONE);
+			if (mPreviousForceAeroSnap == snap) {
+				return;
+			}
 			if (snap != AeroSnap.SNAP_NONE) {
 				layout_moved = false;
-				if (apply) mAeroSnap.forceSnap(snap);
+				if (apply) {
+					mAeroSnap.forceSnap(snap);
+					mPreviousForceAeroSnap = snap;
+				}
+			} else {
+				mPreviousForceAeroSnap = AeroSnap.SNAP_NONE;
 			}
 		}
 	}
