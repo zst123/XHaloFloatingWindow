@@ -12,11 +12,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.PopupMenu;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
@@ -162,24 +160,27 @@ public class SystemUIMultiWindow {
 		public void onClick(View v) {
 			if (mIsFingerDraggingBar) return;
 			
-	    	PopupMenu popup = new PopupMenu(mContext, mViewManager.mViewContent);
-			popup.getMenu().add("Swap Windows");
-			popup.getMenu().add("Reset Positions");
-			// TODO: Remove hardcode, add to strings.xml
-			
-			popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-				public boolean onMenuItemClick(MenuItem item) {
-					if (item.getTitle().equals("Swap Windows")) {
-						swapWindowPosition();
-					} else if (item.getTitle().equals("Reset Positions")) {
-						resetDraggerViewPosition();
-					} else {
-						return false;
-					}
-					return true;
+			MultiWindowViewManager.MWPopupButtons popup = 
+					mViewManager.new MWPopupButtons(mViewManager.mViewContent) {
+				@Override
+				public void onCloseButton() {
+					mAm.removeTask(SystemUIReceiver.mLastTaskId, 0x0);
+					// The last touched should be the one focused.
 				}
-			});
-			popup.show();
+				@Override
+				public void onRecentsButton() {
+					//TODO finish up recents
+				}
+				@Override
+				public void onSwapButton() {
+					swapWindowPosition();
+				}
+				@Override
+				public void onResetButton() {
+					resetDraggerViewPosition();
+				}
+			};
+			popup.display();
 	    }   
 	};
 	

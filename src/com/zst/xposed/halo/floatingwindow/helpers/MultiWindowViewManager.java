@@ -1,19 +1,30 @@
 package com.zst.xposed.halo.floatingwindow.helpers;
 
+import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 public class MultiWindowViewManager {
 	private static final int SIZE_MINIMUM = 40;
@@ -321,5 +332,166 @@ public class MultiWindowViewManager {
 	
 	public void setColor(int color) {
 		mColor = color;
+	}
+	
+	public abstract class MWPopupButtons extends PopupWindow {
+		final View mParent;
+		final LinearLayout mView;
+		final int mSize;
+		public MWPopupButtons(View parent) {
+			super(mContext);
+			mParent = parent;
+			mSize = (int) (mCircleDiameter * 1.4f);
+			
+			mView = new LinearLayout(mContext);
+			mView.setOrientation(LinearLayout.HORIZONTAL);
+			
+			mView.addView(createButton(R.drawable.multiwindow_tray_swap));
+			mView.addView(createButton(R.drawable.multiwindow_tray_recents));
+			mView.addView(createButton(R.drawable.multiwindow_tray_reset));
+	        mView.addView(createButton(R.drawable.multiwindow_tray_close));
+	        setContentView(mView);
+	        
+	        setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT,
+	        		ViewGroup.LayoutParams.WRAP_CONTENT);
+	        setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+	        setAnimationStyle(0);
+	        setOutsideTouchable(true);
+		}
+		private ImageButton createButton(final int icon_id) {
+			Drawable icon = MainXposed.sModRes.getDrawable(icon_id);
+			ImageButton btn = new ImageButton(mContext);
+			
+			btn.setPadding(0, 0, 0, 0);
+			btn.setLayoutParams(createParams());
+			btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
+			btn.setImageDrawable(icon);
+			Util.setBackgroundDrawable(btn, Util.makeCircle(mColor, mSize));
+			
+			btn.setOnTouchListener(new View.OnTouchListener() {
+				boolean isClick;
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					switch (event.getActionMasked()){
+					case MotionEvent.ACTION_DOWN:
+						v.setAlpha(0.6f);
+						isClick = true;
+						break;
+					case MotionEvent.ACTION_UP:
+						if (isClick) {
+							switch (icon_id) {
+							case R.drawable.multiwindow_tray_swap:
+								onSwapButton();
+								break;
+							case R.drawable.multiwindow_tray_close:
+								onCloseButton();
+								break;
+							case R.drawable.multiwindow_tray_recents:
+								onRecentsButton();
+								break;
+							case R.drawable.multiwindow_tray_reset:
+								onResetButton();
+							}
+							isClick = false;
+						}
+						MWPopupButtons.this.dismiss();
+						break;
+					case MotionEvent.ACTION_MOVE:
+						break;
+					default:
+						isClick = false;
+						v.setAlpha(1.0f);
+						break;
+					}
+					return false;
+				}
+			});
+			return btn;
+		}
+		public abstract void onSwapButton();
+		public abstract void onCloseButton();
+		public abstract void onRecentsButton();
+		public abstract void onResetButton();
+		
+		private LinearLayout.LayoutParams createParams() {
+			LinearLayout.LayoutParams pm = new LinearLayout.LayoutParams(mSize, mSize, 0.5f);
+			final int margin = mSize / 8;
+			pm.leftMargin = margin;
+			pm.rightMargin = margin;
+			pm.topMargin = margin;
+			pm.bottomMargin = margin;
+			return pm;
+		}
+		
+		public void display() {
+			if (mPreviousFocusAppTopBottomSplit) {
+				mView.setOrientation(LinearLayout.HORIZONTAL);
+				switch (mPreviousFocusAppSide) {
+				case AeroSnap.SNAP_TOP:
+					showAtLocation(mParent, Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, mCircleDiameter-mSize-mSize);
+					break;
+				case AeroSnap.SNAP_BOTTOM:
+					showAtLocation(mParent, Gravity.TOP | Gravity.CENTER_HORIZONTAL,
+							0, mSize - (mSize / 4));
+					break;
+				default:
+					return;
+				}
+			} else {
+				mView.setOrientation(LinearLayout.VERTICAL);
+				switch (mPreviousFocusAppSide) {
+				case AeroSnap.SNAP_LEFT:
+					showAtLocation(mParent, Gravity.LEFT | Gravity.CENTER_VERTICAL,
+							mCircleDiameter-mSize-mSize, 0);
+					break;
+				case AeroSnap.SNAP_RIGHT:
+					showAtLocation(mParent, Gravity.LEFT | Gravity.CENTER_VERTICAL,
+							mSize , 0);
+					break;
+				default:
+					return;
+				}
+			}
+			// animate
+			ScaleAnimation scaleup = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
+					ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+					ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+			scaleup.setDuration(250);
+
+			for(int x = 0; x < mView.getChildCount(); x++) {
+				mView.getChildAt(x).startAnimation(scaleup);
+			}
+		}
+		
+		@Override 
+		public void dismiss() {
+			ScaleAnimation scaledown = new ScaleAnimation(1.0f, 0.0f, 1.0f, 0.0f,
+					ScaleAnimation.RELATIVE_TO_SELF, 0.5f,
+					ScaleAnimation.RELATIVE_TO_SELF, 0.5f);
+			scaledown.setStartOffset(250);
+			scaledown.setDuration(250);
+			scaledown.setAnimationListener(new Animation.AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {}
+				@Override
+				public void onAnimationRepeat(Animation animation) {}
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					new Handler(mContext.getMainLooper()).postDelayed(new Runnable() {
+						@Override
+						public void run() {
+							MWPopupButtons.super.dismiss();
+						}
+					}, 100);
+				}
+			});
+			scaledown.setFillAfter(true);
+			for(int x = 0; x < mView.getChildCount(); x++) {
+				mView.getChildAt(x).startAnimation(scaledown);
+			}
+		}
+		
+		
 	}
 }

@@ -24,6 +24,7 @@ public class SystemUIReceiver {
 	private static IWindowManager iWindowManager;
 	private static ActivityManager iActivityManager;
 	private static Context mSystemContext; // SystemUI Context
+	public static int mLastTaskId;
 	
 	/*
 	 * Catch the method if a throwable appears so the SystemUI wouldn't
@@ -77,6 +78,7 @@ public class SystemUIReceiver {
 				Log.d("test1", "CANNOT CHANGE APP FOCUS", e);
 			}
 			
+			mLastTaskId = taskId;
 			final long origId = Binder.clearCallingIdentity();
 			try {
 				iActivityManager.moveTaskToFront(taskId, ActivityManager.MOVE_TASK_NO_USER_ACTION);
