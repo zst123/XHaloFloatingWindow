@@ -19,6 +19,7 @@ import android.view.WindowManager;
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
+import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowRecentsManager;
 import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowViewManager;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
@@ -42,6 +43,7 @@ public class SystemUIMultiWindow {
 	
 	// Dragger Views
 	private static MultiWindowViewManager mViewManager;
+	private static MultiWindowRecentsManager mRecentsManager;
 	
 	// App Snap Lists
 	private static LinkedHashSet<String> mTopList = new LinkedHashSet<String>();
@@ -87,6 +89,17 @@ public class SystemUIMultiWindow {
 									intent.getBooleanExtra(Common.INTENT_APP_EXTRA, false)); // direction
 						}
 					}, new IntentFilter(Common.SEND_MULTIWINDOW_SWIPE));
+					
+					mRecentsManager = new MultiWindowRecentsManager(mContext) {
+						@Override
+						public void onRemoveApp(String pkg_name) {
+							mTopList.remove(pkg_name);
+							mBottomList.remove(pkg_name);
+							mLeftList.remove(pkg_name);
+							mRightList.remove(pkg_name);
+							showDragger(mViewManager.mPreviousFocusAppTopBottomSplit);
+						}
+					};
 				}
 			});
 		} catch (Throwable e) {
@@ -169,7 +182,23 @@ public class SystemUIMultiWindow {
 				}
 				@Override
 				public void onRecentsButton() {
-					//TODO finish up recents
+					mRecentsManager.display(mViewManager.mViewContent);
+					LinkedHashSet<String> list = null;
+					switch (mViewManager.mPreviousFocusAppSide) {
+					case AeroSnap.SNAP_TOP:
+						list = mTopList;
+						break;
+					case AeroSnap.SNAP_BOTTOM:
+						list = mBottomList;
+						break;
+					case AeroSnap.SNAP_LEFT:
+						list = mLeftList;
+						break;
+					case AeroSnap.SNAP_RIGHT:
+						list = mRightList;
+						break;
+					}
+					mRecentsManager.refreshList(list);
 				}
 				@Override
 				public void onSwapButton() {

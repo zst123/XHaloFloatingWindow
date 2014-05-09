@@ -46,8 +46,8 @@ public class MultiWindowViewManager {
 	// App Focus Outline
 	public View mViewFocusOutline;
 	public View outline;
-	boolean mPreviousFocusAppTopBottomSplit;
-	int mPreviousFocusAppSide;
+	public boolean mPreviousFocusAppTopBottomSplit;
+	public int mPreviousFocusAppSide;
 
 	// General
 	public int mColor;
