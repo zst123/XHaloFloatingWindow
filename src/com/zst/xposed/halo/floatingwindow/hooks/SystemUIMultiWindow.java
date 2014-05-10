@@ -74,7 +74,8 @@ public class SystemUIMultiWindow {
 					mContext = thiz.getApplicationContext();
 					mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 					mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-					mViewManager = new MultiWindowViewManager(mContext, mWm, MainXposed.sModRes, Util.dp(24, mContext));
+					mViewManager = new MultiWindowViewManager(mContext, mWm, MainXposed.sModRes,
+							Util.realDp(24, mContext));
 					// TODO option to change size
 					
 					mContext.registerReceiver(BROADCAST_RECEIVER,
