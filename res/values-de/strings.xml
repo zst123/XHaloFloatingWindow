@@ -92,6 +92,8 @@
     <string name="pref_movable_titlebar_separator_size_summary">Höhe der Trennlinie unterhalb der Titelleiste</string>
     <string name="pref_movable_titlebar_separator_color_title">Farbe der Trennlinie</string>
     <string name="pref_movable_titlebar_separator_color_summary">Die Farbe der Trennlinie unterhalb der Titelleiste</string>
+    <string name="pref_movable_titlebar_max_hide_title">Verstecke Titelleiste, wenn maximiert</string>
+    <string name="pref_movable_titlebar_max_hide_summary">Versteckt die Titelleiste, wenn das Fenster maximiert ist und zeigt sie wieder, wenn die Größe verändert wird.</string>
     <string name="pref_movable_moving_start_pos_title">Behalte Fensterposition beim Start</string>
     <string name="pref_movable_moving_start_pos_summary">Beim Öffnen eines neuen Fensters der selben App, wird dieses Fenster in der gleichen Position und Größe erscheinen, wie das ursprüngliche Fenster.</string>
     <string name="pref_movable_moving_move_pos_title">Konstante Fensterposition</string>
@@ -104,8 +106,12 @@
     <string name="pref_movable_resizing_aero_snap_delay_summary">Dauer in Millisekunden, bevor die Snap-in-Umrahmung gezeigt wird.</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_title">Teilungsbalken</string>
     <string name="pref_movable_resizing_aero_snap_splitbar_summary">Zeigt einen Teilungsbalken, wenn 2 Fenster in jeweils eine Hälfte des Bildschirms eingerastet sind, um deren Teilungsverhältnis zu verändern.</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_title">Teiungsbalken Farbe</string>
+    <string name="pref_movable_resizing_aero_snap_splitbar_color_summary">Stelle eine Farbe für den Teilungsbalken eins</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_title">Zur nächsten App wischen</string>
     <string name="pref_movable_resizing_aero_snap_swipe_app_summary">Wische mit 2 Fingern von rechts bzw. links, wenn 2 oder mehrere Fenster in die selbe Seite des Bildschirms eingerastet sind, um zwischen ihnen zu wechseln.</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_title">Verstecke Titelleiste, wenn eingerastet</string>
+    <string name="pref_movable_resizing_aero_snap_titlebar_hide_summary">Versteckt die Titelleiste, wenn das Fenster eingerastet ist und zeigt sie wieder, wenn das Fenster entrastet oder die Größe verändert wird.resizing.\n(Erfordert Aktivierung von Snap-in Fenstern Snap-in Windows to be enabled)</string>
     <string name="pref_movable_moving_move_ab_title">Erlaube Verschieben mit Aktionsleiste</string>
     <string name="pref_movable_moving_move_ab_summary">Verwende die Aktionsleiste (oder den oberen Bereich für Apps ohne Aktionsleiste), um das Fenster zu verschieben. </string>
     <string name="pref_movable_triangle_enable_title">Zeige Dreieck</string>
@@ -253,6 +259,8 @@
     <string name="pref_statusbar_taskbar_enable_title">Aktiviere Taskleiste</string>
     <string name="pref_statusbar_taskbar_running_enable_summary">Zeigt eine Reihe kürzlich geöffneter Apps für Multi-Tasking\n(Erfordert Neustart der SystemUI)</string>
     <string name="pref_statusbar_taskbar_running_enable_title">Aktiviere Laufende Apps</string>
+    <string name="pref_statusbar_taskbar_hide_icon_summary">Entfernt das Benachrichtigungssymbol\n(Erfordert Neustart der SystemUI)</string>
+    <string name="pref_statusbar_taskbar_hide_icon_title">Symbol verstecken</string>
     <string name="pref_statusbar_taskbar_pin_apps_summary">Wähle die Apps, die immer in der Taskleiste angezeigt werden sollen</string>
     <string name="pref_statusbar_taskbar_pin_apps_title">Apps anpinnen</string>
     <string name="pref_statusbar_taskbar_number_summary">Wähle die maximale Anzahl an Apps, die in der Taskleiste gezeigt werden sollen\n(Erfordert Neustart der SystemUI)</string>
