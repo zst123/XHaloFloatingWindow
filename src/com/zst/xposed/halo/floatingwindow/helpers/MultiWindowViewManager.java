@@ -1,5 +1,6 @@
 package com.zst.xposed.halo.floatingwindow.helpers;
 
+import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
@@ -33,6 +35,8 @@ public class MultiWindowViewManager {
 	public final Context mContext;
 	public final Drawable mTouchDrawableTB;
 	public final Drawable mTouchDrawableLR;
+	public final Drawable mTouchDrawableTBWhite;
+	public final Drawable mTouchDrawableLRWhite;
 	public final int mCircleDiameter;
 	
 	// Main Circle Dragger
@@ -59,6 +63,8 @@ public class MultiWindowViewManager {
 		mWM = wm;
 		mTouchDrawableTB = res.getDrawable(R.drawable.multiwindow_dragger_press_ud);
 		mTouchDrawableLR = res.getDrawable(R.drawable.multiwindow_dragger_press_lr);
+		mTouchDrawableTBWhite = res.getDrawable(R.drawable.multiwindow_dragger_press_ud_white);
+		mTouchDrawableLRWhite = res.getDrawable(R.drawable.multiwindow_dragger_press_lr_white);
 		mCircleDiameter = circle_size;
 	}
 	
@@ -145,8 +151,14 @@ public class MultiWindowViewManager {
 		// so as to prevent duplicated views
 		
 		ImageView iv = new ImageView(mContext);
-		iv.setImageDrawable(top_bottom ? mTouchDrawableTB : mTouchDrawableLR);
-		//TODO colorize the drawable
+		if (mColor == Color.parseColor("#" + Common.DEFAULT_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR)) {
+			// It is holo blue, use default samsung image
+			iv.setImageDrawable(top_bottom ? mTouchDrawableTB : mTouchDrawableLR);
+		} else {
+			// use white image
+			iv.setImageDrawable(top_bottom ? mTouchDrawableTBWhite : mTouchDrawableLRWhite);
+			iv.setColorFilter(mColor, PorterDuff.Mode.MULTIPLY);
+		}
 		
 		mViewTouched = new FrameLayout(mContext);
 		mViewTouched.addView(iv);
