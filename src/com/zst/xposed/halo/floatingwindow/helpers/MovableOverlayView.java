@@ -7,6 +7,7 @@ import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
@@ -14,6 +15,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -89,8 +91,15 @@ public class MovableOverlayView extends RelativeLayout {
 		/* get the layout from our module. we cannot just use the R reference
 		 * since the layout is from the module, not the current app we are
 		 * modifying. thus, we use a parser */
-		XmlResourceParser parser = resources.getLayout(R.layout.movable_window);
-		activity.getWindow().getLayoutInflater().inflate(parser, this);
+		try {
+			Context module_context = activity.createPackageContext(Common.THIS_PACKAGE_NAME,
+					Context.CONTEXT_IGNORE_SECURITY);
+			LayoutInflater.from(module_context).inflate(R.layout.movable_window, this);
+		} catch (Exception e) {
+			XmlResourceParser parser = resources.getLayout(R.layout.movable_window);
+			activity.getWindow().getLayoutInflater().inflate(parser, this);
+		}
+		
 		// Thanks to this post for some inspiration:
 		// http://sriramramani.wordpress.com/2012/07/25/infamous-viewholder-pattern/
 		
