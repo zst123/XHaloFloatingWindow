@@ -68,7 +68,7 @@ public class RecentAppsHook {
 				popup.getMenu().add(Menu.NONE, ID_OPEN_IN_HALO, 3, TEXT_OPEN_IN_HALO);
 				
 				try {
-					thiz.getClass().getDeclaredField("mPopup").set(thiz, popup);
+					XposedHelpers.setObjectField(thiz, "mPopup", popup);
 				} catch (Exception e) {
 					// User on ICS
 				}
@@ -80,27 +80,23 @@ public class RecentAppsHook {
 						try {
 							switch (item.getItemId()) {
 							case ID_REMOVE_FROM_LIST:
-								ViewGroup recentsContainer = (ViewGroup) hookClass
-										.getDeclaredField("mRecentsContainer").get(thiz);
+								ViewGroup recentsContainer = (ViewGroup) XposedHelpers
+										.getObjectField(thiz, "mRecentsContainer");
 								recentsContainer.removeViewInLayout(selectedView);
 								return true;
 							case ID_APP_INFO:
 								if (viewHolder != null) {
 									closeRecentApps(thiz);
-									Object ad = viewHolder.getClass()
-											.getDeclaredField("taskDescription").get(viewHolder);
-									String pkg_name = (String) ad.getClass()
-											.getDeclaredField("packageName").get(ad);
+									Object ad = XposedHelpers.getObjectField(viewHolder, "taskDescription");
+									String pkg_name = (String) XposedHelpers.getObjectField(ad, "packageName");
 									startApplicationDetailsActivity(thiz.getContext(), pkg_name);
 								}
 								return true;
 							case ID_OPEN_IN_HALO:
 								if (viewHolder != null) {
 									closeRecentApps(thiz);
-									Object ad = viewHolder.getClass()
-											.getDeclaredField("taskDescription").get(viewHolder);
-									Intent intent = (Intent) ad.getClass()
-											.getDeclaredField("intent").get(ad);
+									Object ad = XposedHelpers.getObjectField(viewHolder, "taskDescription");
+									Intent intent = (Intent) XposedHelpers.getObjectField(ad, "intent");
 									intent.addFlags(Common.FLAG_FLOATING_WINDOW
 											| Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 											| Intent.FLAG_ACTIVITY_NO_USER_ACTION
@@ -121,7 +117,7 @@ public class RecentAppsHook {
 					public void onDismiss(PopupMenu menu) {
 						thumbnailView.setSelected(false);
 						try {
-							thiz.getClass().getDeclaredField("mPopup").set(thiz, null);
+							XposedHelpers.setObjectField(thiz, "mPopup", null);
 						} catch (Exception e) {
 							// User on ICS
 						}

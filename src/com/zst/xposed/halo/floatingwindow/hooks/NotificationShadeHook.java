@@ -3,9 +3,6 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 
@@ -105,8 +102,7 @@ public class NotificationShadeHook {
 		XposedBridge.hookAllMethods(phoneStatusBar, "inflateViews", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				final Object entry = param.args[0];
-				Field fieldRow = entry.getClass().getDeclaredField(("row"));
-				View newRow = (View) fieldRow.get(entry);
+				View newRow = (View) XposedHelpers.getObjectField(entry, "row");
 				View content = newRow.findViewById(newRow.getResources().getIdentifier(
 						"content", "id", "com.android.systemui"));
 				content.setTag(entry);
@@ -117,12 +113,9 @@ public class NotificationShadeHook {
 						public void onClick(View v) {
 							try {
 							final Object entry1 = v.getTag();
-							final Object sbn = entry1.getClass()
-									.getDeclaredField(("notification")).get(entry1);
-							final String packageNameF = (String) sbn.getClass()
-									.getDeclaredField(("pkg")).get(sbn);
-							final Notification n = (Notification) sbn.getClass()
-									.getDeclaredField(("notification")).get(sbn);
+							final Object sbn = XposedHelpers.getObjectField(entry1, "notification");
+							final String packageNameF = (String) XposedHelpers.getObjectField(sbn, "pkg");
+							final Notification n = (Notification) XposedHelpers.getObjectField(sbn, "notification");
 							
 							if (packageNameF == null) return;
 							if (v.getWindowToken() == null) return;
@@ -147,12 +140,10 @@ public class NotificationShadeHook {
 							try {
 								
 							final Object entry1 = v.getTag();
-							final Object sbn = entry1.getClass()
-									.getDeclaredField(("notification")).get(entry1);
-							final String packageNameF = (String) sbn.getClass()
-									.getDeclaredField(("pkg")).get(sbn);
-							final Notification n = (Notification) sbn.getClass()
-									.getDeclaredField(("notification")).get(sbn);
+							final Object sbn = XposedHelpers.getObjectField(entry1, "notification");
+							final String packageNameF = (String) XposedHelpers.getObjectField(sbn, "pkg");
+							final Notification n = (Notification) XposedHelpers.getObjectField(sbn, "notification");
+							
 							final PendingIntent contentIntent = n.contentIntent;
 							
 							if (packageNameF == null) return;
@@ -178,12 +169,9 @@ public class NotificationShadeHook {
 						try {
 							
 							final Object entry1 = v.getTag();
-							final Object sbn = entry1.getClass()
-									.getDeclaredField(("notification")).get(entry1);
-							final String packageNameF = (String) sbn.getClass()
-									.getDeclaredField(("pkg")).get(sbn);
-							final Notification n = (Notification) sbn.getClass()
-									.getDeclaredField(("notification")).get(sbn);
+							final Object sbn = XposedHelpers.getObjectField(entry1, "notification");
+							final String packageNameF = (String) XposedHelpers.getObjectField(sbn, "pkg");
+							final Notification n = (Notification) XposedHelpers.getObjectField(sbn, "notification");
 							
 						if (packageNameF == null) return false;
 						if (v.getWindowToken() == null) return false;
@@ -229,7 +217,8 @@ public class NotificationShadeHook {
 						}
 					}
 				});
-				fieldRow.set(entry, newRow);
+				
+				XposedHelpers.setObjectField(entry, "row", newRow);
 			}
 		});
 	}
@@ -247,16 +236,10 @@ public class NotificationShadeHook {
 					@Override
 					public boolean onLongClick(final View v) {
 						try {
-							final Object entry = v.getTag();
-							
-							final Object sbn = entry.getClass().
-									getDeclaredField(("notification")).get(entry);
-							
-							final String packageNameF = (String) sbn.getClass()
-									.getDeclaredField(("pkg")).get(sbn);
-							
-							final Notification n = (Notification) sbn.getClass()
-									.getDeclaredField(("notification")).get(sbn);
+							final Object entry = v.getTag();							
+							final Object sbn = XposedHelpers.getObjectField(entry, "notification");
+							final String packageNameF = (String) XposedHelpers.getObjectField(sbn, "pkg");
+							final Notification n = (Notification) XposedHelpers.getObjectField(sbn, "notification");
 							
 							if (packageNameF == null) return false;
 							if (v.getWindowToken() == null) return false;
@@ -306,9 +289,7 @@ public class NotificationShadeHook {
 		XposedBridge.hookAllMethods(baseStatusBar, "inflateViews", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				final Object entry = param.args[0];
-				Class<?> entryClazz = entry.getClass();
-				Field fieldRow = entryClazz.getDeclaredField(("row"));
-				View newRow = (View) fieldRow.get(entry);
+				View newRow = (View) XposedHelpers.getObjectField(entry, "row");
 				newRow.setTag(entry);
 				if (mSinglePressEnabled) {
 					View content = newRow.findViewById(newRow.getResources()
@@ -317,12 +298,10 @@ public class NotificationShadeHook {
 						@Override
 						public void onClick(View v) {
 							try {
-								final Object sbn = entry.getClass()
-										.getDeclaredField(("notification")).get(entry);
-								final String packageNameF = (String) sbn.getClass()
-										.getDeclaredField(("pkg")).get(sbn);
-								final Notification n = (Notification) sbn.getClass()
-										.getDeclaredField(("notification")).get(sbn);
+								final Object sbn = XposedHelpers.getObjectField(entry, "notification");
+								final String packageNameF = (String) XposedHelpers.getObjectField(sbn, "pkg");
+								final Notification n = (Notification) XposedHelpers.getObjectField(sbn, "notification");
+								
 								if (packageNameF == null) return;
 								if (v.getWindowToken() == null) return;
 								launchFloating(n.contentIntent, v.getContext());
@@ -335,7 +314,7 @@ public class NotificationShadeHook {
 						}
 					});
 				}
-				fieldRow.set(entry, newRow);
+				XposedHelpers.setObjectField(entry, "row", newRow);
 			}
 		});
 	}
@@ -360,8 +339,7 @@ public class NotificationShadeHook {
 				param.args[0] = new Intent();
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				final Context ctx = (Context) clazz.getDeclaredField(("mContext"))
-						.get(param.thisObject);
+				final Context ctx = (Context) XposedHelpers.getObjectField(param.thisObject, "mContext");
 				stolenIntent.setFlags(Common.FLAG_FLOATING_WINDOW |
 						Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				ctx.startActivity(stolenIntent);
@@ -394,11 +372,9 @@ public class NotificationShadeHook {
 			statusBar.collapse();
 		} catch (Throwable e) { // OEM's might remove this expand method.
 			try { // 4.2.2 (later builds) changed method name
-				Method showsb = statusBar.getClass().getMethod("collapsePanels");
-				showsb.invoke(statusBar);
+				XposedHelpers.callMethod(statusBar, "collapsePanels");
 			} catch (Throwable e2) { // else No Hope! Just leave it :P
 			}
 		}
-	}
-	
+	}	
 }
