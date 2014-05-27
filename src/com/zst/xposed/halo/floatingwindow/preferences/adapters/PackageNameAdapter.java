@@ -6,11 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.zst.xposed.halo.floatingwindow.R;
-import com.zst.xposed.halo.floatingwindow.preferences.BlacklistActivity;
-import com.zst.xposed.halo.floatingwindow.preferences.StatusbarTaskbarPinAppActivity;
-import com.zst.xposed.halo.floatingwindow.preferences.WhitelistActivity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -30,9 +26,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class PackageNameAdapter extends BaseAdapter {
+public abstract class PackageNameAdapter extends BaseAdapter {
 	
-	final Activity mActivity;
+	final Context mContext;
 	final Handler mHandler;
 	final PackageManager mPackageManager;
 	final LayoutInflater mLayoutInflater;
@@ -42,11 +38,11 @@ public class PackageNameAdapter extends BaseAdapter {
 	
 	// temp. list holding the filtered items
 	
-	public PackageNameAdapter(Activity act, Set<String> app_array) {
-		mActivity = act;
+	public PackageNameAdapter(Context ctx, Set<String> app_array) {
+		mContext = ctx;
 		mHandler = new Handler();
-		mPackageManager = act.getBaseContext().getPackageManager();
-		mLayoutInflater = (LayoutInflater) act.getBaseContext()
+		mPackageManager = ctx.getPackageManager();
+		mLayoutInflater = (LayoutInflater) ctx
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		update(app_array);
 	}
@@ -128,11 +124,11 @@ public class PackageNameAdapter extends BaseAdapter {
 					Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
 							Uri.fromParts("package", appInfo.packageName, null));
 					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					mActivity.startActivity(intent);
+					mContext.startActivity(intent);
 				} catch (Exception e) {
-					final String txt = mActivity.getResources().getString(R.string.pref_blacklist_error)
+					final String txt = mContext.getResources().getString(R.string.pref_blacklist_error)
 							+ appInfo.packageName + "\n" + e.toString();
-					Toast.makeText(mActivity, txt, Toast.LENGTH_LONG).show();
+					Toast.makeText(mContext, txt, Toast.LENGTH_LONG).show();
 					e.printStackTrace();
 				}				
 			}
@@ -140,18 +136,13 @@ public class PackageNameAdapter extends BaseAdapter {
 		holder.remove.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				if (mActivity instanceof WhitelistActivity) {
-					((WhitelistActivity)mActivity).removeApp(appInfo.packageName);;
-				}else if (mActivity instanceof BlacklistActivity) {
-					((BlacklistActivity)mActivity).removeApp(appInfo.packageName);;
-				}else if (mActivity instanceof StatusbarTaskbarPinAppActivity) {
-					((StatusbarTaskbarPinAppActivity)mActivity).removeApp(appInfo.packageName);
-				}
+				onRemoveApp(appInfo.packageName);
 			}
 		});
 		return convertView;
 	}
 	
+	public abstract void onRemoveApp(String pkg);
 	
 	public class PackageItem implements Comparable<PackageItem> {
 		public CharSequence title;

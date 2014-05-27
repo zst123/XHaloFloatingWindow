@@ -112,7 +112,12 @@ public class StatusbarTaskbarPinAppActivity extends Activity {
 	}
 	
 	private void loadPinlist() {
-		mPkgAdapter = new PackageNameAdapter(this, getSetStrings());
+		mPkgAdapter = new PackageNameAdapter(this, getSetStrings()) {
+			@Override
+			public void onRemoveApp(String pkg) {
+				removeApp(pkg);
+			}
+		};
 		mListView = new ListView(this);
 		mListView.setAdapter(mPkgAdapter);
 		setContentView(mListView);

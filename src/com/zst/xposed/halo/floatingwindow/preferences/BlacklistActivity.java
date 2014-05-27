@@ -141,7 +141,12 @@ public class BlacklistActivity extends Activity {
 	}
 	
 	private void loadBlacklist() {
-		mPkgAdapter = new PackageNameAdapter(this, getSetStrings());
+		mPkgAdapter = new PackageNameAdapter(this, getSetStrings()) {
+			@Override
+			public void onRemoveApp(String pkg) {
+				removeApp(pkg);
+			}
+		};
 		mListView = new ListView(this);
 		mListView.setAdapter(mPkgAdapter);
 		setContentView(mListView);
