@@ -62,6 +62,16 @@ public class StatusbarTaskbarPinAppActivity extends Activity {
 	}
 	
 	@Override
+	public void onPause() {
+		super.onPause();
+		// Avoid WindowLeaked Exception
+		// http://publicstaticdroidmain.com/2012/01/avoiding-android-memory-leaks-part-1/
+		if (dDialog != null && dDialog.isShowing()) {
+			dDialog.dismiss();
+		}
+	}
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case ID_ADD:

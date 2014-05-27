@@ -57,6 +57,16 @@ public class WhitelistActivity extends Activity {
 	}
 	
 	@Override
+	public void onPause() {
+		super.onPause();
+		// Avoid WindowLeaked Exception
+		// http://publicstaticdroidmain.com/2012/01/avoiding-android-memory-leaks-part-1/
+		if (dDialog != null && dDialog.isShowing()) {
+			dDialog.dismiss();
+		}
+	}
+	
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuItem help_item = menu.add(Menu.NONE, ID_HELP, 0, R.string.help);
 		help_item.setIcon(R.drawable.blacklist_help);
