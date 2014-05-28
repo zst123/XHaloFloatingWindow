@@ -222,8 +222,7 @@ public class ActionBarColorHook {
 		}
 	}
 	
-	private static int getMainColorFromActionBarDrawable(Drawable drawable)
-			throws IllegalArgumentException {
+	private static int getMainColorFromActionBarDrawable(Drawable drawable) {
 		/*
 		 * This should fix the bug where a huge part of the ActionBar background
 		 * is drawn white.
@@ -233,6 +232,7 @@ public class ActionBarColorHook {
 			return ((ColorDrawable) drawable).getColor();
 		}
 		Bitmap bitmap = drawableToBitmap(copyDrawable);
+		if (bitmap == null) return Color.BLACK;
 		int pixel = bitmap.getPixel(0, 5);
 		int red = Color.red(pixel);
 		int blue = Color.blue(pixel);
@@ -253,7 +253,7 @@ public class ActionBarColorHook {
 			drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
 			drawable.draw(canvas);
 		} catch (IllegalArgumentException e) {
-			throw e;
+			return null;
 		}
 		
 		return bitmap;
