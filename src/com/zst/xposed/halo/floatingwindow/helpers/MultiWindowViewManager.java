@@ -378,6 +378,7 @@ public class MultiWindowViewManager {
 			btn.setLayoutParams(createParams());
 			btn.setScaleType(ImageView.ScaleType.FIT_CENTER);
 			btn.setImageDrawable(icon);
+			btn.setColorFilter(getIconColor(mColor), PorterDuff.Mode.SRC_ATOP);
 			Util.setBackgroundDrawable(btn, Util.makeCircle(mColor, mSize));
 			
 			btn.setOnTouchListener(new View.OnTouchListener() {
@@ -501,6 +502,17 @@ public class MultiWindowViewManager {
 			scaledown.setFillAfter(true);
 			for(int x = 0; x < mView.getChildCount(); x++) {
 				mView.getChildAt(x).startAnimation(scaledown);
+			}
+		}
+		
+		private int getIconColor(int color) {
+			float[] hsv = new float[3];
+			Color.colorToHSV(color, hsv);
+			float value = hsv[2];
+			if (value > 0.9f) {
+				return 0xff222222;
+			} else {
+				return Color.WHITE;
 			}
 		}
 		
