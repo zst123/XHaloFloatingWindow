@@ -60,6 +60,7 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		super.onBindDialogView(view);
 		
 		mValue = (TextView) view.findViewById(R.id.value);
+		mValue.setText("0%");
 		mSeekBar = (SeekBar) view.findViewById(R.id.seekbar);
 		mSeekBar.setOnSeekBarChangeListener(this);
 	}
@@ -75,7 +76,7 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		defaultsButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				int progress = (int) ((mDefault * 100) - (mMin * 100));
+				int progress = Math.round((mDefault * 100) - (mMin * 100));
 				mSeekBar.setProgress(progress);
 			}
 		});
@@ -84,9 +85,9 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		
 		float value = prefs.getFloat(getKey(), mDefault);
 		value -= mMin;
-		int max = (int) ((mMax * 100) - (mMin * 100));
+		int max = Math.round((mMax * 100) - (mMin * 100));
 		mSeekBar.setMax(max);
-		mSeekBar.setProgress((int) (value * 100));
+		mSeekBar.setProgress(Math.round(value * 100));
 		
 	}
 	
@@ -95,7 +96,7 @@ public class WidgetFloatPercentage extends DialogPreference implements
 		super.onDialogClosed(positiveResult);
 		
 		if (positiveResult) {
-			float realValue = mSeekBar.getProgress() + (mMin * 100);
+			int realValue = mSeekBar.getProgress() + Math.round((mMin * 100));
 			Editor editor = getEditor();
 			editor.putFloat(getKey(), (realValue * 0.01f));
 			editor.commit();
@@ -105,7 +106,7 @@ public class WidgetFloatPercentage extends DialogPreference implements
 	
 	@Override
 	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-		int realValue = progress + (int)(mMin * 100);
+		int realValue = progress + Math.round((mMin * 100));
 		mValue.setText(realValue + "%");
 	}
 	
@@ -119,6 +120,6 @@ public class WidgetFloatPercentage extends DialogPreference implements
 	
 	private void updatePercentage() {
 		float value = getSharedPreferences().getFloat(getKey(), mDefault);
-		mFinalValue.setText((int)(value * 100) + "%");
+		mFinalValue.setText(Math.round((value * 100)) + "%");
 	}
 }
