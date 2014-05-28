@@ -153,6 +153,9 @@ public class ActionBarColorHook {
 	}
 	
 	public static void setTitleBar(MovableOverlayView overlayView) {
+		if (overlayView == null)
+			return;
+		
 		mOverlay = overlayView;
 		mHeader = overlayView.mTitleBarHeader;
 		mAppTitle = overlayView.mTitleBarTitle;
