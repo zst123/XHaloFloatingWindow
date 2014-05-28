@@ -445,7 +445,7 @@ public class HaloFloating {
 				if (MovableWindow.layout_moved) {
 					MovableWindow.setLayoutPositioning(window);
 					// register the receiver for syncing window position
-					MovableWindow.registerLayoutBroadcastReceiver(window);
+					MovableWindow.registerLayoutBroadcastReceiver(null, window);
 				} else {
 					LayoutScaling.appleFloating(mPref, window);
 				}

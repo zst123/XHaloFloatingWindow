@@ -193,7 +193,7 @@ public class MovableWindow {
 				Window window = (Window) activity.getWindow();
 
 				// register the receiver for syncing window position
-				registerLayoutBroadcastReceiver(window);
+				registerLayoutBroadcastReceiver(activity, window);
 				// set layout position from previous activity if available
 				setLayoutPositioning(window);
 
@@ -447,7 +447,8 @@ public class MovableWindow {
 		window.setAttributes(params);
 	}
 
-	public static void registerLayoutBroadcastReceiver(final Window window) {
+	public static void registerLayoutBroadcastReceiver(final Activity activity,
+			final Window window) {
 		if (!(mRetainStartPosition || mConstantMovePosition))
 			return;
 
@@ -474,6 +475,17 @@ public class MovableWindow {
 				if (intent.getStringExtra(INTENT_APP_PKG).equals(
 						window.getContext().getApplicationInfo().packageName)) {
 					setLayoutPositioning(window);
+					
+					boolean is_maximized = mMaximizeChangeTitleBarVisibility &&
+							(window.getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT ||
+							window.getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT);
+					boolean isAeroSnapped = mAeroSnapChangeTitleBarVisibility && AeroSnap.isSnapped();
+					if (activity != null && (is_maximized || isAeroSnapped)) {
+						FrameLayout decor_view = (FrameLayout) activity.getWindow()
+								.peekDecorView().getRootView();
+						mOverlayView = (MovableOverlayView) decor_view.getTag(Common.LAYOUT_OVERLAY_TAG);
+						mOverlayView.setTitleBarVisibility(false);
+					}
 				}
 			}
 		};
