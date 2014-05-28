@@ -234,10 +234,10 @@
     <string name="dnm_close_app">Close Window</string>
     <string name="dnm_minimize">Minimize App</string>
     <string name="dnm_snap_window">Snap Window</string>
-    <string name="dnm_snap_window_sub1">Top</string>
-    <string name="dnm_snap_window_sub2">Bottom</string>
-    <string name="dnm_snap_window_sub3">Left</string>
-    <string name="dnm_snap_window_sub4">Right</string>
+    <string name="dnm_snap_window_sub1">Snap (Top)</string>
+    <string name="dnm_snap_window_sub2">Snap (Bottom)</string>
+    <string name="dnm_snap_window_sub3">Snap (Left)</string>
+    <string name="dnm_snap_window_sub4">Snap (Right)</string>
     <string name="dnm_minimize_notif_title">Restore %1$s</string>
     <string name="dnm_minimize_notif_summary">This floating app has been minimized</string>
     

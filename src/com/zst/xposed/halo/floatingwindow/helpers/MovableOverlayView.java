@@ -386,7 +386,6 @@ public class MovableOverlayView extends RelativeLayout {
 		divider.setBackgroundColor(Color.parseColor("#" + color_str));
 		
 		final String item1 = mResource.getString(R.string.dnm_transparency);
-		final String menu_item4 = mResource.getString(R.string.dnm_snap_window);
 		final String menu_item4_sub1 = mResource.getString(R.string.dnm_snap_window_sub1);
 		final String menu_item4_sub2 = mResource.getString(R.string.dnm_snap_window_sub2);
 		final String menu_item4_sub3 = mResource.getString(R.string.dnm_snap_window_sub3);
@@ -395,11 +394,10 @@ public class MovableOverlayView extends RelativeLayout {
 		final PopupMenu popupMenu = new PopupMenu(mActivity, more_button);
 		final Menu menu = popupMenu.getMenu();
 		menu.add(item1);
-		SubMenu submenu_item4 = menu.addSubMenu(menu_item4);
-		submenu_item4.add(menu_item4_sub1);
-		submenu_item4.add(menu_item4_sub2);
-		submenu_item4.add(menu_item4_sub3);
-		submenu_item4.add(menu_item4_sub4);
+		menu.add(menu_item4_sub1);
+		menu.add(menu_item4_sub2);
+		menu.add(menu_item4_sub3);
+		menu.add(menu_item4_sub4);
 		popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 			@Override
 			public boolean onMenuItemClick(MenuItem item) {
