@@ -258,6 +258,8 @@ public class MultiWindowViewManager {
 				WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
 		params.format = PixelFormat.TRANSLUCENT;
 		params.type = WindowManager.LayoutParams.TYPE_PHONE;
+		params.x = 0;
+		params.y = 0;
 		switch (side) {
 		case AeroSnap.SNAP_TOP:
 			if (!top_bottom_split) {
@@ -293,7 +295,11 @@ public class MultiWindowViewManager {
 			}
 			params.width = WindowManager.LayoutParams.MATCH_PARENT;
 			params.height = (int) ((mScreenHeight - pixels_from_edge) + (outline_thickness * 0.5f));
-			params.gravity = Gravity.BOTTOM | Gravity.LEFT;
+			params.gravity = Gravity.TOP | Gravity.LEFT;
+			params.y = pixels_from_edge;
+			/* Immersive Mode work-around. Screen Height excludes the nav bar
+			 * even if in immersive mode, thus, there will be a 48dp gap between
+			 * the outline and the app. */
 			break;
 		case AeroSnap.SNAP_NONE:
 		default:

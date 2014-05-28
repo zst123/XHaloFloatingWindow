@@ -35,8 +35,6 @@ public class LayoutScaling {
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 		window.setWindowAnimations(android.R.style.Animation_Dialog);
-		window.setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		window.clearFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER);
 		int i = pref.getInt(Common.KEY_KEYBOARD_MODE, Common.DEFAULT_KEYBOARD_MODE);
 		if (i == 2) {
