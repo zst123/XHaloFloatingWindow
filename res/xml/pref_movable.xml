@@ -18,6 +18,13 @@
             android:summary="@string/pref_movable_titlebar_enabled_summary"
             android:title="@string/pref_movable_titlebar_enabled_title" />
 
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="window_moving_titlebar_single_window"
+            android:dependency="window_moving_titlebar_enabled"
+            android:summary="@string/pref_movable_titlebar_single_window_summary"
+            android:title="@string/pref_movable_titlebar_single_window_title" />
+        
         <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
             defaultValue="32"
             maximum="120"

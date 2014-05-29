@@ -44,6 +44,7 @@ public class Common {
 	public static final String KEY_WINDOW_TITLEBAR_SEPARATOR_COLOR = "window_moving_titlebar_separator_color";
 	public static final String KEY_WINDOW_TITLEBAR_MAXIMIZE_HIDE = "window_moving_titlebar_max_hide";
 	public static final String KEY_WINDOW_TITLEBAR_ALT_ICONS = "window_moving_titlebar_alt_icons";
+	public static final String KEY_WINDOW_TITLEBAR_SINGLE_WINDOW = "window_moving_titlebar_single_window";
 	public static final String KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED = "window_moving_move_ab_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_ENABLE = "window_triangle_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_COLOR = "window_triangle_color";
@@ -119,6 +120,7 @@ public class Common {
 	public static final String DEFAULT_WINDOW_TITLEBAR_SEPARATOR_COLOR = "FFFFFF";
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_MAXIMIZE_HIDE = true;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_ALT_ICONS = false;
+	public static final boolean DEFAULT_WINDOW_TITLEBAR_SINGLE_WINDOW = false;
 	public static final boolean DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_ENABLE = true;
 	public static final String DEFAULT_WINDOW_TRIANGLE_COLOR = "FFFFFF";

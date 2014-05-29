@@ -323,11 +323,7 @@ public class MovableOverlayView extends RelativeLayout {
 			setDragActionBarVisibility(true, true);
 			break;
 		case 2:
-			if (Build.VERSION.SDK_INT >= 16) {
-				mActivity.finishAffinity();
-			} else {
-				mActivity.finish();
-			}
+			closeApp();
 			break;
 		case 3: // Transparency Dialog
 			showTransparencyDialogVisibility();
@@ -431,11 +427,7 @@ public class MovableOverlayView extends RelativeLayout {
 				int id = v.getId();
 				
 				if (id == R.id.movable_titlebar_close || tag.equals("movable_titlebar_close")) {
-					if (Build.VERSION.SDK_INT >= 16) {
-						mActivity.finishAffinity();
-					} else {
-						mActivity.finish();
-					}
+					closeApp();
 				} else if (id == R.id.movable_titlebar_max || tag.equals("movable_titlebar_max")) {
 					MovableWindow.maximizeApp(mActivity);
 				} else if (id == R.id.movable_titlebar_min || tag.equals("movable_titlebar_min")) {
@@ -513,7 +505,7 @@ public class MovableOverlayView extends RelativeLayout {
 						if (item.getTitle().equals(menu_item1)) {
 							showTransparencyDialogVisibility();
 						} else if (item.getTitle().equals(menu_item2)) {
-							mActivity.finish();
+							closeApp();
 						} else if (item.getTitle().equals(menu_item3)) {
 							MovableWindow.minimizeAndShowNotification(mActivity);
 						} else if (item.getTitle().equals(menu_item4_sub1)) {
@@ -612,5 +604,15 @@ public class MovableOverlayView extends RelativeLayout {
 				ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
 		paramz.setMargins(0, 0, 0, 0);
 		return paramz;
+	}
+	
+	public void closeApp() {
+		if (mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_SINGLE_WINDOW,
+				Common.DEFAULT_WINDOW_TITLEBAR_SINGLE_WINDOW)
+				&& Build.VERSION.SDK_INT >= 16) {
+			mActivity.finishAffinity();
+		} else {
+			mActivity.finish();
+		}
 	}
 }
