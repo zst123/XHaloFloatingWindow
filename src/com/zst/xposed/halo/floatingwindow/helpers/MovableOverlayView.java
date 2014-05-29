@@ -368,10 +368,18 @@ public class MovableOverlayView extends RelativeLayout {
 				R.id.movable_titlebar_close, "movable_titlebar_close");
 	
 		app_title.setText(mActivity.getApplicationInfo().loadLabel(mActivity.getPackageManager()));
-		close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close));
-		max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max));
-		min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min));
-		more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more));
+		
+		if (mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ALT_ICONS, Common.DEFAULT_WINDOW_TITLEBAR_ALT_ICONS)) {
+			close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close_old));
+			max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max_old));
+			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min_old));
+			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more_old));
+		} else {
+			close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close));
+			max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max));
+			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min));
+			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more));
+		}
 		
 		RelativeLayout.LayoutParams header_param = (LayoutParams) header.getLayoutParams();
 		header_param.height = mTitleBarHeight;

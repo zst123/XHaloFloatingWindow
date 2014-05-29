@@ -62,6 +62,13 @@
             android:dependency="window_moving_titlebar_enabled"
             android:summary="@string/pref_movable_titlebar_max_hide_summary"
             android:title="@string/pref_movable_titlebar_max_hide_title" />
+        
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="window_moving_titlebar_alt_icons"
+            android:dependency="window_moving_titlebar_enabled"
+            android:summary="@string/pref_movable_titlebar_alt_icons_summary"
+            android:title="@string/pref_movable_titlebar_alt_icons_title" />
     </PreferenceScreen>
 
     <!-- Moving -->
