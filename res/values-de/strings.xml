@@ -92,6 +92,10 @@
     <string name="pref_movable_titlebar_separator_size_summary">Höhe der Trennlinie unterhalb der Titelleiste</string>
     <string name="pref_movable_titlebar_separator_color_title">Farbe der Trennlinie</string>
     <string name="pref_movable_titlebar_separator_color_summary">Die Farbe der Trennlinie unterhalb der Titelleiste</string>
+    <string name="pref_movable_titlebar_alt_icons_title">Verwende andere Symbole</string>
+    <string name="pref_movable_titlebar_alt_icons_summary">Ersetzt die Symbole in der Titelleiste mit denen der älteren Version</string>
+    <string name="pref_movable_titlebar_single_window_title">Apps als einzelnes Fenster behandeln</string>
+    <string name="pref_movable_titlebar_single_window_summary">Wenn aktiviert, wird der Schließen-Knopf die gesamte App beenden, anstatt nur dieses Fenster zu schließen.\n(Erfordert Android 4.1 oder höher)</string>
     <string name="pref_movable_titlebar_max_hide_title">Verstecke Titelleiste, wenn maximiert</string>
     <string name="pref_movable_titlebar_max_hide_summary">Versteckt die Titelleiste, wenn das Fenster maximiert ist und zeigt sie wieder, wenn die Größe verändert wird.</string>
     <string name="pref_movable_moving_start_pos_title">Behalte Fensterposition beim Start</string>
