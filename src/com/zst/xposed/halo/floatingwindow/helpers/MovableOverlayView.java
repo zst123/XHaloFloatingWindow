@@ -23,6 +23,7 @@ import android.view.SubMenu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -607,6 +608,19 @@ public class MovableOverlayView extends RelativeLayout {
 	}
 	
 	public void closeApp() {
+		try {
+			/* Work-around for bug:
+			 * When closing a floating window using the titlebar
+			 * while the keyboard is open, the floating window
+			 * closes but the keyboard remains open on top of
+			 * another fullscreen app.
+			 */
+			InputMethodManager imm = (InputMethodManager)
+					mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
+			imm.hideSoftInputFromWindow(mActivity.getCurrentFocus().getWindowToken(), 0);
+		} catch (Exception e) {
+			//ignore
+		}
 		if (mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_SINGLE_WINDOW,
 				Common.DEFAULT_WINDOW_TITLEBAR_SINGLE_WINDOW)
 				&& Build.VERSION.SDK_INT >= 16) {
