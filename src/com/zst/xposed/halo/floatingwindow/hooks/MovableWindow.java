@@ -269,8 +269,14 @@ public class MovableWindow {
 	}
 	
 	private static void checkIfInitialSnapNeeded(boolean apply) {
+		boolean hasExtra;
+		try {
+			hasExtra = activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE);
+		} catch (Exception e) {
+			hasExtra = false;
+		}
 		if (mMovableWindow && isHoloFloat && mAeroSnap != null &&
-				activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE)) {
+				hasExtra) {
 			final int snap = activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE,
 					AeroSnap.SNAP_NONE);
 			if (mPreviousForceAeroSnap == snap) {
