@@ -41,6 +41,7 @@ public class HaloFloating {
 		if (lpparam.packageName.equals("android")) {
 			hookActivityRecord(lpparam);
 			removeAppStartingWindow(lpparam);
+			kitkatMoveHomeStackHook(lpparam);
 		}
 		
 		initHooks(lpparam);
@@ -80,13 +81,6 @@ public class HaloFloating {
 			fixExceptionWhenResuming();
 		} catch (Throwable e) {
 			XposedBridge.log(Common.LOG_TAG + "(fixExceptionWhenResuming)");
-			XposedBridge.log(e);
-		}
-		/*********************************************/
-		try {
-			kitkatMoveHomeStackHook(l);
-		} catch (Throwable e) {
-			XposedBridge.log(Common.LOG_TAG + "(kitkatMoveHomeStackHook)");
 			XposedBridge.log(e);
 		}
 		/*********************************************/
@@ -261,12 +255,11 @@ public class HaloFloating {
 	 * There is a check in "resumeTopActivityLocked" that if "mResumedActivity"
 	 * is not null, then pause the app. We are working around it like this.
 	 */
-	Field activityField;
-	Object previous = null;
-	boolean appPauseEnabled;
 	private  void injectActivityStack(final LoadPackageParam lpp) throws Throwable {
 		final Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() {
+			Object previous = null;
+			boolean appPauseEnabled;
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				if (!mHasHaloFlag) return;
 				
@@ -274,24 +267,15 @@ public class HaloFloating {
 				appPauseEnabled = mPref.getBoolean(Common.KEY_APP_PAUSE, Common.DEFAULT_APP_PAUSE);
 				if (appPauseEnabled) return;
 				
-				Class<?> clazz = param.thisObject.getClass();
-				activityField = clazz.getDeclaredField(("mResumedActivity"));
-				activityField.setAccessible(true);
-				previous = null;
-				final Object prevActivity = activityField.get(param.thisObject);
-				if (prevActivity != null) {
-					previous = prevActivity;
-				}
-				activityField.set(param.thisObject, null);
+				final Object prevActivity = XposedHelpers.getObjectField(param.thisObject, "mResumedActivity");
+				previous = prevActivity;
+				XposedHelpers.setObjectField(param.thisObject, "mResumedActivity", null);
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!mHasHaloFlag) return;
 				if (appPauseEnabled) return;
 				if (previous != null) {
-					Class<?> clazz = param.thisObject.getClass();
-					if (activityField == null) activityField = clazz.getDeclaredField(("mResumedActivity"));
-					activityField.setAccessible(true);
-					activityField.set(param.thisObject, previous);
+					XposedHelpers.setObjectField(param.thisObject, "mResumedActivity", previous);
 				}
 			}
 		});
@@ -302,33 +286,33 @@ public class HaloFloating {
 				if (!mHasHaloFlag) return;
 				if (param.args[1] instanceof Intent) return;
 				Object activityRecord = param.args[0];
-				Class<?> activityRecordClass = activityRecord.getClass();
-				Field activityField = activityRecordClass.getDeclaredField(("fullscreen"));
-				activityField.setAccessible(true);
-				activityField.set(activityRecord, Boolean.FALSE);
+				XposedHelpers.setBooleanField(activityRecord, "fullscreen", false);
 			}
 		});
 		
-		/*
-		 * Prevents the App from bringing the home to the front. // FIXME Kitkat breaks this
-		 */
-		XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodHook() {
-			@Override
-			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				int launchFlags = (Integer) param.args[0];
-				if ((launchFlags & (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME))
-						== (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME)) {
-					boolean floating = (launchFlags & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-					if (floating) param.setResult(null);
-					// if the app is a floating app, and is a new task on home.
-					// then skip this method.
-				} else {
-					param.setResult(null);
-					// This is not a new task on home. Dont allow the method to continue.
-					// Since there is no point to run method which checks for the same thing
+		if (Build.VERSION.SDK_INT < 19) {
+			/*
+			 * Prevents the App from bringing the home to the front.
+			 * Doesn't exists on Kitkat so it is not needed
+			 */
+			XposedBridge.hookAllMethods(hookClass, "moveHomeToFrontFromLaunchLocked", new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					int launchFlags = (Integer) param.args[0];
+					if ((launchFlags & (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME))
+							== (Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME)) {
+						boolean floating = (launchFlags & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+						if (floating) param.setResult(null);
+						// if the app is a floating app, and is a new task on home.
+						// then skip this method.
+					} else {
+						param.setResult(null);
+						// This is not a new task on home. Dont allow the method to continue.
+						// Since there is no point to run method which checks for the same thing
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 	
 	/*
