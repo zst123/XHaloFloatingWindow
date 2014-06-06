@@ -1,6 +1,7 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
@@ -25,40 +26,32 @@ import de.robv.android.xposed.callbacks.XCallback;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class HaloFloating {
+	MainXposed mMain;
+	XSharedPreferences mPref;
 	
-	static XSharedPreferences mPref;
-	static boolean isHoloFloat = false;
-	static boolean floatingWindow;
-	static boolean isPreviousActivityHome;
+	boolean mIsPreviousActivityHome;
+	boolean mHasHaloFlag;
+	boolean isHoloFloat = false; //TODO move to new class
 	
-	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences pref) {
+	public HaloFloating(MainXposed main, LoadPackageParam lpparam, XSharedPreferences pref) throws Throwable {
+		mMain = main;
 		mPref = pref;
 		mPref.reload();
-		initHooks(l);
+		
+		if (lpparam.packageName.equals("android")) {
+			hookActivityRecord(lpparam);
+			removeAppStartingWindow(lpparam);
+		}
+		
+		initHooks(lpparam);
 	}
 	
-	// We catch all the error to prevent the system from crashing or bootlooping
-	// if one of the hooks fail.
-	private static void initHooks(LoadPackageParam l) {
-		/*********************************************/
-		try {
-			inject_ActivityRecord_ActivityRecord(l);
-		} catch (Throwable e) {
-			XposedBridge.log(Common.LOG_TAG + "(ActivityRecord)");
-			XposedBridge.log(e);
-		}
+	private void initHooks(LoadPackageParam l) {
 		/*********************************************/
 		try {
 			injectActivityStack(l);
 		} catch (Throwable e) {
 			XposedBridge.log(Common.LOG_TAG + "(ActivityStack)");
-			XposedBridge.log(e);
-		}
-		/*********************************************/
-		try {
-			removeAppStartingWindow(l);
-		} catch (Throwable e) {
-			XposedBridge.log(Common.LOG_TAG + "(removeAppStartingWindow)");
 			XposedBridge.log(e);
 		}
 		/*********************************************/
@@ -97,174 +90,155 @@ public class HaloFloating {
 			XposedBridge.log(e);
 		}
 		/*********************************************/
-		
 	}
 	
 	
-	/* For passing on flag to next activity*/
-	private static void inject_ActivityRecord_ActivityRecord(final LoadPackageParam lpparam)
-			throws Throwable {
-		if (!lpparam.packageName.equals("android")) return;
-		
-		XposedBridge.hookAllConstructors(findClass("com.android.server.am.ActivityRecord",
-				lpparam.classLoader), new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
+	private void hookActivityRecord(final LoadPackageParam lpparam)throws Throwable {
+		Class<?> classActivityRecord = findClass("com.android.server.am.ActivityRecord",
+				lpparam.classLoader);
+		XposedBridge.hookAllConstructors(classActivityRecord,
+				new XC_MethodHook(XCallback.PRIORITY_HIGHEST) {
 			@Override
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				mPref.reload();
 				
-				isHoloFloat = false;
-				floatingWindow = false;
-				Intent i = null;
-				Object stack = null;
-				ActivityInfo aInfo = null;
+				// Reset the values to accept the next app's
+				mHasHaloFlag = false;
+				Intent intent = null;
+				Object activity_stack = null;
+				ActivityInfo activity_info = null;
 				
-				if (Build.VERSION.SDK_INT <= 17) { // JB 4.2 and below
-					i = (Intent) param.args[4];
-					aInfo = (ActivityInfo) param.args[6];
-					stack = param.args[1];
-				} else if (Build.VERSION.SDK_INT == 18) { 
-					// JB 4.3 has additional _launchedFromPackage. so indexs are affected
-					i = (Intent) param.args[5];
-					aInfo = (ActivityInfo) param.args[7];
-					stack = param.args[1];
-				} else if (Build.VERSION.SDK_INT == 19) { 
-					// Fuck Google. Changed params order again for KitKat.
-					i = (Intent) param.args[4];
-					aInfo = (ActivityInfo) param.args[6];
+				if (Build.VERSION.SDK_INT >= 19) { // Android 4.4 onwards
+					intent = (Intent) param.args[4];
+					activity_info = (ActivityInfo) param.args[6];
 					try {
 						Object stackSupervisor = param.args[12]; // mStackSupervisor
-						stack = XposedHelpers.callMethod(stackSupervisor, "getFocusedStack");
+						activity_stack = XposedHelpers.callMethod(stackSupervisor, "getFocusedStack");
 					} catch (Exception e) {
-						Field field = param.args[12].getClass().getDeclaredField("mFocusedStack");
-						field.setAccessible(true);
-						stack = field.get(param.args[12]);
+						activity_stack = XposedHelpers.getObjectField(param.args[12], "mFocusedStack");
 					}
-				}
-				if (i == null) return;
-				// This is where the package gets its first context from the attribute-cache. In
-				// order to hook its attributes we set up our check for floating mutil windows here.
-				boolean isBlacklisted = MainXposed.isBlacklisted(aInfo.applicationInfo.packageName);
-				boolean isWhitelisted = MainXposed.isWhitelisted(aInfo.applicationInfo.packageName);
-				int blackWhitelistOptions = MainXposed.getBlackWhiteListOption();
-
-				if (blackWhitelistOptions == 1) {
-					/* Always open apps in halo except blacklisted apps */
-					if (!isBlacklisted) {
-						isWhitelisted = true;
-						// if app is NOT blacklisted, whitelist the app
-					}
-				} else if (blackWhitelistOptions == 2) {
-					/* Never open apps in halo but force whitelisted apps in halo */
-					isBlacklisted = !isWhitelisted;
-					// if not whitelisted, then blacklist app
-				} else if (blackWhitelistOptions == 3) {
-					/* Blacklist all apps & only allow whitelisted apps to be opened in halo */
-					isBlacklisted = !isWhitelisted;
-					// if not in whitelist, then blacklist app
-					isWhitelisted = false;
-					// turn whilelist off since we are not forcing app in halo
+					mIsPreviousActivityHome = (Boolean) XposedHelpers.callMethod(activity_stack, "isHomeStack");
+					// Check if the previous activity is home
+				} else if (Build.VERSION.SDK_INT == 18) { // Android 4.3
+					intent = (Intent) param.args[5];
+					activity_stack = param.args[1];
+					activity_info = (ActivityInfo) param.args[7];
+				} else if (Build.VERSION.SDK_INT <= 17) { // Android 4.2 & below
+					intent = (Intent) param.args[4];
+					activity_stack = param.args[1];
+					activity_info = (ActivityInfo) param.args[6];
 				}
 				
-				if (!isBlacklisted && isWhitelisted) {
-					i.addFlags(Common.FLAG_FLOATING_WINDOW);
-				}
-				floatingWindow = (i.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+				if (intent == null) return;
 				
-				Class<?> activitystack = stack.getClass();
-				Field mHistoryField = null;
-				if (Build.VERSION.SDK_INT == 19) { // Kitkat
-					mHistoryField = activitystack.getDeclaredField("mTaskHistory"); // ArrayList<TaskRecord>
-				} else { // JB4.3 and lower
-					mHistoryField = activitystack.getDeclaredField("mHistory"); // ArrayList<ActivityRecord>
-				}
-				mHistoryField.setAccessible(true);
-				ArrayList<?> alist = (ArrayList<?>) mHistoryField.get(stack);
-						
-				int snapSide = AeroSnap.SNAP_NONE;
-				boolean isFloating;
-				boolean taskAffinity;
-				if (alist.size() > 0 && !floatingWindow && !isBlacklisted) {
-					if (Build.VERSION.SDK_INT == 19) {
-						Object taskRecord = alist.get(alist.size() - 1);
-						Field taskRecord_intent_field = taskRecord.getClass().getDeclaredField("intent");
-						taskRecord_intent_field.setAccessible(true);
-						Intent taskRecord_intent = (Intent) taskRecord_intent_field.get(taskRecord);
-						isFloating = !isPreviousActivityHome &&
-								(taskRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-						String pkgName = taskRecord_intent.getPackage();
-						taskAffinity = aInfo.applicationInfo.packageName.equals(pkgName /* info.packageName */);
-						if (taskRecord_intent.hasExtra(Common.EXTRA_SNAP_SIDE)) {
-							snapSide = taskRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
-									AeroSnap.SNAP_NONE);
-						}
+				String packageName = activity_info.applicationInfo.packageName;
+				boolean skipCheck;
+				
+				switch (mMain.getBlackWhiteListOption()) {
+				case 1: /* Always open apps in halo except blacklisted apps */
+					skipCheck = true;
+					if (!mMain.isBlacklisted(packageName)) {
+						mHasHaloFlag = true;
+					}
+					break;
+					
+				case 2: /* Never open apps in halo + force whitelisted apps in halo */
+					skipCheck = true;
+					if (mMain.isWhitelisted(packageName)) {
+						mHasHaloFlag = true;
+					}
+					break;
+				case 3: /* Blacklist all apps & only allow whitelisted apps to be opened in halo */
+					if (mMain.isWhitelisted(packageName)) {
+						skipCheck = false;
 					} else {
-						Object baseRecord = alist.get(alist.size() - 1); // ActivityRecord
-						Field baseRecordField = baseRecord.getClass().getDeclaredField("intent");
-						baseRecordField.setAccessible(true);
-						Intent baseRecord_intent = (Intent) baseRecordField.get(baseRecord);
-						isFloating = (baseRecord_intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
-						Field baseRecordField_2 = baseRecord.getClass().getDeclaredField("packageName");
-						baseRecordField_2.setAccessible(true);
-						String baseRecord_pkg = (String) baseRecordField_2.get(baseRecord);
-						taskAffinity = aInfo.applicationInfo.packageName.equals(baseRecord_pkg );
-						/*baseRecord.packageName*/
-						if (baseRecord_intent.hasExtra(Common.EXTRA_SNAP_SIDE)) {
-							snapSide = baseRecord_intent.getIntExtra(Common.EXTRA_SNAP_SIDE,
-									AeroSnap.SNAP_NONE);
-						}
+						skipCheck = true;
+						mHasHaloFlag = false;
+						// if not whitelisted, skip the check
 					}
-					// If the current intent is not a new task we will check its top parent.
-					// Perhaps it started out as a multiwindow in which case we pass the flag on
-					boolean forceTaskHalo = mPref.getBoolean(Common.KEY_FORCE_OPEN_APP_ABOVE_HALO, Common.DEFAULT_FORCE_OPEN_APP_ABOVE_HALO);
-					if (isFloating && (forceTaskHalo || taskAffinity)) {
-						Field intentField = param.thisObject.getClass().getDeclaredField("intent");
-						intentField.setAccessible(true);
-						Intent newer = (Intent) intentField.get(param.thisObject);
-						newer.addFlags(Common.FLAG_FLOATING_WINDOW);
-						if (taskAffinity && snapSide != AeroSnap.SNAP_NONE) {
-							newer.putExtra(Common.EXTRA_SNAP_SIDE, snapSide);
-						}
-						intentField.set(param.thisObject, newer);
-						floatingWindow = true;
-					}
+					break;
+				default: // no additional options
+					skipCheck = false;
+					break;
 				}
-				if (isBlacklisted) {
-					floatingWindow = false;
-					int intent_flag = i.getFlags();
+				
+				if (skipCheck && !mHasHaloFlag) {
+					// We don't need to waste time checking taskAffinity
+					// Just remove flag straight away
+					int intent_flag = intent.getFlags();
 					intent_flag &= ~Common.FLAG_FLOATING_WINDOW;
-					i.setFlags(intent_flag);
+					intent.setFlags(intent_flag);
+					return;
 				}
-				if (floatingWindow) {
-					int intent_flag = i.getFlags();
-					intent_flag &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
-					i.setFlags(intent_flag);
-					i.addFlags(Common.FLAG_FLOATING_WINDOW);
-					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
-						i.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-					} else if (mPref.getBoolean(Common.KEY_FORCE_APP_IN_RECENTS, Common.DEFAULT_FORCE_APP_IN_RECENTS)) {
-						int intent_flag2 = i.getFlags();
-						intent_flag2 &= ~Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
-						i.setFlags(intent_flag2);
+				
+				ArrayList<?> taskHistoryList = null;
+				if (Build.VERSION.SDK_INT >= 19) { // KK++
+					taskHistoryList = (ArrayList<?>) /* ArrayList<TaskRecord> */
+							XposedHelpers.getObjectField(activity_stack, "mTaskHistory");
+				} else { // ICS & JB
+					taskHistoryList = (ArrayList<?>) /* ArrayList<ActivityRecord> */
+							XposedHelpers.getObjectField(activity_stack, "mHistory");
+				}
+				
+				boolean floatingFlag = (intent.getFlags() & Common.FLAG_FLOATING_WINDOW)
+						== Common.FLAG_FLOATING_WINDOW;
+				
+				if (!floatingFlag && taskHistoryList != null && taskHistoryList.size() > 0 ) {
+					// pv = previous
+					Object pvRecord = taskHistoryList.get(taskHistoryList.size() - 1);
+					Intent pvIntent = (Intent) XposedHelpers.getObjectField(pvRecord, "intent");
+					boolean pvFloatFlag = (pvIntent.getFlags() & Common.FLAG_FLOATING_WINDOW)
+							== Common.FLAG_FLOATING_WINDOW;
+					int pvSnapSide = AeroSnap.SNAP_NONE;
+					try {
+						pvSnapSide = pvIntent.getIntExtra(Common.EXTRA_SNAP_SIDE,
+								AeroSnap.SNAP_NONE);
+					} catch (Exception e) {
+						pvSnapSide = AeroSnap.SNAP_NONE;
 					}
-					i.addFlags(Intent.FLAG_ACTIVITY_NO_USER_ACTION);
-					Field tt = param.thisObject.getClass().getDeclaredField("fullscreen");
-					tt.setAccessible(true);
-					tt.set(param.thisObject, Boolean.FALSE);
+					
+					if (pvFloatFlag) {
+						boolean taskAffinity = packageName.equals(pvIntent.getPackage());
+						boolean forceTaskHalo = mPref.getBoolean(Common.KEY_FORCE_OPEN_APP_ABOVE_HALO,
+								Common.DEFAULT_FORCE_OPEN_APP_ABOVE_HALO);
+						
+						if (taskAffinity && pvSnapSide != AeroSnap.SNAP_NONE) {
+							intent.putExtra(Common.EXTRA_SNAP_SIDE, pvSnapSide);
+						}
+						
+						if (!skipCheck && (forceTaskHalo || taskAffinity)) {
+							// we pass the flag on if it is the same task
+							mHasHaloFlag = true;
+						}
+					}
 				}
-				if (Build.VERSION.SDK_INT >= 19) {
-					isPreviousActivityHome = (Boolean) XposedHelpers.callMethod(stack, "isHomeStack");
-					//finally, update the value if home activity
+				
+				if (mHasHaloFlag) {
+					int flags = intent.getFlags();
+					flags = flags | Common.FLAG_FLOATING_WINDOW;
+					flags = flags | Intent.FLAG_ACTIVITY_NO_USER_ACTION;
+					flags &= ~Intent.FLAG_ACTIVITY_TASK_ON_HOME;
+					
+					if (!mPref.getBoolean(Common.KEY_SHOW_APP_IN_RECENTS, Common.DEFAULT_SHOW_APP_IN_RECENTS)) {
+						flags = flags | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
+					} else if (mPref.getBoolean(Common.KEY_FORCE_APP_IN_RECENTS, Common.DEFAULT_FORCE_APP_IN_RECENTS)) {
+						flags &= ~Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS;
+					}
+					intent.setFlags(flags);
+					
+					// Make the current task non-fullscreen so it can be seen through.
+					XposedHelpers.setBooleanField(param.thisObject, "fullscreen", false);
 				}
 			}
 		});
 	}
 	
-	private static void kitkatMoveHomeStackHook(final LoadPackageParam lpp) throws Throwable {
+	private void kitkatMoveHomeStackHook(final LoadPackageParam lpp) throws Throwable {
 		if (Build.VERSION.SDK_INT < 19) return;
 		final Class<?> hookClass = findClass("com.android.server.am.ActivityStackSupervisor", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "moveHomeStack", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				isPreviousActivityHome = (Boolean) param.args[0];
+				mIsPreviousActivityHome = (Boolean) param.args[0];
 				// set out value so we can check later if home was before the next activity.
 				// we do this since starting from kitkat, home and normal apps are in different
 				// activity stacks and there is no way to see if the previous app was home.
@@ -280,14 +254,14 @@ public class HaloFloating {
 	 * There is a check in "resumeTopActivityLocked" that if "mResumedActivity"
 	 * is not null, then pause the app. We are working around it like this.
 	 */
-	static Field activityField;
-	static Object previous = null;
-	static boolean appPauseEnabled;
-	private static void injectActivityStack(final LoadPackageParam lpp) throws Throwable {
+	Field activityField;
+	Object previous = null;
+	boolean appPauseEnabled;
+	private  void injectActivityStack(final LoadPackageParam lpp) throws Throwable {
 		final Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				if (!floatingWindow) return;
+				if (!mHasHaloFlag) return;
 				
 				mPref.reload();
 				appPauseEnabled = mPref.getBoolean(Common.KEY_APP_PAUSE, Common.DEFAULT_APP_PAUSE);
@@ -304,7 +278,7 @@ public class HaloFloating {
 				activityField.set(param.thisObject, null);
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-				if (!floatingWindow) return;
+				if (!mHasHaloFlag) return;
 				if (appPauseEnabled) return;
 				if (previous != null) {
 					Class<?> clazz = param.thisObject.getClass();
@@ -318,7 +292,7 @@ public class HaloFloating {
 		/* This is a Kitkat work-around to make sure the background is transparent */
 		XposedBridge.hookAllMethods(hookClass, "startActivityLocked", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				if (!floatingWindow) return;
+				if (!mHasHaloFlag) return;
 				if (param.args[1] instanceof Intent) return;
 				Object activityRecord = param.args[0];
 				Class<?> activityRecordClass = activityRecord.getClass();
@@ -327,7 +301,7 @@ public class HaloFloating {
 				activityField.set(activityRecord, Boolean.FALSE);
 			}
 		});
-
+		
 		/*
 		 * Prevents the App from bringing the home to the front. // FIXME Kitkat breaks this
 		 */
@@ -354,11 +328,11 @@ public class HaloFloating {
 	 * Removes the app starting placeholder screen before the app contents is shown.
 	 * Does this by making 'createIfNeeded' to false
 	 */
-	private static void removeAppStartingWindow(final LoadPackageParam lpp) throws Throwable {
+	private void removeAppStartingWindow(final LoadPackageParam lpp) throws Throwable {
 		Class<?> hookClass = findClass("com.android.server.wm.WindowManagerService", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "setAppStartingWindow", new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-				if (!floatingWindow) return;
+				if (!mHasHaloFlag) return;
 				if ("android".equals((String) param.args[1])) return;
 				// Change boolean "createIfNeeded" to FALSE
 				if (param.args[param.args.length - 1] instanceof Boolean) {
@@ -380,7 +354,7 @@ public class HaloFloating {
 	 * This is done onStart because Samsung's multiwindow codes run between onCreate & onStart
 	 * and the codes undo my layout scaling.
 	 */
-	private static void inject_Activity() throws Throwable {
+	private  void inject_Activity() throws Throwable {
 		final boolean isMovable = mPref.getBoolean(Common.KEY_MOVABLE_WINDOW, Common.DEFAULT_MOVABLE_WINDOW);
 		final String class_name = isMovable ? "onStart" : "onResume";
 		XposedBridge.hookAllMethods(Activity.class, class_name, new XC_MethodHook() {
@@ -416,7 +390,7 @@ public class HaloFloating {
 	 *  
 	 *  I added the option to allow the user to disable it.
 	 */
-	private static void injectPerformStop() throws Throwable {
+	private  void injectPerformStop() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "performStop", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {		
 				Activity thiz = (Activity) param.thisObject;
@@ -431,7 +405,7 @@ public class HaloFloating {
 		});
 	}
 	
-	private static void injectGenerateLayout(final LoadPackageParam lpp)
+	private void injectGenerateLayout(final LoadPackageParam lpp)
 			throws Throwable {
 		Class<?> cls = findClass("com.android.internal.policy.impl.PhoneWindow", lpp.classLoader);
 		XposedBridge.hookAllMethods(cls, "generateLayout", new XC_MethodHook() {
@@ -461,15 +435,15 @@ public class HaloFloating {
 	 * According to the AOSP sources for Instrumentation.java:
 	 * 
 	 * 		To allow normal system exception process to occur, return false.
-     *		If true is returned, the system will proceed as if the exception
-     *		didn't happen.
-     *
-     * Therefore, to remove the exception, we return true if the resume activity
-     * is in process and false when we are not resuming to let normal system behavior
-     * continue as normal.
+	 *		If true is returned, the system will proceed as if the exception
+	 *		didn't happen.
+	 *
+	 * Therefore, to remove the exception, we return true if the resume activity
+	 * is in process and false when we are not resuming to let normal system behavior
+	 * continue as normal.
 	 */
-	static boolean mExceptionHook = false;
-	private static void fixExceptionWhenResuming() throws Throwable {
+	boolean mExceptionHook = false;
+	private void fixExceptionWhenResuming() throws Throwable {
 		XposedBridge.hookAllMethods(ActivityThread.class, "performResumeActivity", 
 				new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {

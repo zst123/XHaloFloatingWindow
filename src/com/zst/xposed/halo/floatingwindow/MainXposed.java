@@ -47,22 +47,22 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		SystemUIOutliner.handleLoadPackage(lpparam);
 		SystemUIMultiWindow.handleLoadPackage(lpparam);
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
-		HaloFloating.handleLoadPackage(lpparam, mPref);
+		new HaloFloating(this, lpparam, mPref);
 		ActionBarColorHook.handleLoadPackage(lpparam, mPref);
 		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
 	}
 
-	public static boolean isBlacklisted(String pkg) {
+	public boolean isBlacklisted(String pkg) {
 		mBlacklist.reload();
 		return mBlacklist.contains(pkg);
 	}
 	
-	public static boolean isWhitelisted(String pkg) {
+	public boolean isWhitelisted(String pkg) {
 		mWhitelist.reload();
 		return mWhitelist.contains(pkg);
 	}
 	
-	public static int getBlackWhiteListOption() {
+	public int getBlackWhiteListOption() {
 		mPref.reload();
 		return Integer.parseInt(mPref.getString(Common.KEY_WHITEBLACKLIST_OPTIONS, Common.DEFAULT_WHITEBLACKLIST_OPTIONS));
 	}
