@@ -1,10 +1,8 @@
 package com.zst.xposed.halo.floatingwindow.helpers;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
-import com.zst.xposed.halo.floatingwindow.hooks.ActionBarColorHook;
-import com.zst.xposed.halo.floatingwindow.hooks.MovableWindow;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -47,6 +45,7 @@ public class MovableOverlayView extends RelativeLayout {
 	private static final int ACTION_LONGPRESS_QUADRANT = 0x3;
 	
 	// (constants) App Objects
+	private final MainXposed mMainXposed;
 	private final Activity mActivity;
 	private final Resources mResource;
 	private final AeroSnap mAeroSnap;
@@ -79,11 +78,12 @@ public class MovableOverlayView extends RelativeLayout {
 	 * @param pref - preference of the module
 	 * @param aerosnap - an aerosnap instance
 	 */
-	public MovableOverlayView(Activity activity, Resources resources, SharedPreferences pref,
-			AeroSnap aerosnap) {
+	public MovableOverlayView(MainXposed main, Activity activity, Resources resources,
+			SharedPreferences pref, AeroSnap aerosnap) {
 		super(activity);
 		
 		// Set the params
+		mMainXposed = main;
 		mActivity = activity;
 		mResource = resources;
 		mPref = pref;
@@ -290,7 +290,7 @@ public class MovableOverlayView extends RelativeLayout {
 			final int thickness = mPref.getInt(Common.KEY_WINDOW_BORDER_THICKNESS,
 					Common.DEFAULT_WINDOW_BORDER_THICKNESS);
 			setWindowBorder(color, thickness);
-			ActionBarColorHook.setBorderThickness(thickness);
+			mMainXposed.hookActionBarColor.setBorderThickness(thickness);
 		}
 		
 		initTitleBar();
@@ -330,13 +330,13 @@ public class MovableOverlayView extends RelativeLayout {
 			showTransparencyDialogVisibility();
 			break;
 		case 4: // Minimize / Hide Entire App
-			MovableWindow.minimizeAndShowNotification(mActivity);
+			mMainXposed.hookMovableWindow.minimizeAndShowNotification(mActivity);
 			break;
 		case 5: // Drag & Move Bar w/o hiding corner
 			setDragActionBarVisibility(true, false);
 			break;
 		case 6: // Maximize App
-			MovableWindow.maximizeApp(mActivity);
+			mMainXposed.hookMovableWindow.maximizeApp(mActivity);
 			break;
 		}
 	}
@@ -430,9 +430,9 @@ public class MovableOverlayView extends RelativeLayout {
 				if (id == R.id.movable_titlebar_close || tag.equals("movable_titlebar_close")) {
 					closeApp();
 				} else if (id == R.id.movable_titlebar_max || tag.equals("movable_titlebar_max")) {
-					MovableWindow.maximizeApp(mActivity);
+					mMainXposed.hookMovableWindow.maximizeApp(mActivity);
 				} else if (id == R.id.movable_titlebar_min || tag.equals("movable_titlebar_min")) {
-					MovableWindow.minimizeAndShowNotification(mActivity);
+					mMainXposed.hookMovableWindow.minimizeAndShowNotification(mActivity);
 				} else if (id == R.id.movable_titlebar_more || tag.equals("movable_titlebar_more")) {
 					popupMenu.show();
 				}
@@ -508,7 +508,7 @@ public class MovableOverlayView extends RelativeLayout {
 						} else if (item.getTitle().equals(menu_item2)) {
 							closeApp();
 						} else if (item.getTitle().equals(menu_item3)) {
-							MovableWindow.minimizeAndShowNotification(mActivity);
+							mMainXposed.hookMovableWindow.minimizeAndShowNotification(mActivity);
 						} else if (item.getTitle().equals(menu_item4_sub1)) {
 							mAeroSnap.forceSnap(AeroSnap.SNAP_TOP);
 						} else if (item.getTitle().equals(menu_item4_sub2)) {

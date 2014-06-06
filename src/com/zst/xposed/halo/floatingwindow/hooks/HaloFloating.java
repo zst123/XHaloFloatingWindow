@@ -2,7 +2,6 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -408,7 +407,7 @@ public class HaloFloating {
 				if (name.equals("android")) return;
 				
 				if (MovableWindow.layout_moved) {
-					MovableWindow.setLayoutPositioning(window);
+					MovableWindow.setLayoutPositioning(null, window);
 					// register the receiver for syncing window position
 					MovableWindow.registerLayoutBroadcastReceiver(null, window);
 				} else {

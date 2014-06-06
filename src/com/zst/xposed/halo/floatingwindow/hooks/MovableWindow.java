@@ -1,6 +1,7 @@
 package com.zst.xposed.halo.floatingwindow.hooks;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
@@ -19,7 +20,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
-import android.content.res.XModuleResources;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.IBinder;
 import android.view.Gravity;
@@ -36,26 +37,29 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MovableWindow {
-
+	static final int ID_NOTIFICATION_RESTORE = 22222222;
 	static final String INTENT_APP_PKG = "pkg";
 
-	static XSharedPreferences mPref;
-	static XModuleResources mModRes;
+	final MainXposed mMainXposed;
+	final Resources mModRes;
+	final XSharedPreferences mPref;
+	
 	/* App ActionBar Moving Values */
-	private static Float screenX;
-	private static Float screenY;
-	private static Float viewX;
-	private static Float viewY;
-	private static Float leftFromScreen;
-	private static Float topFromScreen;
+	private Float screenX;
+	private Float screenY;
+	private Float viewX;
+	private Float viewY;
+	private Float leftFromScreen;
+	private Float topFromScreen;
 
-	static Activity activity; // Current app activity
-	static boolean isHoloFloat = false; // Current app has floating flag?
-	static boolean mMovableWindow;
-	static boolean mActionBarDraggable;
+	Activity activity; // Current app activity
+	boolean isHoloFloat = false; // Current app has floating flag?
+	boolean mMovableWindow;
+	boolean mActionBarDraggable;
+	boolean mMinimizeToStatusbar;
+	
 	static boolean mRetainStartPosition;
 	static boolean mConstantMovePosition;
-	static boolean mMinimizeToStatusbar;
 	static int mPreviousOrientation;
 	
 	public static MovableOverlayView mOverlayView;
@@ -64,29 +68,29 @@ public class MovableWindow {
 	/* AeroSnap*/
 	public static AeroSnap mAeroSnap;
 	public static boolean mAeroSnapChangeTitleBarVisibility;
-	static boolean mAeroSnapEnabled;
-	static int mAeroSnapDelay;
-	static boolean mAeroSnapSwipeApp;
-	static int mPreviousForceAeroSnap;
+	boolean mAeroSnapEnabled;
+	int mAeroSnapDelay;
+	boolean mAeroSnapSwipeApp;
+	int mPreviousForceAeroSnap;
 
-	static final int ID_NOTIFICATION_RESTORE = 22222222;
 
-	public static void handleLoadPackage(LoadPackageParam l, XSharedPreferences p, XModuleResources res) throws Throwable {
-		mModRes = res;
-		mPref = p;
-
+	public MovableWindow(MainXposed main, LoadPackageParam lpparam) throws Throwable {
+		mMainXposed = main;
+		mModRes = main.sModRes;
+		mPref = main.mPref;
+		
 		activityHook();
 		inject_dispatchTouchEvent();
 
 		try {
-			injectTriangle(l);
+			injectTriangle(lpparam);
 		} catch (Exception e) {
 			XposedBridge.log(Common.LOG_TAG + "Movable / inject_DecorView_generateLayout");
 			XposedBridge.log(e);
 		}
 	}
 
-	private static void activityHook(){
+	private void activityHook(){
 		/* Initialize all the preference variables here.
 		 */
 		XposedBridge.hookAllMethods(Activity.class, "onCreate", new XC_MethodHook() {
@@ -154,7 +158,7 @@ public class MovableWindow {
 							.peekDecorView().getRootView();
 					mOverlayView = (MovableOverlayView) decor_view.getTag(Common.LAYOUT_OVERLAY_TAG);
 					decor_view.bringChildToFront(mOverlayView);
-					ActionBarColorHook.setTitleBar(mOverlayView);
+					mMainXposed.hookActionBarColor.setTitleBar(mOverlayView);
 					
 					activity.sendBroadcast(new Intent(Common.REMOVE_NOTIFICATION_RESTORE
 							+ activity.getPackageName()));
@@ -183,7 +187,7 @@ public class MovableWindow {
 		});
 	}
 
-	private static void injectTriangle(final LoadPackageParam lpparam)
+	private void injectTriangle(final LoadPackageParam lpparam)
 			throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "onStart", new XC_MethodHook() {
 			@Override
@@ -196,7 +200,7 @@ public class MovableWindow {
 				// register the receiver for syncing window position
 				registerLayoutBroadcastReceiver(activity, window);
 				// set layout position from previous activity if available
-				setLayoutPositioning(window);
+				setLayoutPositioning(activity, window);
 
 				FrameLayout decorView = (FrameLayout) window.peekDecorView().getRootView();
 				if (decorView == null) return;
@@ -220,7 +224,7 @@ public class MovableWindow {
 				}
 				
 				if (mOverlayView == null) {
-					mOverlayView = new MovableOverlayView(activity, mModRes, mPref, mAeroSnap);
+					mOverlayView = new MovableOverlayView(mMainXposed, activity, mModRes, mPref, mAeroSnap);
 					decorView.addView(mOverlayView, -1, MovableOverlayView.getParams());
 					decorView.setTagInternal(Common.LAYOUT_OVERLAY_TAG, mOverlayView);
 				}
@@ -234,13 +238,13 @@ public class MovableWindow {
 					mOverlayView.setTitleBarVisibility(false);
 				}
 				
-				ActionBarColorHook.setTitleBar(mOverlayView);
+				mMainXposed.hookActionBarColor.setTitleBar(mOverlayView);
 			}
 		});
 	}
 
 	// maximize and restore the window.
-	public static void maximizeApp(Activity activity) {
+	public void maximizeApp(Activity activity) {
 		if ((activity.getWindow().getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT) ||
 			(activity.getWindow().getAttributes().height == ViewGroup.LayoutParams.MATCH_PARENT)) {
 			if (AeroSnap.isSnapped()) {
@@ -269,7 +273,7 @@ public class MovableWindow {
 		initAndRefreshLayoutParams(activity.getWindow(), activity, activity.getPackageName());
 	}
 	
-	private static void checkIfInitialSnapNeeded(boolean apply) {
+	private void checkIfInitialSnapNeeded(boolean apply) {
 		boolean hasExtra;
 		try {
 			hasExtra = activity.getIntent().hasExtra(Common.EXTRA_SNAP_SIDE);
@@ -296,7 +300,7 @@ public class MovableWindow {
 	}
 
 	// Send the app to the back, and show a notification to restore
-	public static void minimizeAndShowNotification(final Activity ac) {
+	public void minimizeAndShowNotification(final Activity ac) {
 		if (!mMinimizeToStatusbar) {
 			ac.moveTaskToBack(true);
 			return;
@@ -338,7 +342,7 @@ public class MovableWindow {
 	}
 
 	// hook the touch events to move the window and have aero snap.
-	private static void inject_dispatchTouchEvent() throws Throwable {
+	private void inject_dispatchTouchEvent() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "dispatchTouchEvent", new XC_MethodHook() {
 			@Override
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
@@ -437,12 +441,14 @@ public class MovableWindow {
 		return true;
 	}
 
-	public static void setLayoutPositioning(Window window) {
+	public static void setLayoutPositioning(Activity activity, Window window) {
 		if (!layout_moved) return;
 
 		if (!mRetainStartPosition) return;
 
-		activity.getIntent().removeExtra(Common.EXTRA_SNAP_SIDE);
+		if (activity != null) {
+			activity.getIntent().removeExtra(Common.EXTRA_SNAP_SIDE);
+		}
 
 		WindowManager.LayoutParams params = window.getAttributes();
 		params.x = layout_x;
@@ -481,7 +487,7 @@ public class MovableWindow {
 				}
 				if (intent.getStringExtra(INTENT_APP_PKG).equals(
 						window.getContext().getApplicationInfo().packageName)) {
-					setLayoutPositioning(window);
+					setLayoutPositioning(activity, window);
 					
 					boolean is_maximized = mMaximizeChangeTitleBarVisibility &&
 							(window.getAttributes().width  == ViewGroup.LayoutParams.MATCH_PARENT ||
@@ -544,25 +550,25 @@ public class MovableWindow {
 	}
 	/* (End) Layout Position Method Helpers */
 
-	private static void changeFocusApp(Activity a) throws Throwable {
+	private void changeFocusApp(Activity a) throws Throwable {
 		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
 		i.putExtra(Common.INTENT_APP_ID, a.getTaskId());
 		putIBinderIntoExtras(i, Common.INTENT_APP_TOKEN, getActivityToken(a));
 		a.sendBroadcast(i);
 	}
 
-	private static void updateView(Window mWindow, float x, float y) {
+	private void updateView(Window mWindow, float x, float y) {
 		WindowManager.LayoutParams params = mWindow.getAttributes();
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
 	}
 	
-	private static IBinder getActivityToken(Activity act) {
+	private IBinder getActivityToken(Activity act) {
 		return (IBinder) XposedHelpers.callMethod(act, "getActivityToken");
 	}
 	
-	private static void putIBinderIntoExtras(Intent i, String key, IBinder b) {
+	private void putIBinderIntoExtras(Intent i, String key, IBinder b) {
 		Class<?>[] vv = { String.class, IBinder.class };
 		XposedHelpers.callMethod(i, "putExtra", vv, key, b);
 		// FIXME IMPORTANT: deprecated on jelly bean

@@ -21,18 +21,22 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	
 	public static XModuleResources sModRes;
-	static String MODULE_PATH = null;
-	static XSharedPreferences mPref;
-	static XSharedPreferences mBlacklist;
-	static XSharedPreferences mWhitelist;
+	// TODO make local
+	public XSharedPreferences mPref;
+	public XSharedPreferences mBlacklist;
+	public XSharedPreferences mWhitelist;
+	
+	/* Hook References */
+	public MovableWindow hookMovableWindow;
+	public HaloFloating hookHaloFloating;
+	public ActionBarColorHook hookActionBarColor;
 	
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
 		mBlacklist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_BLACKLIST_FILE);
 		mWhitelist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_WHITELIST_FILE);
-		MODULE_PATH = startupParam.modulePath;
-		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
+		sModRes = XModuleResources.createInstance(startupParam.modulePath, null);
 		
 		//SystemUI
 		NotificationShadeHook.zygote(sModRes);
@@ -56,9 +60,9 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		SystemMods.handleLoadPackage(lpparam, mPref);
 		
 		// App
-		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
-		new HaloFloating(this, lpparam, mPref);
-		ActionBarColorHook.handleLoadPackage(lpparam, mPref);
+		hookMovableWindow = new MovableWindow(this, lpparam);
+		hookHaloFloating = new HaloFloating(this, lpparam, mPref);
+		hookActionBarColor = new ActionBarColorHook(this, lpparam, mPref);
 	}
 
 	public boolean isBlacklisted(String pkg) {

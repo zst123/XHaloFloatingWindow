@@ -5,6 +5,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import static de.robv.android.xposed.XposedHelpers.getObjectField;
 
 import com.zst.xposed.halo.floatingwindow.Common;
+import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
@@ -49,19 +50,23 @@ public class ActionBarColorHook {
 	};
 	
 	/* Current App Variables*/
-	static XSharedPreferences mPref;
-	static RelativeLayout mHeader;
-	static TextView mAppTitle;
-	static ImageButton mCloseButton;
-	static ImageButton mMaxButton;
-	static ImageButton mMinButton;
-	static ImageButton mMoreButton;
-	static View mTriangle;
-	static View mQuadrant;
-	static MovableOverlayView mOverlay;
-	static int mBorderThickness;
+	MainXposed mMainXposed;
+	XSharedPreferences mPref;
 	
-	public static void handleLoadPackage(LoadPackageParam llpp, XSharedPreferences pref) {
+	/* Views */
+	RelativeLayout mHeader;
+	TextView mAppTitle;
+	ImageButton mCloseButton;
+	ImageButton mMaxButton;
+	ImageButton mMinButton;
+	ImageButton mMoreButton;
+	View mTriangle;
+	View mQuadrant;
+	MovableOverlayView mOverlay;
+	int mBorderThickness;
+	
+	public ActionBarColorHook(MainXposed main, LoadPackageParam llpp, XSharedPreferences pref) {
+		mMainXposed = main;
 		mPref = pref;
 		mPref.reload();
 		
@@ -122,7 +127,7 @@ public class ActionBarColorHook {
 		}
 	}
 	
-	private static void changeColorFromActionBarObject(ActionBar actionBar){
+	private void changeColorFromActionBarObject(ActionBar actionBar){
 		Object actionBarContainer = getObjectField(actionBar, "mContainerView");
 		int actionBarTextColor = -2;
 		try {
@@ -152,7 +157,7 @@ public class ActionBarColorHook {
 		changeTitleBarColor(color, iconTint);
 	}
 	
-	public static void setTitleBar(MovableOverlayView overlayView) {
+	public void setTitleBar(MovableOverlayView overlayView) {
 		if (overlayView == null)
 			return;
 		
@@ -167,11 +172,11 @@ public class ActionBarColorHook {
 		mQuadrant = overlayView.mQuadrant;
 	}
 	
-	public static void setBorderThickness(int thickness) {
+	public void setBorderThickness(int thickness) {
 		mBorderThickness = thickness;
 	}
 	
-	private static void changeTitleBarColor(int bg_color, int icon_color) {
+	private void changeTitleBarColor(int bg_color, int icon_color) {
 		try {
 			mHeader.setBackgroundColor(bg_color);
 			mAppTitle.setTextColor(icon_color);
@@ -210,7 +215,7 @@ public class ActionBarColorHook {
 		// if border is zero, the method will take care of it.
 	}
 	
-	private static int getIconColorForColor(int color, int defaultNormal, int defaultInverted,
+	private int getIconColorForColor(int color, int defaultNormal, int defaultInverted,
 			float hsvMaxValue) {
 		float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
@@ -222,7 +227,7 @@ public class ActionBarColorHook {
 		}
 	}
 	
-	private static int getMainColorFromActionBarDrawable(Drawable drawable) {
+	private int getMainColorFromActionBarDrawable(Drawable drawable) {
 		/*
 		 * This should fix the bug where a huge part of the ActionBar background
 		 * is drawn white.
@@ -250,7 +255,7 @@ public class ActionBarColorHook {
 		return Color.argb(alpha, red, green, blue);
 	}
 	
-	private static Bitmap drawableToBitmap(Drawable drawable) throws IllegalArgumentException {
+	private Bitmap drawableToBitmap(Drawable drawable) throws IllegalArgumentException {
 		if (drawable instanceof BitmapDrawable) {
 			return ((BitmapDrawable) drawable).getBitmap();
 		}
@@ -268,20 +273,21 @@ public class ActionBarColorHook {
 		return bitmap;
 	}
 	
-	private static boolean isMovableWindow() {
-		return (MovableWindow.isHoloFloat && MovableWindow.mMovableWindow);
+	private boolean isMovableWindow() {
+		return (mMainXposed.hookMovableWindow.isHoloFloat &&
+				mMainXposed.hookMovableWindow.mMovableWindow);
 	}
 	
-	private static float getHsvMax() {
+	private float getHsvMax() {
 		mPref.reload();
 		return mPref.getFloat(Common.KEY_TINTED_TITLEBAR_HSV, Common.DEFAULT_TINTED_TITLEBAR_HSV);
 	}
 	
-	private static int getDefaultTint(Tint tintType) {
+	private int getDefaultTint(Tint tintType) {
 		return Color.parseColor(getDefaultTintString(tintType));
 	}
 	
-	private static String getDefaultTintString(Tint tintType) {
+	private String getDefaultTintString(Tint tintType) {
 		switch (tintType) {
 		case TITLE_BAR:
 			return COLOR_DEFAULT_TITLEBAR_BACKGROUND;
