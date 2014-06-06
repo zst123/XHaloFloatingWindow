@@ -33,23 +33,32 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		mWhitelist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_WHITELIST_FILE);
 		MODULE_PATH = startupParam.modulePath;
 		sModRes = XModuleResources.createInstance(MODULE_PATH, null);
+		
+		//SystemUI
 		NotificationShadeHook.zygote(sModRes);
 		RecentAppsHook.initZygote(sModRes);
 	}
 	
 	@Override
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		// XHFW
 		TestingSettingHook.handleLoadPackage(lpparam);
+		
+		// SystemUI
 		NotificationShadeHook.hook(lpparam, mPref);
 		RecentAppsHook.handleLoadPackage(lpparam, mPref);
-		SystemMods.handleLoadPackage(lpparam, mPref);
 		SystemUIReceiver.handleLoadPackage(lpparam);
 		SystemUIOutliner.handleLoadPackage(lpparam);
 		SystemUIMultiWindow.handleLoadPackage(lpparam);
+		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
+		
+		// Android
+		SystemMods.handleLoadPackage(lpparam, mPref);
+		
+		// App
 		MovableWindow.handleLoadPackage(lpparam, mPref, sModRes);
 		new HaloFloating(this, lpparam, mPref);
 		ActionBarColorHook.handleLoadPackage(lpparam, mPref);
-		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
 	}
 
 	public boolean isBlacklisted(String pkg) {
