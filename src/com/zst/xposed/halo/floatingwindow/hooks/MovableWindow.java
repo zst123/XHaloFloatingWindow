@@ -21,6 +21,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.content.res.XModuleResources;
 import android.graphics.Color;
+import android.os.IBinder;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -328,8 +329,8 @@ public class MovableWindow {
 			public void onReceive(Context context, Intent intent) {
 				notificationManager.cancel(ID_NOTIFICATION_RESTORE);
 				Intent broadcast = new Intent(Common.CHANGE_APP_FOCUS);
-				broadcast.putExtra(Common.INTENT_APP_TOKEN, ac.getActivityToken());
 				broadcast.putExtra(Common.INTENT_APP_ID, ac.getTaskId());
+				putIBinderIntoExtras(broadcast, Common.INTENT_APP_TOKEN, getActivityToken(ac));
 				context.sendBroadcast(broadcast);
 				context.unregisterReceiver(this);
 			}
@@ -545,8 +546,8 @@ public class MovableWindow {
 
 	private static void changeFocusApp(Activity a) throws Throwable {
 		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
-		i.putExtra(Common.INTENT_APP_TOKEN, a.getActivityToken());
 		i.putExtra(Common.INTENT_APP_ID, a.getTaskId());
+		putIBinderIntoExtras(i, Common.INTENT_APP_TOKEN, getActivityToken(a));
 		a.sendBroadcast(i);
 	}
 
@@ -555,5 +556,16 @@ public class MovableWindow {
 		params.x = (int) x;
 		params.y = (int) y;
 		mWindow.setAttributes(params);
+	}
+	
+	private static IBinder getActivityToken(Activity act) {
+		return (IBinder) XposedHelpers.callMethod(act, "getActivityToken");
+	}
+	
+	private static void putIBinderIntoExtras(Intent i, String key, IBinder b) {
+		Class<?>[] vv = { String.class, IBinder.class };
+		XposedHelpers.callMethod(i, "putExtra", vv, key, b);
+		// FIXME IMPORTANT: deprecated on jelly bean
+		// call after
 	}
 }
