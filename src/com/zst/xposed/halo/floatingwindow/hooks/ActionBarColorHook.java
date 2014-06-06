@@ -233,7 +233,16 @@ public class ActionBarColorHook {
 		}
 		Bitmap bitmap = drawableToBitmap(copyDrawable);
 		if (bitmap == null) return Color.BLACK;
-		int pixel = bitmap.getPixel(0, 5);
+		int pixel;
+		try {
+			if (bitmap.getHeight() <= 5) {
+				pixel = bitmap.getPixel(0, 0);
+			} else {
+				pixel = bitmap.getPixel(0, 5);
+			}
+		} catch (IllegalArgumentException e) {
+			pixel = Color.BLACK;
+		}
 		int red = Color.red(pixel);
 		int blue = Color.blue(pixel);
 		int green = Color.green(pixel);
