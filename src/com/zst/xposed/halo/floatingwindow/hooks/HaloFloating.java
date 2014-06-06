@@ -107,6 +107,7 @@ public class HaloFloating {
 				Intent intent = null;
 				Object activity_stack = null;
 				ActivityInfo activity_info = null;
+				boolean isCurrentActivityHome = false;
 				
 				if (Build.VERSION.SDK_INT >= 19) { // Android 4.4 onwards
 					intent = (Intent) param.args[4];
@@ -117,7 +118,7 @@ public class HaloFloating {
 					} catch (Exception e) {
 						activity_stack = XposedHelpers.getObjectField(param.args[12], "mFocusedStack");
 					}
-					mIsPreviousActivityHome = (Boolean) XposedHelpers.callMethod(activity_stack, "isHomeStack");
+					isCurrentActivityHome = (Boolean) XposedHelpers.callMethod(activity_stack, "isHomeStack");
 					// Check if the previous activity is home
 				} else if (Build.VERSION.SDK_INT == 18) { // Android 4.3
 					intent = (Intent) param.args[5];
@@ -168,6 +169,8 @@ public class HaloFloating {
 					int intent_flag = intent.getFlags();
 					intent_flag &= ~Common.FLAG_FLOATING_WINDOW;
 					intent.setFlags(intent_flag);
+					
+					mIsPreviousActivityHome = isCurrentActivityHome;
 					return;
 				}
 				
@@ -187,8 +190,8 @@ public class HaloFloating {
 					// pv = previous
 					Object pvRecord = taskHistoryList.get(taskHistoryList.size() - 1);
 					Intent pvIntent = (Intent) XposedHelpers.getObjectField(pvRecord, "intent");
-					boolean pvFloatFlag = (pvIntent.getFlags() & Common.FLAG_FLOATING_WINDOW)
-							== Common.FLAG_FLOATING_WINDOW;
+					boolean pvFloatFlag = !mIsPreviousActivityHome && 
+							(pvIntent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 					int pvSnapSide = AeroSnap.SNAP_NONE;
 					try {
 						pvSnapSide = pvIntent.getIntExtra(Common.EXTRA_SNAP_SIDE,
@@ -211,6 +214,8 @@ public class HaloFloating {
 							mHasHaloFlag = true;
 						}
 					}
+				} else if (floatingFlag) {
+					mHasHaloFlag = true;
 				}
 				
 				if (mHasHaloFlag) {
@@ -229,6 +234,8 @@ public class HaloFloating {
 					// Make the current task non-fullscreen so it can be seen through.
 					XposedHelpers.setBooleanField(param.thisObject, "fullscreen", false);
 				}
+				
+				mIsPreviousActivityHome = isCurrentActivityHome;
 			}
 		});
 	}
