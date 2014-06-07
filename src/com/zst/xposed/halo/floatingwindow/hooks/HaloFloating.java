@@ -153,6 +153,14 @@ public class HaloFloating {
 					break;
 				default: // no additional options
 					skipCheck = false;
+					if (mMain.isWhitelisted(packageName)) {
+						mHasHaloFlag = true;
+						skipCheck = true;
+					}
+					if (mMain.isBlacklisted(packageName)) {
+						mHasHaloFlag = false;
+						skipCheck = true;
+					}
 					break;
 				}
 				
