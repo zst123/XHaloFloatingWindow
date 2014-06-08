@@ -23,9 +23,9 @@ public class WidgetFloatPercentage extends DialogPreference implements
 	private SeekBar mSeekBar;
 	private TextView mValue;
 	
-	private Float mMin;
-	private Float mMax;
-	private Float mDefault;
+	public Float mMin;
+	public Float mMax;
+	public Float mDefault;
 	
 	public WidgetFloatPercentage(Context context, AttributeSet attrs) {
 		super(context, attrs);

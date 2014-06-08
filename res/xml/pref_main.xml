@@ -6,14 +6,14 @@
     <PreferenceScreen
         android:summary="@string/pref_window_top_summary"
         android:title="@string/pref_window_top_title" >
-        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetWindowAlphaPicker
             defaultValue="1"
             maximum="1"
             minimum="0.25"
             android:key="window_alpha"
             android:summary="@string/pref_alpha_summary"
             android:title="@string/pref_alpha_title" />
-        <com.zst.xposed.halo.floatingwindow.preferences.WidgetFloatPercentage
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetBackgroundDimPicker
             defaultValue="0.25"
             maximum="1"
             minimum="0"
