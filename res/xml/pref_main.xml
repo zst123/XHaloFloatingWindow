@@ -21,7 +21,7 @@
             android:summary="@string/pref_dim_summary"
             android:title="@string/pref_dim_title" />
 
-        <Preference
+        <com.zst.xposed.halo.floatingwindow.preferences.WidgetGravityChooser
             android:key="window_gravity"
             android:summary="@string/pref_gravity_summary"
             android:title="@string/pref_gravity_title" />
