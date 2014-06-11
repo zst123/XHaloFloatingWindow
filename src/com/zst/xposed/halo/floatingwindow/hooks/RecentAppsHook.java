@@ -96,12 +96,21 @@ public class RecentAppsHook {
 								if (viewHolder != null) {
 									closeRecentApps(thiz);
 									Object ad = XposedHelpers.getObjectField(viewHolder, "taskDescription");
-									Intent intent = (Intent) XposedHelpers.getObjectField(ad, "intent");
+									final Intent intent = (Intent) XposedHelpers.getObjectField(ad, "intent");
 									intent.addFlags(Common.FLAG_FLOATING_WINDOW
 											| Intent.FLAG_ACTIVITY_MULTIPLE_TASK
 											| Intent.FLAG_ACTIVITY_NO_USER_ACTION
 											| Intent.FLAG_ACTIVITY_NEW_TASK);
-									thiz.getContext().startActivity(intent);
+									if (Build.VERSION.SDK_INT >= 19) {
+										thiz.post(new Runnable() {
+											@Override
+											public void run() {
+												thiz.getContext().startActivity(intent);
+											}
+										});
+									} else {
+										thiz.getContext().startActivity(intent);
+									}
 								}
 								return true;
 							}
