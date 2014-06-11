@@ -168,7 +168,7 @@ public class StatusbarTaskbar {
 				.setWhen(0);
 		Notification notification;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			nb.setPriority(Notification.PRIORITY_HIGH);
+			nb.setPriority(Notification.PRIORITY_MAX);
 			notification = nb.build();
 		} else {
 			notification = nb.getNotification();
