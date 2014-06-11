@@ -29,21 +29,22 @@ public class AeroSnap {
 	final Context mContext;
 	final int mDelay;
 	
-	static Runnable mRunnable;
-	static int mRange = 100;
-	static int mSensitivity = 50;
-	static int mSnap = SNAP_NONE;
-	static int[] mSnapParam = new int[3]; // w,h,g
-	static int[] mOldParam = new int[2]; // w,h
-	static int mScreenHeight;
-	static int mScreenWidth;
 	static boolean mSnapped;
-	static int[] mOldLayout;
-	static boolean mTimeoutRunning;
-	static boolean mTimeoutDone;
-	static boolean mRestorePosition;
-	static boolean mChangedPreviousRange;
-	static float[] mPreviousRange = new float[2];
+	static int mSnap = SNAP_NONE;
+	
+	Runnable mRunnable;
+	int mRange = 100;
+	int mSensitivity = 50;
+	int[] mSnapParam = new int[3]; // w,h,g
+	int[] mOldParam = new int[2]; // w,h
+	int mScreenHeight;
+	int mScreenWidth;
+	int[] mOldLayout;
+	boolean mTimeoutRunning;
+	boolean mTimeoutDone;
+	boolean mRestorePosition;
+	boolean mChangedPreviousRange;
+	float[] mPreviousRange = new float[2];
 	
 	/**
 	 * An Aero Snap Class to check if the current pointer's coordinates
