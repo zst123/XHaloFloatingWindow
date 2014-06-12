@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">XHaloFloatingWindow</string>
-    <string name="app_description">從Paranoid Android移植而來的具有懸浮窗口功能的模塊。請通過在模塊內開啟“移動與調整”來使用懸浮窗口功能。（開發by zst123）</string>
+    <string name="app_name">XHalo懸浮窗口</string>
+    <string name="app_description">來自Paranoid Android的懸浮窗口模塊。請通過在模塊內開啟“移動與調整”來使用懸浮窗口功能。（開發by zst123）</string>
     <string name="app_blacklist">黑名單</string>
     <string name="app_whitelist">白名單</string>
     <string name="app_testing">測試</string>
@@ -48,9 +48,9 @@
     <string name="pref_force_open_app_above_halo_summary">如果一個應用程序目前正處于懸浮模式，打開新的應用程序將強制在上面同樣變為懸浮模式。</string>
     <string name="pref_blacklist_title">應用程序黑名單</string>
     <string name="pref_blacklist_summary">選擇一個永遠不會打開為懸浮模式的應用程序列表。</string>
-    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。 
+    <string name="pref_blacklist_dialog">新列入黑名單的應用程序需要強制關閉以使更改生效。
 
-您可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。</string>
+您可以點擊應用程序圖標來打開此應用程序的信息。之後請點擊強行停止。</string>
     <string name="pref_blacklist_error">"打開應用程序信息時發生了一個錯誤。
 這是錯誤。
 
@@ -59,7 +59,7 @@
     <string name="pref_whitelist_summary">選擇一個永遠打開為懸浮模式的應用程序列表。</string>
     <string name="pref_whitelist_dialog">"新列入白名單的應用程序需要強制關閉以使更改生效。
     
-您可以點擊應用程序圖標來打開此應用程序的信息。之後請選擇強行停止。
+您可以點擊應用程序圖標來打開此應用程序的信息。之後請點擊強行停止。
 
 注意，列入黑名單的應用程序不能列入白名單。如果您將同一個應用程序同時列入白名單和黑名單中，黑名單中的應用程序將有更高的優先級。"</string>
     <string name="pref_whiteblacklist_title">白/黑名單選項</string>
@@ -90,6 +90,11 @@
     <string name="pref_movable_titlebar_separator_size_summary">標題欄下方的分割線高度。</string>
     <string name="pref_movable_titlebar_separator_color_title">分割線顏色</string>
     <string name="pref_movable_titlebar_separator_color_summary">標題欄下方的分割線顏色。</string>
+    <string name="pref_movable_titlebar_alt_icons_title">使用替代圖標</string>
+    <string name="pref_movable_titlebar_alt_icons_summary">更改標題欄圖標為舊版圖標</string>
+    <string name="pref_movable_titlebar_single_window_title">將應用程序作為單一窗口</string>
+    <string name="pref_movable_titlebar_single_window_summary">"啟用後，點擊標題欄上的關閉按鈕將會關閉整個應用程序而不是單個活動窗口。
+（需要安卓4.1及以上系統）"</string>
     <string name="pref_movable_titlebar_max_hide_title">全屏狀態下隱藏標題欄</string>
     <string name="pref_movable_titlebar_max_hide_summary">窗口最大化後自動隱藏標題欄，調整大小時會再次顯示出來。</string>
     <string name="pref_movable_moving_start_pos_title">保留窗口的彈出位置</string>
@@ -169,7 +174,7 @@
     <string name="option_movable_corner_hide_app">@string/dnm_minimize</string>
     <string name="option_movable_corner_maximize">最大化應用程序</string>
     <string name="pref_systemui_top_title">系統界面插件</string>
-    <string name="pref_systemui_top_summary">系統用戶界面（SystemUI）的修改合集。</string>
+    <string name="pref_systemui_top_summary">SystemUI的修改合集。</string>
     <string name="pref_notif_warning">這些插件是給AOSP-based的ROM使用的，未測試過其他的ROM。如果您使用後頻繁提示SystemUI強制關閉，請立即禁用這些插件。</string>
     <string name="pref_notif_long_click_title">長按通知項目時的選項</string>
     <string name="pref_notif_long_click_summary">長按通知欄中的某個通知項目時添加一個 \"打開為懸浮窗口\" 選項。</string>
@@ -224,10 +229,10 @@
     <string name="dnm_close_app">關閉窗口</string>
     <string name="dnm_minimize">最小化應用程序</string>
     <string name="dnm_snap_window">窗口分屏</string>
-    <string name="dnm_snap_window_sub1">頂部</string>
-    <string name="dnm_snap_window_sub2">底部</string>
-    <string name="dnm_snap_window_sub3">左側</string>
-    <string name="dnm_snap_window_sub4">右側</string>
+    <string name="dnm_snap_window_sub1">佔用上半屏幕</string>
+    <string name="dnm_snap_window_sub2">佔用下半屏幕</string>
+    <string name="dnm_snap_window_sub3">佔用左半屏幕</string>
+    <string name="dnm_snap_window_sub4">佔用右半屏幕</string>
     <string name="dnm_minimize_notif_title">恢復 %1$s</string>
     <string name="dnm_minimize_notif_summary">此懸浮應用程序已最小化。</string>
     <string name="notif_open_halo">打開為懸浮窗口</string>
@@ -243,7 +248,7 @@
     <string name="pref_statusbar_taskbar_top_title">@string/app_statusbar_taskbar</string>
     <string name="pref_statusbar_taskbar_enable_summary">開啟或者關閉狀態欄應用程序啟動器</string>
     <string name="pref_statusbar_taskbar_enable_title">啟用狀態欄啟動器</string>
-    <string name="pref_statusbar_taskbar_running_enable_summary">"顯示一排最近運行的應用程序來實現多任務效果
+    <string name="pref_statusbar_taskbar_running_enable_summary">"顯示一排最近運行的應用程序欄來實現多任務效果
 （需重啟SystemUI）"</string>
     <string name="pref_statusbar_taskbar_running_enable_title">啟用正在運行的應用程序</string>
     <string name="pref_statusbar_taskbar_hide_icon_summary">"刪除通知圖標
