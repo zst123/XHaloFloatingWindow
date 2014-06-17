@@ -74,7 +74,7 @@ public class SystemUIOutliner {
 				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				PixelFormat.TRANSLUCENT);
 		layOutParams.gravity = Gravity.TOP | Gravity.LEFT;
-		layOutParams.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
+		Util.addPrivateFlagNoMoveAnimationToLayoutParam(layOutParams);
 		mOutline = getOutlineView(ctx, 0xFF33b5e5);
 		mOutline.setFocusable(false);
 		mOutline.setClickable(false);
@@ -124,7 +124,7 @@ public class SystemUIOutliner {
 	// create outline view with translucent filling
 	private static View getOutlineView(Context ctx, int color) {
 		FrameLayout outline = new FrameLayout(ctx);
-		outline.setBackgroundDrawable(Util.makeOutline(color, Util.realDp(4, ctx)));
+		Util.setBackgroundDrawable(outline, Util.makeOutline(color, Util.realDp(4, ctx)));
 		
 		View filling = new View(ctx);
 		filling.setBackgroundColor(color);

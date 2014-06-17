@@ -5,7 +5,6 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ActivityThread;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -77,7 +76,7 @@ public class HaloFloating {
 		}
 		/*********************************************/
 		try {
-			fixExceptionWhenResuming();
+			fixExceptionWhenResuming(l);
 		} catch (Throwable e) {
 			XposedBridge.log(Common.LOG_TAG + "(fixExceptionWhenResuming)");
 			XposedBridge.log(e);
@@ -441,8 +440,9 @@ public class HaloFloating {
 	 * continue as normal.
 	 */
 	boolean mExceptionHook = false;
-	private void fixExceptionWhenResuming() throws Throwable {
-		XposedBridge.hookAllMethods(ActivityThread.class, "performResumeActivity", 
+	private void fixExceptionWhenResuming(final LoadPackageParam lpp) throws Throwable {
+		Class<?> cls = findClass("android.app.ActivityThread", lpp.classLoader);
+		XposedBridge.hookAllMethods(cls, "performResumeActivity",
 				new XC_MethodHook() {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				mExceptionHook = true;

@@ -2,7 +2,9 @@ package com.zst.xposed.halo.floatingwindow.helpers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 
+import de.robv.android.xposed.XposedHelpers;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -14,6 +16,7 @@ import android.graphics.drawable.shapes.OvalShape;
 import android.graphics.drawable.shapes.RectShape;
 import android.os.Build;
 import android.view.View;
+import android.view.WindowManager;
 
 public class Util {
 	
@@ -89,11 +92,26 @@ public class Util {
 	}
 	
 	/* Set background drawable based on the API */
+	@SuppressWarnings("deprecation")
 	public static void setBackgroundDrawable(View view, Drawable drawable) {
 		if (Build.VERSION.SDK_INT >= 16) {
 			view.setBackground(drawable);
 		} else {
 			view.setBackgroundDrawable(drawable);
 		}
+	}
+	
+	public static void addPrivateFlagNoMoveAnimationToLayoutParam(WindowManager.LayoutParams params) {
+		if (Build.VERSION.SDK_INT <= 15) return;
+		
+		try {
+			Field fieldPrivateFlag = XposedHelpers.findField(WindowManager.LayoutParams.class, "privateFlags");
+			fieldPrivateFlag.setInt(params, (fieldPrivateFlag.getInt(params) | 0x00000040));
+		} catch (Exception e) {
+			
+		}
+		/* this private flag is only in JB and above to turn off move animation.
+		 * we need this to speed up our resizing */
+		// params.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
 	}
 }

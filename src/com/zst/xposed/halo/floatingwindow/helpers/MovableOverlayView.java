@@ -3,6 +3,8 @@ package com.zst.xposed.halo.floatingwindow.helpers;
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
+
+import de.robv.android.xposed.XposedHelpers;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -596,13 +598,13 @@ public class MovableOverlayView extends RelativeLayout {
 		if (thickness == 0) {
 			mBorderOutline.setBackgroundResource(0);
 		} else {
-			mBorderOutline.setBackgroundDrawable(Util.makeOutline(color, thickness));
+			Util.setBackgroundDrawable(mBorderOutline, Util.makeOutline(color, thickness));
 		}
 	}
 	
 	public static final RelativeLayout.LayoutParams getParams() {
 		final RelativeLayout.LayoutParams paramz = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
+				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 		paramz.setMargins(0, 0, 0, 0);
 		return paramz;
 	}
@@ -628,5 +630,9 @@ public class MovableOverlayView extends RelativeLayout {
 		} else {
 			mActivity.finish();
 		}
+	}
+	
+	public void setIsRootNamespace(boolean isRoot) {
+		XposedHelpers.callMethod(this, "setIsRootNamespace", isRoot);
 	}
 }

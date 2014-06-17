@@ -8,7 +8,6 @@ import com.zst.xposed.halo.floatingwindow.R;
 
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.XModuleResources;
@@ -356,8 +355,12 @@ public class NotificationShadeHook {
 	private static void launch(Intent intent, PendingIntent pIntent, Context mContext) { 
 		if (pIntent == null) return;
 		try {
-			android.app.ActivityManagerNative.getDefault().resumeAppSwitches();
-			android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
+			Class<?> classAMN = XposedHelpers.findClass("android.app.ActivityManagerNative", null);
+			Object iAM = /* IActivityManager */ XposedHelpers.callStaticMethod(classAMN, "getDefault");
+			XposedHelpers.callMethod(iAM, "resumeAppSwitches");
+			XposedHelpers.callMethod(iAM, "dismissKeyguardOnNextActivity");
+			// android.app.ActivityManagerNative.getDefault().resumeAppSwitches();
+			// android.app.ActivityManagerNative.getDefault().dismissKeyguardOnNextActivity();
 			pIntent.send(mContext, 0, intent);
 		} catch (Exception e) {
 			android.widget.Toast.makeText(mContext, TEXT_ERROR_LAUNCHING + e.toString(),
@@ -366,10 +369,10 @@ public class NotificationShadeHook {
 	}
 	
 	private static void closeNotificationShade(Context c) {
-		final StatusBarManager statusBar = (StatusBarManager) c.getSystemService("statusbar");
+		final Object statusBar = /* StatusBarManager */ c.getSystemService("statusbar");
 		if (statusBar == null) return;
 		try {
-			statusBar.collapse();
+			XposedHelpers.callMethod(statusBar, "collapse");
 		} catch (Throwable e) { // OEM's might remove this expand method.
 			try { // 4.2.2 (later builds) changed method name
 				XposedHelpers.callMethod(statusBar, "collapsePanels");

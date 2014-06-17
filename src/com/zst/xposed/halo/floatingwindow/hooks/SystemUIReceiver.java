@@ -9,19 +9,18 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
-import android.os.ServiceManager;
 import android.util.Log;
-import android.view.IWindowManager;
 
 import com.zst.xposed.halo.floatingwindow.Common;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class SystemUIReceiver {
 	
-	private static IWindowManager iWindowManager;
+	private static Object iWindowManager;
 	private static ActivityManager iActivityManager;
 	private static Context mSystemContext; // SystemUI Context
 	public static int mLastTaskId;
@@ -63,15 +62,18 @@ public class SystemUIReceiver {
 	final static BroadcastReceiver mIntentReceiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
-			IBinder token = (IBinder) intent.getExtra(Common.INTENT_APP_TOKEN);
+			IBinder token = (IBinder) XposedHelpers.callMethod(intent, "getExtra", Common.INTENT_APP_TOKEN);
 			int taskId = intent.getIntExtra(Common.INTENT_APP_ID, 0);
 			
-			iWindowManager = IWindowManager.Stub.asInterface(ServiceManager.getService("window"));
+			
+			iWindowManager = getIWindowManagerProxy();
 			iActivityManager = (ActivityManager) mSystemContext
 					.getSystemService(Context.ACTIVITY_SERVICE);
 			
 			try {
-				iWindowManager.setFocusedApp(token, false);
+				Class<?>[] classes = { IBinder.class, Boolean.class };
+				XposedHelpers.callMethod(iWindowManager, "setFocusedApp", classes, token, false);
+				// iWindowManager.setFocusedApp(token, false);
 			} catch (Exception e) {
 				XposedBridge.log(Common.LOG_TAG + "Cannot change App Focus");
 				XposedBridge.log(e);
@@ -91,4 +93,18 @@ public class SystemUIReceiver {
 		}
 	};
 	
+	// http://stackoverflow.com/questions/9604644/how-do-i-get-a-reference-to-connectivityservice-object
+	static Object getIWindowManagerProxy() {
+		Class<?> serviceManagerClass = XposedHelpers.findClass("android.os.ServiceManager", null);
+		IBinder binderProxy = (IBinder) XposedHelpers.callStaticMethod(serviceManagerClass,
+				"getService", "window");
+		// ServiceManager.getService("window");
+		
+		/* Now use pass the ServiceManager BinderProxy to the 'asInterface'
+		 *  method of the interface Stub inner class */
+		Class<?> stubClass = XposedHelpers.findClass("android.view.IWindowManager$Stub", null);
+		return XposedHelpers.callStaticMethod(stubClass, "asInterface",
+				new Class[] { IBinder.class }, binderProxy);
+		// IWindowManager.Stub.asInterface(binderPRoxy);
+	}
 }

@@ -2,7 +2,6 @@ package com.zst.xposed.halo.floatingwindow.hooks;
 
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-import android.app.StatusBarManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.XModuleResources;
@@ -147,10 +146,10 @@ public class RecentAppsHook {
 			}
 		}
 		
-		StatusBarManager bar = (StatusBarManager) thiz.getContext().getSystemService("statusbar");
+		Object bar = /* StatusBarManager */ thiz.getContext().getSystemService("statusbar");
 		if (bar != null) {
 			try {
-				bar.collapse();
+				XposedHelpers.callMethod(bar, "collapse");
 				return;
 			} catch (Throwable e) {
 			}

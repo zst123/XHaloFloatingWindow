@@ -226,7 +226,7 @@ public class MovableWindow {
 				if (mOverlayView == null) {
 					mOverlayView = new MovableOverlayView(mMainXposed, activity, mModRes, mPref, mAeroSnap);
 					decorView.addView(mOverlayView, -1, MovableOverlayView.getParams());
-					decorView.setTagInternal(Common.LAYOUT_OVERLAY_TAG, mOverlayView);
+					setTagInternalForView(decorView, Common.LAYOUT_OVERLAY_TAG, mOverlayView);
 				}
 				// Add our overlay view
 				
@@ -506,7 +506,7 @@ public class MovableWindow {
 		filters.addAction(Common.REFRESH_APP_LAYOUT);
 		filters.addAction(Intent.ACTION_CONFIGURATION_CHANGED);
 		window.getContext().registerReceiver(br, filters);
-		window.getDecorView().setTagInternal(Common.LAYOUT_RECEIVER_TAG, br);
+		setTagInternalForView(window.getDecorView(), Common.LAYOUT_RECEIVER_TAG, br);
 	}
 
 	private static void unregisterLayoutBroadcastReceiver(Window window) {
@@ -564,6 +564,12 @@ public class MovableWindow {
 		mWindow.setAttributes(params);
 	}
 	
+	private static void setTagInternalForView(View view, int key, Object object) {
+		Class<?>[] classes = { Integer.class, Object.class };
+		XposedHelpers.callMethod(view, "setTagInternal", classes, key, object);
+		// view.setTagInternal(key, object);
+	}
+	
 	private IBinder getActivityToken(Activity act) {
 		return (IBinder) XposedHelpers.callMethod(act, "getActivityToken");
 	}
@@ -572,6 +578,5 @@ public class MovableWindow {
 		Class<?>[] vv = { String.class, IBinder.class };
 		XposedHelpers.callMethod(i, "putExtra", vv, key, b);
 		// FIXME IMPORTANT: deprecated on jelly bean
-		// call after
 	}
 }

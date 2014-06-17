@@ -8,6 +8,7 @@ import android.view.Display;
 import android.view.Window;
 import android.view.WindowManager;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedHelpers;
 
 public class LayoutScaling {
 	
@@ -18,7 +19,8 @@ public class LayoutScaling {
 		if (isMovable) {
 			window.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
 		} else {
-			window.setCloseOnTouchOutsideIfNotSet(true);
+			XposedHelpers.callMethod(window, "setCloseOnTouchOutsideIfNotSet", true);
+			// window.setCloseOnTouchOutsideIfNotSet(true);
 		}
 		window.setGravity(pref.getInt(Common.KEY_GRAVITY, Common.DEFAULT_GRAVITY));
 		window.setFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND,
@@ -29,9 +31,9 @@ public class LayoutScaling {
 		Float dimm = pref.getFloat(Common.KEY_DIM, Common.DEFAULT_DIM);
 		params.alpha = alp;
 		params.dimAmount = dimm;
-		params.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
-		/* this private flag is only in JB and above to turn off move animation.
-		 * we need this to speed up our resizing */
+		
+		Util.addPrivateFlagNoMoveAnimationToLayoutParam(params);
+		
 		window.setAttributes(params);
 		window.addFlags(WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED);
 		window.setWindowAnimations(android.R.style.Animation_Dialog);

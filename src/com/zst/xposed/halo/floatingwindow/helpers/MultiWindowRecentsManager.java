@@ -6,6 +6,7 @@ import java.util.LinkedHashSet;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
 
+import de.robv.android.xposed.XposedHelpers;
 import android.animation.LayoutTransition;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RecentTaskInfo;
@@ -71,7 +72,8 @@ public abstract class MultiWindowRecentsManager extends PopupWindow {
 		
 		setContentView(frame);
 		
-		setWindowLayoutType(WindowManager.LayoutParams.TYPE_PHONE);
+		XposedHelpers.callMethod(this, "setWindowLayoutType", WindowManager.LayoutParams.TYPE_PHONE);
+		// setWindowLayoutType(WindowManager.LayoutParams.TYPE_PHONE);
 		setWindowLayoutMode(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -170,7 +172,8 @@ public abstract class MultiWindowRecentsManager extends PopupWindow {
 	}
 	
 	private void removeApp(final String pkg) {
-		mActivityManager.removeTask(getRunningId(pkg), 0x0);
+		XposedHelpers.callMethod(mActivityManager, "removeTask", getRunningId(pkg), 0x0);
+		// mActivityManager.removeTask(getRunningId(pkg), 0x0);
 		onRemoveApp(pkg);
 	}
 	

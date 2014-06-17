@@ -25,6 +25,7 @@ import com.zst.xposed.halo.floatingwindow.helpers.Util;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class SystemUIMultiWindow {
@@ -178,7 +179,8 @@ public class SystemUIMultiWindow {
 					mViewManager.new MWPopupButtons(mViewManager.mViewContent) {
 				@Override
 				public void onCloseButton() {
-					mAm.removeTask(SystemUIReceiver.mLastTaskId, 0x0);
+					XposedHelpers.callMethod(mAm, "removeTask", SystemUIReceiver.mLastTaskId, 0x0);
+					// mAm.removeTask(SystemUIReceiver.mLastTaskId, 0x0);
 					// The last touched should be the one focused.
 				}
 				@Override

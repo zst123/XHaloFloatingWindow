@@ -93,7 +93,7 @@ public class MultiWindowViewManager {
 					WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
 				PixelFormat.TRANSLUCENT);
 		mContentParamz.gravity = Gravity.TOP | Gravity.LEFT;
-		mContentParamz.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
+		Util.addPrivateFlagNoMoveAnimationToLayoutParam(mContentParamz);
 		mContentParamz.x = (mScreenWidth / 2) - (mCircleDiameter / 2);
 		mContentParamz.y = (mScreenHeight / 2) - (mCircleDiameter / 2);
 		mViewContent.setLayoutParams(mContentParamz);
@@ -175,7 +175,7 @@ public class MultiWindowViewManager {
 					WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
 				PixelFormat.TRANSLUCENT);
 		mTouchedParamz.gravity = Gravity.TOP | Gravity.LEFT;
-		mTouchedParamz.privateFlags |= 0x00000040; //PRIVATE_FLAG_NO_MOVE_ANIMATION
+		Util.addPrivateFlagNoMoveAnimationToLayoutParam(mContentParamz);
 		mTouchedParamz.x = (mScreenWidth / 2) - (mCircleDiameter / 2);
 		mTouchedParamz.y = (mScreenHeight / 2) - (mCircleDiameter / 2);
 		mViewTouched.setLayoutParams(mTouchedParamz);
