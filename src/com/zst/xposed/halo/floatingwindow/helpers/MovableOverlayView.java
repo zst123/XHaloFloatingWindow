@@ -107,7 +107,7 @@ public class MovableOverlayView extends RelativeLayout {
 		// http://sriramramani.wordpress.com/2012/07/25/infamous-viewholder-pattern/
 		
 		setId(ID_OVERLAY_VIEW);
-		setIsRootNamespace(false);
+		setRootNamespace(false);
 		
 		mDragToMoveBar = findViewByIdHelper(this, R.id.movable_action_bar, "movable_action_bar");
 		mTriangle = findViewByIdHelper(this, R.id.movable_corner, "movable_corner");
@@ -132,7 +132,7 @@ public class MovableOverlayView extends RelativeLayout {
 		// init stuff
 		initCornersViews();
 		
-		setIsRootNamespace(true);
+		setRootNamespace(true);
 		// After initializing everything, set this to tell findViewById to skip
 		// our layout. We do this to prevent id's conflicting with the current app.
 	}
@@ -632,7 +632,7 @@ public class MovableOverlayView extends RelativeLayout {
 		}
 	}
 	
-	public void setIsRootNamespace(boolean isRoot) {
+	public void setRootNamespace(boolean isRoot) {
 		XposedHelpers.callMethod(this, "setIsRootNamespace", isRoot);
 	}
 }
