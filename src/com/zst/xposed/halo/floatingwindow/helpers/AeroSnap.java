@@ -39,7 +39,7 @@ public class AeroSnap {
 	int[] mOldParam = new int[2]; // w,h
 	int mScreenHeight;
 	int mScreenWidth;
-	int[] mOldLayout;
+	static int[] mOldLayout;
 	boolean mTimeoutRunning;
 	boolean mTimeoutDone;
 	boolean mRestorePosition;
