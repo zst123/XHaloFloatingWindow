@@ -34,6 +34,7 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		return mInstance;
 	}
 	@Override
+	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

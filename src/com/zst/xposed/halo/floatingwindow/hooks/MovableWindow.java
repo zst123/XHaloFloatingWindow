@@ -22,6 +22,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.IBinder;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -74,6 +75,7 @@ public class MovableWindow {
 	int mPreviousForceAeroSnap;
 
 
+	@SuppressWarnings("static-access")
 	public MovableWindow(MainXposed main, LoadPackageParam lpparam) throws Throwable {
 		mMainXposed = main;
 		mModRes = main.sModRes;
@@ -300,6 +302,7 @@ public class MovableWindow {
 	}
 
 	// Send the app to the back, and show a notification to restore
+	@SuppressWarnings("deprecation")
 	public void minimizeAndShowNotification(final Activity ac) {
 		if (!mMinimizeToStatusbar) {
 			ac.moveTaskToBack(true);
@@ -313,15 +316,21 @@ public class MovableWindow {
 		String title = String.format(mModRes.getString(R.string.dnm_minimize_notif_title),
         		app_info.loadLabel(ac.getPackageManager()));
 
-		Notification n  = new Notification.Builder(ac)
+		Notification.Builder nb = new Notification.Builder(ac)
 		        .setContentTitle(title)
 		        .setContentText(mModRes.getString(R.string.dnm_minimize_notif_summary))
 		        .setSmallIcon(app_info.icon)
 		        .setAutoCancel(true)
 		        .setContentIntent(intent)
-		        .setOngoing(true)
-		        .getNotification();
-
+		        .setOngoing(true);
+		
+		Notification n;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+			n = nb.build();
+		} else {
+			n = nb.getNotification();
+		}
+		
 		final NotificationManager notificationManager =
 		  (NotificationManager) ac.getSystemService(Context.NOTIFICATION_SERVICE);
 		notificationManager.notify(ID_NOTIFICATION_RESTORE, n);

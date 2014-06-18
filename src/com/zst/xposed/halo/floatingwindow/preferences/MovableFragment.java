@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 
@@ -20,6 +21,7 @@ public class MovableFragment extends PreferenceFragment {
 		return mInstance;
 	}
 	@Override
+	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

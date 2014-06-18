@@ -45,6 +45,7 @@ public class StatusbarTaskbarPinAppActivity extends Activity {
 	ImageButton dButton;
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

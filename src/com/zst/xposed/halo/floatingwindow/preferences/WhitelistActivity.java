@@ -47,6 +47,7 @@ public class WhitelistActivity extends Activity {
 	ImageButton dButton;
 	
 	@Override
+	@SuppressWarnings("deprecation")
 	@SuppressLint("WorldReadableFiles")
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -91,6 +92,8 @@ public class WhitelistActivity extends Activity {
 		return false;
 	}
 	
+	@SuppressWarnings("deprecation")
+	@SuppressLint("WorldReadableFiles")
 	private void showFirstTimeHelper(boolean force) {
 		final SharedPreferences main = getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				MODE_WORLD_READABLE);

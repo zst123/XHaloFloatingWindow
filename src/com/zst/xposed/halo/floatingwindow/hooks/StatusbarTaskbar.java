@@ -159,6 +159,7 @@ public class StatusbarTaskbar {
 		addNotification(context, rview, NOTIFICATION_ID_RUNNING);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void addNotification(Context context, RemoteViews view, int id) {
 		Notification.Builder nb = new Notification.Builder(context)
 				.setContent(view)
