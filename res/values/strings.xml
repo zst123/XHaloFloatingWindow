@@ -11,12 +11,12 @@
     <!-- First Use -->
     <string name="firstuse_swipe_hint">(Swipe left)</string>
     <string name="firstuse_welcome_title">Welcome!</string>
-    <string name="firstuse_welcome_info">Before using XHaloFloatingWindow,\nI would need to do a one-time setup.</string>
+    <string name="firstuse_welcome_info">Before using XHaloFloatingWindow,\nI would need to do a one-time checking.</string>
     <string name="firstuse_finish_title">We\'re Done!</string>
     <string name="firstuse_finish_info">XHaloFloatingWindow is very customizable. Take your time to look through the settings.</string>
     <string name="firstuse_halo_title">Halo Flag Conflict</string>
-    <string name="firstuse_halo_info">Your ROM has Halo or MultiWindow built-in. It may conflict with this module.</string>
-    <string name="firstuse_halo_fix">If possible, disable it or switch to another ROM without these built-in.</string>
+    <string name="firstuse_halo_info">Your ROM has Halo or MultiWindow built-in. It will conflict with this module.</string>
+    <string name="firstuse_halo_fix">Disabling it will not completely fix it.\nPlease switch to another ROM without these built-in.</string>
     <string name="firstuse_system_title">APK on /system/</string>
     <string name="firstuse_system_info">This module is installed in the /system/app/ directory. This causes problems when updating to future versions of XHaloFloatingWindow. It is usually done when it is bundled with your ROM.</string>
     <string name="firstuse_system_fix">Delete the APK from the /system/app/ directory and install this module normally.</string>
