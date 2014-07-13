@@ -46,8 +46,6 @@ public class SystemUIOutliner {
 				Service thiz = (Service) param.thisObject;
 				mContext = thiz.getApplicationContext();
 				mContext.registerReceiver(mIntentReceiver, new IntentFilter(Common.SHOW_OUTLINE));
-				mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-				createOutlineView(mContext);
 			}
 		});
 	}
@@ -69,6 +67,9 @@ public class SystemUIOutliner {
 	
 	// Create a view in SystemUI window manager
 	private static void createOutlineView(Context ctx) {
+		if (mWm == null) {
+			mWm = (WindowManager) ctx.getSystemService(Context.WINDOW_SERVICE);
+		}
 		WindowManager.LayoutParams layOutParams = new WindowManager.LayoutParams(
 				WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
 				WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
@@ -85,12 +86,12 @@ public class SystemUIOutliner {
 	
 	// show the outline with positioning (x,y)
 	private static void refreshOutlineView(Context ctx, int x, int y, int height, int width) {
+		if (mOutline == null) {
+			createOutlineView(ctx);
+		}
 		if (x == HIDE || y == HIDE || height == HIDE || width == HIDE) {
 			mOutline.setVisibility(View.GONE);
 			return;
-		}
-		if (mOutline == null) {
-			createOutlineView(ctx);
 		}
 		WindowManager.LayoutParams param = (WindowManager.LayoutParams) mOutline.getLayoutParams();
 		param.x = x;
@@ -104,12 +105,12 @@ public class SystemUIOutliner {
 	
 	// show the outline with gravity
 	private static void refreshOutlineView(Context ctx, int w, int h, int g) {
+		if (mOutline == null) {
+			createOutlineView(ctx);
+		}
 		if (h == HIDE || w == HIDE || g == HIDE) {
 			mOutline.setVisibility(View.GONE);
 			return;
-		}
-		if (mOutline == null) {
-			createOutlineView(ctx);
 		}
 		WindowManager.LayoutParams param = (WindowManager.LayoutParams) mOutline.getLayoutParams();
 		param.x = 0;
