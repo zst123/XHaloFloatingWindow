@@ -8,7 +8,9 @@ import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
 import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowAppManager;
 import com.zst.xposed.halo.floatingwindow.helpers.SwipeToNextApp;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
-
+import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWService;
+import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWInterface;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Notification;
@@ -24,6 +26,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -101,6 +104,14 @@ public class MovableWindow {
 				activity = (Activity) param.thisObject;
 				isHoloFloat = (activity.getIntent().getFlags() & Common.FLAG_FLOATING_WINDOW)
 						== Common.FLAG_FLOATING_WINDOW;
+				try {
+					XHFWInterface inf = XHFWService.retrieveService(activity);
+					//TODO reuse this
+					// inf.setApp(activity.getBaseContext().toString(), activity.getPackageName(), isHoloFloat,
+						//	activity.getIntent().getIntExtra(Common.EXTRA_SNAP_SIDE, AeroSnap.SNAP_NONE));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				if (!isHoloFloat) return;
 				
 				mPref.reload();
@@ -302,6 +313,7 @@ public class MovableWindow {
 	}
 
 	// Send the app to the back, and show a notification to restore
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public void minimizeAndShowNotification(final Activity ac) {
 		if (!mMinimizeToStatusbar) {
@@ -341,10 +353,7 @@ public class MovableWindow {
 			@Override
 			public void onReceive(Context context, Intent intent) {
 				notificationManager.cancel(ID_NOTIFICATION_RESTORE);
-				Intent broadcast = new Intent(Common.CHANGE_APP_FOCUS);
-				broadcast.putExtra(Common.INTENT_APP_ID, ac.getTaskId());
-				putIBinderIntoExtras(broadcast, Common.INTENT_APP_TOKEN, getActivityToken(ac));
-				context.sendBroadcast(broadcast);
+				changeFocusApp(ac);
 				context.unregisterReceiver(this);
 			}
 		}, new IntentFilter(Common.REMOVE_NOTIFICATION_RESTORE + ac.getPackageName()));
@@ -559,11 +568,14 @@ public class MovableWindow {
 	}
 	/* (End) Layout Position Method Helpers */
 
-	private void changeFocusApp(Activity a) throws Throwable {
-		Intent i = new Intent(Common.CHANGE_APP_FOCUS);
-		i.putExtra(Common.INTENT_APP_ID, a.getTaskId());
-		putIBinderIntoExtras(i, Common.INTENT_APP_TOKEN, getActivityToken(a));
-		a.sendBroadcast(i);
+	private static void changeFocusApp(Activity a) {
+		try {
+			XHFWInterface inf = XHFWService.retrieveService(a);
+			//TODO reuse this
+			inf.bringAppToFront(getActivityToken(a), a.getTaskId());
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void updateView(Window mWindow, float x, float y) {
@@ -579,7 +591,7 @@ public class MovableWindow {
 		// view.setTagInternal(key, object);
 	}
 	
-	private IBinder getActivityToken(Activity act) {
+	private static IBinder getActivityToken(Activity act) {
 		return (IBinder) XposedHelpers.callMethod(act, "getActivityToken");
 	}
 	

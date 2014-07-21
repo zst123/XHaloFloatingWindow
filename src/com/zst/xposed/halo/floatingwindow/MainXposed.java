@@ -9,8 +9,8 @@ import com.zst.xposed.halo.floatingwindow.hooks.StatusbarTaskbar;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemMods;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIMultiWindow;
 import com.zst.xposed.halo.floatingwindow.hooks.SystemUIOutliner;
-import com.zst.xposed.halo.floatingwindow.hooks.SystemUIReceiver;
 import com.zst.xposed.halo.floatingwindow.hooks.TestingSettingHook;
+import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWService;
 
 import android.content.res.XModuleResources;
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -51,13 +51,13 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		// SystemUI
 		NotificationShadeHook.hook(lpparam, mPref);
 		RecentAppsHook.handleLoadPackage(lpparam, mPref);
-		SystemUIReceiver.handleLoadPackage(lpparam);
 		SystemUIOutliner.handleLoadPackage(lpparam);
 		SystemUIMultiWindow.handleLoadPackage(lpparam);
 		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
 		
 		// Android
 		SystemMods.handleLoadPackage(lpparam, mPref);
+		XHFWService.initZygote();
 		
 		// App
 		hookMovableWindow = new MovableWindow(this, lpparam);

@@ -12,6 +12,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.RemoteException;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +23,8 @@ import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowRecentsManager;
 import com.zst.xposed.halo.floatingwindow.helpers.MultiWindowViewManager;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
+import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWInterface;
+import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWService;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
@@ -41,6 +44,7 @@ public class SystemUIMultiWindow {
 	private static Context mContext;
 	private static WindowManager mWm;
 	private static ActivityManager mAm;
+	private static XHFWInterface mXHFWService;
 	
 	// Dragger Views
 	private static MultiWindowViewManager mViewManager;
@@ -73,6 +77,7 @@ public class SystemUIMultiWindow {
 				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 					final Service thiz = (Service) param.thisObject;
 					mContext = thiz.getApplicationContext();
+					mXHFWService = XHFWService.retrieveService(mContext);
 					mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
 					mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
 					mViewManager = new MultiWindowViewManager(mContext, mWm, MainXposed.sModRes,
@@ -179,7 +184,11 @@ public class SystemUIMultiWindow {
 					mViewManager.new MWPopupButtons(mViewManager.mViewContent) {
 				@Override
 				public void onCloseButton() {
-					XposedHelpers.callMethod(mAm, "removeTask", SystemUIReceiver.mLastTaskId, 0x0);
+					try {
+						XposedHelpers.callMethod(mAm, "removeTask",
+								mXHFWService.getLastTaskId(), 0x0);
+					} catch (RemoteException e) {
+					}
 					// mAm.removeTask(SystemUIReceiver.mLastTaskId, 0x0);
 					// The last touched should be the one focused.
 				}
