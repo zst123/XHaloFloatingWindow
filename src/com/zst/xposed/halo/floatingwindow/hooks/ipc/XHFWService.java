@@ -198,4 +198,15 @@ public class XHFWService extends XHFWInterface.Stub {
 				new Class[] { IBinder.class }, binderProxy);
 		// IWindowManager.Stub.asInterface(binderPRoxy);
 	}
+
+	@Override
+	public void removeAppTask(int taskId, int flags) throws RemoteException {
+		if (mActivityManager == null) {
+			mActivityManager = (ActivityManager) mContext
+					.getSystemService(Context.ACTIVITY_SERVICE);
+		}
+		XposedHelpers.callMethod(mActivityManager, "removeTask",
+				taskId, flags);
+		// mAm.removeTask(taskId, flags);
+	}
 }

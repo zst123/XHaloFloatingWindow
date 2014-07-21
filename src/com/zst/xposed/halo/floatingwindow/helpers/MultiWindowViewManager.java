@@ -31,13 +31,14 @@ import android.widget.PopupWindow;
 public class MultiWindowViewManager {
 	private static final int SIZE_MINIMUM = 40;
 
-	public final WindowManager mWM;
 	public final Context mContext;
 	public final Drawable mTouchDrawableTB;
 	public final Drawable mTouchDrawableLR;
 	public final Drawable mTouchDrawableTBWhite;
 	public final Drawable mTouchDrawableLRWhite;
 	public final int mCircleDiameter;
+	
+	public WindowManager mWm;
 	
 	// Main Circle Dragger
 	public WindowManager.LayoutParams mContentParamz;
@@ -58,14 +59,21 @@ public class MultiWindowViewManager {
 	public int mScreenHeight;
 	public int mScreenWidth;
 	
-	public MultiWindowViewManager(Context context, WindowManager wm, Resources res, int circle_size) {
+	public MultiWindowViewManager(Context context, Resources res, int circle_size) {
 		mContext = context;
-		mWM = wm;
 		mTouchDrawableTB = res.getDrawable(R.drawable.multiwindow_dragger_press_ud);
 		mTouchDrawableLR = res.getDrawable(R.drawable.multiwindow_dragger_press_lr);
 		mTouchDrawableTBWhite = res.getDrawable(R.drawable.multiwindow_dragger_press_ud_white);
 		mTouchDrawableLRWhite = res.getDrawable(R.drawable.multiwindow_dragger_press_lr_white);
 		mCircleDiameter = circle_size;
+	}
+	
+	public WindowManager getWM() {
+		if (mWm == null) {
+			mWm = (WindowManager)
+					mContext.getSystemService(Context.WINDOW_SERVICE);
+		}
+		return mWm;
 	}
 	
 	public View createDraggerView() {
@@ -77,7 +85,7 @@ public class MultiWindowViewManager {
 		mViewContent.setImageDrawable(Util.makeCircle(mColor, mCircleDiameter));
 		
 		DisplayMetrics metrics = new DisplayMetrics();
-		Display display = mWM.getDefaultDisplay();
+		Display display = getWM().getDefaultDisplay();
 		display.getMetrics(metrics);
 		mScreenWidth = metrics.widthPixels;
 		mScreenHeight = metrics.heightPixels;
@@ -103,13 +111,13 @@ public class MultiWindowViewManager {
 	public void updateDraggerView(boolean add) {
 		if (add) {
 			try {
-				mWM.addView(mViewContent, mContentParamz);
+				getWM().addView(mViewContent, mContentParamz);
 			} catch (Exception e) {
 				// it is already added
 			}
 		} else {
 			try {
-				mWM.updateViewLayout(mViewContent, mContentParamz);
+				getWM().updateViewLayout(mViewContent, mContentParamz);
 			} catch (Exception e) {
 				updateDraggerView(true);
 				// it is not added yet
@@ -139,7 +147,7 @@ public class MultiWindowViewManager {
 	
 	public void removeDraggerView() {
 		try {
-			mWM.removeView(mViewContent);
+			getWM().removeView(mViewContent);
 		} catch (Exception e) {
 			// it is already removed
 		}
@@ -185,7 +193,7 @@ public class MultiWindowViewManager {
 		mTouchedParamz.x = (int) (x - (mTouchedParamz.width / 2));
 		mTouchedParamz.y = (int) (y - (mTouchedParamz.height / 2));
 		try {
-			mWM.updateViewLayout(mViewTouched, mTouchedParamz);
+			getWM().updateViewLayout(mViewTouched, mTouchedParamz);
 		} catch (Exception e) {
 			try {
 				AlphaAnimation anim = new AlphaAnimation(0, 1);
@@ -193,7 +201,7 @@ public class MultiWindowViewManager {
 				if (mViewTouched.getTag() instanceof ImageView) {
 					((ImageView) mViewTouched.getTag()).startAnimation(anim);
 				}
-				mWM.addView(mViewTouched, mTouchedParamz);
+				getWM().addView(mViewTouched, mTouchedParamz);
 			} catch (Exception e2) {
 				// it is already removed
 			}
@@ -202,7 +210,7 @@ public class MultiWindowViewManager {
 	
 	public void removeTouchedView() {
 		try {
-			mWM.removeView(mViewTouched);
+			getWM().removeView(mViewTouched);
 		} catch (Exception e) {
 			// it is already removed
 		}
@@ -307,17 +315,17 @@ public class MultiWindowViewManager {
 			return;
 		}
 		try {
-			mWM.updateViewLayout(mViewFocusOutline, params);
+			getWM().updateViewLayout(mViewFocusOutline, params);
 		} catch (IllegalArgumentException e) {
 			// view is not attached
-			mWM.addView(mViewFocusOutline, params);
+			getWM().addView(mViewFocusOutline, params);
 		}
 	}
 	
 	public void removeFocusedAppOutline() {
 		mPreviousFocusAppSide = AeroSnap.SNAP_NONE;
 		try {
-			mWM.removeView(mViewFocusOutline);
+			getWM().removeView(mViewFocusOutline);
 		} catch (Exception e) {
 			// it is already removed
 		}

@@ -42,8 +42,6 @@ public class SystemUIMultiWindow {
 	
 	/* System Values */
 	private static Context mContext;
-	private static WindowManager mWm;
-	private static ActivityManager mAm;
 	private static XHFWInterface mXHFWService;
 	
 	// Dragger Views
@@ -78,9 +76,7 @@ public class SystemUIMultiWindow {
 					final Service thiz = (Service) param.thisObject;
 					mContext = thiz.getApplicationContext();
 					mXHFWService = XHFWService.retrieveService(mContext);
-					mWm = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
-					mAm = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-					mViewManager = new MultiWindowViewManager(mContext, mWm, MainXposed.sModRes,
+					mViewManager = new MultiWindowViewManager(mContext, MainXposed.sModRes,
 							Util.realDp(24, mContext));
 					// TODO option to change size
 					
@@ -126,7 +122,9 @@ public class SystemUIMultiWindow {
 			// removed and it should reappear at the same location
 			
 			if (AeroSnap.UNKNOWN == snap_side) {
-				for (RunningTaskInfo info : mAm.getRunningTasks(50)) {
+				ActivityManager am = (ActivityManager) mContext
+						.getSystemService(Context.ACTIVITY_SERVICE);
+				for (RunningTaskInfo info : am.getRunningTasks(50)) {
 					if (info.topActivity.getPackageName().equals(pkg_name)) {
 						if (info.numActivities > 0) {
 							return;
@@ -185,8 +183,7 @@ public class SystemUIMultiWindow {
 				@Override
 				public void onCloseButton() {
 					try {
-						XposedHelpers.callMethod(mAm, "removeTask",
-								mXHFWService.getLastTaskId(), 0x0);
+						mXHFWService.removeAppTask(mXHFWService.getLastTaskId(), 0x0);
 					} catch (RemoteException e) {
 					}
 					// mAm.removeTask(SystemUIReceiver.mLastTaskId, 0x0);
