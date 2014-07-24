@@ -228,6 +228,9 @@ public class ActionBarColorHook {
 	}
 	
 	private int getMainColorFromActionBarDrawable(Drawable drawable) {
+		if (drawable == null) {
+			return Color.BLACK;
+		}
 		/*
 		 * This should fix the bug where a huge part of the ActionBar background
 		 * is drawn white.
