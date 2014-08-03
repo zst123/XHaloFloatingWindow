@@ -4,6 +4,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -262,12 +263,25 @@ public class HaloFloating {
 	 * is not null, then pause the app. We are working around it like this.
 	 */
 	private  void injectActivityStack(final LoadPackageParam lpp) throws Throwable {
+		final Class<?> classActivityRecord = findClass("com.android.server.am.ActivityRecord",
+				lpp.classLoader);
 		final Class<?> hookClass = findClass("com.android.server.am.ActivityStack", lpp.classLoader);
 		XposedBridge.hookAllMethods(hookClass, "resumeTopActivityLocked", new XC_MethodHook() {
 			Object previous = null;
 			boolean appPauseEnabled;
+			boolean isHalo;
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+				// Find the first activity that is not finishing.
 				if (!mHasHaloFlag) return;
+				if (mIsPreviousActivityHome) return;
+				
+				Object nextAR = XposedHelpers.callMethod(param.thisObject, "topRunningActivityLocked",
+						new Class[] { classActivityRecord }, (Object) null);
+				Intent nextIntent = (Intent) XposedHelpers.getObjectField(nextAR, "intent");
+				// TODO Find better whatsapp workaround.
+				isHalo = (!nextIntent.getPackage().equals("com.whatsapp")) &&
+						(nextIntent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+				if (!isHalo) return;
 				
 				mPref.reload();
 				appPauseEnabled = mPref.getBoolean(Common.KEY_APP_PAUSE, Common.DEFAULT_APP_PAUSE);
@@ -279,9 +293,12 @@ public class HaloFloating {
 			}
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 				if (!mHasHaloFlag) return;
+				if (!isHalo) return;
+				if (mIsPreviousActivityHome) return;
 				if (appPauseEnabled) return;
 				if (previous != null) {
 					XposedHelpers.setObjectField(param.thisObject, "mResumedActivity", previous);
+					previous = null;
 				}
 			}
 		});
@@ -387,6 +404,7 @@ public class HaloFloating {
 	 *  
 	 *  I added the option to allow the user to disable it.
 	 */
+	@SuppressLint("NewApi")
 	private  void injectPerformStop() throws Throwable {
 		XposedBridge.hookAllMethods(Activity.class, "performStop", new XC_MethodHook() {
 			protected void afterHookedMethod(MethodHookParam param) throws Throwable {		
