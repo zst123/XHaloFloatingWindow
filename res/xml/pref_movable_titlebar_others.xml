@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <!-- Size -->
+    <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+        defaultValue="32"
+        maximum="120"
+        minimum="0"
+        android:key="window_moving_titlebar_size"
+        android:summary="@string/pref_movable_titlebar_size_summary"
+        android:title="@string/pref_movable_titlebar_size_title" />
+
+    <!-- Separator -->
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="window_moving_titlebar_separator_enabled"
+        android:summary="@string/pref_movable_titlebar_separator_enabled_summary"
+        android:title="@string/pref_movable_titlebar_separator_enabled_title" />
+
+    <com.zst.xposed.halo.floatingwindow.preferences.WidgetNumberPicker
+        defaultValue="2"
+        maximum="120"
+        minimum="0"
+        android:dependency="window_moving_titlebar_separator_enabled"
+        android:key="window_moving_titlebar_separator_size"
+        android:summary="@string/pref_movable_titlebar_separator_size_summary"
+        android:title="@string/pref_movable_titlebar_separator_size_title" />
+
+    <com.zst.xposed.halo.floatingwindow.preferences.ColorPicker
+        defaultValue="FFFFFF"
+        android:dependency="window_moving_titlebar_separator_enabled"
+        android:key="window_moving_titlebar_separator_color"
+        android:summary="@string/pref_movable_titlebar_separator_color_summary"
+        android:title="@string/pref_movable_titlebar_separator_color_title" />
+</PreferenceScreen>

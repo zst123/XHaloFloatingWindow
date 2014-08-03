@@ -57,6 +57,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.zst.xposed.halo.floatingwindow.preferences.TitleBarSettingsActivity"
+            android:label="@string/pref_movable_sub_titlebar_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="com.zst.xposed.halo.floatingwindow.preferences.StatusbarTaskbarPinAppActivity"
             android:label="@string/app_statusbar_taskbar" >
             <intent-filter>

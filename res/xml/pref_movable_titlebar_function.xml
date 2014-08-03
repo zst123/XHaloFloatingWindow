@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="window_moving_titlebar_single_window"
+        android:summary="@string/pref_movable_titlebar_single_window_summary"
+        android:title="@string/pref_movable_titlebar_single_window_title" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="window_resizing_aero_snap_titlebar_hide"
+        android:summary="@string/pref_movable_resizing_aero_snap_titlebar_hide_summary"
+        android:title="@string/pref_movable_resizing_aero_snap_titlebar_hide_title" />
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="window_moving_titlebar_max_hide"
+        android:summary="@string/pref_movable_titlebar_max_hide_summary"
+        android:title="@string/pref_movable_titlebar_max_hide_title" />
+    
+</PreferenceScreen>

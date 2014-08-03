@@ -241,6 +241,17 @@
     <string name="option_gravity_8">Bottom Center</string>
     <string name="option_gravity_9">Bottom Right Corner</string>
 
+    <!-- Title Bar Icon Chooser -->
+    <string name="tbic_functionality">Functionality</string>
+    <string name="tbic_other_settings">@string/pref_movable_sub_other_title</string>
+    <string name="tbic_theme">Theming</string>
+    <string name="tbic_theme_none_t">None</string>
+    <string name="tbic_theme_none_s">Hide the entire titlebar</string>
+    <string name="tbic_theme_original_t">Original Icons</string>
+    <string name="tbic_theme_original_s">The icons originally used in the very first version</string>
+    <string name="tbic_theme_clearer_t">Clearer Icons</string>
+    <string name="tbic_theme_clearer_s">Icons created by BachMinuetInG from XDA</string>
+    
     <!-- ColorPicker -->
     <string name="apply">Apply</string>
     <string name="arrow_symbol">➙</string>

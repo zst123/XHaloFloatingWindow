@@ -1,5 +1,7 @@
 package com.zst.xposed.halo.floatingwindow;
 
+import com.zst.xposed.halo.floatingwindow.preferences.TitleBarSettingsActivity;
+
 import android.os.Build;
 import android.view.Gravity;
 
@@ -37,13 +39,12 @@ public class Common {
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_TITLEBAR_HIDE = "window_resizing_aero_snap_titlebar_hide";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_ENABLED = "window_resizing_aero_snap_splitbar";
 	public static final String KEY_WINDOW_RESIZING_AERO_SNAP_SPLITBAR_COLOR = "window_resizing_aero_snap_splitbar_color";
-	public static final String KEY_WINDOW_TITLEBAR_ENABLED = "window_moving_titlebar_enabled";
 	public static final String KEY_WINDOW_TITLEBAR_SIZE = "window_moving_titlebar_size";
 	public static final String KEY_WINDOW_TITLEBAR_SEPARATOR_ENABLED = "window_moving_titlebar_separator_enabled";
 	public static final String KEY_WINDOW_TITLEBAR_SEPARATOR_SIZE = "window_moving_titlebar_separator_size";
 	public static final String KEY_WINDOW_TITLEBAR_SEPARATOR_COLOR = "window_moving_titlebar_separator_color";
 	public static final String KEY_WINDOW_TITLEBAR_MAXIMIZE_HIDE = "window_moving_titlebar_max_hide";
-	public static final String KEY_WINDOW_TITLEBAR_ALT_ICONS = "window_moving_titlebar_alt_icons";
+	public static final String KEY_WINDOW_TITLEBAR_ICON_TYPE = "window_moving_titlebar_icon_type";
 	public static final String KEY_WINDOW_TITLEBAR_SINGLE_WINDOW = "window_moving_titlebar_single_window";
 	public static final String KEY_WINDOW_ACTIONBAR_DRAGGING_ENABLED = "window_moving_move_ab_enabled";
 	public static final String KEY_WINDOW_TRIANGLE_ENABLE = "window_triangle_enabled";
@@ -119,7 +120,7 @@ public class Common {
 	public static final int DEFAULT_WINDOW_TITLEBAR_SEPARATOR_SIZE = 2;
 	public static final String DEFAULT_WINDOW_TITLEBAR_SEPARATOR_COLOR = "FFFFFF";
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_MAXIMIZE_HIDE = true;
-	public static final boolean DEFAULT_WINDOW_TITLEBAR_ALT_ICONS = false;
+	public static final int DEFAULT_WINDOW_TITLEBAR_ICONS_TYPE = TitleBarSettingsActivity.TITLEBAR_ICON_DEFAULT;
 	public static final boolean DEFAULT_WINDOW_TITLEBAR_SINGLE_WINDOW = false;
 	public static final boolean DEFAULT_WINDOW_ACTIONBAR_DRAGGING_ENABLED = true;
 	public static final boolean DEFAULT_WINDOW_TRIANGLE_ENABLE = true;

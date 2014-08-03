@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@null" >
+
+    <LinearLayout
+        android:id="@android:id/home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp" >
+
+        <RelativeLayout
+            android:id="@+id/movable_titlebar"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:background="#000"
+            android:clickable="true"
+            android:tag="movable_titlebar" >
+
+            <TextView
+                android:id="@+id/movable_titlebar_appname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/movable_titlebar_min"
+                android:layout_toRightOf="@+id/movable_titlebar_more"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:gravity="center_vertical|center_horizontal"
+                android:maxLines="1"
+                android:tag="movable_titlebar_appname"
+                android:text="@string/app_name"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="#ffff"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:typeface="sans" />
+
+            <ImageButton
+                android:id="@+id/movable_titlebar_close"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/movable_title_close"
+                android:tag="movable_titlebar_close" />
+
+            <ImageButton
+                android:id="@+id/movable_titlebar_max"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/movable_titlebar_close"
+                android:adjustViewBounds="true"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/movable_title_max"
+                android:tag="movable_titlebar_max" />
+
+            <ImageButton
+                android:id="@+id/movable_titlebar_min"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentTop="true"
+                android:layout_toLeftOf="@+id/movable_titlebar_max"
+                android:adjustViewBounds="true"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/movable_title_min"
+                android:tag="movable_titlebar_min" />
+
+            <ImageButton
+                android:id="@+id/movable_titlebar_more"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:adjustViewBounds="true"
+                android:paddingLeft="0dp"
+                android:paddingRight="2dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/movable_title_more"
+                android:tag="movable_titlebar_more" />
+
+            <View
+                android:id="@+id/movable_titlebar_line"
+                android:layout_width="wrap_content"
+                android:layout_height="2dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:background="#ddd"
+                android:minHeight="5dp"
+                android:tag="movable_titlebar_line" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@android:id/background"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:background="#222" >
+
+            <ImageView
+                android:id="@android:id/button1"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="4dp"
+                android:src="@drawable/ic_launcher" />
+
+            <TextView
+                android:id="@android:id/candidatesArea"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/app_name"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@android:id/button2"
+                style="@android:style/Widget.Holo.Button.Borderless"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="4dp"
+                android:src="@drawable/movable_overflow" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@android:id/home" >
+
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#333"
+            android:paddingBottom="6dp"
+            android:paddingTop="6dp"
+            android:textColor="#fff" />
+    </android.support.v4.view.ViewPager>
+
+</RelativeLayout>

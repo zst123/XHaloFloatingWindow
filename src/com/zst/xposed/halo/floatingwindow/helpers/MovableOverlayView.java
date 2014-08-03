@@ -3,6 +3,7 @@ package com.zst.xposed.halo.floatingwindow.helpers;
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.R;
+import com.zst.xposed.halo.floatingwindow.preferences.TitleBarSettingsActivity;
 
 import de.robv.android.xposed.XposedHelpers;
 import android.annotation.SuppressLint;
@@ -71,6 +72,7 @@ public class MovableOverlayView extends RelativeLayout {
 	/* Title Bar */
 	private final int mTitleBarHeight;
 	private final int mTitleBarDivider;
+	private final int mTitleBarIconType;
 	private final boolean mLiveResizing;
 	
 	/**
@@ -116,8 +118,9 @@ public class MovableOverlayView extends RelativeLayout {
 		mBorderOutline.bringToFront();
 		
 		// set preferences values
-		boolean titlebar_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ENABLED,
-				Common.DEFAULT_WINDOW_TITLEBAR_ENABLED);
+		mTitleBarIconType = mPref.getInt(Common.KEY_WINDOW_TITLEBAR_ICON_TYPE,
+				Common.DEFAULT_WINDOW_TITLEBAR_ICONS_TYPE);
+		boolean titlebar_enabled = mTitleBarIconType != 0;
 		boolean titlebar_separator_enabled = mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_SEPARATOR_ENABLED,
 				Common.DEFAULT_WINDOW_TITLEBAR_SEPARATOR_ENABLED);
 		mTitleBarHeight = !titlebar_enabled ? 0 : Util.realDp(
@@ -368,16 +371,19 @@ public class MovableOverlayView extends RelativeLayout {
 	
 		app_title.setText(mActivity.getApplicationInfo().loadLabel(mActivity.getPackageManager()));
 		
-		if (mPref.getBoolean(Common.KEY_WINDOW_TITLEBAR_ALT_ICONS, Common.DEFAULT_WINDOW_TITLEBAR_ALT_ICONS)) {
+		switch (mTitleBarIconType) {
+		case TitleBarSettingsActivity.TITLEBAR_ICON_ORIGINAL:
 			close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close_old));
 			max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max_old));
 			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min_old));
 			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more_old));
-		} else {
+			break;
+		case TitleBarSettingsActivity.TITLEBAR_ICON_BachMinuetInG:
 			close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close));
 			max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max));
 			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min));
 			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more));
+			break;
 		}
 		
 		RelativeLayout.LayoutParams header_param = (LayoutParams) header.getLayoutParams();
