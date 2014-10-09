@@ -72,7 +72,7 @@ public class MovableOverlayView extends RelativeLayout {
 	/* Title Bar */
 	private final int mTitleBarHeight;
 	private final int mTitleBarDivider;
-	private final int mTitleBarIconType;
+	public final int mTitleBarIconType;
 	private final boolean mLiveResizing;
 	
 	/**
@@ -384,6 +384,12 @@ public class MovableOverlayView extends RelativeLayout {
 			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min));
 			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more));
 			break;
+		case TitleBarSettingsActivity.TITLEBAR_ICON_MATERIAL:
+			close_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close_chrome));
+			max_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max_chrome));
+			min_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min_chrome));
+			more_button.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more_chrome));
+			break;
 		}
 		
 		RelativeLayout.LayoutParams header_param = (LayoutParams) header.getLayoutParams();
@@ -615,6 +621,7 @@ public class MovableOverlayView extends RelativeLayout {
 		return paramz;
 	}
 	
+	@SuppressLint("NewApi")
 	public void closeApp() {
 		try {
 			/* Work-around for bug:

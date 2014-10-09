@@ -3,6 +3,7 @@ package com.zst.xposed.halo.floatingwindow.preferences;
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.R;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
+
 import android.preference.PreferenceFragment;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -36,6 +37,7 @@ public class TitleBarSettingsActivity extends Activity implements OnSharedPrefer
 	public static final int TITLEBAR_ICON_NONE = 0;
 	public static final int TITLEBAR_ICON_ORIGINAL = 1;
 	public static final int TITLEBAR_ICON_BachMinuetInG = 2;
+	public static final int TITLEBAR_ICON_MATERIAL = 3;
 	public static final int TITLEBAR_ICON_DEFAULT = TITLEBAR_ICON_BachMinuetInG;
 	
 	SharedPreferences mPref;
@@ -85,6 +87,9 @@ public class TitleBarSettingsActivity extends Activity implements OnSharedPrefer
 							adapter.add(new ThemeItem(mResource,
 									R.string.tbic_theme_clearer_t,
 									R.string.tbic_theme_clearer_s, TITLEBAR_ICON_BachMinuetInG));
+							adapter.add(new ThemeItem(mResource,
+									R.string.tbic_theme_material_t,
+									R.string.tbic_theme_material_s, TITLEBAR_ICON_MATERIAL));
 							adapter.mSelectedId = mIconType;
 							
 							lv.setAdapter(adapter);
@@ -210,6 +215,12 @@ public class TitleBarSettingsActivity extends Activity implements OnSharedPrefer
 			tbMaxButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max));
 			tbMinButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min));
 			tbMoreButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more));
+			break;
+		case TitleBarSettingsActivity.TITLEBAR_ICON_MATERIAL:
+			tbCloseButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_close_chrome));
+			tbMaxButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_max_chrome));
+			tbMinButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_min_chrome));
+			tbMoreButton.setImageDrawable(mResource.getDrawable(R.drawable.movable_title_more_chrome));
 			break;
 		}
 	}

@@ -375,6 +375,7 @@ public class HaloFloating {
 			protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 				Activity thiz = (Activity) param.thisObject;
 				Intent intent = thiz.getIntent();
+				// 	at com.google.android.velvet.ui.VelvetActivity.onStart(PG:312)
 				isHoloFloat = (intent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
 				if (isHoloFloat) {
 					LayoutScaling.appleFloating(mPref, thiz.getWindow());
