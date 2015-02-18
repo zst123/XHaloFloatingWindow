@@ -153,18 +153,18 @@
             android:summary="@string/pref_recents_long_click_summary"
             android:title="@string/pref_recents_long_click_title" />
         
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="system_prevent_home_to_front"
-            android:summary="@string/pref_prevent_home_to_front_summary"
-            android:title="@string/pref_prevent_home_to_front_title" />
-        
         <Preference
             android:key="restart_systemui"
             android:summary="@string/pref_systemui_restart_summary"
             android:title="@string/pref_systemui_restart_title" />
 
     </PreferenceScreen>
+    
+    <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="system_prevent_home_to_front"
+            android:summary="@string/pref_prevent_home_to_front_summary"
+            android:title="@string/pref_prevent_home_to_front_title" />
     
     <!-- Screen 7: StatusBar Taskbar -->
      <PreferenceScreen
