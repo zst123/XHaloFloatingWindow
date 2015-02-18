@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.Preference;
@@ -47,6 +48,11 @@ public class MainFragment extends PreferenceFragment implements OnPreferenceClic
 		findPreference(Common.KEY_BLACKLIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_WHITELIST_APPS).setOnPreferenceClickListener(this);
 		findPreference(Common.KEY_STATUSBAR_TASKBAR_PINNED_APPS).setOnPreferenceClickListener(this);
+		if (Build.VERSION.SDK_INT >= 20) { // Lollipop
+			Preference p = findPreference("system_notif_top");
+			p.setEnabled(false);
+			p.setSummary(R.string.pref_systemui_top_summary_not_supported_lollipop);
+		}
 		mPref = getActivity().getSharedPreferences(Common.PREFERENCE_MAIN_FILE,
 				PreferenceActivity.MODE_WORLD_READABLE);
 	}

@@ -123,6 +123,7 @@
 
      <!-- Screen 5: SystemUI -->
     <PreferenceScreen
+        android:key="system_notif_top"
         android:summary="@string/pref_systemui_top_summary"
         android:title="@string/pref_systemui_top_title" >
         <Preference

@@ -13,6 +13,7 @@ import com.zst.xposed.halo.floatingwindow.hooks.TestingSettingHook;
 import com.zst.xposed.halo.floatingwindow.hooks.ipc.XHFWService;
 
 import android.content.res.XModuleResources;
+import android.os.Build;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XSharedPreferences;
@@ -49,10 +50,16 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		TestingSettingHook.handleLoadPackage(lpparam);
 		
 		// SystemUI
-		NotificationShadeHook.hook(lpparam, mPref);
-		RecentAppsHook.handleLoadPackage(lpparam, mPref);
-		SystemUIOutliner.handleLoadPackage(lpparam);
-		SystemUIMultiWindow.handleLoadPackage(lpparam);
+		if (Build.VERSION.SDK_INT >= 20) { // Lollipop
+			// Lollipop totally revamped SystemUI
+			// TODO: move old SystemUI hooks to new package
+			// TODO: forward port SystemUI hooks
+		} else { // Kitkat and below
+			NotificationShadeHook.hook(lpparam, mPref);
+			RecentAppsHook.handleLoadPackage(lpparam, mPref);
+			SystemUIOutliner.handleLoadPackage(lpparam);
+			SystemUIMultiWindow.handleLoadPackage(lpparam);
+		}
 		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
 		
 		// Android
