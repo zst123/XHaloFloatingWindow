@@ -8,7 +8,6 @@ import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.MainXposed;
 import com.zst.xposed.halo.floatingwindow.helpers.MovableOverlayView;
 import com.zst.xposed.halo.floatingwindow.helpers.Util;
-import com.zst.xposed.halo.floatingwindow.preferences.TitleBarSettingsActivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -41,6 +40,9 @@ public class ActionBarColorHook {
 	/* Constants */
 	static final String COLOR_BLACK = "#000000";
 	static final String COLOR_WHITE = "#FFFFFF";
+	static final String COLOR_DEFAULT_TITLEBAR_BACKGROUND = COLOR_BLACK;
+	static final String COLOR_DEFAULT_TITLEBAR_ICON_NORMAL = COLOR_WHITE;
+	static final String COLOR_DEFAULT_TITLEBAR_ICON_INVERT = COLOR_BLACK;
 	static enum Tint {
 		TITLE_BAR,
 		ICON,
@@ -62,7 +64,6 @@ public class ActionBarColorHook {
 	View mQuadrant;
 	MovableOverlayView mOverlay;
 	int mBorderThickness;
-	int mTitleBarIconType;
 	
 	public ActionBarColorHook(MainXposed main, LoadPackageParam llpp, XSharedPreferences pref) {
 		mMainXposed = main;
@@ -117,13 +118,6 @@ public class ActionBarColorHook {
 					if (actionBar != null && actionBar.isShowing()) {
 						// If it's not showing, we shouldn't detect it.
 						changeColorFromActionBarObject(actionBar);
-					} else {
-						int titleBarTint = getDefaultTint(Tint.TITLE_BAR);
-						int defaultNormal = getDefaultTint(Tint.ICON);
-						int invertedIconTint = getDefaultTint(Tint.ICON_INVERTED);
-						int icon_color = getIconColorForColor(titleBarTint, defaultNormal,
-								invertedIconTint, getHsvMax());
-						changeTitleBarColor(titleBarTint, icon_color);
 					}
 					
 				}
@@ -176,8 +170,6 @@ public class ActionBarColorHook {
 		mMoreButton = overlayView.mTitleBarMore;
 		mTriangle = overlayView.mTriangle;
 		mQuadrant = overlayView.mQuadrant;
-		
-		mTitleBarIconType = overlayView.mTitleBarIconType;
 	}
 	
 	public void setBorderThickness(int thickness) {
@@ -185,9 +177,6 @@ public class ActionBarColorHook {
 	}
 	
 	private void changeTitleBarColor(int bg_color, int icon_color) {
-		if (bg_color == Color.TRANSPARENT) {
-			bg_color = getDefaultTint(Tint.TITLE_BAR);
-		}
 		try {
 			mHeader.setBackgroundColor(bg_color);
 			mAppTitle.setTextColor(icon_color);
@@ -228,9 +217,6 @@ public class ActionBarColorHook {
 	
 	private int getIconColorForColor(int color, int defaultNormal, int defaultInverted,
 			float hsvMaxValue) {
-		if (color == Color.TRANSPARENT) {
-			color = getDefaultTint(Tint.TITLE_BAR);
-		}
 		float[] hsv = new float[3];
 		Color.colorToHSV(color, hsv);
 		float value = hsv[2];
@@ -243,7 +229,7 @@ public class ActionBarColorHook {
 	
 	private int getMainColorFromActionBarDrawable(Drawable drawable) {
 		if (drawable == null) {
-			return Color.TRANSPARENT;
+			return Color.BLACK;
 		}
 		/*
 		 * This should fix the bug where a huge part of the ActionBar background
@@ -263,27 +249,13 @@ public class ActionBarColorHook {
 				pixel = bitmap.getPixel(0, 5);
 			}
 		} catch (IllegalArgumentException e) {
-			pixel = Color.TRANSPARENT;
+			pixel = Color.BLACK;
 		}
 		int red = Color.red(pixel);
 		int blue = Color.blue(pixel);
 		int green = Color.green(pixel);
 		int alpha = Color.alpha(pixel);
-		if (mTitleBarIconType == TitleBarSettingsActivity.TITLEBAR_ICON_MATERIAL) {
-			return darken(Color.argb(alpha, red, green, blue));
-		}
 		return Color.argb(alpha, red, green, blue);
-	}
-	
-	private int darken(int color) {
-		float[] hsv = new float[3];
-		Color.colorToHSV(color, hsv);
-		if (hsv[2] > 0.10f) {
-			hsv[2] = hsv[2] - 0.10f;
-		} else {
-			hsv[2] = 0;
-		}
-		return Color.HSVToColor(hsv);
 	}
 	
 	private Bitmap drawableToBitmap(Drawable drawable) throws IllegalArgumentException {
@@ -319,26 +291,14 @@ public class ActionBarColorHook {
 	}
 	
 	private String getDefaultTintString(Tint tintType) {
-		if (mTitleBarIconType == TitleBarSettingsActivity.TITLEBAR_ICON_MATERIAL) {
-			switch (tintType) {
-			case TITLE_BAR:
-				return "#F0F0F0";
-			case ICON:
-				return "#F0F0F0";
-			case ICON_INVERTED:
-				return "#282828";
-			}
-			return COLOR_BLACK;
-		} else {
-			switch (tintType) {
-			case TITLE_BAR:
-				return COLOR_BLACK;
-			case ICON:
-				return COLOR_WHITE;
-			case ICON_INVERTED:
-				return COLOR_BLACK;
-			}
-			return COLOR_BLACK;
-		} 
+		switch (tintType) {
+		case TITLE_BAR:
+			return COLOR_DEFAULT_TITLEBAR_BACKGROUND;
+		case ICON:
+			return COLOR_DEFAULT_TITLEBAR_ICON_NORMAL;
+		case ICON_INVERTED:
+			return COLOR_DEFAULT_TITLEBAR_ICON_INVERT;
+		}
+		return COLOR_BLACK;
 	}
 }

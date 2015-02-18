@@ -251,8 +251,6 @@
     <string name="tbic_theme_original_s">The icons originally used in the very first version</string>
     <string name="tbic_theme_clearer_t">Clearer Icons</string>
     <string name="tbic_theme_clearer_s">Icons created by BachMinuetInG from XDA</string>
-    <string name="tbic_theme_material_t">Material Design Icons</string>
-    <string name="tbic_theme_material_s">Based on Android L apps running on Chrome OS</string>
     
     <!-- ColorPicker -->
     <string name="apply">Apply</string>

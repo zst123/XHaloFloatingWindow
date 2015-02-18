@@ -34,7 +34,6 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 	@Override
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		mPref = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_MAIN_FILE);
-//		/makeWorldReadable
 		mBlacklist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_BLACKLIST_FILE);
 		mWhitelist = new XSharedPreferences(Common.THIS_PACKAGE_NAME, Common.PREFERENCE_WHITELIST_FILE);
 		sModRes = XModuleResources.createInstance(startupParam.modulePath, null);
