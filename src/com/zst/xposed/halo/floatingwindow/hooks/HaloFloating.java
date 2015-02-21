@@ -279,8 +279,12 @@ public class HaloFloating {
 						new Class[] { classActivityRecord }, (Object) null);
 				Intent nextIntent = (Intent) XposedHelpers.getObjectField(nextAR, "intent");
 				// TODO Find better whatsapp workaround.
-				isHalo = (!nextIntent.getPackage().equals("com.whatsapp")) &&
-						(nextIntent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+				try {
+					isHalo = (!nextIntent.getPackage().equals("com.whatsapp")) &&
+							(nextIntent.getFlags() & Common.FLAG_FLOATING_WINDOW) == Common.FLAG_FLOATING_WINDOW;
+				} catch (NullPointerException e) {
+					// if getPackage returns null
+				}
 				if (!isHalo) return;
 				
 				mPref.reload();
