@@ -46,7 +46,7 @@ public class XHFWService extends XHFWInterface.Stub {
 					XposedHelpers.callStaticMethod(classSvcMgr, "addService", paramType,
 							SERVICE_NAME, server);
 				} catch (Throwable e) {
-					XposedBridge.log("Error hooking ActivityManagerService ==> See Logcat");
+					XposedBridge.log(Common.LOG_TAG + "Error hooking ActivityManagerService ==> See Logcat");
 					e.printStackTrace();
 					// We are hooking a system method and might cause a
 					// bootloop if it throws any exception, log this throwable.
