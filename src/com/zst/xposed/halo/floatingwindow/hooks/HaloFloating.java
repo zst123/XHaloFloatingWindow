@@ -41,19 +41,18 @@ public class HaloFloating {
 			hookActivityRecord(lpparam);
 			removeAppStartingWindow(lpparam);
 			kitkatMoveHomeStackHook(lpparam);
+			try {
+				injectActivityStack(lpparam);
+			} catch (Throwable e) {
+				XposedBridge.log(Common.LOG_TAG + "(ActivityStack)");
+				XposedBridge.log(e);
+			}
 		}
 		
 		initHooks(lpparam);
 	}
 	
 	private void initHooks(LoadPackageParam l) {
-		/*********************************************/
-		try {
-			injectActivityStack(l);
-		} catch (Throwable e) {
-			XposedBridge.log(Common.LOG_TAG + "(ActivityStack)");
-			XposedBridge.log(e);
-		}
 		/*********************************************/
 		try {
 			inject_Activity();

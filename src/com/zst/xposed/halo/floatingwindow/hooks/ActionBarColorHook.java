@@ -74,8 +74,8 @@ public class ActionBarColorHook {
 				Common.DEFAULT_TINTED_TITLEBAR_ENABLED)) return;
 		
 		try {
-			final Class<?> ActionBarImpl = findClass("com.android.internal.app.ActionBarImpl", null);
-			final Class<?> ActivityClass = XposedHelpers.findClass("android.app.Activity", null);
+			final Class<?> ActionBarImpl = findClass("com.android.internal.app.ActionBarImpl", llpp.classLoader);
+			final Class<?> ActivityClass = XposedHelpers.findClass("android.app.Activity", llpp.classLoader);
 			
 			findAndHookMethod(ActionBarImpl, "setBackgroundDrawable", Drawable.class,
 					new XC_MethodHook() {

@@ -1,12 +1,14 @@
 package com.zst.xposed.halo.floatingwindow.hooks.ipc;
 
 import java.util.HashMap;
+
 import com.zst.xposed.halo.floatingwindow.Common;
 import com.zst.xposed.halo.floatingwindow.helpers.AeroSnap;
 
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Binder;
@@ -31,10 +33,14 @@ public class XHFWService extends XHFWInterface.Stub {
 	static final String SERVICE_NAME = "XHaloFloatingWindow-Service";
 	static Class<?> classSvcMgr;
 	
-	public static void initZygote() throws Throwable {
-		classSvcMgr = XposedHelpers.findClass("android.os.ServiceManager", null);
+	public static void initZygote(LoadPackageParam lpparam) throws Throwable {
+		// allow the class to be found for all processes. we need it to retrieveService
+		classSvcMgr = XposedHelpers.findClass("android.os.ServiceManager", lpparam.classLoader);
+		
+		if (!lpparam.packageName.equals("android")) return;
+
 		final Class<?> classAMS = XposedHelpers.findClass(
-				"com.android.server.am.ActivityManagerService", null);
+				"com.android.server.am.ActivityManagerService", lpparam.classLoader);
 		
 		XposedBridge.hookAllMethods(classAMS, "main", new XC_MethodHook() {
 			@Override

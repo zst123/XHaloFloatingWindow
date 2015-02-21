@@ -17,6 +17,7 @@ import android.os.Build;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.XSharedPreferences;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit {
@@ -49,7 +50,7 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		// XHFW
 		TestingSettingHook.handleLoadPackage(lpparam);
 		
-		// SystemUI
+		// SystemUI Mods
 		if (Build.VERSION.SDK_INT >= 20) { // Lollipop
 			// Lollipop totally revamped SystemUI
 			// TODO: move old SystemUI hooks to new package
@@ -57,14 +58,26 @@ public class MainXposed implements IXposedHookLoadPackage, IXposedHookZygoteInit
 		} else { // Kitkat and below
 			NotificationShadeHook.hook(lpparam, mPref);
 			RecentAppsHook.handleLoadPackage(lpparam, mPref);
-			SystemUIOutliner.handleLoadPackage(lpparam);
-			SystemUIMultiWindow.handleLoadPackage(lpparam);
 		}
 		StatusbarTaskbar.handleLoadPackage(lpparam, mPref);
 		
+		// SystemUI MultiWindow
+		SystemUIOutliner.handleLoadPackage(lpparam);
+		SystemUIMultiWindow.handleLoadPackage(lpparam);
+		
 		// Android
-		SystemMods.handleLoadPackage(lpparam, mPref);
-		XHFWService.initZygote();
+		try {
+			SystemMods.handleLoadPackage(lpparam, mPref);
+		} catch (Throwable e) {
+			XposedBridge.log(Common.LOG_TAG + "(MainXposed // SystemMods)");
+			XposedBridge.log(e);
+		}
+		try {
+			XHFWService.initZygote(lpparam);
+		} catch (Throwable e) {
+			XposedBridge.log(Common.LOG_TAG + "(MainXposed // XHFWService)");
+			XposedBridge.log(e);
+		}
 		
 		// App
 		hookMovableWindow = new MovableWindow(this, lpparam);
